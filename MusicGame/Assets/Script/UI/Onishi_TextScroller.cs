@@ -50,7 +50,6 @@ public class TextScroller : MonoBehaviour
         }
     }
 
-
     /// <summary>
     /// スクロールの初期設定
     /// </summary>
@@ -82,7 +81,6 @@ public class TextScroller : MonoBehaviour
         }
     }
 
-
     /// <summary>
     /// スクロール開始
     /// </summary>
@@ -91,7 +89,6 @@ public class TextScroller : MonoBehaviour
         scrollValue = 0;
         isScrolling = true;
     }
-
 
     /// <summary>
     /// スクロールリセット
@@ -102,7 +99,6 @@ public class TextScroller : MonoBehaviour
         StartCoroutine(Fade(1, 0));
         Invoke(nameof(StartScrolling), waitTimeBeforeScroll + fadeDuration);
     }
-
 
     /// <summary>
     /// フェード処理コルーチン
@@ -121,5 +117,4 @@ public class TextScroller : MonoBehaviour
         }
         canvasGroup.alpha = targetAlpha;
     }
-
 }
