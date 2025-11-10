@@ -21,6 +21,12 @@ namespace Notes {
         public int BPM { get; private set; }
 
         public List<Notes> notes { get; private set; }
+
+        public NotesData() {
+
+            BPM = 0;
+            notes = new List<Notes>();
+        }
     }
 }
 

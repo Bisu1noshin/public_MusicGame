@@ -8,6 +8,19 @@ namespace Music {
     public struct Music {
 
 
-    } 
+    }
 
+    public class MusicData
+    {
+        // メンバー変数
+        public List<Music> music { get; private set; }
+
+
+        // コンストラクタ
+        public MusicData() {
+
+            music = new List<Music>();
+        }
+
+    }
 }
