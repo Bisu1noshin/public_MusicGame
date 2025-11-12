@@ -34,9 +34,11 @@ private:
 
 	float time;
 
-	int bpm; //4分音符が1分間に入る個数
+	float bpm; //4分音符が1分間に入る個数
 	std::string musicName = "./data/ShiningStar_short_audio.mp3"; //使う音楽のファイル名を入れる
 	const std::string filename = "./data/savedNotes.txt";
 
 	NotesManager* mNotesManager;
+
+	const int short_skip_time = 500; //進む or 戻る秒数(ミリ秒)
 };
