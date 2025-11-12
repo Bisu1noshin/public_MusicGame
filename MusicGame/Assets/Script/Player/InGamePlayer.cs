@@ -37,6 +37,8 @@ namespace Player
 
         private void Start()
         {
+            input = new ReceiveInput();
+
             LeftState = PlayerState.Idle;
             RightState = PlayerState.Idle;
         }

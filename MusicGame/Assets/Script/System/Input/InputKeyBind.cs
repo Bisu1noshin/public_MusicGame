@@ -11,7 +11,7 @@ public sealed class InputKeyBind {
         inputActionse = new InputActionse();
 
         // 仮
-        InitilizeBindGamepad();
+        InitilizeBindKeyboard();
     }
 
     /// <summary>
