@@ -1,0 +1,8 @@
+D:/24CI0210/glew-2.2.0/glew-2.2.0/build/CMakeFiles/glew.dir
+D:/24CI0210/glew-2.2.0/glew-2.2.0/build/CMakeFiles/glew_s.dir
+D:/24CI0210/glew-2.2.0/glew-2.2.0/build/CMakeFiles/glewinfo.dir
+D:/24CI0210/glew-2.2.0/glew-2.2.0/build/CMakeFiles/visualinfo.dir
+D:/24CI0210/glew-2.2.0/glew-2.2.0/build/CMakeFiles/uninstall.dir
+D:/24CI0210/glew-2.2.0/glew-2.2.0/build/CMakeFiles/INSTALL.dir
+D:/24CI0210/glew-2.2.0/glew-2.2.0/build/CMakeFiles/ALL_BUILD.dir
+D:/24CI0210/glew-2.2.0/glew-2.2.0/build/CMakeFiles/ZERO_CHECK.dir
