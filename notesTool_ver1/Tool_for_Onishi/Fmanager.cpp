@@ -119,17 +119,17 @@ void FManager::FMOD_Check(FMOD_RESULT result) {
 void FManager::UpdateActor() {
 	system->update();
 	if (owner->GetKeyBoard()->GetKeyStates(SDL_SCANCODE_LEFT) == Down) { //5•b–ß‚é
-		BackTime(5000);
+		BackTime(short_skip_time * 10);
 	}
 	Vector2 wheel = owner->GetKeyBoard()->GetState().mouse.GetScrollWheel();
 	if (wheel.y < 0) {
-		BackTime(500);
+		BackTime(short_skip_time);
 	}
 	if (owner->GetKeyBoard()->GetKeyStates(SDL_SCANCODE_RIGHT) == Down) { //5•bi‚Ş
-		ForwardTime(5000);
+		ForwardTime(short_skip_time * 10);
 	}
 	if (wheel.y > 0) {
-		ForwardTime(500);
+		ForwardTime(short_skip_time);
 	}
 	if (owner->GetKeyBoard()->GetKeyStates(SDL_SCANCODE_SPACE) == Down) { //Ä¶•ˆê’â~
 		bool paused;

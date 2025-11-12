@@ -210,7 +210,10 @@ void NotesManager::Render2D() {
 	for (int i = 0; i < (int)past + AmountofNotes + 1; ++i) {
 		draw.Offset(0, NOTES_SIZE);
 		if (draw.y < -275) { continue; }
-		bpm_line->Draw(draw, src);
+		if (i % shosetsu_num == 0)
+			bpm_line->Draw(draw, src);
+		else 
+		bpm_line->Draw(draw, src, little_clear_color);
 
 		//back_inserter‚ðŽg‚Á‚½ˆ—‚É•ÏX
 //		it = std::copy_if(mNotes.begin(), mNotes.end(), it, [i](Notes* n) { return n->time == i; });

@@ -54,7 +54,7 @@ private:
 	SpriteComponent* red_box;
 	SpriteComponent* green_box;
 
-	int bpm;
+	float bpm;
 	float time;
 	float leftTime;
 	float length; //‹È‚Ì’·‚³(•b)
@@ -68,5 +68,6 @@ private:
 	Vector2 mousePos;
 
 	const int NOTES_SIZE = 32;
-
+	const int shosetsu_num = 16;
+	const Color little_clear_color = Color(1.f, 1.f, 1.f, .25f);
 };
