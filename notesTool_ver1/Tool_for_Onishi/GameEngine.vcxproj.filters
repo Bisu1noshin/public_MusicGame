@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="System">
+      <UniqueIdentifier>{33e9f67a-0720-43cf-a859-5800636c5dfa}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="System\Actor.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="System\Component.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="System\Coordinate.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="System\DynamicVertexArray.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="System\Game.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="System\InputSystem.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="System\VertexArray.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="System\Texture.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="System\Shader.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Fmanager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="NotesManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Font.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="UIScreen.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="System\Actor.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="System\Component.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="System\DynamicVertexArray.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="System\Game.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="System\InputSystem.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="System\VertexArray.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="System\Texture.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="System\Shader.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="System\Math.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="System\Coordinate.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="FManager.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="NotesManager.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Font.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="UIScreen.h">
+      <Filter>System</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data\shader.vert">
+      <Filter>リソース ファイル</Filter>
+    </None>
+    <None Include="data\shader.frag">
+      <Filter>リソース ファイル</Filter>
+    </None>
+    <None Include="data\Transform.vert">
+      <Filter>リソース ファイル</Filter>
+    </None>
+    <None Include="data\Sprite.vert">
+      <Filter>リソース ファイル</Filter>
+    </None>
+    <None Include="data\Sprite.frag">
+      <Filter>リソース ファイル</Filter>
+    </None>
+  </ItemGroup>
+</Project>
