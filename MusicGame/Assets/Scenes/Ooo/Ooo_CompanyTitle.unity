@@ -185,8 +185,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 0
+  m_fontColor: {r: 0, g: 0, b: 0, a: 0}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -507,7 +507,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d195669532a50848b7cfa00cc10a8d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeImage: {fileID: 0}
   fadeText: {fileID: 0}
   fadeDuration: 0
 --- !u!1 &1318516969
@@ -539,9 +538,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d195669532a50848b7cfa00cc10a8d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeImage: {fileID: 581131398}
   fadeText: {fileID: 540870619}
-  fadeDuration: 4
+  fadeDuration: 2.5
 --- !u!4 &1318516971
 Transform:
   m_ObjectHideFlags: 0
@@ -658,6 +656,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2145137041}
+  - component: {fileID: 2145137042}
   m_Layer: 0
   m_Name: SceneManager
   m_TagString: Untagged
@@ -680,6 +679,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2145137042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2145137040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05a87bb11a5e9404694bab3579c23d40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  companyText: {fileID: 540870619}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
