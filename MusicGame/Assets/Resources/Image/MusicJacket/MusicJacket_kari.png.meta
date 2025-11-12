@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      MusicJacket_kari_0: -7950504276262596640
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

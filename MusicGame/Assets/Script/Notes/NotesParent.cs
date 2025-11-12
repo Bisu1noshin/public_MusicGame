@@ -28,6 +28,8 @@ namespace Notes {
         protected StateMachine<NotesState, NotesTrigger> st;
 
         private const float fallSpeed = 5.0f;
+        private const float parfectPos = -3.0f;
+        private const float dedPos = -4.0f;
 
         protected void Awake()
         {
@@ -46,15 +48,15 @@ namespace Notes {
             st.AddTransition(NotesState.Active, NotesState.Ded, NotesTrigger.DedTrigger);
         }
 
-        protected void Start() { }
+        protected virtual void Start() { }
 
-        protected void Update() {
+        protected virtual void Update() {
 
             // ステートマシンの更新
             st.Update(Time.deltaTime);
 
             // 落下処理
-            transform.position -= new Vector3(0, -1 * fallSpeed * Time.deltaTime, 0);
+            transform.position += new Vector3(0, -1 * fallSpeed * Time.deltaTime, 0);
         }
     }
 }
