@@ -31,6 +31,7 @@ FManager::FManager(Game* owner)
 	while (std::getline(ifs, str)) {
 		InputNotes(str);
 	}
+	ifs.close();
 	time = 0;
 	mNotesManager->SetBpm(bpm);
 	mNotesManager->SetTime(time);
@@ -48,6 +49,7 @@ FManager::~FManager() {
 
 	ofs << "bpm:\n" << bpm << "\n"; //BPM‚ð‹L˜^
 	ofs << mNotesManager->CreateNotesStr();
+	ofs.close();
 
 	sound->release();
 	system->close();
