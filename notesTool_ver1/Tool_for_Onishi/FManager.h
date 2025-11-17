@@ -26,6 +26,16 @@ private:
 	void FMOD_Init();
 	void FMOD_Check(FMOD_RESULT result);
 	void InputNotes(const std::string& string);
+	void InputStringStream(const std::string& str, int& inputI) {
+		ss << str;
+		ss >> inputI;
+		ss.clear();
+	}
+	void InputStringStream(const std::string& str, float& inputI) {
+		ss << str;
+		ss >> inputI;
+		ss.clear();
+	}
 
 	FMOD::Sound* sound;
 	FMOD::System* system;
@@ -39,6 +49,7 @@ private:
 	const std::string filename = "./data/savedNotes.txt";
 
 	NotesManager* mNotesManager;
+	std::stringstream ss;
 
 	const int short_skip_time = 500; //i‚Ş or –ß‚é•b”(ƒ~ƒŠ•b)
 };
