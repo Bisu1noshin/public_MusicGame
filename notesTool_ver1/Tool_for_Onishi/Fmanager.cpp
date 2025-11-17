@@ -7,8 +7,8 @@ FManager::FManager(Game* owner)
 	sound(nullptr),
 	system(nullptr),
 	channel(nullptr),
-	bpm(0)
-	
+	bpm(0),
+	ss()
 {
 	FMOD_Init();
 	mNotesManager = owner->GetActor<NotesManager>("NManager");
@@ -21,13 +21,11 @@ FManager::FManager(Game* owner)
 	}
 	mNotesManager->ClearNotes();
 	std::string str;
-	std::stringstream ss;
 
 	//BPM入力
 	std::getline(ifs, str); //一行目はスキップ
 	std::getline(ifs, str);
-	ss << str;
-	ss >> bpm;
+	InputStringStream(str, bpm);
 
 	//ノーツ入力
 	while (std::getline(ifs, str)) {
@@ -42,6 +40,7 @@ FManager::FManager(Game* owner)
 	std::cout << "BPM : " << bpm << std::endl;
 	std::cout << "Length : " << length / 1000.f << std::endl;
 }
+
 FManager::~FManager() {
 	
 	std::ofstream ofs = std::ofstream(filename, std::ios::out);
@@ -56,41 +55,29 @@ FManager::~FManager() {
 }
 
 void FManager::InputNotes(const std::string& string) {
+	std::istringstream iss(string);
 	std::stringstream ss;
 	int splitCnt = 0;
 	std::string subStr;
-	int time = 0;
-	int dirN = 0;
-	bool isH = false;
-	int lane = 0;
-	for (const char s : string) {
-		if (s == ',') {
-			if (splitCnt == 0) {
-				ss << subStr;
-				ss >> time;
-			}
-			if (splitCnt == 1) {
-				ss << subStr;
-				ss >> dirN;
-			}
-			if (splitCnt == 2) {
-				int value;
-				ss << subStr;
-				ss >> value;
-				isH = value == 1;
-			}
-			if (splitCnt == 3) {
-				ss << subStr;
-				ss >> lane;
-			}
-			splitCnt++;
-			subStr.clear();
+	int time = 0, dirN = 0, typeN = 0, lane = 0;
+	while (std::getline(iss, subStr, ',')) {
+		switch (splitCnt) {
+		case 0:
+			InputStringStream(subStr, time);
+			break;
+		case 1:
+			InputStringStream(subStr, dirN);
+			break;
+		case 2:
+			InputStringStream(subStr, typeN);
+			break;
+		case 3:
+			InputStringStream(subStr, lane);
+			break;
 		}
-		else {
-			subStr += s;
-		}
+		splitCnt++;
 	}
-	mNotesManager->CreateNotes(time, dirN, isH, lane);
+	mNotesManager->CreateNotes(time, dirN, typeN, lane);
 }
 
 void FManager::FMOD_Init() {
@@ -108,7 +95,8 @@ void FManager::FMOD_Init() {
 	re = system->playSound(sound, nullptr, false, &channel);
 	FMOD_Check(re);
 	std::cout << "[←]5秒戻る　[→]5秒進む　[space]止める\n";
-	std::cout << "[左クリック]フリックノーツ配置　[右クリックドラッグ]ホールドノーツ配置or消去\n";
+	std::cout << "[左クリック]フリックノーツ配置　[右クリックドラッグ]ホールドノーツ配置orノーツ消去\n";
+	std::cout << "[右クリックドラッグ & Enterキー]ラッシュノーツ配置orノーツ消去\n";
 }
 void FManager::FMOD_Check(FMOD_RESULT result) {
 	if (result != FMOD_OK) {

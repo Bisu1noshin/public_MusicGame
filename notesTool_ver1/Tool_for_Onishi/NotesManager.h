@@ -10,16 +10,19 @@ enum class Direction : short {
 enum class MouseOperation : short {
 	Non, LeftOn, RightOn, RightHold
 };
+enum class NotesType : short {
+	Flick, Hold, Rush
+};
 
 class Notes {
 public:
-	Notes(class NotesManager* owner_) : owner(owner_), time(0), dir(Direction::Non), isHold(false), lane(0) {}
+	Notes(class NotesManager* owner_) : owner(owner_), time(0), dir(Direction::Non), type(NotesType::Flick), lane(0) {}
 	~Notes();
 
 	NotesManager* owner;
 	int time; //判定が出現する時間　単位はノーツラインの本数
 	Direction dir; //入力の方向
-	bool isHold; //HOLDノーツか否か
+	NotesType type; //HOLDノーツか否か
 	int lane; //第1レーンか第2レーンか
 };
 class NotesManager : public Actor {
@@ -28,7 +31,7 @@ public:
 	~NotesManager();
 	void AddNotes(Notes* notes);
 	void RemoveNotes(Notes* notes);
-	void CreateNotes(int time_, int dirN, bool isH, int lane_);
+	void CreateNotes(int time_, int dirN, int typeN, int lane_);
 	void ClearNotes() { mNotes.clear(); }
 	const std::string CreateNotesStr();
 
@@ -49,7 +52,7 @@ private:
 
 
 	std::vector<Notes*> mNotes;
-	SpriteComponent* notes_img[8];
+	SpriteComponent* notes_img;
 	SpriteComponent* bpm_line;
 	SpriteComponent* red_box;
 	SpriteComponent* green_box;
@@ -61,6 +64,8 @@ private:
 	bool stopping;
 	MouseOperation mouse_button;
 	bool notes_erase;
+	bool enter_on;
+	bool rush_mode;
 
 	Rect selectingBox;
 
