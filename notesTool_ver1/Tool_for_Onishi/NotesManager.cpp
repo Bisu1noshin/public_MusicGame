@@ -3,7 +3,7 @@
 
 NotesManager::NotesManager(Game* game) 
 	: Actor(game), bpm(0), time(0), leftTime(0), length(0), stopping(false), 
-	lastInput(Direction::Top), selectingBox(), mouse_button(MouseOperation::Non), notes_erase(false)
+	lastInput(Direction::Top), selectingBox(), mouse_button(MouseOperation::Non), notes_erase(false), enter_on(false), rush_mode(false)
 	
 {
 	bpm_line = new SpriteComponent(this, 2);
@@ -12,25 +12,13 @@ NotesManager::NotesManager(Game* game)
 	green_box = new SpriteComponent(this, 1);
 	red_box->LoadTexture("./data/red_box.png");
 	green_box->LoadTexture("./data/green_box.png");
-	for (int i = 0; i < 8; ++i) {
-		notes_img[i] = new SpriteComponent(this, 4);
-	}
-	notes_img[0]->LoadTexture("./data/up.png");
-	notes_img[1]->LoadTexture("./data/right.png");
-	notes_img[2]->LoadTexture("./data/down.png");
-	notes_img[3]->LoadTexture("./data/left.png");
-	notes_img[4]->LoadTexture("./data/up_hold.png");
-	notes_img[5]->LoadTexture("./data/right_hold.png");
-	notes_img[6]->LoadTexture("./data/down_hold.png");
-	notes_img[7]->LoadTexture("./data/left_hold.png");
+	notes_img = new SpriteComponent(this, 4);
+	notes_img->LoadTexture("./data/notes_img.png");
 
 	DeleteAllNotes();
 }
 NotesManager::~NotesManager() {
-	delete bpm_line, red_box, green_box;
-	for (int i = 0; i < 8; ++i) {
-		delete notes_img[i];
-	}
+	delete bpm_line, red_box, green_box, notes_img;
 	while (!mNotes.empty()) {
 		delete mNotes.back();
 	}
@@ -57,11 +45,11 @@ void NotesManager::RemoveNotes(Notes* notes) {
 	}
 }
 
-void NotesManager::CreateNotes(int time_, int dirN, bool isH, int lane_) {
+void NotesManager::CreateNotes(int time_, int dirN, int typeN, int lane_) {
 	Notes* notes = new Notes(this);
 	notes->time = time_;
 	notes->dir = (Direction)dirN;
-	notes->isHold = isH;
+	notes->type = (NotesType)typeN;
 	notes->lane = lane_;
 	AddNotes(notes);
 }
@@ -71,7 +59,7 @@ const std::string NotesManager::CreateNotesStr() {
 	for (auto n : mNotes) { //各ノーツの情報を記録
 		std::stringstream ss;
 		std::string s;
-		ss << n->time << ','<< (int)n->dir << ',' << (n->isHold ? 1 : 0) << ',' << n->lane;
+		ss << n->time << ',' << (int)n->dir << ',' << (int)n->type << ',' << n->lane;
 		ss >> s;
 		str += s;
 		str += "\n";
@@ -84,13 +72,13 @@ void NotesManager::ActorInput(const InputState& kState) {
 	mousePos = kState.mouse.GetPosition();
 	Vector2 wheelPos = kState.mouse.GetScrollWheel();
 	if (mousePos.x <= NOTES_SIZE * 4 && mousePos.x >= -NOTES_SIZE * 4) {
-		if (kState.mouse.GetButtonState(SDL_BUTTON_RMASK) == Down) {
+		if (kState.mouse.GetButtonState(MouseCode::Right) == Down) {
 			mouse_button = MouseOperation::RightOn;
 		}
-		else if (kState.mouse.GetButtonState(SDL_BUTTON_RMASK) == On) {
+		else if (kState.mouse.GetButtonState(MouseCode::Right) == On) {
 			mouse_button = MouseOperation::RightHold;
 		}
-		else if (kState.mouse.GetButtonState(SDL_BUTTON_LMASK) == Down) {
+		else if (kState.mouse.GetButtonState(MouseCode::Left) == Down) {
 			mouse_button = MouseOperation::LeftOn;
 		}
 		else {
@@ -99,21 +87,28 @@ void NotesManager::ActorInput(const InputState& kState) {
 	}
 	
 	//入力方向を決める
-	if (kState.keyboard.GetKeyState(SDL_SCANCODE_W) == Down) {
+	if (kState.keyboard.GetKeyState(KeyCode::W) == Down) {
 		lastInput = Direction::Top;
 	}
-	if (kState.keyboard.GetKeyState(SDL_SCANCODE_A) == Down) {
+	if (kState.keyboard.GetKeyState(KeyCode::A) == Down) {
 		lastInput = Direction::Left;
 	}
-	if (kState.keyboard.GetKeyState(SDL_SCANCODE_S) == Down) {
+	if (kState.keyboard.GetKeyState(KeyCode::S) == Down) {
 		lastInput = Direction::Down;
 	}
-	if (kState.keyboard.GetKeyState(SDL_SCANCODE_D) == Down) {
+	if (kState.keyboard.GetKeyState(KeyCode::D) == Down) {
 		lastInput = Direction::Right;
 	}
 
-	if (kState.keyboard.GetKeyState(SDL_SCANCODE_P) == Down) {
+	if (kState.keyboard.GetKeyState(KeyCode::P) == Down) {
 		DeleteAllNotes();
+	}
+
+	if (kState.keyboard.GetKeyState(KeyCode::Enter) == On) {
+		enter_on = true;
+	}
+	else {
+		enter_on = false;
 	}
 }
 
@@ -147,14 +142,14 @@ void NotesManager::UpdateActor() {
 		int time = selectNotesNum;
 		int dir = (int)lastInput;
 		int lane = mousePos.x >= 0 ? 1 : 0;
-		bool isHold = false;
+		int type = 0;
 
 		auto it = std::find_if(mNotes.begin(), mNotes.end(), [time, lane](Notes* n) {return n->time == time && n->lane == lane; });
 		if (it != mNotes.end()) {
 			delete* it;
 		}
 		else {
-			CreateNotes(time, dir, isHold, lane);
+			CreateNotes(time, dir, type, lane);
 		}
 	}
 	if (mouse_button == MouseOperation::RightOn) {
@@ -166,13 +161,14 @@ void NotesManager::UpdateActor() {
 		}
 		else {
 			notes_erase = false;
+			rush_mode = enter_on;
 		}
 	}
 	if (mouse_button == MouseOperation::RightHold) {
 		int time = selectNotesNum;
 		int dir = (int)lastInput;
 		int lane = mousePos.x >= 0 ? 1 : 0;
-		bool isHold = true;
+		int type = 1;
 
 		auto it = std::find_if(mNotes.begin(), mNotes.end(), [time, lane](Notes* n) {return n->time == time && n->lane == lane; });
 		if (it != mNotes.end()) {
@@ -182,7 +178,12 @@ void NotesManager::UpdateActor() {
 		}
 		else {
 			if (!notes_erase) {
-				CreateNotes(time, dir, isHold, lane);
+				if (rush_mode) {
+					CreateNotes(time, -1, 2, lane);
+				}
+				else {
+					CreateNotes(time, dir, type, lane);
+				}
 			}
 		}
 	}
@@ -210,7 +211,10 @@ void NotesManager::Render2D() {
 	for (int i = 0; i < (int)past + AmountofNotes + 1; ++i) {
 		draw.Offset(0, NOTES_SIZE);
 		if (draw.y < -275) { continue; }
-		bpm_line->Draw(draw, src);
+		if (i % shosetsu_num == 0)
+			bpm_line->Draw(draw, src);
+		else 
+		bpm_line->Draw(draw, src, little_clear_color);
 
 		//back_inserterを使った処理に変更
 //		it = std::copy_if(mNotes.begin(), mNotes.end(), it, [i](Notes* n) { return n->time == i; });
@@ -220,8 +224,16 @@ void NotesManager::Render2D() {
 			Rect ns_(0, 0, 64, 64);
 			nd_.y += draw.y;
 			nd_.x += NOTES_SIZE * 4 * n->lane;
-			int v = (int)n->dir + (n->isHold ? 1 : 0) * 4;
-			notes_img[v]->Draw(nd_, ns_);
+			if (n->type == NotesType::Rush) {
+				ns_.Offset(0, 64 * 2);
+			}
+			else {
+				int offsetX = (int)n->dir * 64;
+				int offsetY = (int)n->type * 64;
+				ns_.x += offsetX;
+				ns_.y += offsetY;
+			}
+			notes_img->Draw(nd_, ns_);
 		}
 		currNotes.clear();
 	}

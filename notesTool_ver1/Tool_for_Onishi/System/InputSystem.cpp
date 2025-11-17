@@ -8,6 +8,9 @@
 bool KeyboardState::GetKeyValue(SDL_Scancode keyCode) const {
 	return mCurrState[keyCode];
 }
+bool KeyboardState::GetKeyValue(KeyCode code) const {
+	return mCurrState[(int)code];
+}
 ButtonState KeyboardState::GetKeyState(SDL_Scancode keyCode) const {
 	if (!mPrevState[keyCode]) {
 		if (!mCurrState[keyCode]) {
@@ -26,15 +29,56 @@ ButtonState KeyboardState::GetKeyState(SDL_Scancode keyCode) const {
 		}
 	}
 }
+ButtonState KeyboardState::GetKeyState(KeyCode code) const {
+	int kc = (int)code;
+	if (!mPrevState[kc]) {
+		if (!mCurrState[kc]) {
+			return Off;
+		}
+		else {
+			return Down;
+		}
+	}
+	else {
+		if (!mCurrState[kc]) {
+			return Up;
+		}
+		else {
+			return On;
+		}
+	}
+}
 
 
 bool MouseState::GetButtonValue(int button) const {
 	return SDL_BUTTON_MASK(button) != 0;
 }
+bool MouseState::GetButtonValue(MouseCode code) const {
+	return SDL_BUTTON_MASK((int)code) != 0;
+}
 
 ButtonState MouseState::GetButtonState(int button) const {
 	int mCurrOn = mCurrButtons & button;
 	int mPrevOn = mPrevButtons & button;
+
+	if (mCurrOn != 0) {
+		if (mPrevOn != 0) {
+			return On;
+		}
+		else {
+			return Down;
+		}
+	}
+	if (mPrevOn != 0) {
+		return Up;
+	}
+	else {
+		return Off;
+	}
+}
+ButtonState MouseState::GetButtonState(MouseCode code) const {
+	int mCurrOn = mCurrButtons & (int)code;
+	int mPrevOn = mPrevButtons & (int)code;
 
 	if (mCurrOn != 0) {
 		if (mPrevOn != 0) {

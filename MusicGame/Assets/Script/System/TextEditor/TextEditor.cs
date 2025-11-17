@@ -7,12 +7,12 @@ namespace TextEditor {
         where DataClass : class
     {
         // メンバー変数
-
+        static string NotesRootPath = default; //譜面全体を管理するフォルダのパス
         string filePath = default;
 
         // コンストラクタ
-        public TextEditor() {
-
+        public TextEditor(string path) {
+            filePath = path;
         }
 
         /// <summary>
@@ -25,7 +25,11 @@ namespace TextEditor {
             data = null;
             return; 
         }
-
+        public string GetFilePath(string musicName, string level)
+        {
+            string path = NotesRootPath + "/" + musicName + "/" + level + "_savedNotes.txt";
+            return path;
+        }
     }
 
 }
