@@ -6,6 +6,7 @@ public class FlickNotes : NotesParent
 {
     private const float perfectLenge = 0.033f;
     private const float goodLenge = 0.05f;
+    private bool isFirst;
 
     protected override void Initialize() {
 
@@ -16,6 +17,8 @@ public class FlickNotes : NotesParent
             AnsTrigger = PlayerState.Left;
             timeCnt = 0;
             BPM = 200;
+            score.SetScore(NotesScore.Miss);
+            isFirst = true;
         }
     }
 
@@ -24,18 +27,26 @@ public class FlickNotes : NotesParent
         if (state == Player.PlayerState.Idle) { return; }
         if (st.GetState() == NotesState.Ded) { return; }
 
-        if (state == AnsTrigger) {
+        if (state == AnsTrigger)
+        {
+            // perfectの処理
+            if (this.timeCnt <= perfectTime + perfectLenge && this.timeCnt >= perfectTime - perfectLenge)
+            {
+                score.SetScore(NotesScore.Perfect, 0);
+                st.ExecuteTriggerAction(NotesTrigger.DedTrigger);
+                return;
+            }
 
             // goodの処理
             if (this.timeCnt <= perfectTime + goodLenge && this.timeCnt >= perfectTime - goodLenge)
-                score.SetScore(NotesScore.Good);
-
-            // perfectの処理
-            if (this.timeCnt <= perfectTime + perfectLenge && this.timeCnt >= perfectTime - perfectLenge)
-                score.SetScore(NotesScore.Perfect);
+            {
+                score.SetScore(NotesScore.Good, 0);
+                st.ExecuteTriggerAction(NotesTrigger.DedTrigger);
+                return;
+            }   
         }
 
-        st.ExecuteTriggerAction(NotesTrigger.DedTrigger);
-        Debug.Log(this.timeCnt.ToString());
+        if (this.timeCnt >= perfectTime + goodLenge)
+            st.ExecuteTriggerAction(NotesTrigger.DedTrigger);
     }
 }

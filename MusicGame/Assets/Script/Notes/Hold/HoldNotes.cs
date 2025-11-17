@@ -1,84 +1,87 @@
-﻿using Notes;
-using Player;
-using Unity.VisualScripting;
+﻿using Player;
 using UnityEngine;
 
-public class HoldNotes : NotesParent
-{
-    private const float perfectLenge = 0.033f;
-    private const float goodLenge = 0.05f;
-    private int index;
-    private int max_index = 9;
+namespace Notes {
 
-    protected override void Initialize()
+    public class HoldNotes : NotesParent
     {
+        private const float perfectLenge = 0.033f;
+        private const float goodLenge = 0.05f;
+        private int index;
+        private int max_index = 9;
+        private bool isFirst;
 
-        // 変数の初期化
+        protected override void Initialize()
         {
-            score = new NotesScoreData(max_index);
-            side = NotesSide.Left;
-            AnsTrigger = PlayerState.Left;
-            timeCnt = 0;
-            BPM = 200;
-            index = 0; 
-        }
 
-        score.SetScore(NotesScore.Miss, index);
-    }
-
-    protected override void Update()
-    {
-        base.Update();
-
-
-    }
-
-    public override void ActiveNotes(Player.PlayerState state)
-    {
-        if (st.GetState() == NotesState.Ded) { return; }
-
-        // 時間の定義
-        float haku = 60.0f / BPM * 1000.0f / 2.0f;
-        float fromTime = perfectTime + haku * index;
-        float toTime = fromTime + haku;
-
-        // 始点の処理
-        if (state == AnsTrigger && index == 0)
-        {
-            // goodの処理
-            if (this.timeCnt <= fromTime + goodLenge && this.timeCnt >= fromTime - goodLenge)
-                score.SetScore(NotesScore.Good, index);
-
-            // perfectの処理
-            if (this.timeCnt <= fromTime + perfectLenge && this.timeCnt >= fromTime - perfectLenge)
-                score.SetScore(NotesScore.Perfect, index);
-        }
-
-        // 8分ごとの処理
-        if (this.timeCnt >= fromTime && this.timeCnt <= toTime) {
-
-            score.SetScore(NotesScore.Perfect, index);
-
-            if (state != AnsTrigger)
+            // 変数の初期化
             {
-                index++;
-                score.SetScore(NotesScore.Miss, index);
-                Debug.Log("miss");
+                score = new NotesScoreData(max_index);
+                side = NotesSide.Left;
+                AnsTrigger = PlayerState.Left;
+                timeCnt = 0;
+                BPM = 200;
+                index = 1;
+                score.SetScore(NotesScore.Miss, 0);
+                isFirst = true;
             }
         }
 
-        if (this.timeCnt >= toTime) { index++; Debug.Log("perfect"); }
+        public override void ActiveNotes(Player.PlayerState state)
+        {
+            if (st.GetState() == NotesState.Ded) { return; }
 
-        float DedTime = perfectTime + haku * max_index;
+            // 破壊処理
+            if (index >= max_index)
+            {
+                st.ExecuteTriggerAction(NotesTrigger.DedTrigger);
+                return;
+            }
 
-        // 破壊処理
-        if (this.timeCnt >= DedTime) {
+            // 時間の定義
+            float haku = 60.0f / BPM / 2.0f;
+            float fromTime = perfectTime + haku * (float)(index - 1);
+            float toTime = fromTime + haku;
 
-            st.ExecuteTriggerAction(NotesTrigger.DedTrigger);
+            // 始点の処理
+            if (isFirst)
+            {
+                if (state == AnsTrigger)
+                {
+                    // goodの処理
+                    if (this.timeCnt <= perfectTime + goodLenge && this.timeCnt >= perfectTime - goodLenge)
+                        score.SetScore(NotesScore.Good, 0);
+
+                    // perfectの処理
+                    if (this.timeCnt <= perfectTime + perfectLenge && this.timeCnt >= perfectTime - perfectLenge)
+                        score.SetScore(NotesScore.Perfect, 0);
+                }
+
+                if (this.timeCnt >= perfectTime + goodLenge)
+                    isFirst = false;
+            }
+
+
+            // 8分ごとの処理
+            if (this.timeCnt >= fromTime && this.timeCnt <= toTime)
+            {
+                if (state != AnsTrigger)
+                {
+                    score.SetScore(NotesScore.Miss, index);
+                    index++;
+                    return;
+                }
+            }
+
+            if (this.timeCnt >= toTime)
+            {
+                if (state == AnsTrigger)
+                {
+                    score.SetScore(NotesScore.Perfect, index);
+                }
+
+                index++;
+            }
         }
-    }
-
-    private void NotesUpDate() {
-
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Notes
 {
@@ -33,6 +34,7 @@ namespace Notes
         public void SetScore(NotesScore s_,int index = 0) {
 
             score[index] = s_;
+            Debug.Log(s_.ToString());
         }
 
         public int GetTotalScore() {

@@ -4,7 +4,7 @@ namespace Notes
 
     public class NotesActiveState : StateBase<NotesParent, NotesTrigger>
     {
-        private const float dedPos = -4.0f;
+        private const float dedPos = -100.0f;
 
         public NotesActiveState(NotesParent owner, IStateMachine<NotesTrigger> st) : base(owner, st)
         {

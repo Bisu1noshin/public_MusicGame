@@ -35,17 +35,21 @@ namespace Player
 
         public ReceiveInput input;
 
+        Notes.NotesParent notes;
+
         private void Start()
         {
             input = new ReceiveInput();
 
-            LeftState = PlayerState.Idle;
             RightState = PlayerState.Idle;
+
+            notes = null;
         }
 
         private void Update()
         {
-            
+            // ノーツの処理
+            notes?.ActiveNotes(LeftState);
         }
 
         protected override void OnButtonA() { }
@@ -69,7 +73,7 @@ namespace Player
 
             if (collision.gameObject.TryGetComponent<Notes.NotesParent>(out var n_)) {
 
-                n_.ActiveNotes(LeftState);
+                notes = n_;
             }
         }
 
