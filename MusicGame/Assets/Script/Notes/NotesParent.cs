@@ -22,17 +22,6 @@ namespace Notes {
     };
 
     /// <summary>
-    /// スコアを表すための列挙型
-    /// </summary>
-    public enum NotesScore {
-
-        None,
-        Good,
-        Perfect,
-        Miss
-    }
-
-    /// <summary>
     /// ノーツの左右を管理する
     /// </summary>
     public enum NotesSide {
@@ -49,13 +38,16 @@ namespace Notes {
         public float ActiveTime { get; protected set; }
 
         protected StateMachine<NotesState, NotesTrigger> st;
-        public NotesScore score;
+        public NotesScoreData score;
         protected NotesSide side;
         protected PlayerState AnsTrigger;
 
-        private const float fallSpeed = 5.0f;
+        private const float fallSpeed = 4.0f;
 
-        protected const float perfectPos = -3.0f;
+        protected const float perfectTime = 2.0f;
+        protected float BPM;
+
+        protected float timeCnt;
 
         protected void Awake()
         {
@@ -76,38 +68,36 @@ namespace Notes {
                 st.AddTransition(NotesState.Active, NotesState.Ded, NotesTrigger.DedTrigger);
             }
 
-            // 変数の初期化
-            {
-                score = NotesScore.Miss;
-                side = NotesSide.Left ;
-                AnsTrigger=PlayerState.Left ;
-            }
+            Initialize();
         }
 
-        protected virtual void Start() { }
+        protected virtual void Start() {
 
-        protected virtual void Update() {
+            
+        }
+
+        protected virtual void Update()
+        {
 
             // ステートマシンの更新
             st.Update(Time.deltaTime);
 
             // 落下処理
             transform.position += new Vector3(0, -1 * fallSpeed * Time.deltaTime, 0);
+
+            // 時間を加算
+            timeCnt += Time.deltaTime;
         }
 
         private void OnTriggerStay2D(Collider2D collision)
         {
             if (collision.gameObject.TryGetComponent<InGamePlayer>(out InGamePlayer p_))
             {
-
-                PlayerState state;
-                if (side == NotesSide.Left) { state = p_.LeftState; }
-                else { state = p_.RightState; }
-
-                ActiveNotes(state);
+                
             }
         }
 
-        protected abstract void ActiveNotes(PlayerState state);
+        public abstract void ActiveNotes(PlayerState state);
+        protected abstract void Initialize();
     }
 }

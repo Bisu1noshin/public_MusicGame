@@ -6,7 +6,7 @@ namespace Notes {
 
     public class NotesDedState : StateBase<NotesParent,NotesTrigger>
     {
-        private const float CangeState = -5.0f;
+        private const float CangeState = -100.0f;
 
         public NotesDedState(NotesParent owner, IStateMachine<NotesTrigger> st) : base(owner, st)
         {
@@ -15,7 +15,7 @@ namespace Notes {
 
         protected override void OnEnter()
         {
-            Debug.Log(owner.score.ToString());
+            Debug.Log(owner.score.GetTotalScore().ToString());
         }
 
         protected override void OnUpdate(float deltaTime)

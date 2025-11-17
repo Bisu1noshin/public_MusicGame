@@ -45,8 +45,7 @@ namespace Player
 
         private void Update()
         {
-            LeftState = InputAction(input.LeftVec);
-            RightState = InputAction(input.RightVec);
+            
         }
 
         protected override void OnButtonA() { }
@@ -59,20 +58,27 @@ namespace Player
         protected override void UpButtonY() { }
         protected override void MoveUpdate(Vector2 vec) {
 
-            input.LeftVec = vec;
+            LeftState = InputAction(vec);
         }
         protected override void LookUpdate(Vector2 vec) {
 
-            input.RightVec = vec;
+            RightState = InputAction(vec);
         }
 
+        private void OnTriggerStay2D(Collider2D collision) {
+
+            if (collision.gameObject.TryGetComponent<Notes.NotesParent>(out var n_)) {
+
+                n_.ActiveNotes(LeftState);
+            }
+        }
 
         private PlayerState InputAction(Vector3 vec) {
 
             PlayerState state = PlayerState.Idle;
 
-            if (vec.x >= 0.7) { state = PlayerState.Left; }
-            if (vec.x <= -0.7) { state = PlayerState.Right; }
+            if (vec.x >= 0.7) { state = PlayerState.Right; }
+            if (vec.x <= -0.7) { state = PlayerState.Left; }
             if (vec.y >= 0.7) { state = PlayerState.Up; }
             if (vec.y <= -0.7) { state = PlayerState.Down; }
 
