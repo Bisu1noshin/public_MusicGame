@@ -6,23 +6,41 @@ using System.IO;
 namespace Notes {
     public enum Direction
     {
-        Non = -1, Top, Right, Down, Left
+        Non = -1,
+        Top = 0,
+        Right = 1,
+        Down = 2,
+        Left = 3
+    }
+
+    public enum NotesKind
+    {
+        None,
+        Flick = 0,
+        Hold = 1,
+        Rush = 2
+    };
+
+    public enum NotesLane
+    {
+        None,
+        Left = 0,
+        Right = 1
     }
 
     // ノーツを召喚するための構造体
     public struct Notes
     {
-        public Notes(float time_, int dirN, bool isH, int lane_)
+        public Notes(int time_, int dirN, int kind)
         {
-            time = time_;
-            dir = (Direction)dirN;
-            isHold = isH;
-            lane = lane_;
+            this.time = time_;
+            this.dir = (Direction)dirN;
+            this.kind = (NotesKind)kind;
         }
-        float time;
+
+        int time;
         Direction dir;
-        bool isHold;
-        int lane;
+        NotesKind kind;
     }
 
     // 曲に対応したノーツのデータを保存するクラス
