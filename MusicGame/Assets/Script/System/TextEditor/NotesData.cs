@@ -51,11 +51,11 @@ namespace Notes {
 
         public int BPM { get; private set; }
 
-        public List<Notes> notes { get; private set; }
+        public List<Notes> notes { get; set; }
 
-        public NotesData() {
+        public NotesData(int bpm) {
 
-            BPM = 0;
+            BPM = bpm;
             notes = new List<Notes>();
         }
     }
