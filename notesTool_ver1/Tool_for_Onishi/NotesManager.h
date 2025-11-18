@@ -37,7 +37,7 @@ public:
 
 	//FManager‚©‚çŒÄ‚Ño‚·“¯Šú—pŠÖ”ŒQ
 	void SetTime(float time_) { time = time_; }
-	void SetBpm(int bpm_) { bpm = bpm_; }
+	void SetBpm(float bpm_) { bpm = bpm_; }
 	void SetLength(float length_) { length = length_; }
 	void SetStopping(bool s_) { stopping = s_; }
 
