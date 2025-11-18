@@ -15,7 +15,7 @@ namespace Notes {
 
     public enum NotesKind
     {
-        None,
+        None = -1,
         Flick = 0,
         Hold = 1,
         Rush = 2
@@ -29,7 +29,7 @@ namespace Notes {
     }
 
     // ノーツを召喚するための構造体
-    public struct Notes
+    public class Notes
     {
         public Notes(int time_, int dirN, int kind)
         {
@@ -38,9 +38,9 @@ namespace Notes {
             this.kind = (NotesKind)kind;
         }
 
-        int time;
-        Direction dir;
-        NotesKind kind;
+        public int time { get; private set; }
+        public Direction dir { get; private set; }
+        public NotesKind kind { get; private set; }
     }
 
     // 曲に対応したノーツのデータを保存するクラス

@@ -22,8 +22,9 @@ namespace TextEditor {
         public void GetData(DataClass data) {
 
             // 処理に失敗したらnull
-            data = null;
-            return; 
+            if (data == null) return;
+
+
         }
         public string GetFilePath(string musicName, string level)
         {
