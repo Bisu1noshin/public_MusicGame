@@ -4,26 +4,29 @@ namespace Notes {
 
     public class NotesGenerator : MonoBehaviour
     {
-        private NotesData notesData;
+        private NotesData[] notesData;
         private float timeCnt;
-        private int createIndex;
+        private int[] createIndex;
 
         // ノーツのプレファブ
-        private GameObject Flick;
-        private GameObject Hold;
-        private GameObject Rush;
+        private GameObject[] notes;
 
         private void Awake()
         {
-            // ノーツの読み込み
-            Flick = Resources.Load<GameObject>("");
-            Hold = Resources.Load<GameObject>("");
-            Rush = Resources.Load<GameObject>("");
-
             // 変数の初期化
             {
-                createIndex = 0;
+                createIndex = new int[2];
+                notesData = new NotesData[2];
+                notes = new GameObject[3];
+
+                timeCnt = 0;
+                
             }
+
+            // ノーツの読み込み
+            notes[0] = Resources.Load<GameObject>("");
+            notes[1] = Resources.Load<GameObject>("");
+            notes[2] = Resources.Load<GameObject>("");
         }
 
         private void Start()
