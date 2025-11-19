@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Ooo_Button : MonoBehaviour
+public class Ooo_GameChoice : MonoBehaviour
 {
 
     public void SoloClcik()
