@@ -5,13 +5,13 @@ using DG.Tweening;
 
 public class Onishi_ResultSceneManager : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI Txt_Score;             //スコア
-    [SerializeField] private TextMeshProUGUI Txt_PerfectCnt;        //パーフェクト数
-    [SerializeField] private TextMeshProUGUI Txt_GoodCnt;           //グッド数
-    [SerializeField] private TextMeshProUGUI Txt_MissCnt;           //ミス数
+    [SerializeField] private Text Txt_Score;                        //レガシーテキスト版スコア
+    [SerializeField] private TMP_Text Txt_PerfectCnt;               //パーフェクト数
+    [SerializeField] private TMP_Text Txt_GoodCnt;                  //グッド数
+    [SerializeField] private TMP_Text Txt_MissCnt;                  //ミス数
     [SerializeField] private GameObject Img_ClearLamp;              //クリアランプ
     [SerializeField] private RawImage Img_MusicJacket;              //楽曲のジャケット
-    [SerializeField] private TextMeshProUGUI Txt_MusicName;         //楽曲名
+    [SerializeField] private TMP_Text Txt_MusicName;                //楽曲名
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -23,11 +23,23 @@ public class Onishi_ResultSceneManager : MonoBehaviour
         int goodCnt = 10;
         int missCnt = 0;
 
-        //スコア、判定数の表示変更
-        Txt_PerfectCnt.text = score.ToString();
-        Txt_PerfectCnt.text = perfectCnt.ToString();
-        Txt_GoodCnt.text = goodCnt.ToString();
-        Txt_MissCnt.text = missCnt.ToString();
+        //スコア、判定数の表示
+        {
+            Txt_Score.DOCounter(0, score, 0.5f, false);
+            Txt_PerfectCnt.text = "Perfect:" + perfectCnt.ToString().PadLeft(4, ' ');
+            Txt_GoodCnt.text = "Good:" + goodCnt.ToString().PadLeft(4, ' ');
+            Txt_MissCnt.text = "Miss:" + missCnt.ToString().PadLeft(4, ' ');
+        }
+
+        //判定数のテキストをフェードインさせる
+        { 
+            Txt_PerfectCnt.transform.DOLocalMoveX(-380f, 1f).SetDelay(0.5f);
+            Txt_PerfectCnt.DOFade(1f, 1f).SetDelay(0.5f);
+            Txt_GoodCnt.transform.DOLocalMoveX(-380f, 1f).SetDelay(0.5f);
+            Txt_GoodCnt.DOFade(1f, 1f).SetDelay(0.5f);
+            Txt_MissCnt.transform.DOLocalMoveX(-380f, 1f).SetDelay(0.5f);
+            Txt_MissCnt.DOFade(1f, 1f).SetDelay(0.5f);
+        }
 
         //FC/APの画像変更
         //メソッドは完成、仮画像を使用-2025/11/11
