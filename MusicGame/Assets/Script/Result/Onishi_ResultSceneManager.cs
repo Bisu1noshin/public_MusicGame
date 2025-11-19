@@ -25,20 +25,20 @@ public class Onishi_ResultSceneManager : MonoBehaviour
 
         //スコア、判定数の表示
         {
-            Txt_Score.DOCounter(0, score, 0.5f, false);
+            Txt_Score.DOCounter(0, score, 1f, false).SetEase(Ease.OutExpo);
             Txt_PerfectCnt.text = "Perfect:" + perfectCnt.ToString().PadLeft(4, ' ');
             Txt_GoodCnt.text = "Good:" + goodCnt.ToString().PadLeft(4, ' ');
             Txt_MissCnt.text = "Miss:" + missCnt.ToString().PadLeft(4, ' ');
         }
 
         //判定数のテキストをフェードインさせる
-        { 
-            Txt_PerfectCnt.transform.DOLocalMoveX(-380f, 1f).SetDelay(0.5f);
-            Txt_PerfectCnt.DOFade(1f, 1f).SetDelay(0.5f);
-            Txt_GoodCnt.transform.DOLocalMoveX(-380f, 1f).SetDelay(0.5f);
-            Txt_GoodCnt.DOFade(1f, 1f).SetDelay(0.5f);
-            Txt_MissCnt.transform.DOLocalMoveX(-380f, 1f).SetDelay(0.5f);
-            Txt_MissCnt.DOFade(1f, 1f).SetDelay(0.5f);
+        {
+            Txt_PerfectCnt.transform.DOLocalMoveX(-380f, 1f).SetEase(Ease.InOutQuart).SetDelay(1f);
+            Txt_PerfectCnt.DOFade(1f, 1f).SetEase(Ease.InOutQuart).SetDelay(1f);
+            Txt_GoodCnt.transform.DOLocalMoveX(-380f, 1f).SetEase(Ease.InOutQuart).SetDelay(1.5f);
+            Txt_GoodCnt.DOFade(1f, 1f).SetEase(Ease.InOutQuart).SetDelay(1.5f);
+            Txt_MissCnt.transform.DOLocalMoveX(-380f, 1f).SetEase(Ease.InOutQuart).SetDelay(2f);
+            Txt_MissCnt.DOFade(1f, 1f).SetEase(Ease.InOutQuart).SetDelay(2f);
         }
 
         //FC/APの画像変更
