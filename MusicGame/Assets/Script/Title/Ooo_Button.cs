@@ -12,4 +12,9 @@ public class Ooo_Button : MonoBehaviour
     {
         Debug.Log("Online play 実行");
     }
+
+    public void Setting()
+    {
+
+    }
 }
