@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Ooo_Button : MonoBehaviour
+public class Ooo_GameChoice : MonoBehaviour
 {
 
     public void SoloClcik()
@@ -11,5 +11,10 @@ public class Ooo_Button : MonoBehaviour
     public void OnlineClick()
     {
         Debug.Log("Online play 実行");
+    }
+
+    public void Setting()
+    {
+
     }
 }
