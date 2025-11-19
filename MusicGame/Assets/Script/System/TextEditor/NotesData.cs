@@ -7,25 +7,25 @@ namespace Notes {
     public enum Direction
     {
         Non = -1,
-        Top = 0,
-        Right = 1,
-        Down = 2,
-        Left = 3
+        Top,
+        Right,
+        Down,
+        Left
     }
 
     public enum NotesKind
     {
         None = -1,
-        Flick = 0,
-        Hold = 1,
-        Rush = 2
+        Flick,
+        Hold,
+        Rush
     };
 
     public enum NotesLane
     {
-        None,
-        Left = 0,
-        Right = 1
+        None = -1,
+        Left,
+        Right
     }
 
     // ノーツを召喚するための構造体
@@ -44,7 +44,7 @@ namespace Notes {
     }
 
     // 曲に対応したノーツのデータを保存するクラス
-    public class NotesData
+    public class NotesData : INotesListEditor
     {
 
         // メンバー変数
@@ -58,6 +58,24 @@ namespace Notes {
             BPM = bpm;
             notes = new List<Notes>();
         }
+        public void AddList(List<Notes> list) {
+            notes.AddRange(list);
+        }
+        public void AddNotes(Notes notes_)
+        {
+            notes.Add(notes_);
+        }
+        public void DeleteAllNotes()
+        {
+            notes.Clear();
+        }
+    }
+
+    public interface INotesListEditor
+    {
+        void AddNotes(Notes notes_);
+        void AddList(List<Notes> list);
+        void DeleteAllNotes();
     }
 }
 
