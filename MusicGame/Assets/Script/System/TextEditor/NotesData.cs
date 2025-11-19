@@ -44,38 +44,33 @@ namespace Notes {
     }
 
     // 曲に対応したノーツのデータを保存するクラス
-    public class NotesData : INotesListEditor
+    public class NotesData
     {
 
         // メンバー変数
 
         public int BPM { get; private set; }
 
-        public List<Notes> notes { get; set; }
+        public List<Notes>[] notes { get; set; }
 
-        public NotesData(int bpm) {
+        public NotesData(int bpm = 0)
+        {
 
             BPM = bpm;
-            notes = new List<Notes>();
-        }
-        public void AddList(List<Notes> list) {
-            notes.AddRange(list);
-        }
-        public void AddNotes(Notes notes_)
-        {
-            notes.Add(notes_);
-        }
-        public void DeleteAllNotes()
-        {
-            notes.Clear();
+            notes = new List<Notes>[2];
+
+            for (int i = 0; i < notes.Length; i++) {
+
+                notes[i] = new List<Notes>();
+            }
         }
     }
 
-    public interface INotesListEditor
-    {
-        void AddNotes(Notes notes_);
-        void AddList(List<Notes> list);
-        void DeleteAllNotes();
-    }
+    //public interface INotesListEditor
+    //{
+    //    void AddNotes(Notes notes_);
+    //    void AddList(List<Notes> list);
+    //    void DeleteAllNotes();
+    //}
 }
 
