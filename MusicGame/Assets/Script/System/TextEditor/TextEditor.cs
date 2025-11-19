@@ -36,8 +36,10 @@ namespace TextEditor {
         //    {
         //        if (textCnt == 1)
         //        {
+        //            //bpm読み取り　変数への代入は後々
         //            int bpm_ = int.Parse(str);
         //        }
+        //        //2行目以降はノーツ情報を読み取って生成
         //        if (textCnt > 1)
         //        {
         //            string[] notesInfo = str.Split(",");
@@ -92,8 +94,10 @@ namespace TextEditor {
 
             TextAsset textFile;
 
+            //Dataは複数形ないよ
             List<string[]> textDatas = new List<string[]>();
 
+            //NotesRootPathは飽くまでも親フォルダのパスとして設計したので、この場合はmusicFilePathが適切かなと
             textFile = Resources.Load(NotesRootPath) as TextAsset;
 
             int height = 0;
