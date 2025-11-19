@@ -41,6 +41,7 @@ namespace Notes {
             TextEditor.TextEditor text = new(m_path, n_path);
             notesData = text.NotesReadTxt();
 
+            // ノーツの最大値の定義
             for (int i = 0; i < createIndex_max.Length; i++)
             {
                 createIndex_max[i] = notesData.notes[i].Count;
@@ -73,6 +74,7 @@ namespace Notes {
             float hakuTime = 60.0f / (float)notesData.BPM;
             float CreateTime = hakuTime * (float)n_.time;
 
+            // 生成時間になったら生成してカウントを増やす
             if (CreateTime <= timeCnt) {
 
                 GameObject go = notes[(int)n_.kind];
