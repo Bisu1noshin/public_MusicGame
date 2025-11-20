@@ -1,10 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.UIElements;
 
 namespace Notes {
 
     public class NotesGenerator : MonoBehaviour
     {
+        [SerializeField] private Vector3[] NotesPosition = new Vector3[2];
+
+        private Quaternion[] rotate = new Quaternion[4];
+
         private NotesData notesData;
         private float timeCnt;
         private int[] createIndex;
@@ -30,6 +35,11 @@ namespace Notes {
                 notes = new GameObject[3];
 
                 timeCnt = 0;
+
+                for (int i = 0; i < rotate.Length; i++)
+                {
+                    rotate[i] = new Quaternion(0, 0, 90 * i, 0);
+                }
             }
 
             // ノーツオブジェクトの読み込み
@@ -64,12 +74,12 @@ namespace Notes {
                 if (createIndex[i] >= createIndex_max[i]) { return; }
 
                 Notes n = notesData.notes[i][createIndex[i]];
-                createIndex[i] += CreateNotes(n);
+                createIndex[i] += CreateNotes(n, i);
             }
             
         }
 
-        private int CreateNotes(Notes n_) {
+        private int CreateNotes(Notes n_,int lane) {
 
             float hakuTime = 60.0f / (float)notesData.BPM;
             float CreateTime = hakuTime * (float)n_.time;
@@ -78,9 +88,7 @@ namespace Notes {
             if (CreateTime <= timeCnt) {
 
                 GameObject go = notes[(int)n_.kind];
-                Instantiate(go);
-
-                Debug.Log(CreateTime.ToString());
+                Instantiate(go, NotesPosition[lane], rotate[(int)n_.dir]);
 
                 return 1;
             }
