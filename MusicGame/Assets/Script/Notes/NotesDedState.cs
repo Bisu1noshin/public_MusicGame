@@ -4,11 +4,11 @@ using UnityEngine.SocialPlatforms.Impl;
 
 namespace Notes {
 
-    public class NotesDedState : StateBase<NotesParent,NotesTrigger>
+    public class NotesDedState : StateBase<NotesObject,NotesTrigger>
     {
         private const float CangeState = -100.0f;
 
-        public NotesDedState(NotesParent owner, IStateMachine<NotesTrigger> st) : base(owner, st)
+        public NotesDedState(NotesObject owner, IStateMachine<NotesTrigger> st) : base(owner, st)
         {
 
         }

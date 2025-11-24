@@ -35,7 +35,7 @@ namespace Player
 
         public ReceiveInput input;
 
-        Notes.NotesParent[] notes = new Notes.NotesParent[2];
+        Notes.NotesObject[] notes = new Notes.NotesObject[2];
 
         private void Start()
         {
@@ -50,8 +50,8 @@ namespace Player
         private void Update()
         {
             // ノーツの処理
-            notes[0]?.ActiveNotes(LeftState);
-            notes[1]?.ActiveNotes(RightState);
+            notes[0]?.NotesActoin.Invoke(LeftState);
+            notes[1]?.NotesActoin.Invoke(RightState);
         }
 
         protected override void OnButtonA() { }
@@ -71,12 +71,12 @@ namespace Player
             RightState = InputAction(vec);
         }
 
-        private void OnTriggerStay2D(Collider2D collision) {
+        private void OnTriggerEnter2D(Collider2D collision) {
 
             int lane = 1;
             if (collision.gameObject.transform.position.x > 0) { lane = 0; }
 
-            if (collision.gameObject.TryGetComponent<Notes.NotesParent>(out var n_))
+            if (collision.gameObject.TryGetComponent<Notes.NotesObject>(out var n_))
             {
                 notes[lane] = n_;
             }
