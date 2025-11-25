@@ -4,11 +4,11 @@ namespace Notes {
 
     public class NotesGenerator 
     {
-        public static NotesObject CreateNotes(NotesObject obj, Notes notes)
+        public static GameObject CreateNotes(GameObject obj, Notes notes)
         {
             GameObject go = null;
 
-            return obj;
+            return go;
         }
     }
 }

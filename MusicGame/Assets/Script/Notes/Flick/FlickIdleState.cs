@@ -29,7 +29,7 @@ namespace Notes
         protected override void OnUpdate(float deltaTime)
         {
             // 判定の時間外処理に遷移
-            if (owner.timeCnt <= perfectTime + goodLenge)
+            if (owner.timeCnt >= perfectTime + goodLenge)
             {
                 stateMachine.ExecuteTriggerAction(NotesTrigger.ActiveTrigger);
             }

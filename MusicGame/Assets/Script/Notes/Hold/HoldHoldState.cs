@@ -35,14 +35,14 @@ namespace Notes
             this.timeCnt += deltaTime;
 
             // 一拍ホールドされていたらスコアを増やす
-            if (clapTime >= isHoldTime)
+            if (clapTime <= isHoldTime)
             {
                 holdCnt++;
                 owner.score.SetScore(NotesScore.Perfect, holdCnt);
             }
 
             // 一拍たったら遷移
-            if (clapTime >= this.timeCnt)
+            if (clapTime <= this.timeCnt)
             {
                 stateMachine.ExecuteTriggerAction(NotesTrigger.ActiveTrigger);
             }

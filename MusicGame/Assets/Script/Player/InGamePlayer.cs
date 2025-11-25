@@ -50,8 +50,8 @@ namespace Player
         private void Update()
         {
             // ノーツの処理
-            notes[0]?.NotesActoin.Invoke(LeftState);
-            notes[1]?.NotesActoin.Invoke(RightState);
+            notes[0]?.NotesActoin?.Invoke(LeftState);
+            notes[1]?.NotesActoin?.Invoke(RightState);
         }
 
         protected override void OnButtonA() { }
