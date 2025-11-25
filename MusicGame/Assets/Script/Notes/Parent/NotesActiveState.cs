@@ -2,9 +2,8 @@
 namespace Notes
 {
 
-    public class NotesActiveState : StateBase<NotesObject, NotesTrigger>
+    public abstract class NotesActiveState : StateBase<NotesObject, NotesTrigger>
     {
-        private const float dedPos = -100.0f;
 
         public NotesActiveState(NotesObject owner, IStateMachine<NotesTrigger> st) : base(owner, st)
         {
@@ -18,8 +17,7 @@ namespace Notes
 
         protected override void OnUpdate(float deltaTime)
         {
-            if (owner.transform.position.y <= dedPos)
-                stateMachine.ExecuteTriggerAction(NotesTrigger.DedTrigger);
+            // pass
         }
 
         protected override void OnExit()

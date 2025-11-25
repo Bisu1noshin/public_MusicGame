@@ -1,17 +1,19 @@
 ﻿using Player;
 using System;
-using UnityEngine.SocialPlatforms.Impl;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace Notes
 {
-    public class FlickIdleState : NotesIdleState
+    public class RushIdleNotes : NotesIdleState
     {
         private const float perfectLenge = 0.033f;
         private const float goodLenge = 0.05f;
 
         private const float perfectTime = 2.0f;
 
-        public FlickIdleState(NotesObject owner, IStateMachine<NotesTrigger> st) : base(owner, st)
+        public RushIdleNotes(NotesObject owner, IStateMachine<NotesTrigger> st) : base(owner, st)
         {
 
         }
@@ -31,7 +33,7 @@ namespace Notes
             // 判定の時間外処理に遷移
             if (owner.timeCnt <= perfectTime + goodLenge)
             {
-                stateMachine.ExecuteTriggerAction(NotesTrigger.ActiveTrigger);
+                stateMachine.ExecuteTriggerAction(NotesTrigger.HoldTrigger);
             }
         }
 
@@ -45,7 +47,7 @@ namespace Notes
                 if (owner.timeCnt <= perfectTime + perfectLenge && owner.timeCnt >= perfectTime - perfectLenge)
                 {
                     owner.score.SetScore(NotesScore.Perfect, 0);
-                    stateMachine.ExecuteTriggerAction(NotesTrigger.ActiveTrigger);
+                    stateMachine.ExecuteTriggerAction(NotesTrigger.HoldTrigger);
                     return;
                 }
 
@@ -53,13 +55,13 @@ namespace Notes
                 if (owner.timeCnt <= perfectTime + goodLenge && owner.timeCnt >= perfectTime - goodLenge)
                 {
                     owner.score.SetScore(NotesScore.Good, 0);
-                    stateMachine.ExecuteTriggerAction(NotesTrigger.ActiveTrigger);
+                    stateMachine.ExecuteTriggerAction(NotesTrigger.HoldTrigger);
                     return;
                 }
             }
 
             if (owner.timeCnt >= perfectTime + goodLenge)
-                stateMachine.ExecuteTriggerAction(NotesTrigger.ActiveTrigger);
+                stateMachine.ExecuteTriggerAction(NotesTrigger.HoldTrigger);
         }
     }
 }
