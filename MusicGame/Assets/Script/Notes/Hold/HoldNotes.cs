@@ -13,6 +13,11 @@ namespace Notes {
 
         protected override void Initialize()
         {
+            // ステートマシーンの初期化
+            st.SetupState(NotesState.Idle, new HoldIdleState(this, st));
+            st.SetupState(NotesState.Hold, new HoldHoldState(this, st));
+            st.SetupState(NotesState.Active, new HoldActiveState(this, st));
+            st.SetupState(NotesState.Ded, new HoldDedState(this, st));
 
             // 変数の初期化
             {

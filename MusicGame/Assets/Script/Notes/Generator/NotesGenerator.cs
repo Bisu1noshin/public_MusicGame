@@ -4,7 +4,7 @@ namespace Notes {
 
     public class NotesGenerator 
     {
-        public static NotesObject CreateNotes(NotesObject obj, Notes notes, Vector3 pos, Quaternion quat)
+        public static NotesObject CreateNotes(NotesObject obj, Notes notes)
         {
             GameObject go = null;
 
