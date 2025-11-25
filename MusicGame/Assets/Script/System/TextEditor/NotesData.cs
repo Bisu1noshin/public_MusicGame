@@ -3,7 +3,8 @@ using System.Linq;
 using System.Collections.Generic;
 using System.IO;
 
-namespace Notes {
+namespace Notes
+{
     public enum Direction
     {
         Non = -1,
@@ -31,7 +32,7 @@ namespace Notes {
     // ノーツを召喚するための構造体
     public class Notes
     {
-        public Notes(int time_, int dirN, int kind,int lenge = 0)
+        public Notes(int time_, int dirN, int kind, int lenge = 0)
         {
             this.time = time_;
             this.dir = (Direction)dirN;
@@ -47,7 +48,7 @@ namespace Notes {
 
         public NotesKind kind { get; private set; }
 
-        public int lenge { get; private set; } 
+        public int lenge { get; private set; }
     }
 
     // 曲に対応したノーツのデータを保存するクラス
@@ -65,11 +66,11 @@ namespace Notes {
             BPM = bpm;
             notes = new List<Notes>[2];
 
-            for (int i = 0; i < notes.Length; i++) {
+            for (int i = 0; i < notes.Length; i++)
+            {
 
                 notes[i] = new List<Notes>();
             }
         }
     }
 }
-
