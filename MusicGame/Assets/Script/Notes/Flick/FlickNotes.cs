@@ -2,7 +2,7 @@
 using Player;
 using UnityEngine;
 
-public class FlickNotes : NotesParent
+public class FlickNotes : NotesObject
 {
     private const float perfectLenge = 0.033f;
     private const float goodLenge = 0.05f;
@@ -10,13 +10,19 @@ public class FlickNotes : NotesParent
 
     protected override void Initialize() {
 
+        // ステートマシーンの初期化
+        st.SetupState(NotesState.Idle, new FlickIdleState(this, st));
+        st.SetupState(NotesState.Active, new FlickActiveState(this, st));
+        st.SetupState(NotesState.Ded, new FlickDedState(this, st));
+
+
         // 変数の初期化
         {
             score = new NotesScoreData();
             side = NotesSide.Left;
-            AnsTrigger = PlayerState.Left;
-            timeCnt = 0;
-            BPM = 200;
+            //AnsTrigger = PlayerState.Left;
+            //timeCnt = 0;
+            //BPM = 200;
             score.SetScore(NotesScore.Miss);
             isFirst = true;
         }

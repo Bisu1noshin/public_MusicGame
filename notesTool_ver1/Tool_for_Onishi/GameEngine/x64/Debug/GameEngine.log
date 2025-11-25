@@ -1,0 +1,30 @@
+﻿  Fmanager.cpp
+  Font.cpp
+C:\UnityProject\public_MusicGame\notesTool_ver1\Tool_for_Onishi\Font.cpp(9,51): warning C4244: '引数': '_Ty' から 'float' への変換です。データが失われる可能性があります。
+C:\UnityProject\public_MusicGame\notesTool_ver1\Tool_for_Onishi\Font.cpp(9,51): warning C4244:         with
+C:\UnityProject\public_MusicGame\notesTool_ver1\Tool_for_Onishi\Font.cpp(9,51): warning C4244:         [
+C:\UnityProject\public_MusicGame\notesTool_ver1\Tool_for_Onishi\Font.cpp(9,51): warning C4244:             _Ty=int
+C:\UnityProject\public_MusicGame\notesTool_ver1\Tool_for_Onishi\Font.cpp(9,51): warning C4244:         ]
+  main.cpp
+  NotesManager.cpp
+  Actor.cpp
+  Component.cpp
+  Coordinate.cpp
+  DynamicVertexArray.cpp
+  Game.cpp
+  InputSystem.cpp
+  Shader.cpp
+  Texture.cpp
+  VertexArray.cpp
+  UIScreen.cpp
+  コードを生成中...
+  GameEngine.vcxproj -> C:\UnityProject\public_MusicGame\notesTool_ver1\Tool_for_Onishi\x64\Debug\GameEngine.exe
+  C:\UnityProject\public_MusicGame\notesTool_ver1\Tool_for_Onishi\External\SDL3-3.2.14\lib\x64\SDL3.dll
+  C:\UnityProject\public_MusicGame\notesTool_ver1\Tool_for_Onishi\External\SDL3-3.2.14\lib\x64\SDL3_image.dll
+  C:\UnityProject\public_MusicGame\notesTool_ver1\Tool_for_Onishi\External\SDL3-3.2.14\lib\x64\SDL3_ttf.dll
+  3 個のファイルをコピーしました
+  C:\UnityProject\public_MusicGame\notesTool_ver1\Tool_for_Onishi\External\glew-2.2.0\lib\x64\glew32.dll
+  1 個のファイルをコピーしました
+  C:\UnityProject\public_MusicGame\notesTool_ver1\Tool_for_Onishi\External\FMOD Studio API Windows\api\core\lib\x64\fmod.dll
+  C:\UnityProject\public_MusicGame\notesTool_ver1\Tool_for_Onishi\External\FMOD Studio API Windows\api\core\lib\x64\fmodL.dll
+  2 個のファイルをコピーしました

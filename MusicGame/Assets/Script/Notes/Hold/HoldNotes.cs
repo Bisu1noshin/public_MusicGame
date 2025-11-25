@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Notes {
 
-    public class HoldNotes : NotesParent
+    public class HoldNotes : NotesObject
     {
         private const float perfectLenge = 0.033f;
         private const float goodLenge = 0.05f;
@@ -18,9 +18,9 @@ namespace Notes {
             {
                 score = new NotesScoreData(max_index);
                 side = NotesSide.Left;
-                AnsTrigger = PlayerState.Left;
-                timeCnt = 0;
-                BPM = 200;
+                //AnsTrigger = PlayerState.Left;
+                //timeCnt = 0;
+                //BPM = 200;
                 index = 1;
                 score.SetScore(NotesScore.Miss, 0);
                 isFirst = true;
