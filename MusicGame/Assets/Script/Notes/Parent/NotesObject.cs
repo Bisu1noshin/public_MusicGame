@@ -99,14 +99,6 @@ namespace Notes {
             timeCnt += Time.deltaTime;
         }
 
-        private void OnTriggerStay2D(Collider2D collision)
-        {
-            if (collision.gameObject.TryGetComponent<InGamePlayer>(out InGamePlayer p_))
-            {
-                
-            }
-        }
-
         protected abstract void Initialize();
 
         public abstract void ActiveNotes(PlayerState state);
