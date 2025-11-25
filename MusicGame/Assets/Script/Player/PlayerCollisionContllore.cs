@@ -10,7 +10,7 @@ namespace Player
 {
     public class PlayerCollisionContllore: MonoBehaviour
     {
-        Notes.NotesParent notes;
+        Notes.NotesObject notes;
 
         private void Update()
         {
@@ -19,7 +19,7 @@ namespace Player
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.gameObject.TryGetComponent<NotesParent>(out var c_)) {
+            if (collision.gameObject.TryGetComponent<NotesObject>(out var c_)) {
 
                 notes = c_;
             }

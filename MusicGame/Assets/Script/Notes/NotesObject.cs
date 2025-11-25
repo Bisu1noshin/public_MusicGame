@@ -1,5 +1,5 @@
 ﻿using Player;
-using Unity.VisualScripting;
+using System;
 using UnityEngine;
 
 namespace Notes {
@@ -8,15 +8,18 @@ namespace Notes {
     public enum NotesState {
 
         None,
-        Fall,
-        Active,
-        Ded
+        Idle,   // 基本の状態、この時入力を受け付ける
+        Hold,   // 入力後に呼ばれる、Flickノーツは使わない
+        Active, // 判定後に向かう処理、エフェクト等々
+        Ded　   // 破壊されるまでの間の処理を行う、スコアの加算等々
     };
 
     // ステートを変更するトリガー
     public enum NotesTrigger {
 
+        None,
         FallTrigger,
+        HoldTrigger,
         ActiveTrigger,
         DedTrigger,
     };
@@ -31,40 +34,48 @@ namespace Notes {
         Right,
     }
 
-    public abstract class NotesParent : MonoBehaviour {
+    public abstract class NotesObject : MonoBehaviour {
 
         // メンバー変数
 
         public float ActiveTime { get; protected set; }
+        
+        public NotesScoreData score { get; protected set; }
+        
+        public PlayerState AnsTrigger { get; private set; }
 
-        protected StateMachine<NotesState, NotesTrigger> st;
-        public NotesScoreData score;
-        protected NotesSide side;
-        protected PlayerState AnsTrigger;
+        public float BPM { get; private set; }
+
+        public float timeCnt { get; private set; }
+
+        public int Max_holdCnt { get; private set; }
+
 
         private const float fallSpeed = 4.0f;
 
-        protected const float perfectTime = 2.0f;
-        protected float BPM;
+        public const float perfectTime = 2.0f;
+        protected NotesSide side;
+        protected StateMachine<NotesState, NotesTrigger> st;
 
-        protected float timeCnt;
+        // イベントアクションのデリゲート
+        public Action<PlayerState> NotesActoin;
 
         protected void Awake()
         {
             // ステートマシンの初期化
             {
-                st = new StateMachine<NotesState, NotesTrigger>(NotesState.Fall);
+                st = new StateMachine<NotesState, NotesTrigger>(NotesState.Idle);
 
                 // デリゲートの登録
 
-                st.SetupState(NotesState.Fall, new NotesFallState(this, st));
-                st.SetupState(NotesState.Active, new NotesActiveState(this, st));
-                st.SetupState(NotesState.Ded, new NotesDedState(this, st));
+                //st.SetupState(NotesState.Idle, new NotesIdleState(this, st));
+                //st.SetupState(NotesState.Active, new NotesActiveState(this, st));
+                //st.SetupState(NotesState.Ded, new NotesDedState(this, st));
 
                 // 遷移条件の登録
 
-                st.AddTransition(NotesState.Fall, NotesState.Active, NotesTrigger.ActiveTrigger);
-                st.AddTransition(NotesState.Fall, NotesState.Ded, NotesTrigger.DedTrigger);
+                st.AddTransition(NotesState.Idle, NotesState.Active, NotesTrigger.ActiveTrigger);
+                st.AddTransition(NotesState.Idle, NotesState.Ded, NotesTrigger.DedTrigger);
                 st.AddTransition(NotesState.Active, NotesState.Ded, NotesTrigger.DedTrigger);
             }
 
@@ -97,7 +108,8 @@ namespace Notes {
             }
         }
 
-        public abstract void ActiveNotes(PlayerState state);
         protected abstract void Initialize();
+
+        public abstract void ActiveNotes(PlayerState state);
     }
 }

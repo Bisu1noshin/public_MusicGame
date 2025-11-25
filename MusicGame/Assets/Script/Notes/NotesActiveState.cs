@@ -2,11 +2,11 @@
 namespace Notes
 {
 
-    public class NotesActiveState : StateBase<NotesParent, NotesTrigger>
+    public class NotesActiveState : StateBase<NotesObject, NotesTrigger>
     {
         private const float dedPos = -100.0f;
 
-        public NotesActiveState(NotesParent owner, IStateMachine<NotesTrigger> st) : base(owner, st)
+        public NotesActiveState(NotesObject owner, IStateMachine<NotesTrigger> st) : base(owner, st)
         {
 
         }
