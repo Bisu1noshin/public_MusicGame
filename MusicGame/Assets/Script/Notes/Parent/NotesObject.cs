@@ -67,15 +67,14 @@ namespace Notes {
                 st = new StateMachine<NotesState, NotesTrigger>(NotesState.Idle);
 
                 // デリゲートの登録
-
-                //st.SetupState(NotesState.Idle, new NotesIdleState(this, st));
-                //st.SetupState(NotesState.Active, new NotesActiveState(this, st));
-                //st.SetupState(NotesState.Ded, new NotesDedState(this, st));
+                // 各子クラスで行う、忘れないように
 
                 // 遷移条件の登録
 
                 st.AddTransition(NotesState.Idle, NotesState.Active, NotesTrigger.ActiveTrigger);
-                st.AddTransition(NotesState.Idle, NotesState.Ded, NotesTrigger.DedTrigger);
+                st.AddTransition(NotesState.Idle, NotesState.Hold, NotesTrigger.HoldTrigger);
+                st.AddTransition(NotesState.Hold, NotesState.Active, NotesTrigger.ActiveTrigger);
+                st.AddTransition(NotesState.Active, NotesState.Hold, NotesTrigger.HoldTrigger);
                 st.AddTransition(NotesState.Active, NotesState.Ded, NotesTrigger.DedTrigger);
             }
 

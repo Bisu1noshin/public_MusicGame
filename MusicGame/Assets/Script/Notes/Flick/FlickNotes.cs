@@ -12,8 +12,8 @@ public class FlickNotes : NotesObject
 
         // ステートマシーンの初期化
         st.SetupState(NotesState.Idle, new FlickIdleState(this, st));
-        //st.SetupState(NotesState.Active, new NotesActiveState(this, st));
-        //st.SetupState(NotesState.Ded, new NotesDedState(this, st));
+        st.SetupState(NotesState.Active, new FlickActiveState(this, st));
+        st.SetupState(NotesState.Ded, new FlickDedState(this, st));
 
 
         // 変数の初期化
