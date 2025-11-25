@@ -50,6 +50,8 @@ namespace Notes {
             // ノーツの配置データの読み込み
             TextEditor.TextEditor text = new(m_path, n_path);
             notesData = text.NotesReadTxt();
+            NotesDataConversion notesDataConversion = new NotesDataConversion(notesData);
+            notesData = notesDataConversion.GetData();
 
             // ノーツの最大値の定義
             for (int i = 0; i < createIndex_max.Length; i++)
@@ -67,6 +69,7 @@ namespace Notes {
 
         private void Start()
         {
+            // 一章節開けてから再製
             audioSource.Play();
         }
 
