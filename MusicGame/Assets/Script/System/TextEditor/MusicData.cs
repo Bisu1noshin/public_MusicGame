@@ -2,15 +2,25 @@
 using System;
 using System.Collections.Generic;
 
-namespace Music {
+namespace Music
+{
 
     // 曲のデータを保存する構造体
 
-    public class Music {
+    public class Music
+    {
         public string name { get; private set; }
         public string src { get; private set; }
-        public List<int> list;
-
+        public List<NotesData> list;
+        public Music(string name_, string src_)
+        {
+            this.name = name_;
+            this.src = src_;
+        }
+        public void AddList(NotesData data_)
+        {
+            list.Add(data_);
+        }
     }
 
     public class MusicData
@@ -20,7 +30,8 @@ namespace Music {
 
 
         // コンストラクタ
-        public MusicData() {
+        public MusicData()
+        {
 
             music = new List<Music>();
         }
