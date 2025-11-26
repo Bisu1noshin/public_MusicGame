@@ -99,10 +99,8 @@ namespace Notes {
             // 生成時間になったら生成してカウントを増やす
             if (CreateTime <= timeCnt)
             {
-
-                GameObject go = NotesGenerator.CreateNotes(notes[(int)n_.kind], n_, notesData.BPM);
-                Instantiate(go, NotesPosition[lane], rotate[(int)n_.dir]);
-
+                GameObject go = NotesGenerator.CreateNotes
+                    (notes[(int)n_.kind], n_, notesData.BPM, NotesPosition[lane], rotate[(int)n_.dir]);
 
                 return 1;
             }

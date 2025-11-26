@@ -12,17 +12,6 @@ namespace Notes
 
         protected override void Initialize()
         {
-            
-        }
-
-        public override void SetInitilizeNotes(Notes n_,int b_)
-        {
-            // 方向指定
-            AnsTrigger = (PlayerState)((int)n_.dir);
-
-            //
-            BPM = b_;
-
             // ステートマシンの初期化
             {
                 st = new StateMachine<NotesState, NotesTrigger>(NotesState.Idle);
@@ -40,7 +29,16 @@ namespace Notes
                 st.AddTransition(NotesState.Active, NotesState.Hold, NotesTrigger.HoldTrigger);
                 st.AddTransition(NotesState.Active, NotesState.Ded, NotesTrigger.DedTrigger);
             }
-            
+        }
+
+        public override void SetInitilizeNotes(Notes n_,int b_)
+        {
+            // 方向指定
+            AnsTrigger = (PlayerState)((int)n_.dir);
+
+            //
+            BPM = b_;            
+
             // 変数の初期化
             {
                 score = new NotesScoreData();

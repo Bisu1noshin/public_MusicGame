@@ -13,14 +13,23 @@ namespace Notes {
 
         protected override void Initialize()
         {
-
-            // 変数の初期化
+            // ステートマシンの初期化
             {
-                score = new NotesScoreData(max_index);
-                side = NotesSide.Left;
-                index = 1;
-                score.SetScore(NotesScore.Miss, 0);
-                isFirst = true;
+                st = new StateMachine<NotesState, NotesTrigger>(NotesState.Idle);
+
+                /// ステートマシーンの初期化
+                st.SetupState(NotesState.Idle, new RushIdleNotes(this, st));
+                st.SetupState(NotesState.Hold, new RushHoldState(this, st));
+                st.SetupState(NotesState.Active, new RushActiveState(this, st));
+                st.SetupState(NotesState.Ded, new RushDedState(this, st));
+
+                // 遷移条件の登録
+
+                st.AddTransition(NotesState.Idle, NotesState.Active, NotesTrigger.ActiveTrigger);
+                st.AddTransition(NotesState.Idle, NotesState.Hold, NotesTrigger.HoldTrigger);
+                st.AddTransition(NotesState.Hold, NotesState.Active, NotesTrigger.ActiveTrigger);
+                st.AddTransition(NotesState.Active, NotesState.Hold, NotesTrigger.HoldTrigger);
+                st.AddTransition(NotesState.Active, NotesState.Ded, NotesTrigger.DedTrigger);
             }
         }
 
@@ -47,26 +56,7 @@ namespace Notes {
                 index = 1;
                 score.SetScore(NotesScore.Miss, 0);
                 isFirst = true;
-            }
-
-            // ステートマシンの初期化
-            {
-                st = new StateMachine<NotesState, NotesTrigger>(NotesState.Idle);
-
-                /// ステートマシーンの初期化
-                st.SetupState(NotesState.Idle, new RushIdleNotes(this, st));
-                st.SetupState(NotesState.Hold, new RushHoldState(this, st));
-                st.SetupState(NotesState.Active, new RushActiveState(this, st));
-                st.SetupState(NotesState.Ded, new RushDedState(this, st));
-
-                // 遷移条件の登録
-
-                st.AddTransition(NotesState.Idle, NotesState.Active, NotesTrigger.ActiveTrigger);
-                st.AddTransition(NotesState.Idle, NotesState.Hold, NotesTrigger.HoldTrigger);
-                st.AddTransition(NotesState.Hold, NotesState.Active, NotesTrigger.ActiveTrigger);
-                st.AddTransition(NotesState.Active, NotesState.Hold, NotesTrigger.HoldTrigger);
-                st.AddTransition(NotesState.Active, NotesState.Ded, NotesTrigger.DedTrigger);
-            }          
+            }  
         }
     }
 }
