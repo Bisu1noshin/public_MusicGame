@@ -7,20 +7,21 @@ public class ButtonController : MonoBehaviour
     const float buttonPadding = 180;
     TextMeshProUGUI mText;
     RectTransform rectT;
+    TextScroller mTextScroller;
     int listNum;
     private void Awake()
     {
         mText = GetComponentInChildren<TextMeshProUGUI>();
         rectT = GetComponent<RectTransform>();
         musicSelecter = GameObject.Find("SceneManager").GetComponent<MusicSelectSceneManager>();
+        mTextScroller = GetComponentInChildren<TextScroller>();
     }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         Vector2 pos = new(-350, 0);
@@ -29,10 +30,18 @@ public class ButtonController : MonoBehaviour
         if (musicSelecter.SelectNum == listNum)
         {
             transform.localScale = Vector3.one * 1.2f;
+            if (!mTextScroller.enabled)
+            {
+                mTextScroller.enabled = true;
+            }
         }
         else
         {
             transform.localScale = Vector3.one;
+            if (mTextScroller.enabled)
+            {
+                mTextScroller.enabled = false;
+            }
         }
     }
     public void SetProperty(string text, int value = 0)
