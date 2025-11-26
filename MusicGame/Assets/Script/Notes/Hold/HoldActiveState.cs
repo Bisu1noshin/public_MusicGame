@@ -20,7 +20,7 @@ namespace Notes
 
         protected override void OnUpdate(float deltaTime)
         {
-            // pass
+            
         }
 
         protected override void OnExit()

@@ -42,9 +42,9 @@ namespace Notes {
         
         public NotesScoreData score { get; protected set; }
         
-        public PlayerState AnsTrigger { get; private set; }
+        public PlayerState AnsTrigger { get; protected set; }
 
-        public float BPM { get; private set; }
+        public float BPM { get; protected set; }
 
         public float timeCnt { get; private set; }
 
@@ -101,6 +101,6 @@ namespace Notes {
 
         protected abstract void Initialize();
 
-        public abstract void ActiveNotes(PlayerState state);
+        public abstract void SetInitilizeNotes(Notes n_,int bpm);
     }
 }

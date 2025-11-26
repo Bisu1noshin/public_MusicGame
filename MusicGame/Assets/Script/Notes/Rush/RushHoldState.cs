@@ -20,8 +20,8 @@ namespace Notes
             // 変数の初期化
             {
                 isHoldTime = 0f;
-                clapTime = 0f;
-                holdCnt = 0;
+                clapTime = 60.0f / (float)owner.BPM;
+                holdCnt = 1;
             }
         }
 
@@ -46,6 +46,11 @@ namespace Notes
             // 一拍たったら遷移
             if (clapTime >= this.timeCnt)
             {
+                if (holdCnt == owner.Max_holdCnt)
+                {
+                    stateMachine.ExecuteTriggerAction(NotesTrigger.DedTrigger);
+                }
+
                 stateMachine.ExecuteTriggerAction(NotesTrigger.ActiveTrigger);
             }
         }
