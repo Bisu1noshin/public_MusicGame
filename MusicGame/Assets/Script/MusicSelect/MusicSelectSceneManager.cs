@@ -1,11 +1,13 @@
-﻿using NUnit.Framework;
+﻿using System.Collections.Generic;
 using Player;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter
 {
     Music.MusicData musicData;
     int selectNum;
+    public int SelectNum => selectNum;
     Player.Player_forMusicSelect player;
 
     private void Awake()
@@ -19,12 +21,19 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter
         {
             player = p.GetComponent<Player.Player_forMusicSelect>();
         }
+        LoadMusics();
+        int i = 0;
+        foreach (Music.Music m in musicData.music)
+        {
+            ButtonController.CreateButton(m.name, i);
+            i++;
+        }
+        selectNum = 0;
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
-        selectNum = 0;
+        
     }
 
     // Update is called once per frame
@@ -34,15 +43,31 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter
     }
     public void LoadMusics()
     {
-
+        //ダミーデータを作成
+        musicData = new();
+        List<Music.Music> list = new();
+        list.Add(new Music.Music("シャイニングスター", ""));
+        list.Add(new Music.Music("Brain Power", ""));
+        list.Add(new Music.Music("The EmpErroR", ""));
+        musicData.AddList(list);
     }
     public void GoForward()
     {
         Debug.Log("Forward");
+        selectNum++;
+        if (selectNum > musicData.music.Count - 1)
+        {
+            selectNum = musicData.music.Count - 1;
+        }
     }
     public void GoBack()
     {
         Debug.Log("Back");
+        selectNum--;
+        if (selectNum < 0)
+        {
+            selectNum = 0;
+        }
     }
     public void Enter()
     {
@@ -62,6 +87,7 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter
 
 public interface IMusicSelecter
 {
+    int SelectNum { get; }
     void GoForward();
     void GoBack();
     void Enter();
