@@ -48,6 +48,7 @@ namespace Notes
 
         public NotesKind kind { get; private set; }
 
+
         public int lenge { get; private set; }
     }
 

@@ -71,6 +71,10 @@ namespace Player
             RightState = InputAction(vec);
         }
 
+        protected override void StopMove()
+        {
+        }
+
         private void OnTriggerEnter2D(Collider2D collision) {
 
             int lane = 1;

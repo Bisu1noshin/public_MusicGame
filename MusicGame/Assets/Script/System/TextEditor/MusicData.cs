@@ -35,6 +35,11 @@ namespace Music
 
             music = new List<Music>();
         }
+        //ダミーデータ生成用
+        public void AddList(List<Music> list_)
+        {
+            music.AddRange(list_);
+        }
 
     }
 }

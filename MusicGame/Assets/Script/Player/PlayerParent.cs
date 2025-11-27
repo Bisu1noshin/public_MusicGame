@@ -30,9 +30,9 @@ namespace Player {
         {
             inputKey.inputActionse.OnEnable();
 
-            _LeftStick.started += OnLeftStick;
-            _LeftStick.performed += OnLeftStick;
-            _LeftStick.canceled += OnLeftStick;
+            _LeftStick.started += OnLeftStickStarted;
+            _LeftStick.performed += OnLeftStickPerformed;
+            _LeftStick.canceled += OnLeftStickCanceled;
             _RightStick.started += OnRightStick;
             _RightStick.performed += OnRightStick;
             _RightStick.canceled += OnRightStick;
@@ -50,9 +50,9 @@ namespace Player {
         {
             inputKey.inputActionse.OnDisable();
 
-            _LeftStick.started -= OnLeftStick;
-            _LeftStick.performed -= OnLeftStick;
-            _LeftStick.canceled -= OnLeftStick;
+            _LeftStick.started -= OnLeftStickStarted;
+            _LeftStick.performed -= OnLeftStickPerformed;
+            _LeftStick.canceled -= OnLeftStickCanceled;
             _RightStick.started -= OnRightStick;
             _RightStick.performed -= OnRightStick;
             _RightStick.canceled -= OnRightStick;
@@ -78,15 +78,24 @@ namespace Player {
         abstract protected void UpButtonY();
         abstract protected void MoveUpdate(Vector2 vec);
         abstract protected void LookUpdate(Vector2 vec);
+        abstract protected void StopMove();
 
         // Actionのメソッド
 
-        private void OnLeftStick(InputAction.CallbackContext context)
+        private void OnLeftStickStarted(InputAction.CallbackContext context)
         {
-
             Vector2 vec = context.ReadValue<Vector2>();
-
             MoveUpdate(vec);
+        }
+
+        private void OnLeftStickPerformed(InputAction.CallbackContext context)
+        {
+        }
+
+        private void OnLeftStickCanceled(InputAction.CallbackContext context)
+        {
+            Debug.Log("OnLeftStickCanceled");
+            StopMove();
         }
 
         private void OnRightStick(InputAction.CallbackContext context)
