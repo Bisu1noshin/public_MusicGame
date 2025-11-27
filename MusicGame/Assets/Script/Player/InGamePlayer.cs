@@ -7,11 +7,11 @@ namespace Player
 {
     public enum PlayerState {
 
-        None,
+        None = -1,
         Up,
+        Right,
         Down,
         Left,
-        Right,
         Idle
     }
 
@@ -64,11 +64,15 @@ namespace Player
         protected override void UpButtonY() { }
         protected override void MoveUpdate(Vector2 vec) {
 
-            LeftState = InputAction(vec);
+            // ノーツの処理
+            PlayerState p_ = InputAction(vec);
+            notes[0]?.NotesActoin?.Invoke(p_);
         }
         protected override void LookUpdate(Vector2 vec) {
 
-            RightState = InputAction(vec);
+            // ノーツの処理
+            PlayerState p_ = InputAction(vec);
+            notes[1]?.NotesActoin?.Invoke(p_);
         }
 
         protected override void StopMove()

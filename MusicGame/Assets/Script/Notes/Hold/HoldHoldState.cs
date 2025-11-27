@@ -19,8 +19,8 @@ namespace Notes
         {
             // 変数の初期化
             isHoldTime = 0f;
-            clapTime = 0f;
-            holdCnt = 0;
+            clapTime = 60.0f / (float)owner.BPM ;
+            holdCnt = 1;
         }
 
         protected override void OnEnter()
@@ -28,6 +28,7 @@ namespace Notes
             base.OnEnter();
 
             isHoldTime = 0f;
+            timeCnt = 0f;
         }
 
         protected override void OnUpdate(float deltaTime)
@@ -36,14 +37,19 @@ namespace Notes
 
             // 一拍ホールドされていたらスコアを増やす
             if (clapTime <= isHoldTime)
-            {
-                holdCnt++;
+            { 
                 owner.score.SetScore(NotesScore.Perfect, holdCnt);
             }
 
             // 一拍たったら遷移
             if (clapTime <= this.timeCnt)
             {
+                if (holdCnt == owner.Max_holdCnt)
+                {
+                    stateMachine.ExecuteTriggerAction(NotesTrigger.DedTrigger);
+                }
+
+                holdCnt++;
                 stateMachine.ExecuteTriggerAction(NotesTrigger.ActiveTrigger);
             }
         }

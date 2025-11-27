@@ -24,7 +24,7 @@ namespace Notes
 
         protected override void OnUpdate(float deltaTime)
         {
-
+            GameObject.Destroy(owner.gameObject);
         }
 
         protected override void OnExit()

@@ -44,7 +44,7 @@ namespace Notes
                 // perfectの処理
                 if (owner.timeCnt <= perfectTime + perfectLenge && owner.timeCnt >= perfectTime - perfectLenge)
                 {
-                    owner.score.SetScore(NotesScore.Perfect, 0);
+                    owner.score.SetScore(NotesScore.Perfect);
                     stateMachine.ExecuteTriggerAction(NotesTrigger.ActiveTrigger);
                     return;
                 }
@@ -52,7 +52,7 @@ namespace Notes
                 // goodの処理
                 if (owner.timeCnt <= perfectTime + goodLenge && owner.timeCnt >= perfectTime - goodLenge)
                 {
-                    owner.score.SetScore(NotesScore.Good, 0);
+                    owner.score.SetScore(NotesScore.Good);
                     stateMachine.ExecuteTriggerAction(NotesTrigger.ActiveTrigger);
                     return;
                 }

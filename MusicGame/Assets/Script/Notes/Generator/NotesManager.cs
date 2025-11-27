@@ -12,6 +12,7 @@ namespace Notes {
 
         private NotesData notesData;
         private float timeCnt;
+        private int BPM = 158;
         private int[] createIndex;
         private int[] createIndex_max;
 
@@ -98,9 +99,8 @@ namespace Notes {
             // 生成時間になったら生成してカウントを増やす
             if (CreateTime <= timeCnt)
             {
-
-                GameObject go = notes[(int)n_.kind];
-                Instantiate(go, NotesPosition[lane], rotate[(int)n_.dir]);
+                GameObject go = NotesGenerator.CreateNotes
+                    (notes[(int)n_.kind], n_, notesData.BPM, NotesPosition[lane], rotate[(int)n_.dir]);
 
                 return 1;
             }

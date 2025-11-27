@@ -42,9 +42,9 @@ namespace Notes {
         
         public NotesScoreData score { get; protected set; }
         
-        public PlayerState AnsTrigger { get; private set; }
+        public PlayerState AnsTrigger { get; protected set; }
 
-        public float BPM { get; private set; }
+        public float BPM { get; protected set; }
 
         public float timeCnt { get; private set; }
 
@@ -61,22 +61,7 @@ namespace Notes {
         public Action<PlayerState> NotesActoin;
 
         protected void Awake()
-        {
-            // ステートマシンの初期化
-            {
-                st = new StateMachine<NotesState, NotesTrigger>(NotesState.Idle);
-
-                // デリゲートの登録
-                // 各子クラスで行う、忘れないように
-
-                // 遷移条件の登録
-
-                st.AddTransition(NotesState.Idle, NotesState.Active, NotesTrigger.ActiveTrigger);
-                st.AddTransition(NotesState.Idle, NotesState.Hold, NotesTrigger.HoldTrigger);
-                st.AddTransition(NotesState.Hold, NotesState.Active, NotesTrigger.ActiveTrigger);
-                st.AddTransition(NotesState.Active, NotesState.Hold, NotesTrigger.HoldTrigger);
-                st.AddTransition(NotesState.Active, NotesState.Ded, NotesTrigger.DedTrigger);
-            }
+        { 
 
             Initialize();
         }
@@ -101,6 +86,6 @@ namespace Notes {
 
         protected abstract void Initialize();
 
-        public abstract void ActiveNotes(PlayerState state);
+        public abstract void SetInitilizeNotes(Notes n_,int bpm);
     }
 }
