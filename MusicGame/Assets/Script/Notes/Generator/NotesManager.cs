@@ -3,7 +3,7 @@ using UnityEngine.Audio;
 
 namespace Notes {
 
-    public class NotesManager : MonoBehaviour 
+    public class NotesManager : MonoBehaviour
     {
         [SerializeField] private Vector3[] NotesPosition = new Vector3[2];
 
@@ -15,6 +15,7 @@ namespace Notes {
         private int BPM = 158;
         private int[] createIndex;
         private int[] createIndex_max;
+        private bool isMusic = true;
 
         private const string n_path = "TextData/NotesData/ShiningStar/ShiningStar_NORMAL";
         private const string m_path = "Music/ShiningStar";
@@ -51,6 +52,8 @@ namespace Notes {
             // ノーツの配置データの読み込み
             TextEditor.TextEditor text = new(m_path, n_path);
             notesData = text.NotesReadTxt();
+
+            // 生成用にデータを編集
             NotesDataConversion notesDataConversion = new NotesDataConversion(notesData);
             notesData = notesDataConversion.GetData();
 
@@ -71,13 +74,16 @@ namespace Notes {
         private void Start()
         {
             // 一章節開けてから再製
-            audioSource.Play();
+            //audioSource.Play();
         }
 
         private void Update()
         {
-            // 時間の加算
-            timeCnt += Time.deltaTime;
+            // 仮音楽再生部分
+            {
+                if (isMusic)
+                    isMusic = DebugMusic();
+            }
 
             // ノーツの召喚
             for (int i = 0; i < createIndex.Length; i++)
@@ -88,6 +94,8 @@ namespace Notes {
                 createIndex[i] += CreateNotes(n, i);
             }
 
+            // 時間の加算
+            timeCnt += Time.deltaTime;
         }
 
         private int CreateNotes(Notes n_, int lane)
@@ -106,6 +114,17 @@ namespace Notes {
             }
 
             return 0;
+        }
+
+        private bool DebugMusic()
+        {
+            if (timeCnt >= 1f)
+            {
+                audioSource.Play();
+                return false;
+            }
+
+            return true;
         }
     }
 }

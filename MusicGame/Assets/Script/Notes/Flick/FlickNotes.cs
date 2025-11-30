@@ -8,10 +8,21 @@ namespace Notes
     {
         private const float perfectLenge = 0.033f;
         private const float goodLenge = 0.05f;
-        private bool isFirst;
 
-        protected override void Initialize()
+        public override void SetInitilizeNotes(Notes n_,int b_)
         {
+            // 方向指定
+            AnsTrigger = (PlayerState)((int)n_.dir);
+
+            //
+            BPM = b_;            
+
+            // 変数の初期化
+            {
+                score = new NotesScoreData();
+                score.SetScore(NotesScore.Miss);
+            }
+
             // ステートマシンの初期化
             {
                 st = new StateMachine<NotesState, NotesTrigger>(NotesState.Idle);
@@ -29,21 +40,7 @@ namespace Notes
                 st.AddTransition(NotesState.Active, NotesState.Hold, NotesTrigger.HoldTrigger);
                 st.AddTransition(NotesState.Active, NotesState.Ded, NotesTrigger.DedTrigger);
             }
-        }
 
-        public override void SetInitilizeNotes(Notes n_,int b_)
-        {
-            // 方向指定
-            AnsTrigger = (PlayerState)((int)n_.dir);
-
-            //
-            BPM = b_;            
-
-            // 変数の初期化
-            {
-                score = new NotesScoreData();
-                score.SetScore(NotesScore.Miss);
-            }
         }
     }
 

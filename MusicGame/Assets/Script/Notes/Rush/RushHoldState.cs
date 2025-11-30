@@ -43,15 +43,21 @@ namespace Notes
                 owner.score.SetScore(NotesScore.Perfect, holdCnt);
             }
 
+            float clap = owner.timeCnt - 1f - (holdCnt - 1) * clapTime;
+
             // 一拍たったら遷移
-            if (clapTime >= this.timeCnt)
+            if (clapTime >= clap)
             {
+                owner.score.SetScore(NotesScore.Miss, holdCnt);
+
                 if (holdCnt == owner.Max_holdCnt)
                 {
                     stateMachine.ExecuteTriggerAction(NotesTrigger.DedTrigger);
+                    return;
                 }
 
                 stateMachine.ExecuteTriggerAction(NotesTrigger.ActiveTrigger);
+                return;
             }
         }
 

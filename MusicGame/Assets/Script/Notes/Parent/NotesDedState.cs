@@ -13,7 +13,7 @@ namespace Notes {
 
         protected override void OnEnter()
         {
-            Debug.Log(owner.score.GetTotalScore().ToString());
+            owner.score.DebugLogScore();
         }
 
         protected override void OnUpdate(float deltaTime)

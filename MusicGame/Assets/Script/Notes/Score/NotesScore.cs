@@ -34,7 +34,6 @@ namespace Notes
         public void SetScore(NotesScore s_,int index = 0) {
 
             score[index] = s_;
-            Debug.Log(s_.ToString());
         }
 
         public int GetTotalScore() {
@@ -47,6 +46,19 @@ namespace Notes
             }
 
             return totalScore;
+        }
+
+        public void DebugLogScore()
+        {
+            string s = "Log :";
+
+            for (int i = 0; i < score.Length; i++)
+            {
+                int index = i + 1;
+                s += ("\nscore"+index + ": " + score[i].ToString());
+            }
+
+            Debug.Log(s);
         }
 
         private void Initialize()

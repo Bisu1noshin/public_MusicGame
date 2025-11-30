@@ -1,6 +1,6 @@
 ﻿using Player;
 using System;
-using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine;
 
 namespace Notes
 {
@@ -9,7 +9,7 @@ namespace Notes
         private const float perfectLenge = 0.033f;
         private const float goodLenge = 0.05f;
 
-        private const float perfectTime = 2.0f;
+        private const float perfectTime = 1.0f;
 
         public FlickIdleState(NotesObject owner, IStateMachine<NotesTrigger> st) : base(owner, st)
         {
@@ -37,7 +37,7 @@ namespace Notes
 
         protected override void ActiveNotes(PlayerState state)
         {
-            if (state == Player.PlayerState.Idle) { return; }
+            if (state == Player.PlayerState.Idle) { return; }   
 
             if (state == owner.AnsTrigger)
             {

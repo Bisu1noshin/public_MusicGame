@@ -53,11 +53,7 @@ namespace Player
         protected override void UpButtonX() { }
         protected override void UpButtonY() { }
 
-        protected override void LookUpdate(Vector2 vec)
-        {
-            
-        }
-        protected override void MoveUpdate(Vector2 vec)
+        protected override void LeftStickStarted(Vector2 vec)
         {
             if (vec.y > 0)
             {
@@ -69,10 +65,31 @@ namespace Player
             }
             LStick_prev = vec;
         }
-        protected override void StopMove()
+
+        protected override void LeftStickPerformed(Vector2 vec)
         {
-            LStick_prev = Vector2.zero;
+
+        }
+
+        protected override void LeftStickCanceled(Vector2 vec)
+        {
+             LStick_prev = Vector2.zero;
             LStick_onTime = 0.0f;
+        }
+
+        protected override void RightStickStarted(Vector2 vec)
+        {
+            
+        }
+
+        protected override void RightStickPerformed(Vector2 vec)
+        {
+
+        }
+
+        protected override void RightStickCanceled(Vector2 vec)
+        {
+
         }
     }
 }

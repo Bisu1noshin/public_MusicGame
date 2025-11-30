@@ -20,7 +20,7 @@ namespace Notes
 
         protected override void OnUpdate(float deltaTime)
         {
-            // pass
+            stateMachine.ExecuteTriggerAction(NotesTrigger.HoldTrigger);
         }
 
         protected override void OnExit()

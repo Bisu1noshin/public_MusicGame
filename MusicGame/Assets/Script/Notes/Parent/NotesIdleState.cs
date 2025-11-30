@@ -5,11 +5,9 @@ namespace Notes
 
     public abstract class NotesIdleState : StateBase<NotesObject, NotesTrigger>
     {
-        private const float CangeState = -2.0f;
-
         public NotesIdleState(NotesObject owner, IStateMachine<NotesTrigger> st) : base(owner, st)
         {
-
+            owner.NotesActoin += ActiveNotes;
         }
 
         protected override void OnEnter()

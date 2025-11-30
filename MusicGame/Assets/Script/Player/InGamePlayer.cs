@@ -49,10 +49,10 @@ namespace Player
 
         private void Update()
         {
-            // ノーツの処理
-            notes[0]?.NotesActoin?.Invoke(LeftState);
-            notes[1]?.NotesActoin?.Invoke(RightState);
+            // pass
         }
+
+        // 入力アクション
 
         protected override void OnButtonA() { }
         protected override void UpButtonA() { }
@@ -62,25 +62,46 @@ namespace Player
         protected override void UpButtonX() { }
         protected override void OnButtonY() { }
         protected override void UpButtonY() { }
-        protected override void MoveUpdate(Vector2 vec) {
+
+        protected override void LeftStickStarted(Vector2 vec) {
 
             // ノーツの処理
             PlayerState p_ = InputAction(vec);
             notes[0]?.NotesActoin?.Invoke(p_);
         }
-        protected override void LookUpdate(Vector2 vec) {
 
+        protected override void LeftStickPerformed(Vector2 vec)
+        {
+            // ノーツの処理
+            PlayerState p_ = InputAction(vec);
+            notes[0]?.NotesActoin?.Invoke(p_);
+        }
+
+        protected override void LeftStickCanceled(Vector2 vec)
+        {
+        }
+
+        protected override void RightStickStarted(Vector2 vec)
+        {
             // ノーツの処理
             PlayerState p_ = InputAction(vec);
             notes[1]?.NotesActoin?.Invoke(p_);
         }
 
-        protected override void StopMove()
+        protected override void RightStickPerformed(Vector2 vec)
         {
+            // ノーツの処理
+            PlayerState p_ = InputAction(vec);
+            notes[1]?.NotesActoin?.Invoke(p_);
         }
 
-        private void OnTriggerEnter2D(Collider2D collision) {
+        protected override void RightStickCanceled(Vector2 vec)
+        {
 
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
             int lane = 1;
             if (collision.gameObject.transform.position.x > 0) { lane = 0; }
 

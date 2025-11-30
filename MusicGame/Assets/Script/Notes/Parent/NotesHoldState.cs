@@ -11,7 +11,7 @@ namespace Notes
     {
         public NotesHoldState(NotesObject owner, IStateMachine<NotesTrigger> st) : base(owner, st)
         {
-
+            
         }
 
         protected override void OnEnter()

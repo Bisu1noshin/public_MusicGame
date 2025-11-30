@@ -48,12 +48,11 @@ namespace Notes {
 
         public float timeCnt { get; private set; }
 
-        public int Max_holdCnt { get; private set; }
+        public int Max_holdCnt { get; protected set; }
 
 
-        private const float fallSpeed = 4.0f;
+        private const float fallSpeed = 8.0f;
 
-        public const float perfectTime = 2.0f;
         protected NotesSide side;
         protected StateMachine<NotesState, NotesTrigger> st;
 
@@ -63,7 +62,6 @@ namespace Notes {
         protected void Awake()
         { 
 
-            Initialize();
         }
 
         protected virtual void Start() {
@@ -83,8 +81,6 @@ namespace Notes {
             // 時間を加算
             timeCnt += Time.deltaTime;
         }
-
-        protected abstract void Initialize();
 
         public abstract void SetInitilizeNotes(Notes n_,int bpm);
     }

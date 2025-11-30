@@ -11,7 +11,6 @@ namespace Notes
     public class HoldHoldState : NotesHoldState
     {
         private float isHoldTime;
-        private float timeCnt;
         private int holdCnt;
         private readonly float clapTime;
 
@@ -28,29 +27,32 @@ namespace Notes
             base.OnEnter();
 
             isHoldTime = 0f;
-            timeCnt = 0f;
         }
 
         protected override void OnUpdate(float deltaTime)
         {
-            this.timeCnt += deltaTime;
-
             // 一拍ホールドされていたらスコアを増やす
             if (clapTime <= isHoldTime)
             { 
                 owner.score.SetScore(NotesScore.Perfect, holdCnt);
             }
 
+            float clap = owner.timeCnt - 1f - (holdCnt - 1) * clapTime;
+
             // 一拍たったら遷移
-            if (clapTime <= this.timeCnt)
+            if (clapTime <= clap)
             {
+                owner.score.SetScore(NotesScore.Miss, holdCnt);
+
                 if (holdCnt == owner.Max_holdCnt)
                 {
                     stateMachine.ExecuteTriggerAction(NotesTrigger.DedTrigger);
+                    return;
                 }
 
                 holdCnt++;
                 stateMachine.ExecuteTriggerAction(NotesTrigger.ActiveTrigger);
+                return;
             }
         }
 

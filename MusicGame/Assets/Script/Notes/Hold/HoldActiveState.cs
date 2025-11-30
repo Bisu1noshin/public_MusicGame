@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 using System.Threading.Tasks;
 
 namespace Notes
@@ -20,7 +21,7 @@ namespace Notes
 
         protected override void OnUpdate(float deltaTime)
         {
-            
+            stateMachine.ExecuteTriggerAction(NotesTrigger.HoldTrigger);
         }
 
         protected override void OnExit()

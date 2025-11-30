@@ -1,5 +1,6 @@
 ﻿using Player;
 using UnityEngine;
+using static Unity.Burst.Intrinsics.X86;
 
 namespace Notes {
 
@@ -11,32 +12,11 @@ namespace Notes {
         private int max_index = default;
         private bool isFirst;
 
-        protected override void Initialize()
-        {
-            // ステートマシンの初期化
-            {
-                st = new StateMachine<NotesState, NotesTrigger>(NotesState.Idle);
-
-                /// ステートマシーンの初期化
-                st.SetupState(NotesState.Idle, new RushIdleNotes(this, st));
-                st.SetupState(NotesState.Hold, new RushHoldState(this, st));
-                st.SetupState(NotesState.Active, new RushActiveState(this, st));
-                st.SetupState(NotesState.Ded, new RushDedState(this, st));
-
-                // 遷移条件の登録
-
-                st.AddTransition(NotesState.Idle, NotesState.Active, NotesTrigger.ActiveTrigger);
-                st.AddTransition(NotesState.Idle, NotesState.Hold, NotesTrigger.HoldTrigger);
-                st.AddTransition(NotesState.Hold, NotesState.Active, NotesTrigger.ActiveTrigger);
-                st.AddTransition(NotesState.Active, NotesState.Hold, NotesTrigger.HoldTrigger);
-                st.AddTransition(NotesState.Active, NotesState.Ded, NotesTrigger.DedTrigger);
-            }
-        }
-
         public override void SetInitilizeNotes(Notes n_, int b_)
         {
             // 最大値の設定
             max_index = n_.lenge + 1;
+            Max_holdCnt = n_.lenge;
 
             // スプライトの調整
             Vector3 Pos = transform.GetChild(0).transform.position;
@@ -56,7 +36,27 @@ namespace Notes {
                 index = 1;
                 score.SetScore(NotesScore.Miss, 0);
                 isFirst = true;
-            }  
+            }
+
+            // ステートマシンの初期化
+            {
+                st = new StateMachine<NotesState, NotesTrigger>(NotesState.Idle);
+
+                /// ステートマシーンの初期化
+                st.SetupState(NotesState.Idle, new RushIdleNotes(this, st));
+                st.SetupState(NotesState.Hold, new RushHoldState(this, st));
+                st.SetupState(NotesState.Active, new RushActiveState(this, st));
+                st.SetupState(NotesState.Ded, new RushDedState(this, st));
+
+                // 遷移条件の登録
+
+                st.AddTransition(NotesState.Idle, NotesState.Active, NotesTrigger.ActiveTrigger);
+                st.AddTransition(NotesState.Idle, NotesState.Hold, NotesTrigger.HoldTrigger);
+                st.AddTransition(NotesState.Hold, NotesState.Active, NotesTrigger.ActiveTrigger);
+                st.AddTransition(NotesState.Hold, NotesState.Ded, NotesTrigger.DedTrigger);
+                st.AddTransition(NotesState.Active, NotesState.Hold, NotesTrigger.HoldTrigger);
+            }
+
         }
     }
 }

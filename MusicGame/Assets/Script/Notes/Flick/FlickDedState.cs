@@ -10,8 +10,6 @@ namespace Notes
 {
     public class FlickDedState : NotesDedState
     {
-        private const float CangeState = -100.0f;
-
         public FlickDedState(NotesObject owner, IStateMachine<NotesTrigger> st) : base(owner, st)
         {
 

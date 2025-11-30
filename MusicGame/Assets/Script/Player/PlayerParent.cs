@@ -33,9 +33,9 @@ namespace Player {
             _LeftStick.started += OnLeftStickStarted;
             _LeftStick.performed += OnLeftStickPerformed;
             _LeftStick.canceled += OnLeftStickCanceled;
-            _RightStick.started += OnRightStick;
-            _RightStick.performed += OnRightStick;
-            _RightStick.canceled += OnRightStick;
+            _RightStick.started += OnRightStickStarted;
+            _RightStick.performed += OnRightStickPerformed;
+            _RightStick.canceled += OnRightStickCanceled;
             _ButtonA.started += EnterButtonA;
             _ButtonA.canceled += ExitButtonA;
             _ButtonB.started += EnterButtonB;
@@ -53,9 +53,9 @@ namespace Player {
             _LeftStick.started -= OnLeftStickStarted;
             _LeftStick.performed -= OnLeftStickPerformed;
             _LeftStick.canceled -= OnLeftStickCanceled;
-            _RightStick.started -= OnRightStick;
-            _RightStick.performed -= OnRightStick;
-            _RightStick.canceled -= OnRightStick;
+            _RightStick.started -= OnRightStickStarted;
+            _RightStick.performed -= OnRightStickPerformed;
+            _RightStick.canceled -= OnRightStickCanceled;
             _ButtonA.started -= EnterButtonA;
             _ButtonA.canceled -= ExitButtonA;
             _ButtonB.started -= EnterButtonB;
@@ -76,33 +76,50 @@ namespace Player {
         abstract protected void UpButtonX();
         abstract protected void OnButtonY();
         abstract protected void UpButtonY();
-        abstract protected void MoveUpdate(Vector2 vec);
-        abstract protected void LookUpdate(Vector2 vec);
-        abstract protected void StopMove();
+        abstract protected void LeftStickStarted(Vector2 vec);
+        abstract protected void LeftStickPerformed(Vector2 vec);
+        abstract protected void LeftStickCanceled(Vector2 vec);
+        abstract protected void RightStickStarted(Vector2 vec);
+        abstract protected void RightStickPerformed(Vector2 vec);
+        abstract protected void RightStickCanceled(Vector2 vec);
+        
 
         // Actionのメソッド
 
         private void OnLeftStickStarted(InputAction.CallbackContext context)
         {
             Vector2 vec = context.ReadValue<Vector2>();
-            MoveUpdate(vec);
+            LeftStickStarted(vec);
         }
 
         private void OnLeftStickPerformed(InputAction.CallbackContext context)
         {
+            Vector2 vec = context.ReadValue<Vector2>();
+            LeftStickPerformed(vec);
         }
 
         private void OnLeftStickCanceled(InputAction.CallbackContext context)
         {
-            Debug.Log("OnLeftStickCanceled");
-            StopMove();
+            Vector2 vec = context.ReadValue<Vector2>();
+            LeftStickCanceled(vec);
         }
 
-        private void OnRightStick(InputAction.CallbackContext context)
+        private void OnRightStickStarted(InputAction.CallbackContext context)
         {
             Vector2 vec = context.ReadValue<Vector2>();
+            RightStickStarted(vec);
+        }
 
-            LookUpdate(vec);
+        private void OnRightStickPerformed(InputAction.CallbackContext context)
+        {
+            Vector2 vec = context.ReadValue<Vector2>();
+            RightStickPerformed(vec);
+        }
+
+        private void OnRightStickCanceled(InputAction.CallbackContext context)
+        {
+            Vector2 vec = context.ReadValue<Vector2>();
+            RightStickCanceled(vec);
         }
 
         private void EnterButtonA(InputAction.CallbackContext context)

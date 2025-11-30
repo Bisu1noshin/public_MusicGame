@@ -30,10 +30,13 @@ namespace Notes
                         {
                             Notes pre = data.notes[i][j - 1];
 
+                            int dir = (int)pre.dir;
+                            if (dir < 0) dir = 0;
+
                             data.notes[i][j - 1] =
                                 new Notes(
                                     pre.time,
-                                    (int)pre.dir,
+                                    dir,
                                     (int)pre.kind,
                                     holdCnt
                                 );
