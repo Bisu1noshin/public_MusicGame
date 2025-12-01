@@ -26,7 +26,7 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter
         int i = 0;
         foreach (Music.Music m in musicData.music)
         {
-            ButtonController.CreateButton(m.name, i);
+            //ButtonController.CreateButton(m.name, i);
             i++;
         }
         selectNum = 0;
