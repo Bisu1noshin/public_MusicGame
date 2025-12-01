@@ -65,16 +65,15 @@ namespace Player
 
         protected override void LeftStickStarted(Vector2 vec) {
 
-            // ノーツの処理
-            PlayerState p_ = InputAction(vec);
-            notes[0]?.NotesActoin?.Invoke(p_);
+            
         }
 
         protected override void LeftStickPerformed(Vector2 vec)
         {
             // ノーツの処理
             PlayerState p_ = InputAction(vec);
-            notes[0]?.NotesActoin?.Invoke(p_);
+            Debug.Log(notes[0].timeCnt.ToString());
+            notes[0] = notes[0]?.NotesActoin?.Invoke(p_);
         }
 
         protected override void LeftStickCanceled(Vector2 vec)
@@ -83,16 +82,15 @@ namespace Player
 
         protected override void RightStickStarted(Vector2 vec)
         {
-            // ノーツの処理
-            PlayerState p_ = InputAction(vec);
-            notes[1]?.NotesActoin?.Invoke(p_);
+            
         }
 
         protected override void RightStickPerformed(Vector2 vec)
         {
             // ノーツの処理
             PlayerState p_ = InputAction(vec);
-            notes[1]?.NotesActoin?.Invoke(p_);
+            Debug.Log(notes[1].timeCnt.ToString());
+            notes[1] = notes[1]?.NotesActoin?.Invoke(p_);
         }
 
         protected override void RightStickCanceled(Vector2 vec)
@@ -115,10 +113,10 @@ namespace Player
 
             PlayerState state = PlayerState.Idle;
 
-            if (vec.x >= 0.7) { state = PlayerState.Right; }
-            if (vec.x <= -0.7) { state = PlayerState.Left; }
-            if (vec.y >= 0.7) { state = PlayerState.Up; }
-            if (vec.y <= -0.7) { state = PlayerState.Down; }
+            if (vec.x > 0) { state = PlayerState.Right; }
+            if (vec.x < 0) { state = PlayerState.Left; }
+            if (vec.y > 0) { state = PlayerState.Up; }
+            if (vec.y < 0) { state = PlayerState.Down; }
 
             return state;
         }

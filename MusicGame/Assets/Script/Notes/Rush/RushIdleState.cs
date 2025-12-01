@@ -37,31 +37,28 @@ namespace Notes
             }
         }
 
-        protected override void ActiveNotes(PlayerState state)
+        protected override NotesObject ActiveNotes(PlayerState state)
         {
-            if (state == Player.PlayerState.Idle) { return; }
-
-            if (state == owner.AnsTrigger)
+            // perfectの処理
+            if (owner.timeCnt <= perfectTime + perfectLenge && owner.timeCnt >= perfectTime - perfectLenge)
             {
-                // perfectの処理
-                if (owner.timeCnt <= perfectTime + perfectLenge && owner.timeCnt >= perfectTime - perfectLenge)
-                {
-                    owner.score.SetScore(NotesScore.Perfect, 0);
-                    stateMachine.ExecuteTriggerAction(NotesTrigger.HoldTrigger);
-                    return;
-                }
+                owner.score.SetScore(NotesScore.Perfect, 0);
+                stateMachine.ExecuteTriggerAction(NotesTrigger.HoldTrigger);
+                return owner;
+            }
 
-                // goodの処理
-                if (owner.timeCnt <= perfectTime + goodLenge && owner.timeCnt >= perfectTime - goodLenge)
-                {
-                    owner.score.SetScore(NotesScore.Good, 0);
-                    stateMachine.ExecuteTriggerAction(NotesTrigger.HoldTrigger);
-                    return;
-                }
+            // goodの処理
+            if (owner.timeCnt <= perfectTime + goodLenge && owner.timeCnt >= perfectTime - goodLenge)
+            {
+                owner.score.SetScore(NotesScore.Good, 0);
+                stateMachine.ExecuteTriggerAction(NotesTrigger.HoldTrigger);
+                return owner;
             }
 
             if (owner.timeCnt >= perfectTime + goodLenge)
                 stateMachine.ExecuteTriggerAction(NotesTrigger.HoldTrigger);
+
+            return owner;
         }
     }
 }
