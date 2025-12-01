@@ -73,20 +73,20 @@ namespace Notes {
         protected virtual void FixedUpdate()
         {
             // ステートマシンの更新
-            st.Update(Time.deltaTime);
+            st.Update(Time.fixedDeltaTime);
 
             // 落下処理
-            transform.position += new Vector3(0, -1 * fallSpeed * Time.deltaTime, 0);
+            transform.position += new Vector3(0, -1 * fallSpeed * Time.fixedDeltaTime, 0);
 
             // パーフェクト
             if (timeCnt >= 1f)
             {
                 var s = GetComponentInChildren<SpriteRenderer>();
-                s.color = Color.red;
+                s.color = Color.blue;
             }
 
             // 時間を加算
-            timeCnt += Time.deltaTime;
+            timeCnt += Time.fixedDeltaTime;
         }
 
         public abstract void SetInitilizeNotes(Notes n_,int bpm);

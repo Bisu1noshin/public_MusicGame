@@ -95,7 +95,7 @@ namespace Notes {
             }
 
             // 時間の加算
-            timeCnt += Time.deltaTime;
+            timeCnt += Time.fixedDeltaTime;
         }
 
         private int CreateNotes(Notes n_, int lane)
