@@ -10,6 +10,7 @@ public class PropertyController : MonoBehaviour
     private void Awake()
     {
         mAudio = GetComponent<AudioSource>();
+        mThumbnail = transform.GetChild(0).GetComponent<Image>();
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -27,12 +28,17 @@ public class PropertyController : MonoBehaviour
         mText.text = text;
         if (audioPath != null) 
         {
-            mAudio.resource = Resources.Load(audioPath) as AudioClip;
+            mAudio.resource = Resources.Load(CreateMusicPath(audioPath)) as AudioClip;
             mAudio.Play();
         }
         if (imagePath != null) 
         {
             mThumbnail = Resources.Load<Image>(imagePath);
         }
+    }
+    string CreateMusicPath(string path_)
+    {
+        string res = "Music/" + path_;
+        return res;
     }
 }

@@ -8,13 +8,16 @@ public class ButtonController : MonoBehaviour
     TextMeshProUGUI mText;
     RectTransform rectT;
     TextScroller mTextScroller;
+    PropertyController mProperty;
     int listNum;
+    string audioPath;
     private void Awake()
     {
         mText = GetComponentInChildren<TextMeshProUGUI>();
         rectT = GetComponent<RectTransform>();
         musicSelecter = GameObject.Find("SceneManager").GetComponent<MusicSelectSceneManager>();
         mTextScroller = GetComponentInChildren<TextScroller>();
+        mProperty = GameObject.Find("Property").GetComponent<PropertyController>();
     }
 
     void Start()
@@ -33,6 +36,7 @@ public class ButtonController : MonoBehaviour
             if (!mTextScroller.enabled)
             {
                 mTextScroller.enabled = true;
+                mProperty.SetProperty(mText.text, audioPath, null);
             }
         }
         else
@@ -44,12 +48,13 @@ public class ButtonController : MonoBehaviour
             }
         }
     }
-    public void SetProperty(string text, int value = 0)
+    public void SetProperty(string text, int value, string audioPath_)
     {
         mText.text = text;
         listNum = value;
+        audioPath = audioPath_;
     }
-    public static ButtonController CreateButton(string text, int value = 0)
+    public static ButtonController CreateButton(string text, int value, string audioPath_)
     {
         GameObject go = Instantiate(Resources.Load("MusicSelecter/button") as GameObject);
         go.name = text;
@@ -58,7 +63,7 @@ public class ButtonController : MonoBehaviour
         go.transform.localRotation = Quaternion.identity;
         go.transform.localScale = Vector3.one;
         ButtonController controller = go.GetComponent<ButtonController>();
-        controller.SetProperty(text, value);
+        controller.SetProperty(text, value, audioPath_);
         return controller;
     }
 }

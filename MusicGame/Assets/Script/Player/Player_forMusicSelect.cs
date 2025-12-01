@@ -15,7 +15,6 @@ namespace Player
         private void Start()
         {
             musicSelecter = GameObject.Find("SceneManager").GetComponent<MusicSelectSceneManager>();
-            Debug.Log("Is MusicSelecter NULL? : " + musicSelecter == null);
             LStick_onTime = 0;
         }
 

@@ -12,6 +12,7 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter
 
     private void Awake()
     {
+        //Application.targetFrameRate = 60;
         GameObject p = GameObject.Find("Player_forMusicSelect");
         if (p == null)
         {
@@ -46,9 +47,9 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter
         //ダミーデータを作成
         musicData = new();
         List<Music.Music> list = new();
-        list.Add(new Music.Music("シャイニングスター", ""));
-        list.Add(new Music.Music("Brain Power", ""));
-        list.Add(new Music.Music("The EmpErroR", ""));
+        list.Add(new Music.Music("シャイニングスター", "Shining Star.mp3"));
+        list.Add(new Music.Music("本来はここに2曲目の曲名が入る", ""));
+        list.Add(new Music.Music("本来はここに3曲目の曲名が入る", ""));
         musicData.AddList(list);
     }
     public void GoForward()
