@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: MusicData
+  m_EditorClassIdentifier: Assembly-CSharp::MusicDatabase
+  musicDatabase:
+  - musicNo: 1
+    musicName: "\u30B7\u30E3\u30A4\u30CB\u30F3\u30B0\u30B9\u30BF\u30FC"
+    composerName: "\u9B54\u738B\u9B42"
+    musicPath: Resources/Music/ShiningStar.mp3
+    BPM: 158
