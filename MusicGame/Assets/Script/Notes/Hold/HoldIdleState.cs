@@ -38,9 +38,9 @@ namespace Notes
             }
         }
 
-        protected override void ActiveNotes(PlayerState state)
+        protected override NotesObject ActiveNotes(PlayerState state)
         {
-            if (state == Player.PlayerState.Idle) { return; }
+            if (state == Player.PlayerState.Idle) { return owner; }
 
             if (state == owner.AnsTrigger)
             {
@@ -49,7 +49,7 @@ namespace Notes
                 {
                     owner.score.SetScore(NotesScore.Perfect, 0);
                     stateMachine.ExecuteTriggerAction(NotesTrigger.HoldTrigger);
-                    return;
+                    return owner;
                 }
 
                 // goodの処理
@@ -57,12 +57,14 @@ namespace Notes
                 {
                     owner.score.SetScore(NotesScore.Good, 0);
                     stateMachine.ExecuteTriggerAction(NotesTrigger.HoldTrigger);
-                    return;
+                    return owner;
                 }
             }
 
             if (owner.timeCnt >= perfectTime + goodLenge)
                 stateMachine.ExecuteTriggerAction(NotesTrigger.HoldTrigger);
+
+            return owner;
         }
     }
 }

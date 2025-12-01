@@ -53,11 +53,14 @@ namespace Notes {
 
         private const float fallSpeed = 8.0f;
 
+        private const float perfectLenge = 0.033f;
+        private const float goodLenge = 0.05f;
+
         protected NotesSide side;
         protected StateMachine<NotesState, NotesTrigger> st;
 
         // イベントアクションのデリゲート
-        public Action<PlayerState> NotesActoin;
+        public Func<PlayerState, NotesObject> NotesActoin;
 
         protected void Awake()
         { 
@@ -82,6 +85,7 @@ namespace Notes {
             if (timeCnt >= 1f)
             {
                 var s = GetComponentInChildren<SpriteRenderer>();
+                //NotesActoin?.Invoke(AnsTrigger);
                 s.color = Color.blue;
             }
 

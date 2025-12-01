@@ -6,8 +6,8 @@ namespace Notes
 {
     public class FlickIdleState : NotesIdleState
     {
-        private const float perfectLenge = 0.033f;
-        private const float goodLenge = 0.05f;
+        private const float perfectLenge = 0.04f;
+        private const float goodLenge = 0.08f;
 
         private const float perfectTime = 1.0f;
 
@@ -35,9 +35,12 @@ namespace Notes
             }
         }
 
-        protected override void ActiveNotes(PlayerState state)
+        protected override NotesObject ActiveNotes(PlayerState state)
         {
-            if (state == Player.PlayerState.Idle) { return; }   
+            if (state == Player.PlayerState.Idle) { return null; }
+
+            Debug.Log("Flick Active time :" + owner.timeCnt.ToString());
+            Debug.Log("Flick Active pos :" + owner.gameObject.transform.position.ToString());
 
             if (state == owner.AnsTrigger)
             {
@@ -46,7 +49,7 @@ namespace Notes
                 {
                     owner.score.SetScore(NotesScore.Perfect);
                     stateMachine.ExecuteTriggerAction(NotesTrigger.ActiveTrigger);
-                    return;
+                    return null;
                 }
 
                 // goodの処理
@@ -54,12 +57,14 @@ namespace Notes
                 {
                     owner.score.SetScore(NotesScore.Good);
                     stateMachine.ExecuteTriggerAction(NotesTrigger.ActiveTrigger);
-                    return;
+                    return null;
                 }
             }
 
             if (owner.timeCnt >= perfectTime + goodLenge)
                 stateMachine.ExecuteTriggerAction(NotesTrigger.ActiveTrigger);
+
+            return null;
         }
     }
 }

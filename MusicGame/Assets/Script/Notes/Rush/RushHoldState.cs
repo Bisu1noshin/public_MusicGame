@@ -67,9 +67,13 @@ namespace Notes
         }
 
         // 発火イベント
-        protected override void ActiveNotes(PlayerState state)
+        protected override NotesObject ActiveNotes(PlayerState state)
         {
+            if (holdCnt == owner.Max_holdCnt) { return null; }
+
             isHoldTime += Time.deltaTime;
+
+            return owner;
         }
     }
 }
