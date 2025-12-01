@@ -60,7 +60,7 @@ namespace Notes {
         protected StateMachine<NotesState, NotesTrigger> st;
 
         // イベントアクションのデリゲート
-        public Func<PlayerState, NotesObject> NotesActoin;
+        public Action<PlayerState> NotesActoin;
 
         protected void Awake()
         { 

@@ -35,5 +35,19 @@ namespace Notes
         {
             base.OnExit();
         }
+
+        private void ChangeColor(int index)
+        {
+            var s = owner.GetComponentInChildren<SpriteRenderer>();
+
+            Color[] color =
+            {
+                Color.black,
+                Color.yellow,
+                Color.green,
+            };
+
+            s.color = color[index];
+        }
     }
 }

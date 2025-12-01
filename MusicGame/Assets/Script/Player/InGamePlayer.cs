@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
 namespace Player
 {
     public enum PlayerState {
@@ -30,26 +29,36 @@ namespace Player
 
     public class InGamePlayer : PlayerParent {
 
-        public PlayerState LeftState { get; private set; }
-        public PlayerState RightState { get; private set; }
+        private PlayerState[] state;
 
         public ReceiveInput input;
 
-        Notes.NotesObject[] notes = new Notes.NotesObject[2];
+        private Action<PlayerState>[] notesAction = new Action<PlayerState>[2];
 
         private void Start()
         {
             input = new ReceiveInput();
 
-            RightState = PlayerState.Idle;
-
-            for(int i = 0; i < notes.Length; i++)
-                notes[i] = null;
+            state = new PlayerState[2];
+            for (int i = 0; i < state.Length; i++)
+            {
+                state[i] = PlayerState.Idle;
+            }
         }
 
         private void Update()
         {
-            // pass
+            // ノーツの処理
+            {
+                for (int i = 0; i < state.Length; i++)
+                {
+                    if (state[i] != PlayerState.Idle)
+                    {
+                        notesAction[i]?.Invoke(state[i]);
+                        state[i] = PlayerState.Idle;
+                    }
+                }
+            }
         }
 
         // 入力アクション
@@ -63,17 +72,14 @@ namespace Player
         protected override void OnButtonY() { }
         protected override void UpButtonY() { }
 
-        protected override void LeftStickStarted(Vector2 vec) {
-
-            
+        protected override void LeftStickStarted(Vector2 vec)
+        {
+            state[0] = InputAction(vec);
         }
 
         protected override void LeftStickPerformed(Vector2 vec)
         {
-            // ノーツの処理
-            PlayerState p_ = InputAction(vec);
-            Debug.Log(notes[0].timeCnt.ToString());
-            notes[0] = notes[0]?.NotesActoin?.Invoke(p_);
+            state[0] = InputAction(vec);
         }
 
         protected override void LeftStickCanceled(Vector2 vec)
@@ -82,15 +88,12 @@ namespace Player
 
         protected override void RightStickStarted(Vector2 vec)
         {
-            
+            state[1] = InputAction(vec);
         }
 
         protected override void RightStickPerformed(Vector2 vec)
         {
-            // ノーツの処理
-            PlayerState p_ = InputAction(vec);
-            Debug.Log(notes[1].timeCnt.ToString());
-            notes[1] = notes[1]?.NotesActoin?.Invoke(p_);
+            state[1] = InputAction(vec);
         }
 
         protected override void RightStickCanceled(Vector2 vec)
@@ -105,7 +108,8 @@ namespace Player
 
             if (collision.gameObject.TryGetComponent<Notes.NotesObject>(out var n_))
             {
-                notes[lane] = n_;
+                if (notesAction[lane] != null) { notesAction[lane] = null; }
+                notesAction[lane] = n_.NotesActoin;
             }
         }
 
