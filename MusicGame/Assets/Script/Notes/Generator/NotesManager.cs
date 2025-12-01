@@ -51,7 +51,7 @@ namespace Notes {
 
             // ノーツの配置データの読み込み
             TextEditor.TextEditor text = new(m_path, n_path);
-            notesData = text.NotesReadTxt();
+            notesData = text.NotesReadTxt(); 
 
             // 生成用にデータを編集
             NotesDataConversion notesDataConversion = new NotesDataConversion(notesData);

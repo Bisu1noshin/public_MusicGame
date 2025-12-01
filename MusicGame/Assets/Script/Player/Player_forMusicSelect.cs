@@ -7,14 +7,14 @@ namespace Player
 {
     public class Player_forMusicSelect : PlayerParent
     {
-        IMusicSelecter musicSelecter;
+        IMusicSelecter mSelecter;
         float LStick_onTime;
 
         Vector2 LStick_prev;
 
         private void Start()
         {
-            musicSelecter = GameObject.Find("SceneManager").GetComponent<MusicSelectSceneManager>();
+            mSelecter = GameObject.Find("SceneManager").GetComponent<MusicSelectSceneManager>();
             LStick_onTime = 0;
         }
 
@@ -24,11 +24,11 @@ namespace Player
             {
                 if (LStick_prev.y > 0)
                 {
-                    musicSelecter.GoBack();
+                    mSelecter.GoBack();
                 }
                 else
                 {
-                    musicSelecter.GoForward();
+                    mSelecter.GoForward();
                 }
                 LStick_onTime = 0.0f;
             }
@@ -39,11 +39,11 @@ namespace Player
         }
         protected override void OnButtonA()
         {
-            musicSelecter.Enter();
+            mSelecter.Enter();
         }
         protected override void OnButtonB()
         {
-            musicSelecter.Undo();
+            mSelecter.Undo();
         }
         protected override void OnButtonX() { }
         protected override void OnButtonY() { }
@@ -56,11 +56,11 @@ namespace Player
         {
             if (vec.y > 0)
             {
-                musicSelecter.GoBack();
+                mSelecter.GoBack();
             }
             else
             {
-                musicSelecter.GoForward();
+                mSelecter.GoForward();
             }
             LStick_prev = vec;
         }

@@ -9,6 +9,7 @@ public class PropertyController : MonoBehaviour
     Image mThumbnail;
     private void Awake()
     {
+        mText = transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>();
         mAudio = GetComponent<AudioSource>();
         mThumbnail = transform.GetChild(0).GetComponent<Image>();
     }
@@ -26,12 +27,12 @@ public class PropertyController : MonoBehaviour
     public void SetProperty(string text, string audioPath, string imagePath)
     {
         mText.text = text;
-        if (audioPath != null) 
+        if (audioPath != string.Empty) 
         {
             mAudio.resource = Resources.Load(CreateMusicPath(audioPath)) as AudioClip;
             mAudio.Play();
         }
-        if (imagePath != null) 
+        if (imagePath != string.Empty) 
         {
             mThumbnail = Resources.Load<Image>(imagePath);
         }

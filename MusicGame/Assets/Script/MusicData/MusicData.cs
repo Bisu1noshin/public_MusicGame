@@ -10,9 +10,11 @@ public class MusicDatabase : ScriptableObject
 [System.Serializable]
 public class MusicData
 {
-    public int musicNo;
-    public string musicName;
-    public string composerName;
+    public int id;
+    public string name;
+    public string composerName; //作曲者名
     public string musicPath; //"Resource/name.mp3"
+    public string demoMusicPath;
     public int BPM;
+    public Notes.NotesData[] notesData;
 }

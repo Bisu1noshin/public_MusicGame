@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using TMPro;
+using System;
+using UnityEditor.Rendering.Universal;
 
-public class ButtonController : MonoBehaviour
+public class MusicButtonController : MonoBehaviour
 {
-    IMusicSelecter musicSelecter;
+    IMusicSelecter mSelecter;
     const float buttonPadding = 180;
     TextMeshProUGUI mText;
     RectTransform rectT;
@@ -15,22 +17,22 @@ public class ButtonController : MonoBehaviour
     {
         mText = GetComponentInChildren<TextMeshProUGUI>();
         rectT = GetComponent<RectTransform>();
-        musicSelecter = GameObject.Find("SceneManager").GetComponent<MusicSelectSceneManager>();
+        mSelecter = GameObject.Find("SceneManager").GetComponent<MusicSelectSceneManager>();
         mTextScroller = GetComponentInChildren<TextScroller>();
         mProperty = GameObject.Find("Property").GetComponent<PropertyController>();
     }
 
     void Start()
     {
-        
+
     }
 
     void Update()
     {
         Vector2 pos = new(-350, 0);
-        pos.y += (musicSelecter.SelectNum - listNum) * 1.3f * buttonPadding;
+        pos.y += (mSelecter.SelectNum - listNum) * 1.3f * buttonPadding;
         rectT.anchoredPosition = pos;
-        if (musicSelecter.SelectNum == listNum)
+        if (mSelecter.SelectNum == listNum)
         {
             transform.localScale = Vector3.one * 1.2f;
             if (!mTextScroller.enabled)
@@ -54,7 +56,7 @@ public class ButtonController : MonoBehaviour
         listNum = value;
         audioPath = audioPath_;
     }
-    public static ButtonController CreateButton(string text, int value, string audioPath_)
+    public static Action CreateButton(string text, int value, string audioPath_)
     {
         GameObject go = Instantiate(Resources.Load("MusicSelecter/button") as GameObject);
         go.name = text;
@@ -62,8 +64,11 @@ public class ButtonController : MonoBehaviour
         go.transform.localPosition = Vector3.zero;
         go.transform.localRotation = Quaternion.identity;
         go.transform.localScale = Vector3.one;
-        ButtonController controller = go.GetComponent<ButtonController>();
+        MusicButtonController controller = go.GetComponent<MusicButtonController>();
         controller.SetProperty(text, value, audioPath_);
-        return controller;
+
+        Action f = () => { Destroy(controller.gameObject); };
+
+        return f;
     }
 }
