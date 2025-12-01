@@ -6,7 +6,7 @@ namespace Notes {
     public static class NotesGenerator 
     {
         public static GameObject CreateNotes
-            (GameObject obj, Notes n,int bpm,Vector3 v_,Quaternion q_)
+            (GameObject obj, Notes n,int bpm,Vector3 v_,Vector3 q_)
         {
             Type[] notes =
             {
@@ -15,7 +15,8 @@ namespace Notes {
             typeof(RushNotes),
             };
 
-            GameObject go = GameObject.Instantiate(obj, v_, q_);
+            Quaternion q = Quaternion.Euler(q_);
+            GameObject go = GameObject.Instantiate(obj, v_, q);
 
             // スクリプトを動的にアタッチ
             go.AddComponent(notes[(int)n.kind]);

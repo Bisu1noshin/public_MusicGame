@@ -7,7 +7,7 @@ namespace Notes {
     {
         [SerializeField] private Vector3[] NotesPosition = new Vector3[2];
 
-        private Quaternion[] rotate = new Quaternion[4];
+        private Vector3[] rotate = new Vector3[4];
         private AudioSource audioSource;
 
         private NotesData notesData;
@@ -40,7 +40,7 @@ namespace Notes {
 
                 for (int i = 0; i < rotate.Length; i++)
                 {
-                    rotate[i] = new Quaternion(0, 0, 90 * i, 0);
+                    rotate[i] = new Vector3(0, 0, 90 * i);
                 }
             }
 
@@ -77,7 +77,7 @@ namespace Notes {
             //audioSource.Play();
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             // 仮音楽再生部分
             {

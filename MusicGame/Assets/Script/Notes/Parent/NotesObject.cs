@@ -69,14 +69,21 @@ namespace Notes {
             
         }
 
-        protected virtual void Update()
-        {
 
+        protected virtual void FixedUpdate()
+        {
             // ステートマシンの更新
             st.Update(Time.deltaTime);
 
             // 落下処理
             transform.position += new Vector3(0, -1 * fallSpeed * Time.deltaTime, 0);
+
+            // パーフェクト
+            if (timeCnt >= 1f)
+            {
+                var s = GetComponentInChildren<SpriteRenderer>();
+                s.color = Color.red;
+            }
 
             // 時間を加算
             timeCnt += Time.deltaTime;
