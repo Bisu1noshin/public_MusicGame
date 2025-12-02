@@ -20,15 +20,14 @@ public class MusicButtonController : MonoBehaviour
         mSelecter = GameObject.Find("SceneManager").GetComponent<MusicSelectSceneManager>();
         mTextScroller = GetComponentInChildren<TextScroller>();
         mProperty = GameObject.Find("Property").GetComponent<PropertyController>();
-        if (id == 0)
-        {
-            mProperty.SetProperty(mText.text, audioPath, string.Empty);
-        }
     }
 
     void Start()
     {
-
+        if (id == 0)
+        {
+            mProperty.SetProperty(mText.text, audioPath, string.Empty);
+        }
     }
 
     void Update()
@@ -54,24 +53,24 @@ public class MusicButtonController : MonoBehaviour
             }
         }
     }
-    public void SetProperty(string text, int value, string audioPath_)
+    public void SetInfo(string text, int value, string audioPath_)
     {
         mText.text = text;
         id = value;
         audioPath = audioPath_;
     }
-    public static Action CreateButton(string text, int value, string audioPath_)
+    public static Action CreateInstance(string text, int value, string audioPath_)
     {
         GameObject go = Instantiate(Resources.Load("MusicSelecter/MusicButton") as GameObject);
         go.name = text;
-        go.transform.SetParent(GameObject.Find("Canvas").transform.GetChild(2).transform);
+        go.transform.SetParent(GameObject.Find("Canvas").transform.GetChild(1).transform);
         go.transform.localPosition = Vector3.zero;
         go.transform.localRotation = Quaternion.identity;
         go.transform.localScale = Vector3.one;
         MusicButtonController controller = go.GetComponent<MusicButtonController>();
-        controller.SetProperty(text, value, audioPath_);
+        controller.SetInfo(text, value, audioPath_);
 
-        Action f = () => { Destroy(controller.gameObject); };
+        Action f = () => { Destroy(go); };
 
         return f;
     }

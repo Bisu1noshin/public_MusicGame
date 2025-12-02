@@ -54,6 +54,9 @@ namespace Player
 
         protected override void LeftStickStarted(Vector2 vec)
         {
+            //横入力はキャンセル
+            if (Mathf.Abs(vec.y / vec.x) < 1.0f) { return; }
+
             if (vec.y > 0)
             {
                 mSelecter.GoBack();

@@ -14,7 +14,11 @@ enum SceneState
 
 public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSelecter
 {
-    private Action deleteAction;
+    private Action deleteAction = null;
+    public AudioSource mAudio { get; set; }
+
+    private AudioClip enter, cancel, scroll, beep;
+
     int maxValue;
     int[] selectNum;
     public int[] SelectNum => selectNum;
@@ -37,11 +41,18 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
         {
             CreatePlayer();
         }
-        //LoadMusics();
+        
+        deleteAction += PropertyController.CreateInstance();
         CreateMusicButtons();
+
         selectNum = new int[3];
         mCurrNotesData = new Notes.NotesData[4];
         mSceneState = SceneState.MusicSelect;
+        mAudio = GetComponent<AudioSource>();
+        enter = Resources.Load<AudioClip>("MusicSelecter/Sound/Enter");
+        cancel = Resources.Load<AudioClip>("MusicSelecter/Sound/Cancel");
+        scroll = Resources.Load<AudioClip>("MusicSelecter/Sound/Scroll");
+        beep = Resources.Load<AudioClip>("MusicSelecter/Sound/Beep");
         foreach (MusicData md in mDataBase.musicDatabase)
         {
             for (int i = 0; i < 4; ++i)
@@ -54,18 +65,8 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
     // Update is called once per frame
     void Update()
     {
-        
+
     }
-    //public void LoadMusics()
-    //{
-    //    //ダミーデータを作成
-    //    //musicData = new();
-    //    //List<Music.Music> list = new();
-    //    //list.Add(new Music.Music("シャイニングスター", "Shining Star.mp3"));
-    //    //list.Add(new Music.Music("本来はここに2曲目の曲名が入る", ""));
-    //    //list.Add(new Music.Music("本来はここに3曲目の曲名が入る", ""));
-    //    //musicData.AddList(list);
-    //}
     public void GoForward()
     {
         Debug.Log("Forward");
@@ -73,17 +74,25 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
         switch (mSceneState)
         {
             case SceneState.MusicSelect:
-                selectNum[0]++;
-                if (selectNum[0] > mDataBase.musicDatabase.Count - 1)
+                if (selectNum[0] >= mDataBase.musicDatabase.Count - 1)
                 {
-                    selectNum[0] = mDataBase.musicDatabase.Count - 1;
+                    mAudio.PlayOneShot(beep);
+                }
+                else
+                {
+                    selectNum[0]++;
+                    mAudio.PlayOneShot(scroll);
                 }
                 break;
             case SceneState.LevelSelect:
-                selectNum[1]++;
-                if (selectNum[1] > maxValue)
+                if (selectNum[1] > maxValue - 1)
                 {
-                    selectNum[1] = mDataBase.musicDatabase.Count - 1;
+                    mAudio.PlayOneShot(beep);
+                }
+                else
+                {
+                    selectNum[1]++;
+                    mAudio.PlayOneShot(scroll);
                 }
                 break;
             default:
@@ -97,17 +106,25 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
         switch (mSceneState)
         {
             case SceneState.MusicSelect:
-                selectNum[0]--;
-                if (selectNum[0] < 0)
+                if (selectNum[0] <= 0)
                 {
-                    selectNum[0] = 0;
+                    mAudio.PlayOneShot(beep);
+                }
+                else
+                {
+                    selectNum[0]--;
+                    mAudio.PlayOneShot(scroll);
                 }
                 break;
             case SceneState.LevelSelect:
-                selectNum[1]--;
-                if (selectNum[1] < 0)
+                if (selectNum[1] <= 0)
                 {
-                    selectNum[1] = 0;
+                    mAudio.PlayOneShot(beep);
+                }
+                else
+                {
+                    selectNum[1]--;
+                    mAudio.PlayOneShot(scroll);
                 }
                 break;
             default:
@@ -120,13 +137,14 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
         {
             case SceneState.MusicSelect:
                 mCurrNotesData = mDataBase.musicDatabase[selectNum[0]].notesData;
-                deleteAction?.Invoke();
-                deleteAction = null;
+                DeleteObj();
                 CreateLevelButtons();
+                mAudio.PlayOneShot(enter);
                 break;
             case SceneState.LevelSelect:
-                deleteAction?.Invoke();
-                deleteAction = null;
+                //DeleteObj();
+                CreatePopupInstance();
+                mAudio.PlayOneShot(enter);
                 break;
             case SceneState.EnterGame:
                 break;
@@ -143,14 +161,15 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
             case SceneState.MusicSelect:
                 break;
             case SceneState.LevelSelect:
-                deleteAction?.Invoke();
-                deleteAction = null;
+                DeleteObj();
+                deleteAction += PropertyController.CreateInstance();
                 CreateMusicButtons();
+                mAudio.PlayOneShot(cancel);
                 break;
             case SceneState.EnterGame:
-                deleteAction?.Invoke();
-                deleteAction = null;
+                DeleteObj();
                 CreateLevelButtons();
+                mAudio.PlayOneShot(cancel);
                 break;
         }
         if (mSceneState > SceneState.MusicSelect)
@@ -168,7 +187,7 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
     {
         foreach (MusicData m in mDataBase.musicDatabase)
         {
-            deleteAction += MusicButtonController.CreateButton(m.name, m.id, m.demoMusicPath);
+            deleteAction += MusicButtonController.CreateInstance(m.name, m.id, m.demoMusicPath);
         }
     }
 
@@ -177,7 +196,7 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
         for (int i = 0; i < 4; i++)
         {
             if (mCurrNotesData[i] == null) { break; }
-            deleteAction += LevelButtonController.CreateButton(i, levelName[i]);
+            deleteAction += LevelButtonController.CreateInstance(i, levelName[i]);
             maxValue = i;
         }
     }
@@ -185,6 +204,23 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
     {
         TextEditor.TextEditor text = new("Music/ShiningStar", "TextData/NotesData/ShiningStar/ShiningStar_NORMAL");
         md_ = text.NotesReadTxt();
+    }
+    void DeleteObj()
+    {
+        deleteAction?.Invoke();
+        deleteAction = null;
+    }
+    void CreatePopupInstance()
+    {
+        var loadObj = Resources.Load<GameObject>("MusicSelecter/Popup_EnterGame");
+        Debug.Log($"load: {loadObj.name}");
+
+        GameObject go = Instantiate(loadObj);
+        go.transform.SetParent(GameObject.Find("Canvas").transform);
+        go.transform.localPosition = Vector3.zero;
+        go.transform.localScale = Vector3.one;
+        go.transform.localRotation = Quaternion.identity;
+        deleteAction += () => { Destroy(go); };
     }
 }
 

@@ -15,11 +15,10 @@ public class LevelButtonController : MonoBehaviour
         //mSelecter = GameObject.Find("SceneManager").GetComponent<MusicSelectSceneManager>();
         if (GameObject.Find("SceneManager").TryGetComponent<MusicSelectSceneManager>(out var mssm)) {
             mSelecter = mssm;
-            Debug.Log("SceneManager is found.");
         }
         else
         {
-            Debug.LogError("Error! : SceneManger is not found.");
+            Debug.LogError("Error! : SceneManger is NOT found.");
         }
         mRect = GetComponent<RectTransform>();
     }
@@ -36,18 +35,18 @@ public class LevelButtonController : MonoBehaviour
             transform.localScale = Vector3.one;
         }
 
-        mRect.anchoredPosition = new Vector2(-350.0f, (id + 1) * -200.0f + 540.0f);
+        mRect.anchoredPosition = new Vector2(-350.0f, (id + 1) * -200.0f + 510.0f);
     }
     public void SetProperty(int id_, string str_)
     {
         id = id_;
         mText.text = str_;
     }
-    public static Action CreateButton(int id_, string str_)
+    public static Action CreateInstance(int id_, string str_)
     {
         GameObject res = Resources.Load("MusicSelecter/LevelButton") as GameObject;
         GameObject go = Instantiate(res);
-        go.transform.SetParent(GameObject.Find("Canvas").transform.GetChild(2).transform);
+        go.transform.SetParent(GameObject.Find("Canvas").transform.GetChild(1).transform);
         go.transform.localPosition = new(-350, 0, 0);
         go.name = str_;
         go.transform.localScale = Vector3.one;
