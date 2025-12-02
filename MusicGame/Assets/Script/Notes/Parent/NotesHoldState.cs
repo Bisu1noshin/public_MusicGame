@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Notes
 {
@@ -16,7 +15,8 @@ namespace Notes
 
         protected override void OnEnter()
         {
-            owner.NotesActoin += ActiveNotes;
+            if (owner.NotesActoin == null)
+                owner.NotesActoin += ActiveNotes;
         }
 
         protected override void OnUpdate(float deltaTime)
@@ -26,10 +26,10 @@ namespace Notes
 
         protected override void OnExit()
         {
-            owner.NotesActoin -= ActiveNotes;
+            
         }
 
         // 発火イベント
-        protected abstract void ActiveNotes(PlayerState state);
+        protected abstract void ActiveNotes(PlayerState state,float ActiveTime);
     }
 }

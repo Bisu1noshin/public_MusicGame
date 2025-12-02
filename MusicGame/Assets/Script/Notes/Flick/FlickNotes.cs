@@ -22,7 +22,6 @@ namespace Notes
                 score = new NotesScoreData();
                 score.SetScore(NotesScore.Miss);
                 CreateTime = i_.CteateTime;
-                NotesManager = i_.NotesManager;
             }
 
             // ステートマシンの初期化

@@ -8,7 +8,6 @@ namespace Notes
     {
         private const float perfectLenge = 0.04f;
         private const float goodLenge = 0.08f;
-
         private const float perfectTime = 1.0f;
 
         public FlickIdleState(NotesObject owner, IStateMachine<NotesTrigger> st) : base(owner, st)
@@ -29,21 +28,21 @@ namespace Notes
         protected override void OnUpdate(float deltaTime)
         {
             // 判定の時間外処理に遷移
-            if (owner.NotesManager.InGameTime >= perfectTime + goodLenge)
+            if (owner.timeCnt >= perfectTime + goodLenge)
             {
                 stateMachine.ExecuteTriggerAction(NotesTrigger.ActiveTrigger);
             }
         }
 
-        protected override void ActiveNotes(PlayerState state)
+        protected override void ActiveNotes(PlayerState state, float ActiveTime)
         {
-            Debug.Log("Flick Active time :" + owner.NotesManager.InGameTime.ToString());
-            Debug.Log("Flick Active pos :" + owner.gameObject.transform.position.ToString());
+            float DiscriminationTime = ActiveTime - owner.CreateTime;
+            owner.NotesActoin -= ActiveNotes;
 
             if (state == owner.AnsTrigger)
             {
                 // perfectの処理
-                if (owner.NotesManager.InGameTime <= perfectTime + perfectLenge && owner.NotesManager.InGameTime >= perfectTime - perfectLenge)
+                if (DiscriminationTime <= perfectTime + perfectLenge && DiscriminationTime >= perfectTime - perfectLenge)
                 {
                     owner.score.SetScore(NotesScore.Perfect);
                     stateMachine.ExecuteTriggerAction(NotesTrigger.ActiveTrigger);
@@ -51,18 +50,13 @@ namespace Notes
                 }
 
                 // goodの処理
-                if (owner.NotesManager.InGameTime <= perfectTime + goodLenge && owner.NotesManager.InGameTime >= perfectTime - goodLenge)
+                if (DiscriminationTime <= perfectTime + goodLenge && DiscriminationTime >= perfectTime - goodLenge)
                 {
                     owner.score.SetScore(NotesScore.Good);
                     stateMachine.ExecuteTriggerAction(NotesTrigger.ActiveTrigger);
                     return;
                 }
             }
-
-            if (owner.NotesManager.InGameTime >= perfectTime + goodLenge)
-                stateMachine.ExecuteTriggerAction(NotesTrigger.ActiveTrigger);
-
-            return;
         }
     }
 }

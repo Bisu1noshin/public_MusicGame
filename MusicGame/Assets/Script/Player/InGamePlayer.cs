@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Notes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -33,7 +34,8 @@ namespace Player
 
         public ReceiveInput input;
 
-        private Action<PlayerState>[] notesAction = new Action<PlayerState>[2];
+        private NotesObject[] notes;
+        private Notes.NotesManager manager;
 
         private void Start()
         {
@@ -44,6 +46,10 @@ namespace Player
             {
                 state[i] = PlayerState.Idle;
             }
+
+            notes = new NotesObject[2];
+
+            manager = GameObject.Find("NotesGenarator").GetComponent<Notes.NotesManager>();
         }
 
         private void Update()
@@ -54,7 +60,7 @@ namespace Player
                 {
                     if (state[i] != PlayerState.Idle)
                     {
-                        notesAction[i]?.Invoke(state[i]);
+                        notes[i]?.NotesActoin?.Invoke(state[i], manager.InGameTime);
                         state[i] = PlayerState.Idle;
                     }
                 }
@@ -104,12 +110,12 @@ namespace Player
         private void OnTriggerEnter2D(Collider2D collision)
         {
             int lane = 1;
-            if (collision.gameObject.transform.position.x > 0) { lane = 0; }
+            if (collision.gameObject.transform.position.x < 0) { lane = 0; }
 
             if (collision.gameObject.TryGetComponent<Notes.NotesObject>(out var n_))
             {
-                if (notesAction[lane] != null) { notesAction[lane] = null; }
-                notesAction[lane] = n_.NotesActoin;
+                if (notes[lane] != null) { notes[lane] = null; }
+                notes[lane] = n_;
             }
         }
 

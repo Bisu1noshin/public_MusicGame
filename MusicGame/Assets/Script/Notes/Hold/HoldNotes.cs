@@ -15,7 +15,7 @@ namespace Notes {
         {
             // 最大値の設定
             max_index = i_.Notes.lenge + 1;
-            Max_holdCnt = i_.Notes.lenge;
+            Max_holdCnt = i_.Notes.lenge + 1;
 
             // スプライトの調整
             Vector3 Pos = transform.GetChild(0).position;
@@ -38,7 +38,6 @@ namespace Notes {
                 score.SetScore(NotesScore.Miss, 0);
                 isFirst = true;
                 CreateTime = i_.CteateTime;
-                NotesManager = i_.NotesManager;
             }
 
             // ステートマシンの初期化
