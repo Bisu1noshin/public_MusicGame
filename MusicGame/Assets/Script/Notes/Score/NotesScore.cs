@@ -48,6 +48,29 @@ namespace Notes
             return totalScore;
         }
 
+        public int[] GetTotalScoreData()
+        {
+            int[] ScoreData = new int[3]; //0Perfect 1Good 2Miss
+            foreach (var f in score)
+            {
+                switch (f)
+                {
+                    case NotesScore.Perfect:
+                        ScoreData[0]++;
+                        break;
+                    case NotesScore.Good:
+                        ScoreData[1]++;
+                        break;
+                    case NotesScore.Miss:
+                        ScoreData[2]++;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return ScoreData;
+        }
+
         public void DebugLogScore()
         {
             string s = "Log :";
