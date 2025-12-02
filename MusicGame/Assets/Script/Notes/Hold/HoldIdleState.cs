@@ -32,7 +32,7 @@ namespace Notes
         protected override void OnUpdate(float deltaTime)
         {
             // 判定の時間外処理に遷移
-            if (owner.timeCnt >= perfectTime + goodLenge)
+            if (owner.NotesManager.InGameTime >= perfectTime + goodLenge)
             {
                 stateMachine.ExecuteTriggerAction(NotesTrigger.HoldTrigger);
             }
@@ -45,7 +45,7 @@ namespace Notes
             if (state == owner.AnsTrigger)
             {
                 // perfectの処理
-                if (owner.timeCnt <= perfectTime + perfectLenge && owner.timeCnt >= perfectTime - perfectLenge)
+                if (owner.NotesManager.InGameTime <= perfectTime + perfectLenge && owner.NotesManager.InGameTime >= perfectTime - perfectLenge)
                 {
                     owner.score.SetScore(NotesScore.Perfect, 0);
                     stateMachine.ExecuteTriggerAction(NotesTrigger.HoldTrigger);
@@ -53,7 +53,7 @@ namespace Notes
                 }
 
                 // goodの処理
-                if (owner.timeCnt <= perfectTime + goodLenge && owner.timeCnt >= perfectTime - goodLenge)
+                if (owner.NotesManager.InGameTime <= perfectTime + goodLenge && owner.NotesManager.InGameTime >= perfectTime - goodLenge)
                 {
                     owner.score.SetScore(NotesScore.Good, 0);
                     stateMachine.ExecuteTriggerAction(NotesTrigger.HoldTrigger);
@@ -61,7 +61,7 @@ namespace Notes
                 }
             }
 
-            if (owner.timeCnt >= perfectTime + goodLenge)
+            if (owner.NotesManager.InGameTime >= perfectTime + goodLenge)
                 stateMachine.ExecuteTriggerAction(NotesTrigger.HoldTrigger);
 
             return;

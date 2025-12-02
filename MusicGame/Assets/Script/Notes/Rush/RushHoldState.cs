@@ -43,7 +43,7 @@ namespace Notes
                 owner.score.SetScore(NotesScore.Perfect, holdCnt);
             }
 
-            float clap = owner.timeCnt - 1f - (holdCnt - 1) * clapTime;
+            float clap = owner.NotesManager.InGameTime - 1f - (holdCnt - 1) * clapTime;
 
             // 一拍たったら遷移
             if (clapTime >= clap)

@@ -27,7 +27,7 @@ namespace Notes
         {
             timeCnt += deltaTime;
 
-            if (timeCnt >= 1f) 
+            if (timeCnt >= 100f) 
                 stateMachine.ExecuteTriggerAction(NotesTrigger.DedTrigger);
         }
 
