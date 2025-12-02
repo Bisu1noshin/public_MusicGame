@@ -9,18 +9,20 @@ namespace Notes
         private const float perfectLenge = 0.033f;
         private const float goodLenge = 0.05f;
 
-        public override void SetInitilizeNotes(Notes n_,int b_)
+        public override void SetInitilizeNotes(NotesInformaiton i_)
         {
             // 方向指定
-            AnsTrigger = (PlayerState)((int)n_.dir);
+            AnsTrigger = (PlayerState)(i_.Notes.dir);
 
-            //
-            BPM = b_;            
+            // BPMの定義
+            BPM = i_.BPM;            
 
             // 変数の初期化
             {
                 score = new NotesScoreData();
                 score.SetScore(NotesScore.Miss);
+                CreateTime = i_.CteateTime;
+                NotesManager = i_.NotesManager;
             }
 
             // ステートマシンの初期化

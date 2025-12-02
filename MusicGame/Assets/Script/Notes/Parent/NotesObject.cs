@@ -37,8 +37,6 @@ namespace Notes {
     public abstract class NotesObject : MonoBehaviour {
 
         // メンバー変数
-
-        public float ActiveTime { get; protected set; }
         
         public NotesScoreData score { get; protected set; }
         
@@ -46,7 +44,9 @@ namespace Notes {
 
         public float BPM { get; protected set; }
 
-        public float timeCnt { get; private set; }
+        public NotesManager NotesManager { get; protected set; }
+
+        public float CreateTime { get; protected set; }
 
         public int Max_holdCnt { get; protected set; }
 
@@ -63,8 +63,8 @@ namespace Notes {
         public Action<PlayerState> NotesActoin;
 
         protected void Awake()
-        { 
-
+        {
+            //NotesManager=GameObject.Find()
         }
 
         protected virtual void Start() {
@@ -82,17 +82,16 @@ namespace Notes {
             transform.position += new Vector3(0, -1 * fallSpeed * Time.fixedDeltaTime, 0);
 
             // パーフェクト
-            if (timeCnt >= 1f)
+            if (NotesManager.InGameTime - CreateTime >= 1f)
             {
                 var s = GetComponentInChildren<SpriteRenderer>();
                 //NotesActoin?.Invoke(AnsTrigger);
                 s.color = Color.blue;
             }
 
-            // 時間を加算
-            timeCnt += Time.fixedDeltaTime;
+            Debug.Log("InGameTimeCnt :" + NotesManager.InGameTime);
         }
 
-        public abstract void SetInitilizeNotes(Notes n_,int bpm);
+        public abstract void SetInitilizeNotes(NotesInformaiton informaiton);
     }
 }

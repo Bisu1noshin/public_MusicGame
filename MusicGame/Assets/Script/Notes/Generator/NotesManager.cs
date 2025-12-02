@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Xml.Linq;
+using UnityEngine;
 using UnityEngine.Audio;
 
 namespace Notes {
@@ -7,11 +8,12 @@ namespace Notes {
     {
         [SerializeField] private Vector3[] NotesPosition = new Vector3[2];
 
+        public float InGameTime { get; private set; } = default;
+
         private Vector3[] rotate = new Vector3[4];
         private AudioSource audioSource;
 
         private NotesData notesData;
-        private float timeCnt;
         private int BPM = 158;
         private int[] createIndex;
         private int[] createIndex_max;
@@ -36,7 +38,7 @@ namespace Notes {
                 notesData = new NotesData();
                 notes = new GameObject[3];
 
-                timeCnt = 0;
+                InGameTime = 0;
 
                 for (int i = 0; i < rotate.Length; i++)
                 {
@@ -89,13 +91,14 @@ namespace Notes {
             for (int i = 0; i < createIndex.Length; i++)
             {
                 if (createIndex[i] >= createIndex_max[i]) { return; }
+                if (createIndex[i] >= 1) { return; }
 
                 Notes n = notesData.notes[i][createIndex[i]];
                 createIndex[i] += CreateNotes(n, i);
             }
 
             // 時間の加算
-            timeCnt += Time.fixedDeltaTime;
+            InGameTime += Time.fixedDeltaTime;
         }
 
         private int CreateNotes(Notes n_, int lane)
@@ -104,11 +107,21 @@ namespace Notes {
             float hakuTime = 60.0f / (float)notesData.BPM;
             float CreateTime = hakuTime * (float)n_.time;
 
+            // ノーツ生成に必要なデータの構築
+            NotesInformaiton informaiton = new(
+                manager:this,
+                create: CreateTime,
+                obj: notes[(int)n_.kind],
+                n: n_,
+                bpm: BPM,
+                v: NotesPosition[lane],
+                q: rotate[(int)n_.dir]
+                );
+
             // 生成時間になったら生成してカウントを増やす
-            if (CreateTime <= timeCnt)
+            if (CreateTime <= InGameTime)
             {
-                GameObject go = NotesGenerator.CreateNotes
-                    (notes[(int)n_.kind], n_, notesData.BPM, NotesPosition[lane], rotate[(int)n_.dir]);
+                GameObject go = NotesGenerator.CreateNotes(informaiton);
 
                 return 1;
             }
@@ -118,7 +131,7 @@ namespace Notes {
 
         private bool DebugMusic()
         {
-            if (timeCnt >= 1f)
+            if (InGameTime >= 1f)
             {
                 audioSource.Play();
                 return false;

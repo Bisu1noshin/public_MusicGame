@@ -2,11 +2,39 @@
 using UnityEngine;
 
 namespace Notes {
+    public class NotesInformaiton
+    {
+        public NotesManager NotesManager { get; private set; }
+
+        public float CteateTime { get; private set; }
+
+        public GameObject NotesObj { get; private set; }
+
+        public Notes Notes { get; private set; }
+
+        public int BPM { get; private set; }
+
+        public Vector3 CreatePos { get; private set; }
+
+        public Vector3 CreateRot { get; private set; }
+
+        public NotesInformaiton
+            (NotesManager manager,float create,GameObject obj,Notes n,int bpm,Vector3 v,Vector3 q)
+        {
+            NotesManager = manager;
+            CteateTime = create;
+            NotesObj = obj;
+            Notes = n;
+            BPM = bpm;
+            CreatePos = v;
+            CreateRot = q;
+        }
+    }
 
     public static class NotesGenerator 
     {
         public static GameObject CreateNotes
-            (GameObject obj, Notes n,int bpm,Vector3 v_,Vector3 q_)
+            (NotesInformaiton informaiton)
         {
             Type[] notes =
             {
@@ -15,15 +43,15 @@ namespace Notes {
             typeof(RushNotes),
             };
 
-            Quaternion q = Quaternion.Euler(q_);
-            GameObject go = GameObject.Instantiate(obj, v_, q);
+            Quaternion q = Quaternion.Euler(informaiton.CreateRot);
+            GameObject go = GameObject.Instantiate(informaiton.NotesObj, informaiton.CreateRot, q);
 
             // スクリプトを動的にアタッチ
-            go.AddComponent(notes[(int)n.kind]);
+            go.AddComponent(notes[(int)informaiton.Notes.kind]);
 
             // 変数を初期化
             var n_ = go.GetComponent<NotesObject>();
-            n_.SetInitilizeNotes(n, bpm);
+            n_.SetInitilizeNotes(informaiton);
 
             return go;
         }

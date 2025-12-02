@@ -12,23 +12,23 @@ namespace Notes {
         private int max_index = default;
         private bool isFirst;
 
-        public override void SetInitilizeNotes(Notes n_, int b_)
+        public override void SetInitilizeNotes(NotesInformaiton i_)
         {
             // 最大値の設定
-            max_index = n_.lenge + 1;
-            Max_holdCnt = n_.lenge;
+            max_index = i_.Notes.lenge + 1;
+            Max_holdCnt = i_.Notes.lenge;
 
             // スプライトの調整
             Vector3 Pos = transform.GetChild(0).transform.position;
-            Pos += new Vector3(0, (n_.lenge - 1) * 0.5f, 0);
+            Pos += new Vector3(0, (i_.Notes.lenge - 1) * 0.5f, 0);
             transform.GetChild(0).position = Pos;
 
             Vector3 Scale = transform.GetChild(0).transform.localScale;
-            Scale+= new Vector3(0, n_.lenge, 0);
+            Scale+= new Vector3(0, i_.Notes.lenge, 0);
             transform.GetChild(0).localScale = Scale;
 
-            // 方向指定
-            AnsTrigger = (PlayerState)((int)n_.dir);
+            // BPMの定義
+            BPM = i_.BPM;
 
             // 変数の初期化
             {
@@ -36,6 +36,8 @@ namespace Notes {
                 index = 1;
                 score.SetScore(NotesScore.Miss, 0);
                 isFirst = true;
+                CreateTime = i_.CteateTime;
+                NotesManager = i_.NotesManager;
             }
 
             // ステートマシンの初期化
