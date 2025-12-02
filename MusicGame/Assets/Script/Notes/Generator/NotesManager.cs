@@ -1,4 +1,4 @@
-﻿using System.Xml.Linq;
+﻿using System.Linq;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -8,7 +8,7 @@ namespace Notes {
     {
         [SerializeField] private Vector3[] NotesPosition = new Vector3[2];
 
-        public float InGameTime { get; private set; } = default;
+        public float InGameTime = default;
 
         private Vector3[] rotate = new Vector3[4];
         private AudioSource audioSource;
@@ -18,6 +18,7 @@ namespace Notes {
         private int[] createIndex;
         private int[] createIndex_max;
         private bool isMusic = true;
+        private bool goinstance = false;
 
         private const string n_path = "TextData/NotesData/ShiningStar/ShiningStar_NORMAL";
         private const string m_path = "Music/ShiningStar";
@@ -71,6 +72,12 @@ namespace Notes {
 
                 audioSource.resource = Resources.Load<AudioResource>(m_path);
             }
+
+            // static変数の処理
+            {
+                InGameTime = new();
+                InGameTime = 0;
+            }
         }
 
         private void Start()
@@ -91,7 +98,6 @@ namespace Notes {
             for (int i = 0; i < createIndex.Length; i++)
             {
                 if (createIndex[i] >= createIndex_max[i]) { return; }
-                if (createIndex[i] >= 1) { return; }
 
                 Notes n = notesData.notes[i][createIndex[i]];
                 createIndex[i] += CreateNotes(n, i);
@@ -109,7 +115,6 @@ namespace Notes {
 
             // ノーツ生成に必要なデータの構築
             NotesInformaiton informaiton = new(
-                manager:this,
                 create: CreateTime,
                 obj: notes[(int)n_.kind],
                 n: n_,
@@ -136,6 +141,25 @@ namespace Notes {
                 audioSource.Play();
                 return false;
             }
+
+            return true;
+        }
+
+        private bool DebugNotesCreate()
+        {
+            Notes notes_ = new(0, 0, 1, 3);
+
+            // ノーツ生成に必要なデータの構築
+            NotesInformaiton informaiton = new(
+                create:0,
+                obj: notes[(int)notes_.kind],
+                n: notes_,
+                bpm: BPM,
+                v: NotesPosition[0],
+                q: rotate[(int)notes_.dir]
+                );
+
+            GameObject go = NotesGenerator.CreateNotes(informaiton);
 
             return true;
         }

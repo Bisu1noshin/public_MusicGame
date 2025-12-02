@@ -24,16 +24,6 @@ namespace Notes {
         DedTrigger,
     };
 
-    /// <summary>
-    /// ノーツの左右を管理する
-    /// </summary>
-    public enum NotesSide {
-
-        None,
-        Left,
-        Right,
-    }
-
     public abstract class NotesObject : MonoBehaviour {
 
         // メンバー変数
@@ -44,7 +34,7 @@ namespace Notes {
 
         public float BPM { get; protected set; }
 
-        public NotesManager NotesManager { get; protected set; }
+        public float timeCnt { get; protected set; }
 
         public float CreateTime { get; protected set; }
 
@@ -53,18 +43,14 @@ namespace Notes {
 
         private const float fallSpeed = 8.0f;
 
-        private const float perfectLenge = 0.033f;
-        private const float goodLenge = 0.05f;
-
-        protected NotesSide side;
         protected StateMachine<NotesState, NotesTrigger> st;
 
         // イベントアクションのデリゲート
-        public Action<PlayerState> NotesActoin;
+        public Action<PlayerState, float> NotesActoin;
 
         protected void Awake()
         {
-            //NotesManager=GameObject.Find()
+            
         }
 
         protected virtual void Start() {
@@ -82,14 +68,14 @@ namespace Notes {
             transform.position += new Vector3(0, -1 * fallSpeed * Time.fixedDeltaTime, 0);
 
             // パーフェクト
-            if (NotesManager.InGameTime - CreateTime >= 1f)
+            if (timeCnt >= 1f)
             {
                 var s = GetComponentInChildren<SpriteRenderer>();
-                //NotesActoin?.Invoke(AnsTrigger);
+                //NotesActoin?.Invoke(AnsTrigger, 1f + CreateTime);
                 s.color = Color.blue;
             }
 
-            Debug.Log("InGameTimeCnt :" + NotesManager.InGameTime);
+            timeCnt += Time.fixedDeltaTime;
         }
 
         public abstract void SetInitilizeNotes(NotesInformaiton informaiton);

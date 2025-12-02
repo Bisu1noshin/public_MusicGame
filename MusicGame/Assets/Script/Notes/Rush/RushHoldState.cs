@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Notes
@@ -34,31 +33,35 @@ namespace Notes
 
         protected override void OnUpdate(float deltaTime)
         {
-            this.timeCnt += deltaTime;
-
-            // 一拍ホールドされていたらスコアを増やす
-            if (clapTime >= isHoldTime)
+            // カウントが最大値になったら破壊する
+            if (holdCnt == owner.Max_holdCnt)
             {
-                holdCnt++;
-                owner.score.SetScore(NotesScore.Perfect, holdCnt);
+                owner.NotesActoin -= ActiveNotes;
+                stateMachine.ExecuteTriggerAction(NotesTrigger.DedTrigger);
+                return;
             }
 
-            float clap = owner.NotesManager.InGameTime - 1f - (holdCnt - 1) * clapTime;
-
-            // 一拍たったら遷移
-            if (clapTime >= clap)
+            // 一拍ホールドされていたらスコアを増やす
+            if (clapTime <= isHoldTime)
             {
-                owner.score.SetScore(NotesScore.Miss, holdCnt);
-
-                if (holdCnt == owner.Max_holdCnt)
-                {
-                    stateMachine.ExecuteTriggerAction(NotesTrigger.DedTrigger);
-                    return;
-                }
-
+                owner.score.SetScore(NotesScore.Perfect, holdCnt);
+                holdCnt++;
                 stateMachine.ExecuteTriggerAction(NotesTrigger.ActiveTrigger);
                 return;
             }
+
+            float clap = timeCnt - (holdCnt - 1) * clapTime;
+
+            // 一拍たったら遷移
+            if (clapTime <= clap)
+            {
+                owner.score.SetScore(NotesScore.Miss, holdCnt);
+                holdCnt++;
+                stateMachine.ExecuteTriggerAction(NotesTrigger.ActiveTrigger);
+                return;
+            }
+
+            timeCnt += deltaTime;
         }
 
         protected override void OnExit()
@@ -67,13 +70,9 @@ namespace Notes
         }
 
         // 発火イベント
-        protected override void ActiveNotes(PlayerState state)
+        protected override void ActiveNotes(PlayerState state, float ActiveTime)
         {
-            if (holdCnt == owner.Max_holdCnt) { return; }
-
-            isHoldTime += Time.deltaTime;
-
-            return;
+            isHoldTime += Time.fixedDeltaTime;
         }
     }
 }

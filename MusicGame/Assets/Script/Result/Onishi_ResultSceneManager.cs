@@ -65,6 +65,8 @@ public class Onishi_ResultSceneManager : MonoBehaviour
             Texture2D newTexture = Resources.Load("Image/MusicJacket/MusicJacket_kari") as Texture2D;
             Img_MusicJacket.texture = newTexture;
             Txt_MusicName.text = "Totemo Nagai Kyokumei Demo Yoyuu De Nagareru ~Totemo Sugoi~";
+
+
         }
     }
 }

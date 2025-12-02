@@ -22,10 +22,10 @@ namespace Notes
 
         protected override void OnExit()
         {
-            owner.NotesActoin -= ActiveNotes;
+            
         }
 
         // 発火イベント
-        protected abstract void ActiveNotes(PlayerState state);
+        protected abstract void ActiveNotes(PlayerState state, float ActiveTime);
     }
 }
