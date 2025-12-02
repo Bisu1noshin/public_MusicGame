@@ -35,10 +35,8 @@ namespace Notes
             }
         }
 
-        protected override NotesObject ActiveNotes(PlayerState state)
+        protected override void ActiveNotes(PlayerState state)
         {
-            if (state == Player.PlayerState.Idle) { return null; }
-
             Debug.Log("Flick Active time :" + owner.timeCnt.ToString());
             Debug.Log("Flick Active pos :" + owner.gameObject.transform.position.ToString());
 
@@ -49,7 +47,7 @@ namespace Notes
                 {
                     owner.score.SetScore(NotesScore.Perfect);
                     stateMachine.ExecuteTriggerAction(NotesTrigger.ActiveTrigger);
-                    return null;
+                    return;
                 }
 
                 // goodの処理
@@ -57,14 +55,14 @@ namespace Notes
                 {
                     owner.score.SetScore(NotesScore.Good);
                     stateMachine.ExecuteTriggerAction(NotesTrigger.ActiveTrigger);
-                    return null;
+                    return;
                 }
             }
 
             if (owner.timeCnt >= perfectTime + goodLenge)
                 stateMachine.ExecuteTriggerAction(NotesTrigger.ActiveTrigger);
 
-            return null;
+            return;
         }
     }
 }

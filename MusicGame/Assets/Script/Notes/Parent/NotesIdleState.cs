@@ -26,6 +26,6 @@ namespace Notes
         }
 
         // 発火イベント
-        protected abstract NotesObject ActiveNotes(PlayerState state);
+        protected abstract void ActiveNotes(PlayerState state);
     }
 }
