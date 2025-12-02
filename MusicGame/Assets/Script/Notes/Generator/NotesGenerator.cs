@@ -4,8 +4,6 @@ using UnityEngine;
 namespace Notes {
     public class NotesInformaiton
     {
-        public NotesManager NotesManager { get; private set; }
-
         public float CteateTime { get; private set; }
 
         public GameObject NotesObj { get; private set; }
@@ -19,9 +17,8 @@ namespace Notes {
         public Vector3 CreateRot { get; private set; }
 
         public NotesInformaiton
-            (NotesManager manager,float create,GameObject obj,Notes n,int bpm,Vector3 v,Vector3 q)
+            (float create,GameObject obj,Notes n,int bpm,Vector3 v,Vector3 q)
         {
-            NotesManager = manager;
             CteateTime = create;
             NotesObj = obj;
             Notes = n;
@@ -44,7 +41,7 @@ namespace Notes {
             };
 
             Quaternion q = Quaternion.Euler(informaiton.CreateRot);
-            GameObject go = GameObject.Instantiate(informaiton.NotesObj, informaiton.CreateRot, q);
+            GameObject go = GameObject.Instantiate(informaiton.NotesObj, informaiton.CreatePos, q);
 
             // スクリプトを動的にアタッチ
             go.AddComponent(notes[(int)informaiton.Notes.kind]);

@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Notes
 {
@@ -32,20 +31,21 @@ namespace Notes
         protected override void OnUpdate(float deltaTime)
         {
             // 判定の時間外処理に遷移
-            if (owner.NotesManager.InGameTime >= perfectTime + goodLenge)
+            if (owner.timeCnt >= perfectTime + goodLenge)
             {
                 stateMachine.ExecuteTriggerAction(NotesTrigger.HoldTrigger);
             }
         }
 
-        protected override void ActiveNotes(PlayerState state)
+        protected override void ActiveNotes(PlayerState state, float ActiveTime)
         {
-            if (state == Player.PlayerState.Idle) { return; }
+            float DiscriminationTime = ActiveTime - owner.CreateTime;
+            owner.NotesActoin -= ActiveNotes;
 
             if (state == owner.AnsTrigger)
             {
                 // perfectの処理
-                if (owner.NotesManager.InGameTime <= perfectTime + perfectLenge && owner.NotesManager.InGameTime >= perfectTime - perfectLenge)
+                if (DiscriminationTime <= perfectTime + perfectLenge && DiscriminationTime >= perfectTime - perfectLenge)
                 {
                     owner.score.SetScore(NotesScore.Perfect, 0);
                     stateMachine.ExecuteTriggerAction(NotesTrigger.HoldTrigger);
@@ -53,18 +53,13 @@ namespace Notes
                 }
 
                 // goodの処理
-                if (owner.NotesManager.InGameTime <= perfectTime + goodLenge && owner.NotesManager.InGameTime >= perfectTime - goodLenge)
+                if (DiscriminationTime <= perfectTime + goodLenge && DiscriminationTime >= perfectTime - goodLenge)
                 {
                     owner.score.SetScore(NotesScore.Good, 0);
                     stateMachine.ExecuteTriggerAction(NotesTrigger.HoldTrigger);
                     return;
                 }
             }
-
-            if (owner.NotesManager.InGameTime >= perfectTime + goodLenge)
-                stateMachine.ExecuteTriggerAction(NotesTrigger.HoldTrigger);
-
-            return;
         }
     }
 }
