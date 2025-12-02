@@ -15,8 +15,9 @@ enum SceneState
 public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSelecter
 {
     private Action deleteAction;
-    int selectNum, maxValue;
-    public int SelectNum => selectNum;
+    int maxValue;
+    int[] selectNum;
+    public int[] SelectNum => selectNum;
     public int MaxValue => maxValue;
     public MusicDatabase mDataBase;
     Notes.NotesData[] mCurrNotesData;
@@ -38,9 +39,16 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
         }
         //LoadMusics();
         CreateMusicButtons();
-        selectNum = 0;
+        selectNum = new int[3];
         mCurrNotesData = new Notes.NotesData[4];
         mSceneState = SceneState.MusicSelect;
+        foreach (MusicData md in mDataBase.musicDatabase)
+        {
+            for (int i = 0; i < 4; ++i)
+            {
+                MakeNotesData(ref md.notesData[i]);
+            }
+        }
     }
 
     // Update is called once per frame
@@ -61,19 +69,49 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
     public void GoForward()
     {
         Debug.Log("Forward");
-        selectNum++;
-        if (selectNum > mDataBase.musicDatabase.Count - 1)
+        
+        switch (mSceneState)
         {
-            selectNum = mDataBase.musicDatabase.Count - 1;
+            case SceneState.MusicSelect:
+                selectNum[0]++;
+                if (selectNum[0] > mDataBase.musicDatabase.Count - 1)
+                {
+                    selectNum[0] = mDataBase.musicDatabase.Count - 1;
+                }
+                break;
+            case SceneState.LevelSelect:
+                selectNum[1]++;
+                if (selectNum[1] > maxValue)
+                {
+                    selectNum[1] = mDataBase.musicDatabase.Count - 1;
+                }
+                break;
+            default:
+                break;
         }
+        
     }
     public void GoBack()
     {
         Debug.Log("Back");
-        selectNum--;
-        if (selectNum < 0)
+        switch (mSceneState)
         {
-            selectNum = 0;
+            case SceneState.MusicSelect:
+                selectNum[0]--;
+                if (selectNum[0] < 0)
+                {
+                    selectNum[0] = 0;
+                }
+                break;
+            case SceneState.LevelSelect:
+                selectNum[1]--;
+                if (selectNum[1] < 0)
+                {
+                    selectNum[1] = 0;
+                }
+                break;
+            default:
+                break;
         }
     }
     public void Enter()
@@ -81,13 +119,14 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
         switch (mSceneState)
         {
             case SceneState.MusicSelect:
-                mCurrNotesData = mDataBase.musicDatabase[selectNum].notesData;
+                mCurrNotesData = mDataBase.musicDatabase[selectNum[0]].notesData;
                 deleteAction?.Invoke();
                 deleteAction = null;
-                //CreateLevelButtons();
+                CreateLevelButtons();
                 break;
             case SceneState.LevelSelect:
-
+                deleteAction?.Invoke();
+                deleteAction = null;
                 break;
             case SceneState.EnterGame:
                 break;
@@ -104,9 +143,14 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
             case SceneState.MusicSelect:
                 break;
             case SceneState.LevelSelect:
+                deleteAction?.Invoke();
+                deleteAction = null;
                 CreateMusicButtons();
                 break;
             case SceneState.EnterGame:
+                deleteAction?.Invoke();
+                deleteAction = null;
+                CreateLevelButtons();
                 break;
         }
         if (mSceneState > SceneState.MusicSelect)
@@ -133,14 +177,20 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
         for (int i = 0; i < 4; i++)
         {
             if (mCurrNotesData[i] == null) { break; }
-            //ここに我参上！！
+            deleteAction += LevelButtonController.CreateButton(i, levelName[i]);
+            maxValue = i;
         }
+    }
+    void MakeNotesData(ref NotesData md_)
+    {
+        TextEditor.TextEditor text = new("Music/ShiningStar", "TextData/NotesData/ShiningStar/ShiningStar_NORMAL");
+        md_ = text.NotesReadTxt();
     }
 }
 
 public interface IMusicSelecter
 {
-    int SelectNum { get; }
+    int[] SelectNum { get; }
     void GoForward();
     void GoBack();
     void Enter();
@@ -149,6 +199,6 @@ public interface IMusicSelecter
 
 public interface ILevelSelecter
 {
-    int SelectNum { get; }
+    int[] SelectNum { get; }
     int MaxValue { get; }
 }

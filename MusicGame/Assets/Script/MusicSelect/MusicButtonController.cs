@@ -11,7 +11,7 @@ public class MusicButtonController : MonoBehaviour
     RectTransform rectT;
     TextScroller mTextScroller;
     PropertyController mProperty;
-    int listNum;
+    int id;
     string audioPath;
     private void Awake()
     {
@@ -20,6 +20,10 @@ public class MusicButtonController : MonoBehaviour
         mSelecter = GameObject.Find("SceneManager").GetComponent<MusicSelectSceneManager>();
         mTextScroller = GetComponentInChildren<TextScroller>();
         mProperty = GameObject.Find("Property").GetComponent<PropertyController>();
+        if (id == 0)
+        {
+            mProperty.SetProperty(mText.text, audioPath, string.Empty);
+        }
     }
 
     void Start()
@@ -30,15 +34,15 @@ public class MusicButtonController : MonoBehaviour
     void Update()
     {
         Vector2 pos = new(-350, 0);
-        pos.y += (mSelecter.SelectNum - listNum) * 1.3f * buttonPadding;
+        pos.y += (mSelecter.SelectNum[0] - id) * 1.3f * buttonPadding;
         rectT.anchoredPosition = pos;
-        if (mSelecter.SelectNum == listNum)
+        if (mSelecter.SelectNum[0] == id)
         {
             transform.localScale = Vector3.one * 1.2f;
             if (!mTextScroller.enabled)
             {
                 mTextScroller.enabled = true;
-                mProperty.SetProperty(mText.text, audioPath, null);
+                mProperty.SetProperty(mText.text, audioPath, string.Empty);
             }
         }
         else
@@ -53,12 +57,12 @@ public class MusicButtonController : MonoBehaviour
     public void SetProperty(string text, int value, string audioPath_)
     {
         mText.text = text;
-        listNum = value;
+        id = value;
         audioPath = audioPath_;
     }
     public static Action CreateButton(string text, int value, string audioPath_)
     {
-        GameObject go = Instantiate(Resources.Load("MusicSelecter/button") as GameObject);
+        GameObject go = Instantiate(Resources.Load("MusicSelecter/MusicButton") as GameObject);
         go.name = text;
         go.transform.SetParent(GameObject.Find("Canvas").transform.GetChild(2).transform);
         go.transform.localPosition = Vector3.zero;

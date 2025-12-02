@@ -12,14 +12,22 @@ public class LevelButtonController : MonoBehaviour
     void Awake()
     {
         mText = GetComponentInChildren<TextMeshProUGUI>();
-        mSelecter = GameObject.Find("MusicSelectSceneManager").GetComponent<MusicSelectSceneManager>();
+        //mSelecter = GameObject.Find("SceneManager").GetComponent<MusicSelectSceneManager>();
+        if (GameObject.Find("SceneManager").TryGetComponent<MusicSelectSceneManager>(out var mssm)) {
+            mSelecter = mssm;
+            Debug.Log("SceneManager is found.");
+        }
+        else
+        {
+            Debug.LogError("Error! : SceneManger is not found.");
+        }
         mRect = GetComponent<RectTransform>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (mSelecter.SelectNum == id)
+        if (mSelecter.SelectNum[1] == id)
         {
             transform.localScale = Vector3.one * 1.2f;
         }
@@ -27,14 +35,8 @@ public class LevelButtonController : MonoBehaviour
         {
             transform.localScale = Vector3.one;
         }
-        if (mSelecter.MaxValue == 4)
-        {
-            mRect.anchoredPosition = ((id + 1) * -4) * 250 * Vector2.up;
-        }
-        else
-        {
-            
-        }
+
+        mRect.anchoredPosition = new Vector2(-350.0f, (id + 1) * -200.0f + 540.0f);
     }
     public void SetProperty(int id_, string str_)
     {
@@ -45,8 +47,9 @@ public class LevelButtonController : MonoBehaviour
     {
         GameObject res = Resources.Load("MusicSelecter/LevelButton") as GameObject;
         GameObject go = Instantiate(res);
-        go.transform.SetParent(GameObject.Find("Canvas").transform, false);
+        go.transform.SetParent(GameObject.Find("Canvas").transform.GetChild(2).transform);
         go.transform.localPosition = new(-350, 0, 0);
+        go.name = str_;
         go.transform.localScale = Vector3.one;
         go.transform.localRotation = Quaternion.identity;
         LevelButtonController lbc = go.GetComponent<LevelButtonController>();
