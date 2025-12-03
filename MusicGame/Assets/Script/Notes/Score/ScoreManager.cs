@@ -15,10 +15,10 @@ namespace Notes
 
         private void Awake()
         {
+            if (instance) { Destroy(this.gameObject); }
+
             if (instance == null)
                 instance = this;
-
-            if (instance) { Destroy(this.gameObject); }
 
             score = new();
         }

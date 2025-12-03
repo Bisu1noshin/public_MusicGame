@@ -4,6 +4,7 @@ using Notes;
 using Player;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 enum SceneState
 {
@@ -147,6 +148,8 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
                 mAudio.PlayOneShot(enter);
                 break;
             case SceneState.EnterGame:
+
+                SceneManager.LoadScene("NotesTest");
                 break;
         }
         if (mSceneState != SceneState.EnterGame)

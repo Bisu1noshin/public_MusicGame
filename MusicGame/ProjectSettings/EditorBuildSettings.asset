@@ -9,6 +9,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Ooo/Ooo_Title.unity
     guid: 04dadac62f809004d8d29338cdc6ba33
   - enabled: 1
+    path: Assets/Scenes/Kanda/NotesTest.unity
+    guid: 59c97817304ba484f9c279e8c6e09d08
+  - enabled: 1
+    path: Assets/Scenes/Kameda/Test_MusicSelectScene.unity
+    guid: ec1630ec4ade81a458558bd89774be29
+  - enabled: 1
     path: Assets/Scenes/Onishi/Onishi_Credit.unity
     guid: 202384ae57444b24ba6cd543eeb638e7
   m_configObjects:

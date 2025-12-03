@@ -12,6 +12,7 @@ namespace Notes {
         protected override void OnEnter()
         {
             owner.score.DebugLogScore();
+            ScoreManager.instance.SetScore(owner.score.GetTotalScore());
         }
 
         protected override void OnUpdate(float deltaTime)

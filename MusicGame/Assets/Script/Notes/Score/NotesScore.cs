@@ -36,7 +36,7 @@ namespace Notes
             score[index] = s_;
         }
 
-        public int GetTotalScore() {
+        public int GetTotalScoreToInt() {
 
             int totalScore = 0;
 
@@ -46,6 +46,11 @@ namespace Notes
             }
 
             return totalScore;
+        }
+
+        public NotesScore[] GetTotalScore()
+        {
+            return score;
         }
 
         public int[] GetTotalScoreData()

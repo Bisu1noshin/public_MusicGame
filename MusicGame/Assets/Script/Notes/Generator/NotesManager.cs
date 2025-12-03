@@ -1,6 +1,8 @@
 ﻿using System.Linq;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 
 namespace Notes {
 
@@ -92,6 +94,13 @@ namespace Notes {
             {
                 if (isMusic)
                     isMusic = DebugMusic();
+            }
+
+            // 曲の終わりを認識
+            if (!audioSource.isPlaying && !isMusic)
+            {
+                SceneManager.LoadScene("Onishi_Credit");
+                Debug.Log("曲が終了しました");
             }
 
             // ノーツの召喚
