@@ -99,7 +99,7 @@ namespace Notes {
             // 曲の終わりを認識
             if (!audioSource.isPlaying && !isMusic)
             {
-                SceneManager.LoadScene("Onishi_Credit");
+                SceneManager.LoadScene("Onishi_Result");
                 Debug.Log("曲が終了しました");
             }
 
