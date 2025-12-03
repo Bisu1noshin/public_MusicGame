@@ -16,12 +16,18 @@ enum SceneState
 public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSelecter
 {
     private Action deleteAction = null;
-    public AudioSource mAudio { get; set; }
+    AudioSource mAudio;
 
     private AudioClip enter, cancel, scroll, beep;
 
     int maxValue;
     int[] selectNum;
+    bool startSelect;
+    public bool CanSelect
+    {
+        get { return startSelect; }
+        set { startSelect = value; }
+    }
     public int[] SelectNum => selectNum;
     public int MaxValue => maxValue;
     public MusicDatabase mDataBase;
@@ -49,6 +55,7 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
         selectNum = new int[3];
         mCurrNotesData = new Notes.NotesData[4];
         mSceneState = SceneState.MusicSelect;
+        startSelect = false;
         mAudio = GetComponent<AudioSource>();
         enter = Resources.Load<AudioClip>("MusicSelecter/Sound/Enter");
         cancel = Resources.Load<AudioClip>("MusicSelecter/Sound/Cancel");
@@ -62,15 +69,9 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
             }
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
     public void GoForward()
     {
-        Debug.Log("Forward");
+        if (!startSelect) return;
         
         switch (mSceneState)
         {
@@ -103,7 +104,7 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
     }
     public void GoBack()
     {
-        Debug.Log("Back");
+        if (!startSelect) return;
         switch (mSceneState)
         {
             case SceneState.MusicSelect:
@@ -134,6 +135,7 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
     }
     public void Enter()
     {
+        if (!startSelect) return;
         switch (mSceneState)
         {
             case SceneState.MusicSelect:
@@ -159,6 +161,7 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
     }
     public void Undo()
     {
+        if (!startSelect) return;
         switch (mSceneState)
         {
             case SceneState.MusicSelect:
@@ -230,6 +233,7 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
 public interface IMusicSelecter
 {
     int[] SelectNum { get; }
+    bool CanSelect { get; set; }
     void GoForward();
     void GoBack();
     void Enter();
