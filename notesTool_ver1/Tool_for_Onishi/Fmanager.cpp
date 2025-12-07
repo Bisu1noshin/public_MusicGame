@@ -91,7 +91,7 @@ void FManager::FMOD_Init() {
 	std::FILE* f = fopen(musicName.c_str(), "r");
 	if (f == nullptr) { std::cout << "File isn't exist : " << musicName << std::endl; }
 
-	re = system->createSound(musicName.c_str(), FMOD_DEFAULT, nullptr, &sound);
+	re = system->createSound(musicName.c_str(), FMOD_LOOP_NORMAL, nullptr, &sound);
 	FMOD_Check(re);
 	if (re != FMOD_OK) { std::cout << "Failed to create stream\n"; }
 	re = system->playSound(sound, nullptr, false, &channel);

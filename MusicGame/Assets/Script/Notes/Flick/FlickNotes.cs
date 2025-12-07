@@ -2,51 +2,47 @@
 using Player;
 using UnityEngine;
 
-public class FlickNotes : NotesParent
+namespace Notes
 {
-    private const float perfectLenge = 0.033f;
-    private const float goodLenge = 0.05f;
-    private bool isFirst;
-
-    protected override void Initialize() {
-
-        // 変数の初期化
-        {
-            score = new NotesScoreData();
-            side = NotesSide.Left;
-            AnsTrigger = PlayerState.Left;
-            timeCnt = 0;
-            BPM = 200;
-            score.SetScore(NotesScore.Miss);
-            isFirst = true;
-        }
-    }
-
-    public override void ActiveNotes(Player.PlayerState state)
+    public class FlickNotes : NotesObject
     {
-        if (state == Player.PlayerState.Idle) { return; }
-        if (st.GetState() == NotesState.Ded) { return; }
+        private const float perfectLenge = 0.033f;
+        private const float goodLenge = 0.05f;
 
-        if (state == AnsTrigger)
+        public override void SetInitilizeNotes(NotesInformaiton i_)
         {
-            // perfectの処理
-            if (this.timeCnt <= perfectTime + perfectLenge && this.timeCnt >= perfectTime - perfectLenge)
+            // 方向指定
+            AnsTrigger = (PlayerState)(i_.Notes.dir);
+
+            // BPMの定義
+            BPM = i_.BPM;            
+
+            // 変数の初期化
             {
-                score.SetScore(NotesScore.Perfect, 0);
-                st.ExecuteTriggerAction(NotesTrigger.DedTrigger);
-                return;
+                score = new NotesScoreData();
+                score.SetScore(NotesScore.Miss);
+                CreateTime = i_.CteateTime;
             }
 
-            // goodの処理
-            if (this.timeCnt <= perfectTime + goodLenge && this.timeCnt >= perfectTime - goodLenge)
+            // ステートマシンの初期化
             {
-                score.SetScore(NotesScore.Good, 0);
-                st.ExecuteTriggerAction(NotesTrigger.DedTrigger);
-                return;
-            }   
-        }
+                st = new StateMachine<NotesState, NotesTrigger>(NotesState.Idle);
 
-        if (this.timeCnt >= perfectTime + goodLenge)
-            st.ExecuteTriggerAction(NotesTrigger.DedTrigger);
+                // ステートマシーンの初期化
+                st.SetupState(NotesState.Idle, new FlickIdleState(this, st));
+                st.SetupState(NotesState.Active, new FlickActiveState(this, st));
+                st.SetupState(NotesState.Ded, new FlickDedState(this, st));
+
+                // 遷移条件の登録
+
+                st.AddTransition(NotesState.Idle, NotesState.Active, NotesTrigger.ActiveTrigger);
+                st.AddTransition(NotesState.Idle, NotesState.Hold, NotesTrigger.HoldTrigger);
+                st.AddTransition(NotesState.Hold, NotesState.Active, NotesTrigger.ActiveTrigger);
+                st.AddTransition(NotesState.Active, NotesState.Hold, NotesTrigger.HoldTrigger);
+                st.AddTransition(NotesState.Active, NotesState.Ded, NotesTrigger.DedTrigger);
+            }
+
+        }
     }
+
 }

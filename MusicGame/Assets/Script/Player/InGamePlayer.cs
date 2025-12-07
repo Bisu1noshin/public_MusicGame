@@ -1,17 +1,17 @@
-﻿using System;
+﻿using Notes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
 namespace Player
 {
     public enum PlayerState {
 
-        None,
+        None = -1,
         Up,
+        Right,
         Down,
         Left,
-        Right,
         Idle
     }
 
@@ -30,27 +30,44 @@ namespace Player
 
     public class InGamePlayer : PlayerParent {
 
-        public PlayerState LeftState { get; private set; }
-        public PlayerState RightState { get; private set; }
+        private PlayerState[] state;
 
         public ReceiveInput input;
 
-        Notes.NotesParent notes;
+        private NotesObject[] notes;
+        private Notes.NotesManager manager;
 
         private void Start()
         {
             input = new ReceiveInput();
 
-            RightState = PlayerState.Idle;
+            state = new PlayerState[2];
+            for (int i = 0; i < state.Length; i++)
+            {
+                state[i] = PlayerState.Idle;
+            }
 
-            notes = null;
+            notes = new NotesObject[2];
+
+            manager = GameObject.Find("NotesGenarator").GetComponent<Notes.NotesManager>();
         }
 
         private void Update()
         {
             // ノーツの処理
-            notes?.ActiveNotes(LeftState);
+            {
+                for (int i = 0; i < state.Length; i++)
+                {
+                    if (state[i] != PlayerState.Idle)
+                    {
+                        notes[i]?.NotesActoin?.Invoke(state[i], manager.InGameTime);
+                        state[i] = PlayerState.Idle;
+                    }
+                }
+            }
         }
+
+        // 入力アクション
 
         protected override void OnButtonA() { }
         protected override void UpButtonA() { }
@@ -60,20 +77,45 @@ namespace Player
         protected override void UpButtonX() { }
         protected override void OnButtonY() { }
         protected override void UpButtonY() { }
-        protected override void MoveUpdate(Vector2 vec) {
 
-            LeftState = InputAction(vec);
-        }
-        protected override void LookUpdate(Vector2 vec) {
-
-            RightState = InputAction(vec);
+        protected override void LeftStickStarted(Vector2 vec)
+        {
+            state[0] = InputAction(vec);
         }
 
-        private void OnTriggerStay2D(Collider2D collision) {
+        protected override void LeftStickPerformed(Vector2 vec)
+        {
+            state[0] = InputAction(vec);
+        }
 
-            if (collision.gameObject.TryGetComponent<Notes.NotesParent>(out var n_)) {
+        protected override void LeftStickCanceled(Vector2 vec)
+        {
+        }
 
-                notes = n_;
+        protected override void RightStickStarted(Vector2 vec)
+        {
+            state[1] = InputAction(vec);
+        }
+
+        protected override void RightStickPerformed(Vector2 vec)
+        {
+            state[1] = InputAction(vec);
+        }
+
+        protected override void RightStickCanceled(Vector2 vec)
+        {
+
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            int lane = 1;
+            if (collision.gameObject.transform.position.x < 0) { lane = 0; }
+
+            if (collision.gameObject.TryGetComponent<Notes.NotesObject>(out var n_))
+            {
+                if (notes[lane] != null) { notes[lane] = null; }
+                notes[lane] = n_;
             }
         }
 
@@ -81,10 +123,10 @@ namespace Player
 
             PlayerState state = PlayerState.Idle;
 
-            if (vec.x >= 0.7) { state = PlayerState.Right; }
-            if (vec.x <= -0.7) { state = PlayerState.Left; }
-            if (vec.y >= 0.7) { state = PlayerState.Up; }
-            if (vec.y <= -0.7) { state = PlayerState.Down; }
+            if (vec.x > 0) { state = PlayerState.Right; }
+            if (vec.x < 0) { state = PlayerState.Left; }
+            if (vec.y > 0) { state = PlayerState.Up; }
+            if (vec.y < 0) { state = PlayerState.Down; }
 
             return state;
         }

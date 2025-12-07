@@ -6,8 +6,20 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
+    path: Assets/Scenes/Ooo/Ooo_Title.unity
+    guid: 04dadac62f809004d8d29338cdc6ba33
+  - enabled: 1
+    path: Assets/Scenes/Kanda/NotesTest.unity
+    guid: 59c97817304ba484f9c279e8c6e09d08
+  - enabled: 1
+    path: Assets/Scenes/Kameda/Test_MusicSelectScene.unity
+    guid: ec1630ec4ade81a458558bd89774be29
+  - enabled: 1
+    path: Assets/Scenes/Onishi/Onishi_Credit.unity
+    guid: 202384ae57444b24ba6cd543eeb638e7
+  - enabled: 1
+    path: Assets/Scenes/Onishi/Onishi_Result.unity
+    guid: 827b6887297f22f44bcc36b0736f3c67
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

@@ -1,0 +1,76 @@
+﻿using UnityEngine;
+using TMPro;
+using System;
+
+public class MusicButtonController : MonoBehaviour
+{
+    IMusicSelecter mSelecter;
+    const float buttonPadding = 180;
+    TextMeshProUGUI mText;
+    RectTransform rectT;
+    TextScroller mTextScroller;
+    PropertyController mProperty;
+    int id;
+    string audioPath;
+    private void Awake()
+    {
+        mText = GetComponentInChildren<TextMeshProUGUI>();
+        rectT = GetComponent<RectTransform>();
+        mSelecter = GameObject.Find("SceneManager").GetComponent<MusicSelectSceneManager>();
+        mTextScroller = GetComponentInChildren<TextScroller>();
+        mProperty = GameObject.Find("Property").GetComponent<PropertyController>();
+    }
+
+    void Start()
+    {
+        if (id == 0)
+        {
+            mProperty.SetProperty(mText.text, audioPath, string.Empty);
+        }
+    }
+
+    void Update()
+    {
+        Vector2 pos = new(-350, 0);
+        pos.y += (mSelecter.SelectNum[0] - id) * 1.3f * buttonPadding;
+        rectT.anchoredPosition = pos;
+        if (mSelecter.SelectNum[0] == id)
+        {
+            transform.localScale = Vector3.one * 1.2f;
+            if (!mTextScroller.enabled)
+            {
+                mTextScroller.enabled = true;
+                mProperty.SetProperty(mText.text, audioPath, string.Empty);
+            }
+        }
+        else
+        {
+            transform.localScale = Vector3.one;
+            if (mTextScroller.enabled)
+            {
+                mTextScroller.enabled = false;
+            }
+        }
+    }
+    public void SetInfo(string text, int value, string audioPath_)
+    {
+        mText.text = text;
+        id = value;
+        audioPath = audioPath_;
+    }
+    public static Action CreateInstance(string text, int value, string audioPath_)
+    {
+        GameObject go = Instantiate(Resources.Load("MusicSelecter/MusicButton") as GameObject);
+        go.name = text;
+        go.transform.SetParent(GameObject.Find("Canvas").transform.GetChild(1).transform);
+        go.transform.localPosition = Vector3.zero;
+        go.transform.localRotation = Quaternion.identity;
+        go.transform.localScale = Vector3.one;
+        MusicButtonController controller = go.GetComponent<MusicButtonController>();
+        controller.SetInfo(text, value, audioPath_);
+
+        Action f = () => { Destroy(go); };
+
+        return f;
+    }
+}

@@ -1,0 +1,65 @@
+﻿using Player;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace Notes
+{
+    public class HoldIdleState : NotesIdleState
+    {
+        private const float perfectLenge = 0.033f;
+        private const float goodLenge = 0.05f;
+
+        private const float perfectTime = 1.0f;
+
+        public HoldIdleState(NotesObject owner, IStateMachine<NotesTrigger> st) : base(owner, st)
+        {
+
+        }
+
+        protected override void OnEnter()
+        {
+            base.OnEnter();
+        }
+
+        protected override void OnExit()
+        {
+            base.OnExit();
+        }
+
+        protected override void OnUpdate(float deltaTime)
+        {
+            // 判定の時間外処理に遷移
+            if (owner.timeCnt >= perfectTime + goodLenge)
+            {
+                stateMachine.ExecuteTriggerAction(NotesTrigger.HoldTrigger);
+            }
+        }
+
+        protected override void ActiveNotes(PlayerState state, float ActiveTime)
+        {
+            float DiscriminationTime = ActiveTime - owner.CreateTime;
+            owner.NotesActoin -= ActiveNotes;
+
+            if (state == owner.AnsTrigger)
+            {
+                // perfectの処理
+                if (DiscriminationTime <= perfectTime + perfectLenge && DiscriminationTime >= perfectTime - perfectLenge)
+                {
+                    owner.score.SetScore(NotesScore.Perfect, 0);
+                    stateMachine.ExecuteTriggerAction(NotesTrigger.HoldTrigger);
+                    return;
+                }
+
+                // goodの処理
+                if (DiscriminationTime <= perfectTime + goodLenge && DiscriminationTime >= perfectTime - goodLenge)
+                {
+                    owner.score.SetScore(NotesScore.Good, 0);
+                    stateMachine.ExecuteTriggerAction(NotesTrigger.HoldTrigger);
+                    return;
+                }
+            }
+        }
+    }
+}

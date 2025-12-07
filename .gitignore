@@ -1,3 +1,2 @@
-# privateなファイルがあれば追加してね
-
-/[Ll]ostFile/
+// privateなファイルがあれば追加してね
+/LostFile/
