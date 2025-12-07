@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Cancel(B)
+  m_text: "\u623B\u308B(B)"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6746cba2a7d2e3c4abf2219fb2b582f7, type: 2}
   m_sharedMaterial: {fileID: 3474744287128314936, guid: 6746cba2a7d2e3c4abf2219fb2b582f7, type: 2}
@@ -323,7 +323,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 300, y: 150}
+  m_SizeDelta: {x: 400, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8236899619421522867
 CanvasRenderer:
@@ -353,7 +353,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: OK(A)
+  m_text: "\u6C7A\u5B9A(A)"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6746cba2a7d2e3c4abf2219fb2b582f7, type: 2}
   m_sharedMaterial: {fileID: 3474744287128314936, guid: 6746cba2a7d2e3c4abf2219fb2b582f7, type: 2}
@@ -523,7 +523,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535

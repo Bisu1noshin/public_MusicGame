@@ -16,17 +16,13 @@ public class PropertyController : MonoBehaviour
         mThumbnail = transform.GetChild(0).GetComponent<Image>();
         //mSelecter = GameObject.Find("SceneManager").GetComponent<MusicSelectSceneManager>();
     }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
     {
         
     }
+
     public void SetProperty(string text, string audioPath, string imagePath)
     {
         mText.text = text;
