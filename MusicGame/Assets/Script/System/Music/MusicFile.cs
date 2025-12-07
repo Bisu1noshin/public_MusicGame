@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-namespace MusicFile
-{
-}
+public class MusicFile {
+    public string name { get; protected set; }
+    public AudioClip src { get; protected set; }
 
+}
