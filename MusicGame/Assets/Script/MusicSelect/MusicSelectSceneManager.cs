@@ -15,7 +15,8 @@ enum SceneState
 
 public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSelecter
 {
-    private Action deleteAction = null;
+    public static float MaxX => 960.0f;
+    private Action deleteAction = null, createAction = null;
     AudioSource mAudio;
 
     private AudioClip enter, cancel, scroll, beep;
@@ -33,6 +34,7 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
     public MusicDatabase mDataBase;
     Notes.NotesData[] mCurrNotesData;
     SceneState mSceneState;
+    float timer = 0.0f;
     readonly string[] levelName =
     {
         "NORMAL",
@@ -43,24 +45,11 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
 
     private void Awake()
     {
-        //Application.targetFrameRate = 60;
-        if (!GameObject.Find("Player_forMusicSelect"))
-        {
-            CreatePlayer();
-        }
-        
-        deleteAction += PropertyController.CreateInstance();
-        CreateMusicButtons();
+        Init();
 
-        selectNum = new int[3];
-        mCurrNotesData = new Notes.NotesData[4];
-        mSceneState = SceneState.MusicSelect;
-        startSelect = false;
-        mAudio = GetComponent<AudioSource>();
-        enter = Resources.Load<AudioClip>("MusicSelecter/Sound/Enter");
-        cancel = Resources.Load<AudioClip>("MusicSelecter/Sound/Cancel");
-        scroll = Resources.Load<AudioClip>("MusicSelecter/Sound/Scroll");
-        beep = Resources.Load<AudioClip>("MusicSelecter/Sound/Beep");
+        CreateMusicButtons().Invoke();
+
+        //これはダミーデータ
         foreach (MusicData md in mDataBase.musicDatabase)
         {
             for (int i = 0; i < 4; ++i)
@@ -69,9 +58,23 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
             }
         }
     }
+
+    void Update()
+    {
+        if (timer <= 0.0f && createAction != null)
+        {
+            CreateObj();
+        }
+        if (timer > 0.0f)
+        {
+            timer -= Time.deltaTime;
+        }
+    }
+
     public void GoForward()
     {
         if (!startSelect) return;
+        if (timer > 0.0f) return;
         
         switch (mSceneState)
         {
@@ -105,6 +108,8 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
     public void GoBack()
     {
         if (!startSelect) return;
+        if (timer > 0.0f) return;
+
         switch (mSceneState)
         {
             case SceneState.MusicSelect:
@@ -136,17 +141,20 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
     public void Enter()
     {
         if (!startSelect) return;
+        if (timer > 0.0f) return;
+
         switch (mSceneState)
         {
             case SceneState.MusicSelect:
                 mCurrNotesData = mDataBase.musicDatabase[selectNum[0]].notesData;
                 DeleteObj();
-                CreateLevelButtons();
+                createAction += CreateLevelButtons();
                 mAudio.PlayOneShot(enter);
+                timer = 0.15f;
                 break;
             case SceneState.LevelSelect:
                 //DeleteObj();
-                CreatePopupInstance();
+                createAction += CreatePopup();
                 mAudio.PlayOneShot(enter);
                 break;
             case SceneState.EnterGame:
@@ -162,19 +170,20 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
     public void Undo()
     {
         if (!startSelect) return;
+        if (timer > 0.0f) return;
+
         switch (mSceneState)
         {
             case SceneState.MusicSelect:
                 break;
             case SceneState.LevelSelect:
                 DeleteObj();
-                deleteAction += PropertyController.CreateInstance();
-                CreateMusicButtons();
+                createAction += CreateMusicButtons();
                 mAudio.PlayOneShot(cancel);
                 break;
             case SceneState.EnterGame:
                 DeleteObj();
-                CreateLevelButtons();
+                createAction += CreateLevelButtons();
                 mAudio.PlayOneShot(cancel);
                 break;
         }
@@ -183,50 +192,92 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
             mSceneState--;
         }
     }
+
     Player_forMusicSelect CreatePlayer()
     {
         GameObject res = Resources.Load("MusicSelecter/Player_forMusicSelect") as GameObject;
         GameObject instance = Instantiate(res);
         return instance.GetComponent<Player.Player_forMusicSelect>();
     }
-    void CreateMusicButtons()
+
+    Action CreateMusicButtons()
     {
-        foreach (MusicData m in mDataBase.musicDatabase)
-        {
-            deleteAction += MusicButtonController.CreateInstance(m.name, m.id, m.demoMusicPath);
-        }
+        Action f = () => {
+            deleteAction += PropertyController.CreateInstance();
+            foreach (MusicData m in mDataBase.musicDatabase)
+            {
+                deleteAction += MusicButtonController.CreateInstance(m.name, m.id, m.demoMusicPath);
+            }
+            
+        };
+        return f;
     }
 
-    void CreateLevelButtons()
+    Action CreateLevelButtons()
     {
-        for (int i = 0; i < 4; i++)
-        {
-            if (mCurrNotesData[i] == null) { break; }
-            deleteAction += LevelButtonController.CreateInstance(i, levelName[i]);
-            maxValue = i;
-        }
+        Action f = () => {
+            for (int i = 0; i < 4; i++)
+            {
+                if (mCurrNotesData[i] == null) { break; }
+                deleteAction += LevelButtonController.CreateInstance(i, levelName[i]);
+                maxValue = i;
+            }
+        };
+        return f;
     }
+
     void MakeNotesData(ref NotesData md_)
     {
         TextEditor.TextEditor text = new("Music/ShiningStar", "TextData/NotesData/ShiningStar/ShiningStar_NORMAL");
         md_ = text.NotesReadTxt();
     }
+
     void DeleteObj()
     {
         deleteAction?.Invoke();
         deleteAction = null;
     }
-    void CreatePopupInstance()
+
+    void CreateObj()
+    {
+        createAction?.Invoke();
+        createAction = null;
+    }
+
+    Action CreatePopup()
+    {
+        Action f = () => { deleteAction += MakePopupInstance(); };
+        return f;
+    }
+
+    Action MakePopupInstance()
     {
         var loadObj = Resources.Load<GameObject>("MusicSelecter/Popup_EnterGame");
-        Debug.Log($"load: {loadObj.name}");
 
         GameObject go = Instantiate(loadObj);
         go.transform.SetParent(GameObject.Find("Canvas").transform);
-        go.transform.localPosition = Vector3.zero;
+        go.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
         go.transform.localScale = Vector3.one;
-        go.transform.localRotation = Quaternion.identity;
-        deleteAction += () => { Destroy(go); };
+        
+        Action f = () => { Destroy(go); };
+        return f;
+    }
+
+    void Init()
+    {
+        if (!GameObject.Find("Player_forMusicSelect"))
+        {
+            CreatePlayer();
+        }
+        selectNum = new int[3];
+        mCurrNotesData = new Notes.NotesData[4];
+        mSceneState = SceneState.MusicSelect;
+        startSelect = false;
+        mAudio = GetComponent<AudioSource>();
+        enter = Resources.Load<AudioClip>("MusicSelecter/Sound/Enter");
+        cancel = Resources.Load<AudioClip>("MusicSelecter/Sound/Cancel");
+        scroll = Resources.Load<AudioClip>("MusicSelecter/Sound/Scroll");
+        beep = Resources.Load<AudioClip>("MusicSelecter/Sound/Beep");
     }
 }
 

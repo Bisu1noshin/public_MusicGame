@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class LevelButtonController : MonoBehaviour
 {
+    public ButtonState mState { get; private set; }
     ILevelSelecter mSelecter;
     TextMeshProUGUI mText;
     RectTransform mRect;
     int id;
+    float timer;
 
     void Awake()
     {
@@ -41,16 +43,17 @@ public class LevelButtonController : MonoBehaviour
     {
         id = id_;
         mText.text = str_;
+        mState = ButtonState.Appear;
     }
     public static Action CreateInstance(int id_, string str_)
     {
         GameObject res = Resources.Load("MusicSelecter/LevelButton") as GameObject;
         GameObject go = Instantiate(res);
         go.transform.SetParent(GameObject.Find("Canvas").transform.GetChild(1).transform);
-        go.transform.localPosition = new(-350, 0, 0);
+        go.transform.SetLocalPositionAndRotation(new(-350, 0, 0), Quaternion.identity);
         go.name = str_;
         go.transform.localScale = Vector3.one;
-        go.transform.localRotation = Quaternion.identity;
+        
         LevelButtonController lbc = go.GetComponent<LevelButtonController>();
         lbc.SetProperty(id_, str_);
 
