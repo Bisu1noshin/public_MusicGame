@@ -9,18 +9,45 @@ public class PropertyController : MonoBehaviour
     TextMeshProUGUI mText;
     AudioSource mAudio;
     Image mThumbnail;
+    ButtonState mState;
+    RectTransform mRect;
+
     private void Awake()
     {
         mText = transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>();
         mAudio = GetComponent<AudioSource>();
         mThumbnail = transform.GetChild(0).GetComponent<Image>();
-        //mSelecter = GameObject.Find("SceneManager").GetComponent<MusicSelectSceneManager>();
+        mRect = GetComponent<RectTransform>();
+        mState = ButtonState.Appear;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        switch (mState)
+        {
+            case ButtonState.Appear:
+                float y = Mathf.Lerp(mRect.anchoredPosition.y, 0.0f, 0.1f);
+                mRect.anchoredPosition = new(550.0f, y);
+                if (y < -1.5e-3f)
+                {
+                    mRect.anchoredPosition = new(550.0f, 0.0f);
+                    mState = ButtonState.Active;
+                }
+                break;
+            case ButtonState.Active:
+                break;
+            case ButtonState.Dead:
+                y = Mathf.Lerp(mRect.anchoredPosition.y, -1e4f, 0.1f);
+                mRect.anchoredPosition = new(550.0f, y);
+                if (y + 1e4f < -1.5e-3f)
+                {
+                    Destroy(gameObject);
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     public void SetProperty(string text, string audioPath, string imagePath)
@@ -47,9 +74,8 @@ public class PropertyController : MonoBehaviour
         GameObject go = Instantiate(Resources.Load<GameObject>("MusicSelecter/Property"));
         go.name = "Property";
         go.transform.SetParent(GameObject.Find("Canvas").transform);
-        go.transform.localPosition = new Vector2(550, 0);
+        go.transform.SetLocalPositionAndRotation(new Vector2(550.0f, -1e4f), Quaternion.identity);
         go.transform.localScale = Vector3.one;
-        go.transform.localRotation = Quaternion.identity;
 
         Action f = () => { Destroy(go); };
         return f;
