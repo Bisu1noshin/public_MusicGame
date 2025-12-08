@@ -8,11 +8,6 @@ namespace Notes
 {
     public class RushIdleNotes : NotesIdleState
     {
-        private const float perfectLenge = 0.033f;
-        private const float goodLenge = 0.05f;
-
-        private const float perfectTime = 2.0f;
-
         public RushIdleNotes(NotesObject owner, IStateMachine<NotesTrigger> st) : base(owner, st)
         {
 
@@ -31,7 +26,7 @@ namespace Notes
         protected override void OnUpdate(float deltaTime)
         {
             // 判定の時間外処理に遷移
-            if (owner.timeCnt >= perfectTime + goodLenge)
+            if (owner.timeCnt >= owner.Judg.JudgmentTimeDelay + owner.Judg.GoodTime)
             {
                 stateMachine.ExecuteTriggerAction(NotesTrigger.HoldTrigger);
             }
@@ -43,7 +38,8 @@ namespace Notes
             owner.NotesActoin -= ActiveNotes;
 
             // perfectの処理
-            if (DiscriminationTime <= perfectTime + perfectLenge && DiscriminationTime >= perfectTime - perfectLenge)
+            if (DiscriminationTime <= owner.Judg.JudgmentTimeDelay + owner.Judg.PerfectTime
+                && DiscriminationTime >= owner.Judg.JudgmentTimeDelay - owner.Judg.PerfectTime)
             {
                 owner.score.SetScore(NotesScore.Perfect, 0);
                 stateMachine.ExecuteTriggerAction(NotesTrigger.HoldTrigger);
@@ -51,7 +47,8 @@ namespace Notes
             }
 
             // goodの処理  
-            if (DiscriminationTime <= perfectTime + goodLenge && DiscriminationTime >= perfectTime - goodLenge)
+            if (DiscriminationTime <= owner.Judg.JudgmentTimeDelay + owner.Judg.GoodTime
+                && DiscriminationTime >= owner.Judg.JudgmentTimeDelay - owner.Judg.GoodTime)
             {
                 owner.score.SetScore(NotesScore.Good, 0);
                 stateMachine.ExecuteTriggerAction(NotesTrigger.HoldTrigger);

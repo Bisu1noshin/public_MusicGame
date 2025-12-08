@@ -8,6 +8,7 @@ namespace Notes {
     public class NotesManager : MonoBehaviour
     {
         [SerializeField] private Vector3[] NotesPosition = new Vector3[2];
+        [SerializeField] private NotesManagerDatabase NotesManagerData;
 
         public float InGameTime = default;
 
@@ -21,8 +22,8 @@ namespace Notes {
         private bool isMusic = true;
         private bool goinstance = false;
 
-        private const string n_path = "TextData/NotesData/ShiningStar/ShiningStar_NORMAL";
-        private const string m_path = "Music/ShiningStar";
+        private string n_path = "TextData/NotesData/ShiningStar/ShiningStar_NORMAL";
+        private string m_path = "Music/ShiningStar";
 
         private const string FlicNotesPath = "Notes/FlickNotes";
         private const string HoldNotesPath = "Notes/HoldNotes";
@@ -46,6 +47,13 @@ namespace Notes {
                 {
                     rotate[i] = new Vector3(0, 0, 90 * i);
                 }
+            }
+
+            // スクリプタルオブジェクトから読み込み
+            if (NotesManagerData != null)
+            {
+                n_path = NotesManagerData.fData.NotesDataFilePath;
+                m_path = NotesManagerData.fData.MusicFilePath;
             }
 
             // ノーツオブジェクトの読み込み
@@ -127,6 +135,7 @@ namespace Notes {
                 obj: notes[(int)n_.kind],
                 n: n_,
                 bpm: BPM,
+                j: NotesManagerData.nData,
                 v: NotesPosition[lane],
                 q: rotate[(int)n_.dir]
                 );
@@ -163,6 +172,7 @@ namespace Notes {
                 obj: notes[(int)notes_.kind],
                 n: notes_,
                 bpm: BPM,
+                j: NotesManagerData.nData,
                 v: NotesPosition[0],
                 q: rotate[(int)notes_.dir]
                 );

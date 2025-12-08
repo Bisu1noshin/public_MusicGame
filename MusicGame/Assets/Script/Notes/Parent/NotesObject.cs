@@ -40,8 +40,10 @@ namespace Notes {
 
         public int Max_holdCnt { get; protected set; }
 
+        public NotesManagerForNotesData Judg { get; protected set; }
 
-        private const float fallSpeed = 8.0f;
+
+        private float fallSpeed;
 
         protected StateMachine<NotesState, NotesTrigger> st;
 
@@ -55,7 +57,7 @@ namespace Notes {
 
         protected virtual void Start() {
 
-            
+            fallSpeed = Judg.JudgmentTimeDelay * 8.0f;
         }
 
 
@@ -68,7 +70,7 @@ namespace Notes {
             transform.position += new Vector3(0, -1 * fallSpeed * Time.fixedDeltaTime, 0);
 
             // パーフェクト
-            if (timeCnt >= 1f)
+            if (timeCnt >= Judg.JudgmentTimeDelay)
             {
                 var s = GetComponentInChildren<SpriteRenderer>();
                 //NotesActoin?.Invoke(AnsTrigger, 1f + CreateTime);
