@@ -8,7 +8,7 @@ namespace Notes
 {
     public class FlickActiveState : NotesActiveState
     {
-        private float timeCnt; 
+        private float timeCnt;
 
         public FlickActiveState(NotesObject owner, IStateMachine<NotesTrigger> st) : base(owner, st)
         {

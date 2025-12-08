@@ -44,7 +44,6 @@ namespace Notes {
 
 
         private float fallSpeed;
-
         protected StateMachine<NotesState, NotesTrigger> st;
 
         // イベントアクションのデリゲート

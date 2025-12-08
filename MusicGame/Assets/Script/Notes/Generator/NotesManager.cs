@@ -34,7 +34,7 @@ namespace Notes {
         // ノーツのプレファブ
         private GameObject[] notes;
 
-        private void Awake()
+        private async UniTask Awake()
         {
             // 変数の初期化
             {
@@ -81,8 +81,9 @@ namespace Notes {
             {
                 audioSource = GetComponent<AudioSource>();
 
-                audioSource.resource = Resources.Load<AudioResource>(m_path);
-                //audioSource.resource = LoadObjectForAsync.AsyncLoad<AudioResource>(m_path);
+                AudioResource audio = await LoadObjectForAsync.AsyncLoad<AudioResource>(m_path);
+                if (audio != null) { Debug.Log("ロードできました"); }
+                audioSource.resource = audio;
             }
 
             // static変数の処理
