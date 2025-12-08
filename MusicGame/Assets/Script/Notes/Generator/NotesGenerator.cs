@@ -16,13 +16,16 @@ namespace Notes {
 
         public Vector3 CreateRot { get; private set; }
 
+        public NotesManagerForNotesData Judgment { get; private set; }
+
         public NotesInformaiton
-            (float create,GameObject obj,Notes n,int bpm,Vector3 v,Vector3 q)
+            (float create,GameObject obj,Notes n,int bpm, NotesManagerForNotesData j, Vector3 v,Vector3 q)
         {
             CteateTime = create;
             NotesObj = obj;
             Notes = n;
             BPM = bpm;
+            Judgment = j;
             CreatePos = v;
             CreateRot = q;
         }

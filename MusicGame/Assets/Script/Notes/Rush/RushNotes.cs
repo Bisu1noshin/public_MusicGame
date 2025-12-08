@@ -36,6 +36,7 @@ namespace Notes {
                 score.SetScore(NotesScore.Miss, 0);
                 isFirst = true;
                 CreateTime = i_.CteateTime;
+                Judg = i_.Judgment;
             }
 
             // ステートマシンの初期化
