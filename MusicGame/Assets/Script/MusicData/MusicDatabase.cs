@@ -16,5 +16,8 @@ public class MusicData
     public string musicPath; //"Resource/name.mp3"
     public string demoMusicPath;
     public int BPM;
+    public string normalPath;
+    public string hardPath;
+    public string expertPath;
     public Notes.NotesData[] notesData = new Notes.NotesData[4];
 }
