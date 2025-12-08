@@ -16,6 +16,10 @@ MonoBehaviour:
   - id: 0
     name: "\u30B7\u30E3\u30A4\u30CB\u30F3\u30B0\u30B9\u30BF\u30FC"
     composerName: "\u9B54\u738B\u9B42"
-    musicPath: Assets/Resources/Music/ShiningStar.mp3
-    demoMusicPath: 
+    musicPath: Music/ShiningStar.mp3
+    demoMusicPath: DemoMusic/ShiningStar_Demo.mp3
     BPM: 158
+    jacketPath: Image/MusicJacket/ShiningStar.jpg
+    normalPath: TextData/NotesData/ShiningStar/ShiningStar_NORMAL.txt
+    hardPath: TextData/NotesData/ShiningStar/ShiningStar_HARD.txt
+    expertPath: TextData/NotesData/ShiningStar/ShiningStar_EXPERT.txt
