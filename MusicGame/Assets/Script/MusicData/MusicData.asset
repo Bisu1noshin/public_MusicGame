@@ -19,3 +19,6 @@ MonoBehaviour:
     musicPath: Assets/Resources/Music/ShiningStar.mp3
     demoMusicPath: 
     BPM: 158
+    normalPath: Assets/Resources/TextData/NotesData/ShiningStar/ShiningStar_NORMAL.txt
+    hardPath: Assets/Resources/TextData/NotesData/ShiningStar/ShiningStar_HARD.txt
+    expertPath: Assets/Resources/TextData/NotesData/ShiningStar/ShiningStar_EXPERT.txt
