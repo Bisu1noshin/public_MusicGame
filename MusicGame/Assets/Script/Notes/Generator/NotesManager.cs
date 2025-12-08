@@ -2,6 +2,8 @@
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
+using LoadForAsync;
+using Cysharp.Threading.Tasks;
 
 namespace Notes {
 
@@ -80,6 +82,7 @@ namespace Notes {
                 audioSource = GetComponent<AudioSource>();
 
                 audioSource.resource = Resources.Load<AudioResource>(m_path);
+                //audioSource.resource = LoadObjectForAsync.AsyncLoad<AudioResource>(m_path);
             }
 
             // static変数の処理
