@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      "UpHold\u5B8C_0": 6898817749909526257
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
