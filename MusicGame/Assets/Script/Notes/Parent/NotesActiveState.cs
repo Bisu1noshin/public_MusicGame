@@ -22,7 +22,6 @@ namespace Notes
 
             Vector3 pos = new(owner.transform.position.x, -3.0f, 0);
             GameObject.Instantiate(JugeEfect[(int)score - 1], pos, Quaternion.identity);
-            Debug.Log("Creste Efect");
         }
 
         protected override void OnUpdate(float deltaTime)
