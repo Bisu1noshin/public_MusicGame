@@ -130,7 +130,6 @@ GameObject:
   - component: {fileID: 462764127}
   - component: {fileID: 462764129}
   - component: {fileID: 462764130}
-  - component: {fileID: 462764131}
   m_Layer: 0
   m_Name: NotesGenarator
   m_TagString: Untagged
@@ -267,19 +266,6 @@ MonoBehaviour:
   - {x: 2, y: 5, z: 0}
   NotesManagerData: {fileID: 11400000, guid: 0894919679aa8644e892fc74176583fe, type: 2}
   InGameTime: 0
---- !u!114 &462764131
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 462764125}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26d26640404dc9f4e9a44d31d51890eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  score: 
 --- !u!1 &729530351
 GameObject:
   m_ObjectHideFlags: 0
@@ -455,6 +441,51 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!1 &936016704
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 936016705}
+  - component: {fileID: 936016706}
+  m_Layer: 0
+  m_Name: ScoreManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &936016705
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 936016704}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.8903916, y: -0.85265213, z: -9.946098}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &936016706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 936016704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26d26640404dc9f4e9a44d31d51890eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  score: 
 --- !u!1 &1615180636
 GameObject:
   m_ObjectHideFlags: 0
@@ -612,3 +643,4 @@ SceneRoots:
   - {fileID: 1615180639}
   - {fileID: 729530353}
   - {fileID: 462764127}
+  - {fileID: 936016705}

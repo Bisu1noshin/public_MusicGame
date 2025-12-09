@@ -81,9 +81,11 @@ namespace Notes {
             {
                 audioSource = GetComponent<AudioSource>();
 
-                AudioResource audio = await LoadObjectForAsync.AsyncLoad<AudioResource>(m_path);
-                if (audio != null) { Debug.Log("ロードできました"); }
-                audioSource.resource = audio;
+                audioSource.resource = Resources.Load<AudioResource>(m_path);
+
+                //AudioResource audio = await LoadObjectForAsync.AsyncLoad<AudioResource>(m_path);
+                //if (audio != null) { Debug.Log("ロードできました"); }
+                //audioSource.resource = audio;
             }
 
             // static変数の処理
