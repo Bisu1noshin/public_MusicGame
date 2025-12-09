@@ -42,9 +42,10 @@ namespace Notes {
 
         public NotesManagerForNotesData Judg { get; protected set; }
 
+        public int NotesNum { get; protected set; }
+
 
         private float fallSpeed;
-
         protected StateMachine<NotesState, NotesTrigger> st;
 
         // イベントアクションのデリゲート

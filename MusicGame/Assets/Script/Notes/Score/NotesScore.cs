@@ -17,7 +17,7 @@ namespace Notes
 
     public sealed class NotesScoreData
     {
-        private NotesScore[] score;
+        public NotesScore[] score { get; private set; }
 
         public NotesScoreData() {
 
