@@ -21,10 +21,10 @@ public class Onishi_JudgeTextMover : MonoBehaviour
             seq.Append(txt.DOFade(1f, 0.5f).SetEase(Ease.OutQuart));
             seq.Join(txt.transform.DOLocalMoveY(100f, 0.5f).SetEase(Ease.OutQuart));
         }
+
         //消える
         {
             seq.Append(txt.DOFade(0f, 0.5f).SetEase(Ease.OutQuart).OnComplete(() => Destroy(txt.gameObject)));
         }
     }
-
 }

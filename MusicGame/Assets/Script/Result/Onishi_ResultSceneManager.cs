@@ -62,7 +62,7 @@ public class Onishi_ResultSceneManager : MonoBehaviour
         //未着手
         //仮で画面表示変更だけ-2025/11/11
         {
-            Texture2D newTexture = Resources.Load("Image/MusicJacket/MusicJacket_kari") as Texture2D;
+            Texture2D newTexture = Resources.Load("Image/MusicJacket/ShiningStar") as Texture2D;
             Img_MusicJacket.texture = newTexture;
             Txt_MusicName.text = "Totemo Nagai Kyokumei Demo Yoyuu De Nagareru ~Totemo Sugoi~";
 

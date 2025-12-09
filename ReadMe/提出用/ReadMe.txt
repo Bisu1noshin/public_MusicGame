@@ -37,4 +37,12 @@ PRポイント
 各提出バージョンに関しての定義
 　α:一人でプレイができる状態　スコア計算、判定が問題なく、譜面も1曲分はできている								
 　β:二人プレイができる状態　対戦して、勝敗がつく
-　完成:完成版　演出やUI								
+　完成:完成版　演出やUI
+
+楽曲
+　シャイニングスター
+　　https://maou.audio/14_shining_star/
+　　規約URL https://maou.audio/rule/
+　G e n g a o z o
+　　https://malie.noor.jp/
+　　https://yoshikawa45.fanbox.cc/posts/2779878
