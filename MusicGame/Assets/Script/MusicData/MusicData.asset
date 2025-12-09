@@ -19,7 +19,17 @@ MonoBehaviour:
     musicPath: Music/ShiningStar.mp3
     demoMusicPath: DemoMusic/ShiningStar_Demo.mp3
     BPM: 158
-    jacketPath: Image/MusicJacket/ShiningStar.jpg
+    jacketPath: Image/MusicJacket/ShiningStar
     normalPath: TextData/NotesData/ShiningStar/ShiningStar_NORMAL.txt
     hardPath: TextData/NotesData/ShiningStar/ShiningStar_HARD.txt
     expertPath: TextData/NotesData/ShiningStar/ShiningStar_EXPERT.txt
+  - id: 1
+    name: G e n g a o z o
+    composerName: -45
+    musicPath: 
+    demoMusicPath: 
+    BPM: 0
+    jacketPath: 
+    normalPath: 
+    hardPath: 
+    expertPath: 
