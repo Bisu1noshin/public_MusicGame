@@ -21,7 +21,6 @@ public class MusicButtonController : MonoBehaviour
     TextScroller mTextScroller;
     PropertyController mProperty;
     int id;
-    float timer = 0.0f;
     string audioPath;
 
     private void Awake()
@@ -47,13 +46,10 @@ public class MusicButtonController : MonoBehaviour
         switch (mState)
         {
             case ButtonState.Appear:
-                timer += Time.deltaTime;
-                mRect.localScale = Vector3.Lerp(mRect.localScale, Vector3.one, 0.5f);
-                if (1.0f - mRect.localScale.x < 1e-3f)
+                float x = Mathf.Lerp(mRect.anchoredPosition.x, -350.0f, 0.2f);
+                mRect.anchoredPosition = new(x, mRect.anchoredPosition.y);
+                if (Mathf.Abs(350.0f + x) < 0.1f)
                 {
-                    Debug.Log($"Time : {timer}");
-                    timer = 0.0f;
-                    mRect.localScale = Vector3.one;
                     mState = ButtonState.Active;
                 }
                 break;
@@ -80,10 +76,10 @@ public class MusicButtonController : MonoBehaviour
                 }
                 break;
             case ButtonState.Dead:
-                timer += Time.deltaTime;
-                float x = Mathf.Lerp(-350.0f, -1360.0f, timer / 0.2f);
+                mRect.localScale = Vector3.one;
+                x = Mathf.Lerp(mRect.anchoredPosition.x, -1360.0f, 0.2f);
                 mRect.anchoredPosition = new(x, mRect.anchoredPosition.y);
-                if (timer >= 0.2f)
+                if (Mathf.Abs(1360.0f + x) < 1.0f)
                 {
                     Destroy(gameObject);
                 }
@@ -105,8 +101,8 @@ public class MusicButtonController : MonoBehaviour
         GameObject go = Instantiate(Resources.Load<GameObject>("MusicSelecter/MusicButton"));
         go.name = text_;
         go.transform.SetParent(GameObject.Find("Canvas").transform.GetChild(1).transform);
-        go.transform.SetLocalPositionAndRotation(new(-350.0f, id_ * 1.3f * buttonPadding, 0.0f), Quaternion.identity);
-        go.transform.localScale = Vector3.zero;
+        go.transform.SetLocalPositionAndRotation(new(-1360.0f, id_ * 1.3f * buttonPadding, 0.0f), Quaternion.identity);
+        go.transform.localScale = Vector3.one;
         MusicButtonController mbc = go.GetComponent<MusicButtonController>();
         mbc.SetInfo(text_, id_, audioPath_);
 

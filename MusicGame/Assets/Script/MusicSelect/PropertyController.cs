@@ -27,9 +27,9 @@ public class PropertyController : MonoBehaviour
         switch (mState)
         {
             case ButtonState.Appear:
-                float y = Mathf.Lerp(mRect.anchoredPosition.y, 0.0f, 0.1f);
+                float y = Mathf.Lerp(mRect.anchoredPosition.y, 0.0f, 0.2f);
                 mRect.anchoredPosition = new(550.0f, y);
-                if (y < -1.5e-3f)
+                if (Mathf.Abs(y) < 0.1f)
                 {
                     mRect.anchoredPosition = new(550.0f, 0.0f);
                     mState = ButtonState.Active;
@@ -40,7 +40,7 @@ public class PropertyController : MonoBehaviour
             case ButtonState.Dead:
                 y = Mathf.Lerp(mRect.anchoredPosition.y, -1e4f, 0.1f);
                 mRect.anchoredPosition = new(550.0f, y);
-                if (y + 1e4f < -1.5e-3f)
+                if (Mathf.Abs(y + 1000.0f) < 0.1f)
                 {
                     Destroy(gameObject);
                 }
@@ -66,7 +66,7 @@ public class PropertyController : MonoBehaviour
     }
     string CreateMusicPath(string path_)
     {
-        string res = "Music/" + path_;
+        string res = "DemoMusic/" + path_;
         return res;
     }
     public static Action CreateInstance()
@@ -74,10 +74,12 @@ public class PropertyController : MonoBehaviour
         GameObject go = Instantiate(Resources.Load<GameObject>("MusicSelecter/Property"));
         go.name = "Property";
         go.transform.SetParent(GameObject.Find("Canvas").transform);
-        go.transform.SetLocalPositionAndRotation(new Vector2(550.0f, -1e4f), Quaternion.identity);
+        go.transform.localRotation = Quaternion.identity;
         go.transform.localScale = Vector3.one;
+        PropertyController pc = go.GetComponent<PropertyController>();
+        pc.mRect.anchoredPosition = new(550.0f, -1000.0f);
 
-        Action f = () => { Destroy(go); };
+        Action f = () => { pc.mState = ButtonState.Dead; };
         return f;
     }
 }

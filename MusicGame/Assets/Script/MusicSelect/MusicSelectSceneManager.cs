@@ -6,7 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-enum SceneState
+public enum SceneState
 {
     MusicSelect,
     LevelSelect,
@@ -32,9 +32,10 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
     public int[] SelectNum => selectNum;
     public int MaxValue => maxValue;
     public MusicDatabase mDataBase;
-    Notes.NotesData[] mCurrNotesData;
-    SceneState mSceneState;
+    string[] mCurrNotesData;
+    public SceneState mSceneState { get; private set; }
     float timer = 0.0f;
+    public float untouchableTimer { get; private set; }
     readonly string[] levelName =
     {
         "NORMAL",
@@ -50,13 +51,13 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
         CreateMusicButtons().Invoke();
 
         //これはダミーデータ
-        foreach (MusicData md in mDataBase.musicDatabase)
-        {
-            for (int i = 0; i < 4; ++i)
-            {
-                MakeNotesData(ref md.notesData[i]);
-            }
-        }
+        //foreach (MusicData md in mDataBase.musicDatabase)
+        //{
+        //    for (int i = 0; i < 4; ++i)
+        //    {
+        //        MakeNotesData(ref md.notesData[i]);
+        //    }
+        //}
     }
 
     void Update()
@@ -69,13 +70,17 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
         {
             timer -= Time.deltaTime;
         }
+        if (untouchableTimer > 0.0f)
+        {
+            untouchableTimer -= Time.deltaTime;
+        }
     }
 
     public void GoForward()
     {
         if (!startSelect) return;
-        if (timer > 0.0f) return;
-        
+        if (untouchableTimer > 0.0f) return;
+
         switch (mSceneState)
         {
             case SceneState.MusicSelect:
@@ -108,7 +113,7 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
     public void GoBack()
     {
         if (!startSelect) return;
-        if (timer > 0.0f) return;
+        if (untouchableTimer > 0.0f) return;
 
         switch (mSceneState)
         {
@@ -141,25 +146,28 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
     public void Enter()
     {
         if (!startSelect) return;
-        if (timer > 0.0f) return;
+        if (untouchableTimer > 0.0f) return;
 
         switch (mSceneState)
         {
             case SceneState.MusicSelect:
-                mCurrNotesData = mDataBase.musicDatabase[selectNum[0]].notesData;
-                DeleteObj();
-                createAction += CreateLevelButtons();
+                mCurrNotesData[0] = mDataBase.musicDatabase[selectNum[0]].normalPath;
+                mCurrNotesData[1] = mDataBase.musicDatabase[selectNum[0]].hardPath;
+                mCurrNotesData[2] = mDataBase.musicDatabase[selectNum[0]].expertPath;
+                DeleteAndExecuteAction(CreateLevelButtons());
                 mAudio.PlayOneShot(enter);
                 timer = 0.15f;
+                untouchableTimer = 0.2f;
                 break;
             case SceneState.LevelSelect:
-                //DeleteObj();
-                createAction += CreatePopup();
+                DeleteAndExecuteAction(CreatePopup());
                 mAudio.PlayOneShot(enter);
+                timer = 0.1f;
+                untouchableTimer = 0.1f;
                 break;
             case SceneState.EnterGame:
-
-                SceneManager.LoadScene("NotesTest");
+                DeleteAndExecuteAction(() => SceneManager.LoadScene("NotesTest"));
+                timer = 2.0f;
                 break;
         }
         if (mSceneState != SceneState.EnterGame)
@@ -170,21 +178,23 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
     public void Undo()
     {
         if (!startSelect) return;
-        if (timer > 0.0f) return;
+        if (untouchableTimer > 0.0f) return;
 
         switch (mSceneState)
         {
             case SceneState.MusicSelect:
                 break;
             case SceneState.LevelSelect:
-                DeleteObj();
-                createAction += CreateMusicButtons();
+                DeleteAndExecuteAction(CreateMusicButtons());
                 mAudio.PlayOneShot(cancel);
+                timer = 0.02f;
+                untouchableTimer = 0.2f;
                 break;
             case SceneState.EnterGame:
-                DeleteObj();
-                createAction += CreateLevelButtons();
+                DeleteAndExecuteAction(CreateLevelButtons(mSceneState));
                 mAudio.PlayOneShot(cancel);
+                timer = 0.02f;
+                untouchableTimer = 0.1f;
                 break;
         }
         if (mSceneState > SceneState.MusicSelect)
@@ -208,29 +218,29 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
             {
                 deleteAction += MusicButtonController.CreateInstance(m.name, m.id, m.demoMusicPath);
             }
-            
+            CreateGUI();
         };
         return f;
     }
 
-    Action CreateLevelButtons()
+    Action CreateLevelButtons(SceneState ss = SceneState.LevelSelect)
     {
         Action f = () => {
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 3; i++)
             {
-                if (mCurrNotesData[i] == null) { break; }
-                deleteAction += LevelButtonController.CreateInstance(i, levelName[i]);
+                deleteAction += LevelButtonController.CreateInstance(i, levelName[i], ss);
                 maxValue = i;
             }
+            CreateGUI();
         };
         return f;
     }
 
-    void MakeNotesData(ref NotesData md_)
-    {
-        TextEditor.TextEditor text = new("Music/ShiningStar", "TextData/NotesData/ShiningStar/ShiningStar_NORMAL");
-        md_ = text.NotesReadTxt();
-    }
+    //void MakeNotesData(ref NotesData md_)
+    //{
+    //    TextEditor.TextEditor text = new("Music/ShiningStar", "TextData/NotesData/ShiningStar/ShiningStar_NORMAL");
+    //    md_ = text.NotesReadTxt();
+    //}
 
     void DeleteObj()
     {
@@ -242,6 +252,12 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
     {
         createAction?.Invoke();
         createAction = null;
+    }
+
+    void DeleteAndExecuteAction(Action action)
+    {
+        DeleteObj();
+        createAction += action;
     }
 
     Action CreatePopup()
@@ -262,6 +278,11 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
         Action f = () => { Destroy(go); };
         return f;
     }
+    void CreateGUI()
+    {
+        deleteAction += GUIController.CreateInstance("決定(A)", new(-180.0f, -50.0f));
+        deleteAction += GUIController.CreateInstance("戻る(B)", new(0.0f, -50.0f));
+    }
 
     void Init()
     {
@@ -270,7 +291,7 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
             CreatePlayer();
         }
         selectNum = new int[3];
-        mCurrNotesData = new Notes.NotesData[4];
+        mCurrNotesData = new string[4];
         mSceneState = SceneState.MusicSelect;
         startSelect = false;
         mAudio = GetComponent<AudioSource>();
@@ -283,6 +304,7 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
 
 public interface IMusicSelecter
 {
+    
     int[] SelectNum { get; }
     bool CanSelect { get; set; }
     void GoForward();
@@ -293,6 +315,8 @@ public interface IMusicSelecter
 
 public interface ILevelSelecter
 {
+    SceneState mSceneState { get; }
     int[] SelectNum { get; }
     int MaxValue { get; }
+    float untouchableTimer { get; }
 }
