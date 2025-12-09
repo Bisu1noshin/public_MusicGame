@@ -42,7 +42,7 @@ namespace Notes
                     && DiscriminationTime >= owner.Judg.JudgmentTimeDelay - owner.Judg.PerfectTime)
                 {
                     owner.score.SetScore(NotesScore.Perfect, 0);
-                    stateMachine.ExecuteTriggerAction(NotesTrigger.HoldTrigger);
+                    stateMachine.ExecuteTriggerAction(NotesTrigger.ActiveTrigger);
                     return;
                 }
 
@@ -51,7 +51,7 @@ namespace Notes
                     && DiscriminationTime >= owner.Judg.JudgmentTimeDelay - owner.Judg.GoodTime)
                 {
                     owner.score.SetScore(NotesScore.Good, 0);
-                    stateMachine.ExecuteTriggerAction(NotesTrigger.HoldTrigger);
+                    stateMachine.ExecuteTriggerAction(NotesTrigger.ActiveTrigger);
                     return;
                 }
             }
