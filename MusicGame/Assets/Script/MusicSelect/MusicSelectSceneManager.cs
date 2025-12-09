@@ -23,12 +23,6 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
 
     int maxValue;
     int[] selectNum;
-    bool startSelect;
-    public bool CanSelect
-    {
-        get { return startSelect; }
-        set { startSelect = value; }
-    }
     public int[] SelectNum => selectNum;
     public int MaxValue => maxValue;
     public MusicDatabase mDataBase;
@@ -78,7 +72,6 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
 
     public void GoForward()
     {
-        if (!startSelect) return;
         if (untouchableTimer > 0.0f) return;
 
         switch (mSceneState)
@@ -112,7 +105,6 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
     }
     public void GoBack()
     {
-        if (!startSelect) return;
         if (untouchableTimer > 0.0f) return;
 
         switch (mSceneState)
@@ -145,7 +137,6 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
     }
     public void Enter()
     {
-        if (!startSelect) return;
         if (untouchableTimer > 0.0f) return;
 
         switch (mSceneState)
@@ -166,8 +157,7 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
                 untouchableTimer = 0.1f;
                 break;
             case SceneState.EnterGame:
-                DeleteAndExecuteAction(() => SceneManager.LoadScene("NotesTest"));
-                timer = 2.0f;
+                SceneManager.LoadScene("NotesTest");
                 break;
         }
         if (mSceneState != SceneState.EnterGame)
@@ -177,7 +167,6 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
     }
     public void Undo()
     {
-        if (!startSelect) return;
         if (untouchableTimer > 0.0f) return;
 
         switch (mSceneState)
@@ -293,7 +282,6 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
         selectNum = new int[3];
         mCurrNotesData = new string[4];
         mSceneState = SceneState.MusicSelect;
-        startSelect = false;
         mAudio = GetComponent<AudioSource>();
         enter = Resources.Load<AudioClip>("MusicSelecter/Sound/Enter");
         cancel = Resources.Load<AudioClip>("MusicSelecter/Sound/Cancel");
@@ -306,7 +294,6 @@ public interface IMusicSelecter
 {
     
     int[] SelectNum { get; }
-    bool CanSelect { get; set; }
     void GoForward();
     void GoBack();
     void Enter();
