@@ -2,6 +2,8 @@
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
+using LoadForAsync;
+using Cysharp.Threading.Tasks;
 
 namespace Notes {
 
@@ -32,7 +34,7 @@ namespace Notes {
         // ノーツのプレファブ
         private GameObject[] notes;
 
-        private void Awake()
+        private async UniTask Awake()
         {
             // 変数の初期化
             {
@@ -79,7 +81,9 @@ namespace Notes {
             {
                 audioSource = GetComponent<AudioSource>();
 
-                audioSource.resource = Resources.Load<AudioResource>(m_path);
+                AudioResource audio = await LoadObjectForAsync.AsyncLoad<AudioResource>(m_path);
+                if (audio != null) { Debug.Log("ロードできました"); }
+                audioSource.resource = audio;
             }
 
             // static変数の処理
@@ -116,14 +120,14 @@ namespace Notes {
                 if (createIndex[i] >= createIndex_max[i]) { return; }
 
                 Notes n = notesData.notes[i][createIndex[i]];
-                createIndex[i] += CreateNotes(n, i);
+                createIndex[i] += CreateNotes(n, i, createIndex[i]);
             }
 
             // 時間の加算
             InGameTime += Time.fixedDeltaTime;
         }
 
-        private int CreateNotes(Notes n_, int lane)
+        private int CreateNotes(Notes n_, int lane,int index)
         {
 
             float hakuTime = 60.0f / (float)notesData.BPM;
@@ -135,6 +139,7 @@ namespace Notes {
                 obj: notes[(int)n_.kind],
                 n: n_,
                 bpm: BPM,
+                num: index + 1,
                 j: NotesManagerData.nData,
                 v: NotesPosition[lane],
                 q: rotate[(int)n_.dir]
@@ -172,6 +177,7 @@ namespace Notes {
                 obj: notes[(int)notes_.kind],
                 n: notes_,
                 bpm: BPM,
+                num:0,
                 j: NotesManagerData.nData,
                 v: NotesPosition[0],
                 q: rotate[(int)notes_.dir]

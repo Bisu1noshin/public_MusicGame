@@ -23,6 +23,7 @@ namespace Notes
                 score.SetScore(NotesScore.Miss);
                 CreateTime = i_.CteateTime;
                 Judg = i_.Judgment;
+                NotesNum = i_.NotesNum;
             }
 
             // ステートマシンの初期化

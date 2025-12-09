@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using GameInfo;
+using UnityEngine;
 
 namespace Notes {
 
@@ -11,8 +12,10 @@ namespace Notes {
 
         protected override void OnEnter()
         {
-            owner.score.DebugLogScore();
-            ScoreManager.instance.SetScore(owner.score.GetTotalScore());
+            int side = 1;
+            if (owner.transform.position.x < 0) { side = 0; }
+            owner.score.DebugLogScore(owner.NotesNum, side);
+            SingletonDataManager.instance.SetScore(owner.score.GetTotalScore());
         }
 
         protected override void OnUpdate(float deltaTime)

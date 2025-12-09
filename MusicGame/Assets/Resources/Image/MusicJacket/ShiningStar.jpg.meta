@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      ShiningStar_0: -7353056418157613984
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

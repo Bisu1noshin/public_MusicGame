@@ -39,6 +39,7 @@ namespace Notes {
                 isFirst = true;
                 CreateTime = i_.CteateTime;
                 Judg = i_.Judgment;
+                NotesNum = i_.NotesNum;
             }
 
             // ステートマシンの初期化

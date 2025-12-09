@@ -17,7 +17,7 @@ namespace Notes
 
     public sealed class NotesScoreData
     {
-        private NotesScore[] score;
+        public NotesScore[] score { get; private set; }
 
         public NotesScoreData() {
 
@@ -76,9 +76,12 @@ namespace Notes
             return ScoreData;
         }
 
-        public void DebugLogScore()
+        public void DebugLogScore(int num = 0,int lane = 0)
         {
-            string s = "Log :";
+            string side = "LeftNotes";
+            if (lane != 0) { side = "RightNotes"; }
+
+            string s = "Log :" + num + side;
 
             for (int i = 0; i < score.Length; i++)
             {
