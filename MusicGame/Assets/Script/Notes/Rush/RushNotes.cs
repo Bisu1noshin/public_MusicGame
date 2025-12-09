@@ -5,11 +5,7 @@ namespace Notes {
 
     public class RushNotes :NotesObject
     {
-        private const float perfectLenge = 0.033f;
-        private const float goodLenge = 0.05f;
-        private int index;
         private int max_index = default;
-        private bool isFirst;
 
         public override void SetInitilizeNotes(NotesInformaiton i_)
         {
@@ -32,9 +28,7 @@ namespace Notes {
             // 変数の初期化
             {
                 score = new NotesScoreData(max_index);
-                index = 1;
                 score.SetScore(NotesScore.Miss, 0);
-                isFirst = true;
                 CreateTime = i_.CteateTime;
                 Judg = i_.Judgment;
                 NotesNum = i_.NotesNum;
@@ -55,8 +49,8 @@ namespace Notes {
                 st.AddTransition(NotesState.Idle, NotesState.Active, NotesTrigger.ActiveTrigger);
                 st.AddTransition(NotesState.Idle, NotesState.Hold, NotesTrigger.HoldTrigger);
                 st.AddTransition(NotesState.Hold, NotesState.Active, NotesTrigger.ActiveTrigger);
-                st.AddTransition(NotesState.Hold, NotesState.Ded, NotesTrigger.DedTrigger);
                 st.AddTransition(NotesState.Active, NotesState.Hold, NotesTrigger.HoldTrigger);
+                st.AddTransition(NotesState.Active, NotesState.Ded, NotesTrigger.DedTrigger);
             }
 
         }

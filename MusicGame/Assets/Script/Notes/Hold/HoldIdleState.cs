@@ -28,7 +28,7 @@ namespace Notes
             // 判定の時間外処理に遷移
             if (owner.timeCnt >= owner.Judg.JudgmentTimeDelay + owner.Judg.GoodTime)
             {
-                stateMachine.ExecuteTriggerAction(NotesTrigger.HoldTrigger);
+                stateMachine.ExecuteTriggerAction(NotesTrigger.ActiveTrigger);
             }
         }
 
@@ -41,10 +41,10 @@ namespace Notes
             {
                 // perfectの処理
                 if (DiscriminationTime <= owner.Judg.JudgmentTimeDelay + owner.Judg.PerfectTime
-                    && DiscriminationTime >= owner.Judg.JudgmentTimeDelay - owner.Judg.PerfectTime)
+                && DiscriminationTime >= owner.Judg.JudgmentTimeDelay - owner.Judg.PerfectTime)
                 {
-                    owner.score.SetScore(NotesScore.Perfect, 0);
-                    stateMachine.ExecuteTriggerAction(NotesTrigger.HoldTrigger);
+                    owner.score.SetScore(NotesScore.Perfect, owner.holdCnt);
+                    stateMachine.ExecuteTriggerAction(NotesTrigger.ActiveTrigger);
                     return;
                 }
 
@@ -52,8 +52,8 @@ namespace Notes
                 if (DiscriminationTime <= owner.Judg.JudgmentTimeDelay + owner.Judg.GoodTime
                     && DiscriminationTime >= owner.Judg.JudgmentTimeDelay - owner.Judg.GoodTime)
                 {
-                    owner.score.SetScore(NotesScore.Good, 0);
-                    stateMachine.ExecuteTriggerAction(NotesTrigger.HoldTrigger);
+                    owner.score.SetScore(NotesScore.Good, owner.holdCnt);
+                    stateMachine.ExecuteTriggerAction(NotesTrigger.ActiveTrigger);
                     return;
                 }
             }

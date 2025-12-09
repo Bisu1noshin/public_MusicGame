@@ -44,6 +44,8 @@ namespace Notes {
 
         public int NotesNum { get; protected set; }
 
+        public int holdCnt;
+
 
         private float fallSpeed;
         protected StateMachine<NotesState, NotesTrigger> st;
@@ -59,6 +61,7 @@ namespace Notes {
         protected virtual void Start() {
 
             fallSpeed = Judg.JudgmentTimeDelay * 8.0f;
+            holdCnt = 0;
         }
 
 
@@ -74,8 +77,11 @@ namespace Notes {
             if (timeCnt >= Judg.JudgmentTimeDelay)
             {
                 var s = GetComponentInChildren<SpriteRenderer>();
-                //NotesActoin?.Invoke(AnsTrigger, 1f + CreateTime);
                 s.color = Color.blue;
+
+                // オートプレイの処理
+                if (Judg.AoutPlay)
+                    NotesActoin?.Invoke(AnsTrigger, Judg.JudgmentTimeDelay + CreateTime);
             }
 
             timeCnt += Time.fixedDeltaTime;

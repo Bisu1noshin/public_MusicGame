@@ -20,12 +20,20 @@ namespace Notes
 
         protected override void OnUpdate(float deltaTime)
         {
+            if (owner.holdCnt >= owner.Max_holdCnt - 1)
+            {
+                stateMachine.ExecuteTriggerAction(NotesTrigger.DedTrigger);
+                return;
+            }
+
             stateMachine.ExecuteTriggerAction(NotesTrigger.HoldTrigger);
         }
 
         protected override void OnExit()
         {
             base.OnExit();
+
+            owner.holdCnt++;
         }
     }
 }

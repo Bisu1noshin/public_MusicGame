@@ -43,5 +43,7 @@ namespace Notes
         [Tooltip("Good判定の幅")]
         public float GoodTime;
 
+        [Tooltip("オートモード")]
+        public bool AoutPlay;
     }
 }

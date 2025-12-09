@@ -57,8 +57,8 @@ namespace Notes {
                 st.AddTransition(NotesState.Idle, NotesState.Active, NotesTrigger.ActiveTrigger);
                 st.AddTransition(NotesState.Idle, NotesState.Hold, NotesTrigger.HoldTrigger);
                 st.AddTransition(NotesState.Hold, NotesState.Active, NotesTrigger.ActiveTrigger);
-                st.AddTransition(NotesState.Hold, NotesState.Ded, NotesTrigger.DedTrigger);
-                st.AddTransition(NotesState.Active, NotesState.Hold, NotesTrigger.HoldTrigger);               
+                st.AddTransition(NotesState.Active, NotesState.Hold, NotesTrigger.HoldTrigger);
+                st.AddTransition(NotesState.Active, NotesState.Ded, NotesTrigger.DedTrigger);
             }
         }
     }

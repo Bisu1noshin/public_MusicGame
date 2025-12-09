@@ -19,3 +19,4 @@ MonoBehaviour:
     JudgmentTimeDelay: 1
     PerfectTime: 0.03
     GoodTime: 0.05
+    AoutPlay: 0

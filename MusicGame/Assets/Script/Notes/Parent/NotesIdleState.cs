@@ -1,8 +1,8 @@
 ﻿using Player;
 using UnityEngine;
+
 namespace Notes
 {
-
     public abstract class NotesIdleState : StateBase<NotesObject, NotesTrigger>
     {
         public NotesIdleState(NotesObject owner, IStateMachine<NotesTrigger> st) : base(owner, st)
