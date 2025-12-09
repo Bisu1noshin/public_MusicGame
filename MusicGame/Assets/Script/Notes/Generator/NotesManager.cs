@@ -120,14 +120,14 @@ namespace Notes {
                 if (createIndex[i] >= createIndex_max[i]) { return; }
 
                 Notes n = notesData.notes[i][createIndex[i]];
-                createIndex[i] += CreateNotes(n, i);
+                createIndex[i] += CreateNotes(n, i, createIndex[i]);
             }
 
             // 時間の加算
             InGameTime += Time.fixedDeltaTime;
         }
 
-        private int CreateNotes(Notes n_, int lane)
+        private int CreateNotes(Notes n_, int lane,int index)
         {
 
             float hakuTime = 60.0f / (float)notesData.BPM;
@@ -139,6 +139,7 @@ namespace Notes {
                 obj: notes[(int)n_.kind],
                 n: n_,
                 bpm: BPM,
+                num: index + 1,
                 j: NotesManagerData.nData,
                 v: NotesPosition[lane],
                 q: rotate[(int)n_.dir]
@@ -176,6 +177,7 @@ namespace Notes {
                 obj: notes[(int)notes_.kind],
                 n: notes_,
                 bpm: BPM,
+                num:0,
                 j: NotesManagerData.nData,
                 v: NotesPosition[0],
                 q: rotate[(int)notes_.dir]

@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine.UI;
 using DG.Tweening;
 using Notes;
+using GameInfo;
 
 public class Onishi_ResultSceneManager : MonoBehaviour
 {
@@ -21,7 +22,7 @@ public class Onishi_ResultSceneManager : MonoBehaviour
         int score = 0;
         int[] scoreCnt = new int[3];
 
-        foreach(var sc in ScoreManager.instance.score){
+        foreach(var sc in SingletonDataManager.instance.score){
             scoreCnt[(int)sc]++;
         }
 

@@ -18,12 +18,15 @@ namespace Notes {
 
         public NotesManagerForNotesData Judgment { get; private set; }
 
+        public int NotesNum { get; private set; }
+
         public NotesInformaiton
-            (float create,GameObject obj,Notes n,int bpm, NotesManagerForNotesData j, Vector3 v,Vector3 q)
+            (float create,GameObject obj,Notes n,int bpm, NotesManagerForNotesData j,int num, Vector3 v,Vector3 q)
         {
             CteateTime = create;
             NotesObj = obj;
             Notes = n;
+            NotesNum = num;
             BPM = bpm;
             Judgment = j;
             CreatePos = v;

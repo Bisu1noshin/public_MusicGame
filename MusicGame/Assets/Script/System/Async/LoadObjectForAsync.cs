@@ -9,7 +9,6 @@ namespace LoadForAsync
             where TClass : UnityEngine.Object
         {
             ResourceRequest request = Resources.LoadAsync<TClass>(filePath);
-            await UniTask.Yield(); 
 
             while (!request.isDone)
             {

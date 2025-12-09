@@ -17,12 +17,6 @@ namespace LoadForAsync
             ObjectTable = loadObjects;
             successCnt = 0;
         }
-
-        public async UniTask AsyncLoadObject(int index)
-        {
-            bool success = await ObjectTable[index].AsyncLoadObject();
-            if (success) successCnt++;
-        }
     }
 
     public class LoadObject<TClass>
@@ -42,7 +36,7 @@ namespace LoadForAsync
             if (assets != null) { return false; }
 
             assets =
-                await LoadObjectForAsync.AsyncLoad<TClass>(filePath);
+                await LoadObjectForAsync.AsyncLoad<TClass>((filePath));
 
             return true;
         }
