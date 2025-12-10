@@ -15,10 +15,12 @@ namespace ModeSelect
         protected override void OnButtonA()
         {
             enterAction?.Invoke();
+            enterAction = null;
         }
         protected override void OnButtonB()
         {
             backAction?.Invoke();
+            backAction = null;
         }
         
         protected override void LeftStickStarted(Vector2 vec)

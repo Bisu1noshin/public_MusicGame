@@ -9,12 +9,19 @@ namespace ModeSelect.StateMachine
         protected ModeSelectSceneManager mOwner;
         public List<Action> Actions { get; set; }
         public Dictionary<int, Action> ActionDic { get; set; }
-        public int SelectNum { get; protected set; }
+        protected Dictionary<int, string> ButtonNames { get; set; }
+        public int[] SelectNum { get; protected set; }
+        protected int layer;
+        protected Action deleteAction;
         public IState(ModeSelectSceneManager owner, IStateMachine<Trigger> st) : base(owner, st)
         {
             mOwner = owner;
             Actions = new();
-            SelectNum = 0;
+            SelectNum = new int[6];
+            ActionDic = new();
+            ButtonNames = new();
+            layer = 0;
+            deleteAction = null;
         }
         protected void PlayEnterSound()
         {
@@ -34,21 +41,32 @@ namespace ModeSelect.StateMachine
         }
         protected void Scroll(Vector2 vector2)
         {
-            SelectNum += vector2.y < 0.0f ? -1 : 1;
-            if (SelectNum < 0)
+            SelectNum[layer] += vector2.y < 0.0f ? -1 : 1;
+            if (SelectNum[layer] < 0)
             {
-                SelectNum = 0;
+                SelectNum[layer] = 0;
                 PlayBeepSound();
             }
-            else if (SelectNum > Actions.Count - 1)
+            else if (SelectNum[layer] > Actions.Count - 1)
             {
-                SelectNum = Actions.Count - 1;
+                SelectNum[layer] = Actions.Count - 1;
                 PlayBeepSound();
             }
             else
             {
                 PlayShiftSound();
             }
+        }
+        protected void SetButtonAction(int id_, string name_,  Action action_)
+        {
+            if (ActionDic.ContainsKey(id_)) { Debug.Log($"Error! : id({id_}) is already exist");  return; }
+            ActionDic.Add(id_, action_);
+            ButtonNames.Add(id_, name_);
+        }
+        protected void SetEnterAction(Action action_)
+        {
+            ModeSelect.Player.enterAction += deleteAction;
+            ModeSelect.Player.enterAction += action_;
         }
     }
 }

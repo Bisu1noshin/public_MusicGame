@@ -48,7 +48,7 @@ namespace ModeSelect
     public interface IModeSelecter
     {
         List<Action> Actions { get; set; }
-        int SelectNum { get; }
+        int[] SelectNum { get; }
     }
     public interface IActionDictionary
     {

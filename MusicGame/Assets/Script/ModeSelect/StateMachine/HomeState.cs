@@ -14,6 +14,9 @@ namespace ModeSelect
         protected override void OnEnter()
         {
             ModeSelect.Player.vecAction += (vector2) => Scroll(vector2);
+            SetEnterAction(Actions[SelectNum[layer]]);
+            ModeSelect.Player.enterAction += Actions[SelectNum[layer]];
+            ModeSelect.Player.backAction += () => { };
         }
         protected override void OnUpdate(float deltaTime)
         {
