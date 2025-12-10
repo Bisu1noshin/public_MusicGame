@@ -124,10 +124,10 @@ namespace Player
 
             PlayerState state = PlayerState.Idle;
 
-            if (vec.x > 0) { state = PlayerState.Right; }
-            if (vec.x < 0) { state = PlayerState.Left; }
-            if (vec.y > 0) { state = PlayerState.Up; }
-            if (vec.y < 0) { state = PlayerState.Down; }
+            if (vec.x > 0.9f) { state = PlayerState.Right; }
+            if (vec.x < -0.9f) { state = PlayerState.Left; }
+            if (vec.y > 0.9f) { state = PlayerState.Up; }
+            if (vec.y < -0.9f) { state = PlayerState.Down; }
 
             return state;
         }

@@ -8,7 +8,6 @@ namespace Notes
 {
     public class FlickActiveState : NotesActiveState
     {
-        private float timeCnt;
 
         public FlickActiveState(NotesObject owner, IStateMachine<NotesTrigger> st) : base(owner, st)
         {
@@ -18,16 +17,11 @@ namespace Notes
         protected override void OnEnter()
         {
             base.OnEnter();
-
-            timeCnt = 0f;
         }
 
         protected override void OnUpdate(float deltaTime)
         {
-            timeCnt += deltaTime;
-
-            if (timeCnt >= 0.3f) 
-                stateMachine.ExecuteTriggerAction(NotesTrigger.DedTrigger);
+            stateMachine.ExecuteTriggerAction(NotesTrigger.DedTrigger);
         }
 
         protected override void OnExit()

@@ -26,7 +26,7 @@ public class Onishi_ResultSceneManager : MonoBehaviour
             scoreCnt[(int)sc]++;
         }
 
-        score = scoreCnt[0] * 2 + scoreCnt[1];
+        score = scoreCnt[2] * 2 + scoreCnt[1];
 
         //スコア、判定数の表示
         {

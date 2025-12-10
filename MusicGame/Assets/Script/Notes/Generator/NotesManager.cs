@@ -47,7 +47,7 @@ namespace Notes {
 
                 for (int i = 0; i < rotate.Length; i++)
                 {
-                    rotate[i] = new Vector3(0, 0, 90 * i);
+                    rotate[i] = new Vector3(0, 0, -90 * i);
                 }
             }
 
@@ -142,7 +142,7 @@ namespace Notes {
                 create: CreateTime,
                 obj: notes[(int)n_.kind],
                 n: n_,
-                bpm: BPM,
+                bpm: notesData.BPM,
                 num: index + 1,
                 j: NotesManagerData.nData,
                 v: NotesPosition[lane],
@@ -153,8 +153,11 @@ namespace Notes {
             // 生成時間になったら生成してカウントを増やす
             if (CreateTime <= InGameTime)
             {
-                GameObject go = NotesGenerator.CreateNotes(informaiton);
-
+                if (n_.kind != NotesKind.Rush)
+                {
+                    GameObject go = NotesGenerator.CreateNotes(informaiton);
+                }
+                
                 return 1;
             }
 
@@ -181,7 +184,7 @@ namespace Notes {
                 create:0,
                 obj: notes[(int)notes_.kind],
                 n: notes_,
-                bpm: BPM,
+                bpm: notesData.BPM,
                 num:0,
                 j: NotesManagerData.nData,
                 v: NotesPosition[0],
