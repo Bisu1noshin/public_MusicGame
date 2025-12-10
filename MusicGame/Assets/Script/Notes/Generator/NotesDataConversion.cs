@@ -22,9 +22,9 @@ namespace Notes
                 int holdCnt = 0;
                 NotesKind preKind = data.notes[i][0].kind;
 
-                for (int j = 0; j < data.notes[i].Count;j++)
+                for (int j = 1; j < data.notes[i].Count;j++)
                 {
-                    if (data.notes[i][j].kind != preKind)
+                    if (data.notes[i][j].kind != preKind|| j == data.notes[i].Count - 1)
                     {
                         if (holdCnt > 0)
                         {

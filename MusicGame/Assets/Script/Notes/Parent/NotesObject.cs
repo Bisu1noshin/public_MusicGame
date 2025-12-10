@@ -66,10 +66,10 @@ namespace Notes {
         protected virtual void FixedUpdate()
         {
             // ステートマシンの更新
-            st.Update(Time.fixedDeltaTime);
+            st.Update(Time.fixedDeltaTime * Judg.MusicSpeed);
 
             // 落下処理
-            transform.position += new Vector3(0, -1 * fallSpeed * Time.fixedDeltaTime, 0);
+            transform.position += new Vector3(0, -1 * fallSpeed * Time.fixedDeltaTime * Judg.MusicSpeed, 0);
             
             // パーフェクト
             if (timeCnt >= Judg.CreateTimeDelay)
@@ -78,11 +78,11 @@ namespace Notes {
                 s.color = Color.blue;
 
                 // オートプレイの処理
-                if (Judg.AoutPlay)
+                if (Judg.AuotPlay)
                     InGamePlayer.NotesAction[(int)lane]?.Invoke(AnsTrigger, Judg.CreateTimeDelay + CreateTime);
             }
 
-            timeCnt += Time.fixedDeltaTime;
+            timeCnt += Time.fixedDeltaTime * Judg.MusicSpeed;
         }
 
         public abstract void SetInitilizeNotes(NotesInformaiton informaiton);

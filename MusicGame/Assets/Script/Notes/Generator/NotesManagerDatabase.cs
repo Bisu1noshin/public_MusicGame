@@ -47,7 +47,11 @@ namespace Notes
         [Tooltip("Good判定の幅")]
         public float GoodTime;
 
+        [Range(0, 3)]
+        [Tooltip("再生速度")]
+        public float MusicSpeed;
+
         [Tooltip("オートモード")]
-        public bool AoutPlay;
+        public bool AuotPlay;
     }
 }

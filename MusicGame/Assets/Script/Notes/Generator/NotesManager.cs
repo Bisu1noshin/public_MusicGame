@@ -83,6 +83,9 @@ namespace Notes {
 
                 audioSource.resource = Resources.Load<AudioResource>(m_path);
 
+                // 曲の再生速度の変更
+                audioSource.pitch = NotesManagerData.nData.MusicSpeed;
+
                 //AudioResource audio = await LoadObjectForAsync.AsyncLoad<AudioResource>(m_path);
                 //if (audio != null) { Debug.Log("ロードできました"); }
                 //audioSource.resource = audio;
@@ -128,12 +131,11 @@ namespace Notes {
             //if (!goinstance) { goinstance = DebugNotesCreate(); }
 
             // 時間の加算
-            InGameTime += Time.fixedDeltaTime;
+            InGameTime += Time.fixedDeltaTime * NotesManagerData.nData.MusicSpeed;
         }
 
         private int CreateNotes(Notes n_, int lane,int index)
         {
-
             float hakuTime = 60.0f / (float)notesData.BPM;
             float CreateTime = hakuTime * (float)n_.time;
 
