@@ -116,16 +116,16 @@ namespace Notes {
                 Debug.Log("曲が終了しました");
             }
 
-            //// ノーツの召喚
-            //for (int i = 0; i < createIndex.Length; i++)
-            //{
-            //    if (createIndex[i] >= createIndex_max[i]) { return; }
+            // ノーツの召喚
+            for (int i = 0; i < createIndex.Length; i++)
+            {
+                if (createIndex[i] >= createIndex_max[i]) { return; }
 
-            //    Notes n = notesData.notes[i][createIndex[i]];
-            //    createIndex[i] += CreateNotes(n, i, createIndex[i]);
-            //}
+                Notes n = notesData.notes[i][createIndex[i]];
+                createIndex[i] += CreateNotes(n, i, createIndex[i]);
+            }
 
-            if (!goinstance) { goinstance = DebugNotesCreate(); }
+            //if (!goinstance) { goinstance = DebugNotesCreate(); }
 
             // 時間の加算
             InGameTime += Time.fixedDeltaTime;
@@ -146,7 +146,8 @@ namespace Notes {
                 num: index + 1,
                 j: NotesManagerData.nData,
                 v: NotesPosition[lane],
-                q: rotate[(int)n_.dir]
+                q: rotate[(int)n_.dir],
+                l_:(NotesLane)lane
                 );
 
             // 生成時間になったら生成してカウントを増やす
@@ -184,7 +185,8 @@ namespace Notes {
                 num:0,
                 j: NotesManagerData.nData,
                 v: NotesPosition[0],
-                q: rotate[(int)notes_.dir]
+                q: rotate[(int)notes_.dir],
+                l_: (NotesLane)0
                 );
 
             GameObject go = NotesGenerator.CreateNotes(informaiton);

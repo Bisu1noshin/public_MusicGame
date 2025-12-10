@@ -5,19 +5,29 @@ namespace Notes
 {
     public abstract class NotesIdleState : StateBase<NotesObject, NotesTrigger>
     {
+        private bool isActionBind;
+
         public NotesIdleState(NotesObject owner, IStateMachine<NotesTrigger> st) : base(owner, st)
         {
-            owner.NotesActoin += ActiveNotes;
+            isActionBind = true;
         }
 
         protected override void OnEnter()
         {
-            owner.NotesActoin += ActiveNotes;
+            
         }
 
         protected override void OnUpdate(float deltaTime)
         {
-            
+            // ノーツのイベントをplayerにバインド
+            if (owner.timeCnt >= owner.Judg.CreateTimeDelay - owner.Judg.JudgmentTimeDelay)
+            {
+                if (isActionBind)
+                {
+                    InGamePlayer.NotesAction[(int)owner.lane] += ActiveNotes;
+                    isActionBind = false;
+                }
+            }
         }
 
         protected override void OnExit()

@@ -10,17 +10,11 @@ namespace Notes {
         public override void SetInitilizeNotes(NotesInformaiton i_)
         {
             // 最大値の設定
-            max_index = i_.Notes.lenge + 1;
-            Max_holdCnt = i_.Notes.lenge + 1;
+            max_index = i_.Notes.range + 1;
+            Max_holdCnt = i_.Notes.range + 1;
 
             // スプライトの調整
-            Vector3 Pos = transform.GetChild(0).transform.position;
-            Pos += new Vector3(0, (i_.Notes.lenge - 1) * 0.5f, 0);
-            transform.GetChild(0).position = Pos;
-
-            Vector3 Scale = transform.GetChild(0).transform.localScale;
-            Scale+= new Vector3(0, i_.Notes.lenge, 0);
-            transform.GetChild(0).localScale = Scale;
+            IntilizeSprite(i_.Notes.range);
 
             // BPMの定義
             BPM = i_.BPM;
@@ -32,6 +26,7 @@ namespace Notes {
                 CreateTime = i_.CteateTime;
                 Judg = i_.Judgment;
                 NotesNum = i_.NotesNum;
+                lane = i_.lane;
             }
 
             // ステートマシンの初期化
@@ -53,6 +48,17 @@ namespace Notes {
                 st.AddTransition(NotesState.Active, NotesState.Ded, NotesTrigger.DedTrigger);
             }
 
+        }
+
+        private void IntilizeSprite(int r_)
+        {
+            Vector3 Pos = transform.GetChild(0).transform.position;
+            Pos += new Vector3(0, (r_ - 1) * 0.5f, 0);
+            transform.GetChild(0).position = Pos;
+
+            Vector3 Scale = transform.GetChild(0).transform.localScale;
+            Scale += new Vector3(0, r_, 0);
+            transform.GetChild(0).localScale = Scale;
         }
     }
 }

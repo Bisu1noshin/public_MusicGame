@@ -76,12 +76,9 @@ namespace Notes
             return ScoreData;
         }
 
-        public void DebugLogScore(int num = 0,int lane = 0)
+        public void DebugLogScore(int num = 0,NotesLane lane = 0)
         {
-            string side = "LeftNotes";
-            if (lane != 0) { side = "RightNotes"; }
-
-            string s = "Log :" + num + side;
+            string s = "Log :" + num + " " + lane.ToString();
 
             for (int i = 0; i < score.Length; i++)
             {

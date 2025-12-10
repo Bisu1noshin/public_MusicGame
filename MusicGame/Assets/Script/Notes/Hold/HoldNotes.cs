@@ -14,15 +14,15 @@ namespace Notes {
         public override void SetInitilizeNotes(NotesInformaiton i_)
         {
             // 最大値の設定
-            max_index = i_.Notes.lenge + 1;
-            Max_holdCnt = i_.Notes.lenge + 1;
+            max_index = i_.Notes.range + 1;
+            Max_holdCnt = i_.Notes.range + 1;
 
             // スプライトの調整
             Vector3 Pos = transform.GetChild(0).position;
-            Pos += new Vector3(0, (i_.Notes.lenge - 1) * 0.5f, 0);
+            Pos += new Vector3(0, (i_.Notes.range - 1) * 0.5f, 0);
             transform.GetChild(0).position = Pos;
 
-            Vector3 Scale = new Vector3(1, i_.Notes.lenge, 1);
+            Vector3 Scale = new Vector3(1, i_.Notes.range, 1);
             transform.GetChild(0).localScale = Scale;
 
             // 方向指定
@@ -40,6 +40,7 @@ namespace Notes {
                 CreateTime = i_.CteateTime;
                 Judg = i_.Judgment;
                 NotesNum = i_.NotesNum;
+                lane = i_.lane;
             }
 
             // ステートマシンの初期化

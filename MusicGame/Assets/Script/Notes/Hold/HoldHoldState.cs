@@ -56,7 +56,7 @@ namespace Notes
             base.OnExit();
 
             if (owner.holdCnt >= owner.Max_holdCnt - 1)
-                owner.NotesActoin -= ActiveNotes;
+                InGamePlayer.NotesAction[(int)owner.lane] -= ActiveNotes;
         }
 
         // 発火イベント

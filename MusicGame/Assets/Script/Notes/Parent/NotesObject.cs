@@ -29,6 +29,8 @@ namespace Notes {
         // メンバー変数
         
         public NotesScoreData score { get; protected set; }
+
+        public NotesLane lane { get; protected set; }
         
         public PlayerState AnsTrigger { get; protected set; }
 
@@ -46,12 +48,8 @@ namespace Notes {
 
         public int holdCnt;
 
-
         private float fallSpeed;
         protected StateMachine<NotesState, NotesTrigger> st;
-
-        // イベントアクションのデリゲート
-        public Action<PlayerState, float> NotesActoin;
 
         protected void Awake()
         {
@@ -60,7 +58,7 @@ namespace Notes {
 
         protected virtual void Start() {
 
-            fallSpeed = Judg.JudgmentTimeDelay * 8.0f;
+            fallSpeed = Judg.CreateTimeDelay * 8.0f;
             holdCnt = 0;
         }
 
@@ -72,16 +70,16 @@ namespace Notes {
 
             // 落下処理
             transform.position += new Vector3(0, -1 * fallSpeed * Time.fixedDeltaTime, 0);
-
+            
             // パーフェクト
-            if (timeCnt >= Judg.JudgmentTimeDelay)
+            if (timeCnt >= Judg.CreateTimeDelay)
             {
                 var s = GetComponentInChildren<SpriteRenderer>();
                 s.color = Color.blue;
 
                 // オートプレイの処理
                 if (Judg.AoutPlay)
-                    NotesActoin?.Invoke(AnsTrigger, Judg.JudgmentTimeDelay + CreateTime);
+                    InGamePlayer.NotesAction[(int)lane]?.Invoke(AnsTrigger, Judg.CreateTimeDelay + CreateTime);
             }
 
             timeCnt += Time.fixedDeltaTime;
