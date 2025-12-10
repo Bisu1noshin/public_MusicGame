@@ -15,8 +15,8 @@ namespace Notes
 
         protected override void OnEnter()
         {
-            if (owner.NotesActoin == null)
-                owner.NotesActoin += ActiveNotes;
+            if (InGamePlayer.NotesAction[(int)owner.lane] == null)
+                InGamePlayer.NotesAction[(int)owner.lane] += ActiveNotes;
         }
 
         protected override void OnUpdate(float deltaTime)

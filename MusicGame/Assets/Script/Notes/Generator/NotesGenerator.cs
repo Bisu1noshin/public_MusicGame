@@ -19,9 +19,10 @@ namespace Notes {
         public NotesManagerForNotesData Judgment { get; private set; }
 
         public int NotesNum { get; private set; }
+        public NotesLane lane{ get; private set; }
 
         public NotesInformaiton
-            (float create,GameObject obj,Notes n,int bpm, NotesManagerForNotesData j,int num, Vector3 v,Vector3 q)
+            (float create,GameObject obj,Notes n,int bpm, NotesManagerForNotesData j,int num,NotesLane l_, Vector3 v,Vector3 q)
         {
             CteateTime = create;
             NotesObj = obj;
@@ -31,6 +32,7 @@ namespace Notes {
             Judgment = j;
             CreatePos = v;
             CreateRot = q;
+            lane = l_;
         }
     }
 

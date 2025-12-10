@@ -32,7 +32,11 @@ namespace Notes
         // ノーツ関係
 
         [Range(0, 10)]
-        [Tooltip("判定までのディレイ")]
+        [Tooltip("召喚から判定までのディレイ")]
+        public float CreateTimeDelay;
+
+        [Range(0, 1)]
+        [Tooltip("ノーツ判定のディレイ")]
         public float JudgmentTimeDelay;
 
         [Range(0, 1)]
@@ -43,5 +47,7 @@ namespace Notes
         [Tooltip("Good判定の幅")]
         public float GoodTime;
 
+        [Tooltip("オートモード")]
+        public bool AoutPlay;
     }
 }

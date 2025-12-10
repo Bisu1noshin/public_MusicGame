@@ -24,6 +24,7 @@ namespace Notes
                 CreateTime = i_.CteateTime;
                 Judg = i_.Judgment;
                 NotesNum = i_.NotesNum;
+                lane = i_.lane;
             }
 
             // ステートマシンの初期化

@@ -16,6 +16,8 @@ MonoBehaviour:
     MusicFilePath: Music/ShiningStar
     NotesDataFilePath: TextData/NotesData/ShiningStar/ShiningStar_NORMAL
   nData:
-    JudgmentTimeDelay: 1
+    CreateTimeDelay: 1
+    JudgmentTimeDelay: 0.057
     PerfectTime: 0.03
     GoodTime: 0.05
+    AoutPlay: 1

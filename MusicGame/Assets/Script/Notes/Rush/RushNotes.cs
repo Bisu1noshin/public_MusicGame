@@ -5,26 +5,16 @@ namespace Notes {
 
     public class RushNotes :NotesObject
     {
-        private const float perfectLenge = 0.033f;
-        private const float goodLenge = 0.05f;
-        private int index;
         private int max_index = default;
-        private bool isFirst;
 
         public override void SetInitilizeNotes(NotesInformaiton i_)
         {
             // 最大値の設定
-            max_index = i_.Notes.lenge + 1;
-            Max_holdCnt = i_.Notes.lenge + 1;
+            max_index = i_.Notes.range + 1;
+            Max_holdCnt = i_.Notes.range + 1;
 
             // スプライトの調整
-            Vector3 Pos = transform.GetChild(0).transform.position;
-            Pos += new Vector3(0, (i_.Notes.lenge - 1) * 0.5f, 0);
-            transform.GetChild(0).position = Pos;
-
-            Vector3 Scale = transform.GetChild(0).transform.localScale;
-            Scale+= new Vector3(0, i_.Notes.lenge, 0);
-            transform.GetChild(0).localScale = Scale;
+            IntilizeSprite(i_.Notes.range);
 
             // BPMの定義
             BPM = i_.BPM;
@@ -32,12 +22,11 @@ namespace Notes {
             // 変数の初期化
             {
                 score = new NotesScoreData(max_index);
-                index = 1;
                 score.SetScore(NotesScore.Miss, 0);
-                isFirst = true;
                 CreateTime = i_.CteateTime;
                 Judg = i_.Judgment;
                 NotesNum = i_.NotesNum;
+                lane = i_.lane;
             }
 
             // ステートマシンの初期化
@@ -55,10 +44,21 @@ namespace Notes {
                 st.AddTransition(NotesState.Idle, NotesState.Active, NotesTrigger.ActiveTrigger);
                 st.AddTransition(NotesState.Idle, NotesState.Hold, NotesTrigger.HoldTrigger);
                 st.AddTransition(NotesState.Hold, NotesState.Active, NotesTrigger.ActiveTrigger);
-                st.AddTransition(NotesState.Hold, NotesState.Ded, NotesTrigger.DedTrigger);
                 st.AddTransition(NotesState.Active, NotesState.Hold, NotesTrigger.HoldTrigger);
+                st.AddTransition(NotesState.Active, NotesState.Ded, NotesTrigger.DedTrigger);
             }
 
+        }
+
+        private void IntilizeSprite(int r_)
+        {
+            Vector3 Pos = transform.GetChild(0).transform.position;
+            Pos += new Vector3(0, (r_ - 1) * 0.5f, 0);
+            transform.GetChild(0).position = Pos;
+
+            Vector3 Scale = transform.GetChild(0).transform.localScale;
+            Scale += new Vector3(0, r_, 0);
+            transform.GetChild(0).localScale = Scale;
         }
     }
 }

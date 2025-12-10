@@ -37,7 +37,7 @@ namespace Notes
             this.time = time_;
             this.dir = (Direction)dirN;
             this.kind = (NotesKind)kind;
-            this.lenge = lenge;
+            this.range = lenge;
         }
 
         // メンバー変数
@@ -49,7 +49,7 @@ namespace Notes
         public NotesKind kind { get; private set; }
 
 
-        public int lenge { get; private set; }
+        public int range { get; private set; }
     }
 
     // 曲に対応したノーツのデータを保存するクラス

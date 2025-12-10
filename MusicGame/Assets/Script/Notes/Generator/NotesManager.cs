@@ -125,6 +125,8 @@ namespace Notes {
                 createIndex[i] += CreateNotes(n, i, createIndex[i]);
             }
 
+            //if (!goinstance) { goinstance = DebugNotesCreate(); }
+
             // 時間の加算
             InGameTime += Time.fixedDeltaTime;
         }
@@ -144,7 +146,8 @@ namespace Notes {
                 num: index + 1,
                 j: NotesManagerData.nData,
                 v: NotesPosition[lane],
-                q: rotate[(int)n_.dir]
+                q: rotate[(int)n_.dir],
+                l_:(NotesLane)lane
                 );
 
             // 生成時間になったら生成してカウントを増やす
@@ -171,7 +174,7 @@ namespace Notes {
 
         private bool DebugNotesCreate()
         {
-            Notes notes_ = new(0, 0, 1, 3);
+            Notes notes_ = new(0, 0, 2, 3);
 
             // ノーツ生成に必要なデータの構築
             NotesInformaiton informaiton = new(
@@ -182,7 +185,8 @@ namespace Notes {
                 num:0,
                 j: NotesManagerData.nData,
                 v: NotesPosition[0],
-                q: rotate[(int)notes_.dir]
+                q: rotate[(int)notes_.dir],
+                l_: (NotesLane)0
                 );
 
             GameObject go = NotesGenerator.CreateNotes(informaiton);

@@ -36,6 +36,7 @@ namespace Player
 
         private NotesObject[] notes;
         private Notes.NotesManager manager;
+        public static Action<PlayerState, float>[] NotesAction = new Action<PlayerState, float>[2];
 
         private void Start()
         {
@@ -60,10 +61,9 @@ namespace Player
                 {
                     if (state[i] != PlayerState.Idle)
                     {
-                        notes[i]?.NotesActoin?.Invoke(state[i], manager.InGameTime);
-                        state[i] = PlayerState.Idle;
+                        NotesAction[i]?.Invoke(state[i], manager.InGameTime);
                     }
-                }
+                }        
             }
         }
 
@@ -90,6 +90,7 @@ namespace Player
 
         protected override void LeftStickCanceled(Vector2 vec)
         {
+            state[0] = InputAction(vec);
         }
 
         protected override void RightStickStarted(Vector2 vec)
@@ -104,7 +105,7 @@ namespace Player
 
         protected override void RightStickCanceled(Vector2 vec)
         {
-
+            state[1] = InputAction(vec);
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
