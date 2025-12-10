@@ -47,10 +47,7 @@ namespace Player
         }
         protected override void OnButtonX() { }
         protected override void OnButtonY() { }
-        protected override void UpButtonA()
-        {
-            mSelecter.CanSelect = true;
-        }
+        protected override void UpButtonA() { }
         protected override void UpButtonB() { }
         protected override void UpButtonX() { }
         protected override void UpButtonY() { }
