@@ -18,18 +18,23 @@ namespace Notes {
             Max_holdCnt = i_.Notes.range + 1;
 
             // スプライトの調整
-            Vector3 Pos = transform.GetChild(0).position;
-            Pos += new Vector3(0, (i_.Notes.range - 1) * 0.5f, 0);
-            transform.GetChild(0).position = Pos;
-
-            Vector3 Scale = new Vector3(1, i_.Notes.range, 1);
-            transform.GetChild(0).localScale = Scale;
+            {
+                for (int i = 0; i < i_.Notes.range; i++)
+                {
+                    float speed = 60.0f / (float)i_.BPMInfo.MusicBPM / 4.0f;
+                    float value = 8f * speed;
+                    Vector3 vector = new Vector3(0, 2.5f * value / 2.0f + 2.5f * value * i, 0);
+                    transform.GetChild(i).localPosition = vector;
+                    transform.GetChild(i).localScale = new Vector3(1, value, 1);
+                    transform.GetChild(i).gameObject.gameObject.SetActive(true);
+                }
+            }
 
             // 方向指定
             AnsTrigger = (PlayerState)((int)i_.Notes.dir);
 
             // BPMの定義
-            BPM = i_.BPM;
+            BPMInfo = i_.BPMInfo;
 
             // 変数の初期化
             {
@@ -39,8 +44,7 @@ namespace Notes {
                 isFirst = true;
                 CreateTime = i_.CteateTime;
                 Judg = i_.Judgment;
-                NotesNum = i_.NotesNum;
-                lane = i_.lane;
+                DebugInfo = i_.DebugInfo;
             }
 
             // ステートマシンの初期化

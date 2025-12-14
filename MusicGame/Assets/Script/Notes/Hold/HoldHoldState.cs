@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 namespace Notes
 {
@@ -17,7 +18,7 @@ namespace Notes
         {
             // 変数の初期化
             isHoldTime = 0f;
-            clapTime = 60.0f / (float)owner.BPM - Time.fixedDeltaTime;
+            clapTime = 60.0f / (float)owner.BPMInfo.MusicBPM / 2.0f - Time.fixedDeltaTime;
         }
 
         protected override void OnEnter()
@@ -56,14 +57,14 @@ namespace Notes
             base.OnExit();
 
             if (owner.holdCnt >= owner.Max_holdCnt - 1)
-                InGamePlayer.NotesAction[(int)owner.lane] -= ActiveNotes;
+                InGamePlayer.NotesAction[(int)owner.DebugInfo.NotesLane] -= ActiveNotes;
         }
 
         // 発火イベント
         protected override void ActiveNotes(PlayerState state, float ActiveTime)
         {
-            if(state == owner.AnsTrigger)
-                isHoldTime += Time.fixedDeltaTime;
+            if (state == owner.AnsTrigger)
+                isHoldTime += Time.fixedDeltaTime * owner.Judg.MusicSpeed;
         }
     }
 }

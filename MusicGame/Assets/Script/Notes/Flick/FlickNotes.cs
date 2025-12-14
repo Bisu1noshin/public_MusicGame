@@ -15,7 +15,7 @@ namespace Notes
             AnsTrigger = (PlayerState)(i_.Notes.dir);
 
             // BPMの定義
-            BPM = i_.BPM;            
+            BPMInfo = i_.BPMInfo;            
 
             // 変数の初期化
             {
@@ -23,8 +23,7 @@ namespace Notes
                 score.SetScore(NotesScore.Miss);
                 CreateTime = i_.CteateTime;
                 Judg = i_.Judgment;
-                NotesNum = i_.NotesNum;
-                lane = i_.lane;
+                DebugInfo = i_.DebugInfo;
             }
 
             // ステートマシンの初期化

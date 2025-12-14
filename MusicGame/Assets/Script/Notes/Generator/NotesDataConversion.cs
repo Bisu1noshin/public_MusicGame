@@ -20,40 +20,72 @@ namespace Notes
             for (int i = 0; i < data.notes.Length; i++)
             {
                 int holdCnt = 0;
-                NotesKind preKind = data.notes[i][0].kind;
+                Notes preKind = data.notes[i][0];
 
                 for (int j = 1; j < data.notes[i].Count;j++)
                 {
-                    if (data.notes[i][j].kind != preKind|| j == data.notes[i].Count - 1)
+                    // 通常処理
                     {
-                        if (holdCnt > 0)
+                        if (data.notes[i][j].kind != preKind.kind || data.notes[i][j].dir != preKind.dir)
                         {
-                            Notes pre = data.notes[i][j - 1];
+                            if (holdCnt > 0)
+                            {
+                                Notes pre = data.notes[i][j - 1];
 
-                            int dir = (int)pre.dir;
-                            if (dir < 0) dir = 0;
+                                int dir = (int)pre.dir;
+                                if (dir < 0) dir = 0;
 
-                            data.notes[i][j - 1] =
-                                new Notes(
-                                    pre.time,
-                                    dir,
-                                    (int)pre.kind,
-                                    holdCnt
-                                );
+                                data.notes[i][j - 1] =
+                                    new Notes(
+                                        pre.time,
+                                        dir,
+                                        (int)pre.kind,
+                                        holdCnt
+                                    );
 
-                            holdCnt = 0;
+                                holdCnt = 0;
+                            }
+
+                            preKind = data.notes[i][j];
+                            continue;
                         }
-
-                        preKind = data.notes[i][j].kind;
-                        continue;
                     }
 
+                    // 最後のノーツの処理
+                    {
+                        if (j == data.notes[i].Count - 1)
+                        {
+                            if (holdCnt > 0)
+                            {
+                                Notes pre = data.notes[i][j - 1];
+
+                                int dir = (int)pre.dir;
+                                if (dir < 0) dir = 0;
+
+                                data.notes[i][j - 1] =
+                                    new Notes(
+                                        pre.time,
+                                        dir,
+                                        (int)pre.kind,
+                                        holdCnt
+                                    );
+
+                                holdCnt = 0;
+
+                                data.notes[i].RemoveAt(j);
+
+                                continue;
+                            }
+                        }
+                    }
+
+                    // 加算処理
                     if (data.notes[i][j].kind != NotesKind.Flick)
                     {
                         data.notes[i].RemoveAt(j);
                         j--;
                         holdCnt++;
-                    }                
+                    }
                 }
             }     
         }
