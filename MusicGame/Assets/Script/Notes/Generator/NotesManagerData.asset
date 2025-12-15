@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fData:
     MusicFilePath: Music/ShiningStar
-    NotesDataFilePath: TextData/NotesData/ShiningStar/ShiningStar_HARD
+    NotesDataFilePath: TextData/NotesData/ShiningStar/ShiningStar_EXPERT
   nData:
     CreateTimeDelay: 1
     JudgmentTimeDelay: 0

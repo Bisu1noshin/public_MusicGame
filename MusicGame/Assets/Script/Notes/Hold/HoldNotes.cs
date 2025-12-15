@@ -13,16 +13,19 @@ namespace Notes {
 
         public override void SetInitilizeNotes(NotesInformaiton i_)
         {
+            // 幅の再定義
+            var average = 2.0f * i_.BPMInfo.MusicBPM / i_.BPMInfo.NotesBPM;
+
             // 最大値の設定
-            max_index = i_.Notes.range + 1;
-            Max_holdCnt = i_.Notes.range + 1;
+            max_index = (int)(i_.Notes.range * average);
+            Max_holdCnt = (int)(i_.Notes.range * average) + 1;
 
             // スプライトの調整
             {
-                for (int i = 0; i < i_.Notes.range; i++)
+                for (int i = 0; i < max_index; i++)
                 {
                     float speed = 60.0f / (float)i_.BPMInfo.MusicBPM / 4.0f;
-                    float value = 8f * speed;
+                    float value = 0.7f;
                     Vector3 vector = new Vector3(0, 2.5f * value / 2.0f + 2.5f * value * i, 0);
                     transform.GetChild(i).localPosition = vector;
                     transform.GetChild(i).localScale = new Vector3(1, value, 1);
@@ -38,7 +41,7 @@ namespace Notes {
 
             // 変数の初期化
             {
-                score = new NotesScoreData(max_index);
+                score = new NotesScoreData(Max_holdCnt);
                 index = 1;
                 score.SetScore(NotesScore.Miss, 0);
                 isFirst = true;
