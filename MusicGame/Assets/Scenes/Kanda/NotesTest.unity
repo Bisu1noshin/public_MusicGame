@@ -266,6 +266,7 @@ MonoBehaviour:
   - {x: 2, y: 5, z: 0}
   NotesManagerData: {fileID: 11400000, guid: 0894919679aa8644e892fc74176583fe, type: 2}
   InGameTime: 0
+  BPM: 153
 --- !u!1 &729530351
 GameObject:
   m_ObjectHideFlags: 0

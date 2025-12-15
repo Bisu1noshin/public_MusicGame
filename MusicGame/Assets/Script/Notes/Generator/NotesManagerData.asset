@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: NotesManagerData
   m_EditorClassIdentifier: 
   fData:
-    MusicFilePath: Music/ShiningStar
-    NotesDataFilePath: TextData/NotesData/ShiningStar/ShiningStar_EXPERT
+    MusicFilePath: Music/gengaozo
+    NotesDataFilePath: TextData/NotesData/gengaozo/Gengaozo_EXPERT
   nData:
     CreateTimeDelay: 1
     JudgmentTimeDelay: 0
