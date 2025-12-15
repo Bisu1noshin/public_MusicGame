@@ -19,7 +19,7 @@ namespace Notes {
         private AudioSource audioSource;
 
         private NotesData notesData;
-        private int BPM = 158;
+        [SerializeField] private int BPM = 158;
         private int[] createIndex;
         private int[] createIndex_max;
         private bool isMusic = true;
@@ -130,10 +130,11 @@ namespace Notes {
             // ノーツの召喚
             for (int i = 0; i < createIndex.Length; i++)
             {
-                if (createIndex[i] >= createIndex_max[i]) { return; }
-
-                Notes n = notesData.notes[i][createIndex[i]];
-                createIndex[i] += CreateNotes(n, i, createIndex[i]);
+                if (createIndex[i] < createIndex_max[i])
+                {
+                    Notes n = notesData.notes[i][createIndex[i]];
+                    createIndex[i] += CreateNotes(n, i, createIndex[i]);
+                }
             }
 
             //if (!goinstance) { goinstance = DebugNotesCreate(); }
