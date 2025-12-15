@@ -35,8 +35,8 @@ namespace LoadForAsync
         {
             if (assets != null) { return false; }
 
-            assets =
-                await LoadObjectForAsync.AsyncLoad<TClass>((filePath));
+            //assets =
+                //await LoadObjectForAsync.AsyncLoad<TClass>((filePath));
 
             return true;
         }

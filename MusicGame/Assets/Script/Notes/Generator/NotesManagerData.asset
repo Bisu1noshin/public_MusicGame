@@ -20,5 +20,5 @@ MonoBehaviour:
     JudgmentTimeDelay: 0
     PerfectTime: 0.03
     GoodTime: 0.05
-    MusicSpeed: 1
+    MusicSpeed: 1.51
     AuotPlay: 1

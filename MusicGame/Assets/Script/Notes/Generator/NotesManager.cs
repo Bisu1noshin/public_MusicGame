@@ -66,7 +66,7 @@ namespace Notes {
             for (int i = 0; i < 4; i++)
             {
                 notes[0, i] = Resources.Load<GameObject>(FlicNotesPath + NotesDir[i]);
-                notes[1, i] = Resources.Load<GameObject>(HoldNotesPath + NotesDir[0]);
+                notes[1, i] = Resources.Load<GameObject>(HoldNotesPath + NotesDir[i]);
                 notes[2, i] = Resources.Load<GameObject>(RushNotesPath);
             }
             
