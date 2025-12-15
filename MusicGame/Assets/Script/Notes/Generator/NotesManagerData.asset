@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fData:
     MusicFilePath: Music/gengaozo
-    NotesDataFilePath: TextData/NotesData/gengaozo/Gengaozo_EXPERT
+    NotesDataFilePath: TextData/NotesData/ShiningStar/ShiningStar_HARD
   nData:
     CreateTimeDelay: 1
     JudgmentTimeDelay: 0
     PerfectTime: 0.03
     GoodTime: 0.05
-    MusicSpeed: 1.51
+    MusicSpeed: 1
     AuotPlay: 1

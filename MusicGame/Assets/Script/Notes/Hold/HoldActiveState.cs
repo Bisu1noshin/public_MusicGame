@@ -24,8 +24,9 @@ namespace Notes
 
         protected override void OnUpdate(float deltaTime)
         {
-            if (owner.holdCnt >= owner.Max_holdCnt - 1)
+            if (owner.holdCnt >= owner.Max_holdCnt)
             {
+                owner.holdCnt--;
                 stateMachine.ExecuteTriggerAction(NotesTrigger.DedTrigger);
                 return;
             }

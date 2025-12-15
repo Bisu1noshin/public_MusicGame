@@ -15,7 +15,13 @@ namespace Notes
             AnsTrigger = (PlayerState)(i_.Notes.dir);
 
             // BPMの定義
-            BPMInfo = i_.BPMInfo;            
+            BPMInfo = i_.BPMInfo;
+
+            // スプライトの調整
+            {
+                var value = 2.5f;
+                transform.GetChild(0).localScale = new Vector3(value, value, value);
+            }
 
             // 変数の初期化
             {
