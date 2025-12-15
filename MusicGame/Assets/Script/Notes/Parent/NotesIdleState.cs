@@ -24,7 +24,7 @@ namespace Notes
             {
                 if (isActionBind)
                 {
-                    InGamePlayer.NotesAction[(int)owner.lane] += ActiveNotes;
+                    InGamePlayer.NotesAction[(int)owner.DebugInfo.NotesLane] += ActiveNotes;
                     isActionBind = false;
                 }
             }

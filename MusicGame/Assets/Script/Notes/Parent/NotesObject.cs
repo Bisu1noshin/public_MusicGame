@@ -30,21 +30,19 @@ namespace Notes {
         
         public NotesScoreData score { get; protected set; }
 
-        public NotesLane lane { get; protected set; }
+        public float CreateTime { get; protected set; }
         
         public PlayerState AnsTrigger { get; protected set; }
 
-        public float BPM { get; protected set; }
-
         public float timeCnt { get; protected set; }
-
-        public float CreateTime { get; protected set; }
 
         public int Max_holdCnt { get; protected set; }
 
         public NotesManagerForNotesData Judg { get; protected set; }
 
-        public int NotesNum { get; protected set; }
+        public BPMInfo BPMInfo { get; protected set; }
+
+        public NotesDebugInfo DebugInfo { get; protected set; }
 
         public int holdCnt;
 
@@ -66,23 +64,21 @@ namespace Notes {
         protected virtual void FixedUpdate()
         {
             // ステートマシンの更新
-            st.Update(Time.fixedDeltaTime);
+            st.Update(Time.fixedDeltaTime * Judg.MusicSpeed);
 
             // 落下処理
-            transform.position += new Vector3(0, -1 * fallSpeed * Time.fixedDeltaTime, 0);
-            
-            // パーフェクト
+            transform.position += new Vector3(0, -1 * fallSpeed * Time.fixedDeltaTime * Judg.MusicSpeed, 0);
+
+            // オートプレイの処理
             if (timeCnt >= Judg.CreateTimeDelay)
             {
-                var s = GetComponentInChildren<SpriteRenderer>();
-                s.color = Color.blue;
-
-                // オートプレイの処理
-                if (Judg.AoutPlay)
-                    InGamePlayer.NotesAction[(int)lane]?.Invoke(AnsTrigger, Judg.CreateTimeDelay + CreateTime);
+                if (Judg.AuotPlay)
+                {
+                    InGamePlayer.NotesAction[(int)DebugInfo.NotesLane]?.Invoke(AnsTrigger, Judg.CreateTimeDelay + CreateTime);
+                }                   
             }
 
-            timeCnt += Time.fixedDeltaTime;
+            timeCnt += Time.fixedDeltaTime * Judg.MusicSpeed;
         }
 
         public abstract void SetInitilizeNotes(NotesInformaiton informaiton);

@@ -12,7 +12,7 @@ namespace Notes {
 
         protected override void OnEnter()
         {
-            owner.score.DebugLogScore(owner.NotesNum, owner.lane);
+            owner.score.DebugLogScore(owner.DebugInfo.NotesNum, owner.DebugInfo.NotesLane);
             SingletonDataManager.instance.SetScore(owner.score.GetTotalScore());
         }
 

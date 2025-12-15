@@ -37,7 +37,7 @@ namespace Notes
         protected override void ActiveNotes(PlayerState state, float ActiveTime)
         {
             float DiscriminationTime = ActiveTime - owner.CreateTime;
-            InGamePlayer.NotesAction[(int)owner.lane] -= ActiveNotes;
+            InGamePlayer.NotesAction[(int)owner.DebugInfo.NotesLane] -= ActiveNotes;
 
             if (state == owner.AnsTrigger)
             {
