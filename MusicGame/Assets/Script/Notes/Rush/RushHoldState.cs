@@ -18,7 +18,7 @@ namespace Notes
             // 変数の初期化
             {
                 isHoldTime = 0f;
-                clapTime = 60.0f / (float)owner.BPM - Time.fixedDeltaTime;
+                clapTime = 60.0f / (float)owner.BPMInfo.MusicBPM - Time.fixedDeltaTime;
             }
         }
 
@@ -57,7 +57,7 @@ namespace Notes
             base.OnExit();
 
             if (owner.holdCnt >= owner.Max_holdCnt - 1)
-                InGamePlayer.NotesAction[(int)owner.lane] -= ActiveNotes;
+                InGamePlayer.NotesAction[(int)owner.DebugInfo.NotesLane] -= ActiveNotes;
         }
 
         // 発火イベント

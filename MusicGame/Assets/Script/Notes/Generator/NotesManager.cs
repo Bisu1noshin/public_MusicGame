@@ -4,6 +4,8 @@ using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using LoadForAsync;
 using Cysharp.Threading.Tasks;
+using TMPro;
+using System;
 
 namespace Notes {
 
@@ -14,7 +16,6 @@ namespace Notes {
 
         public float InGameTime = default;
 
-        private Vector3[] rotate = new Vector3[4];
         private AudioSource audioSource;
 
         private NotesData notesData;
@@ -27,12 +28,19 @@ namespace Notes {
         private string n_path = "TextData/NotesData/ShiningStar/ShiningStar_NORMAL";
         private string m_path = "Music/ShiningStar";
 
-        private const string FlicNotesPath = "Notes/FlickNotes";
-        private const string HoldNotesPath = "Notes/HoldNotes";
+        private readonly string[] NotesDir = new string[4]{
+            "_Up",
+            "_Right",
+            "_Down",
+            "_Left"
+        };
+
+        private const string FlicNotesPath = "Notes/Flick/FlickNotes";
+        private const string HoldNotesPath = "Notes/Hold/HoldNotes";
         private const string RushNotesPath = "Notes/RushNotes";
 
         // ノーツのプレファブ
-        private GameObject[] notes;
+        private GameObject[,] notes;
 
         private async UniTask Awake()
         {
@@ -41,14 +49,10 @@ namespace Notes {
                 createIndex = new int[2];
                 createIndex_max = new int[2];
                 notesData = new NotesData();
-                notes = new GameObject[3];
+                notes = new GameObject[3,4];
 
                 InGameTime = 0;
 
-                for (int i = 0; i < rotate.Length; i++)
-                {
-                    rotate[i] = new Vector3(0, 0, -90 * i);
-                }
             }
 
             // スクリプタルオブジェクトから読み込み
@@ -59,9 +63,13 @@ namespace Notes {
             }
 
             // ノーツオブジェクトの読み込み
-            notes[0] = Resources.Load<GameObject>(FlicNotesPath);
-            notes[1] = Resources.Load<GameObject>(HoldNotesPath);
-            notes[2] = Resources.Load<GameObject>(RushNotesPath);
+            for (int i = 0; i < 4; i++)
+            {
+                notes[0, i] = Resources.Load<GameObject>(FlicNotesPath + NotesDir[i]);
+                notes[1, i] = Resources.Load<GameObject>(HoldNotesPath + NotesDir[0]);
+                notes[2, i] = Resources.Load<GameObject>(RushNotesPath);
+            }
+            
 
             // ノーツの配置データの読み込み
             TextEditor.TextEditor text = new(m_path, n_path);
@@ -82,6 +90,9 @@ namespace Notes {
                 audioSource = GetComponent<AudioSource>();
 
                 audioSource.resource = Resources.Load<AudioResource>(m_path);
+
+                // 曲の再生速度の変更
+                audioSource.pitch = NotesManagerData.nData.MusicSpeed;
 
                 //AudioResource audio = await LoadObjectForAsync.AsyncLoad<AudioResource>(m_path);
                 //if (audio != null) { Debug.Log("ロードできました"); }
@@ -128,26 +139,26 @@ namespace Notes {
             //if (!goinstance) { goinstance = DebugNotesCreate(); }
 
             // 時間の加算
-            InGameTime += Time.fixedDeltaTime;
+            InGameTime += Time.fixedDeltaTime * NotesManagerData.nData.MusicSpeed;
         }
 
         private int CreateNotes(Notes n_, int lane,int index)
         {
-
             float hakuTime = 60.0f / (float)notesData.BPM;
             float CreateTime = hakuTime * (float)n_.time;
 
             // ノーツ生成に必要なデータの構築
+            BPMInfo BPMInfo = new(m_bpm: BPM, n_bpm: notesData.BPM);
+            NotesInstantInfo instantInfo = new(notes[(int)n_.kind, (int)n_.dir], NotesPosition[lane]);
+            NotesDebugInfo debugInfo = new(index + 1, (NotesLane)lane);
+
             NotesInformaiton informaiton = new(
                 create: CreateTime,
-                obj: notes[(int)n_.kind],
                 n: n_,
-                bpm: notesData.BPM,
-                num: index + 1,
+                bpm: BPMInfo,
+                instantInfo: instantInfo,
                 j: NotesManagerData.nData,
-                v: NotesPosition[lane],
-                q: rotate[(int)n_.dir],
-                l_:(NotesLane)lane
+                debugInfo: debugInfo
                 );
 
             // 生成時間になったら生成してカウントを増やす
@@ -180,16 +191,17 @@ namespace Notes {
             Notes notes_ = new(0, 0, 2, 3);
 
             // ノーツ生成に必要なデータの構築
+            BPMInfo BPMInfo = new(m_bpm: BPM, n_bpm: notesData.BPM);
+            NotesInstantInfo instantInfo = new(notes[(int)notes_.kind, (int)notes_.dir], NotesPosition[0]);
+            NotesDebugInfo debugInfo = new(0, (NotesLane)0);
+            
             NotesInformaiton informaiton = new(
-                create:0,
-                obj: notes[(int)notes_.kind],
+                create: 0,
                 n: notes_,
-                bpm: notesData.BPM,
-                num:0,
+                bpm: BPMInfo,
+                instantInfo: instantInfo,
                 j: NotesManagerData.nData,
-                v: NotesPosition[0],
-                q: rotate[(int)notes_.dir],
-                l_: (NotesLane)0
+                debugInfo: debugInfo
                 );
 
             GameObject go = NotesGenerator.CreateNotes(informaiton);

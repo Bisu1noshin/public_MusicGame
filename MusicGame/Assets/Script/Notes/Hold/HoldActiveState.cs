@@ -16,6 +16,10 @@ namespace Notes
         protected override void OnEnter()
         {
             base.OnEnter();
+
+            if (owner.holdCnt == 0) { return; }
+
+            owner.transform.GetChild(owner.holdCnt - 1).gameObject.gameObject.SetActive(false);
         }
 
         protected override void OnUpdate(float deltaTime)
