@@ -25,8 +25,8 @@ namespace ModeSelect
         
         protected override void LeftStickStarted(Vector2 vec)
         {
-            if (vec.y / vec.x < 1.0f) return;
-            float Y = vec.y < 0.0f ? 1.0f : -1.0f;
+            if (Mathf.Abs(vec.y / vec.x) < 1.0f) return;
+            float Y = vec.y < 0.0f ? -1.0f : 1.0f;
             vecAction?.Invoke(new(0.0f, Y));
         }
         protected override void OnButtonX() { }

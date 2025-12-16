@@ -13,6 +13,7 @@ namespace ModeSelect.StateMachine
         public int[] SelectNum { get; protected set; }
         protected int layer;
         protected Action deleteAction;
+        protected GameObject buttonPre;
         public IState(ModeSelectSceneManager owner, IStateMachine<Trigger> st) : base(owner, st)
         {
             mOwner = owner;
@@ -22,6 +23,11 @@ namespace ModeSelect.StateMachine
             ButtonNames = new();
             layer = 0;
             deleteAction = null;
+            buttonPre = Resources.Load<GameObject>("ModeSelect/ModeButton");
+        }
+        protected override void OnUpdate(float deltaTime)
+        {
+            ReplaceEnterAction(Actions[SelectNum[layer]]);
         }
         protected void PlayEnterSound()
         {
@@ -41,7 +47,7 @@ namespace ModeSelect.StateMachine
         }
         protected void Scroll(Vector2 vector2)
         {
-            SelectNum[layer] += vector2.y < 0.0f ? -1 : 1;
+            SelectNum[layer] += vector2.y < 0.0f ? 1 : -1;
             if (SelectNum[layer] < 0)
             {
                 SelectNum[layer] = 0;
@@ -63,10 +69,17 @@ namespace ModeSelect.StateMachine
             ActionDic.Add(id_, action_);
             ButtonNames.Add(id_, name_);
         }
-        protected void SetEnterAction(Action action_)
+        protected void ReplaceEnterAction(Action action_)
         {
-            ModeSelect.Player.enterAction += deleteAction;
+            ModeSelect.Player.enterAction = deleteAction;
             ModeSelect.Player.enterAction += action_;
+        }
+        protected void ReserveNullActionList(int cap)
+        {
+            for (int i = 0; i < cap; ++i)
+            {
+                Actions.Add(null);
+            }
         }
     }
 }
