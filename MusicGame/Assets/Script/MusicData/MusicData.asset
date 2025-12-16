@@ -16,20 +16,20 @@ MonoBehaviour:
   - id: 0
     name: "\u30B7\u30E3\u30A4\u30CB\u30F3\u30B0\u30B9\u30BF\u30FC"
     composerName: "\u9B54\u738B\u9B42"
-    musicPath: Music/ShiningStar.mp3
-    demoMusicPath: DemoMusic/ShiningStar_Demo.mp3
+    musicPath: Music/ShiningStar
+    demoMusicPath: DemoMusic/ShiningStar_Demo
     BPM: 158
     jacketPath: Image/MusicJacket/ShiningStar
-    normalPath: TextData/NotesData/ShiningStar/ShiningStar_NORMAL.txt
-    hardPath: TextData/NotesData/ShiningStar/ShiningStar_HARD.txt
-    expertPath: TextData/NotesData/ShiningStar/ShiningStar_EXPERT.txt
+    normalPath: TextData/NotesData/ShiningStar/ShiningStar_NORMAL
+    hardPath: TextData/NotesData/ShiningStar/ShiningStar_HARD
+    expertPath: TextData/NotesData/ShiningStar/ShiningStar_EXPERT
   - id: 1
     name: G e n g a o z o
     composerName: -45
-    musicPath: 
+    musicPath: Music/gengaozo
     demoMusicPath: 
-    BPM: 0
+    BPM: 153
     jacketPath: 
     normalPath: 
     hardPath: 
-    expertPath: 
+    expertPath: TextData/NotesData/gengaozo/Gengaozo_EXPERT
