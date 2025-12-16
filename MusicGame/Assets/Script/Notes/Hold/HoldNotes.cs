@@ -52,7 +52,7 @@ namespace Notes {
 
             // ステートマシンの初期化
             {
-                st = new StateMachine<NotesState, NotesTrigger>(NotesState.Idle);
+                st = new StateMachine<NotesState, NotesTrigger>(NotesState.Idle, new HoldIdleState(this, st));
 
                 // ステートマシーンの初期化
                 st.SetupState(NotesState.Idle, new HoldIdleState(this, st));

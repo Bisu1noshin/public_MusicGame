@@ -35,7 +35,7 @@ public class StateMachine<TState, TTrigger>: IStateMachine<TTrigger>
     private Dictionary<object, IStateMapping> _stateMappings = new Dictionary<object, IStateMapping>();
     private Dictionary<TState, List<Transition<TState, TTrigger>>> _transitionLists = new Dictionary<TState, List<Transition<TState, TTrigger>>>();
 
-    public StateMachine(TState initialState)
+    public StateMachine(TState initialState, IStateMapping mapping)
     {
         // StateからStateMappingを作成
         var enumValues = Enum.GetValues(typeof(TState));
@@ -47,6 +47,7 @@ public class StateMachine<TState, TTrigger>: IStateMachine<TTrigger>
         }
 
         // 最初のStateに遷移
+        SetupState(initialState, mapping);
         ChangeState(initialState);
     }
 
@@ -112,10 +113,7 @@ public class StateMachine<TState, TTrigger>: IStateMachine<TTrigger>
     /// </summary>
     public void Update(float deltaTime)
     {
-        if (_stateMappings[_stateType] != null && _stateMappings[_stateType].onUpdate != null)
-        {
-            _stateMappings[_stateType].onUpdate(deltaTime);
-        }
+        _stateMappings[_stateType]?.onUpdate?.Invoke(deltaTime);
     }
 
     /// <summary>
@@ -132,16 +130,10 @@ public class StateMachine<TState, TTrigger>: IStateMachine<TTrigger>
     private void ChangeState(TState to)
     {
         // OnExit
-        if (_stateMappings[_stateType] != null && _stateMappings[_stateType].onExit != null)
-        {
-            _stateMappings[_stateType].onExit();
-        }
+        _stateMappings[_stateType]?.onExit?.Invoke();
 
         // OnEnter
         _stateType = to;
-        if (_stateMappings[_stateType] != null && _stateMappings[_stateType].onEnter != null)
-        {
-            _stateMappings[_stateType].onEnter();
-        }
+        _stateMappings[_stateType]?.onEnter?.Invoke();
     }
 }
