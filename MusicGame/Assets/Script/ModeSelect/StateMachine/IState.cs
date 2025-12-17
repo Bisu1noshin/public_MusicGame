@@ -1,12 +1,15 @@
-﻿using System;
+﻿using Cysharp.Threading.Tasks.Triggers;
+using System;
 using System.Collections.Generic;
+using TMPro;
+using UnityEditor;
 using UnityEngine;
 
 namespace ModeSelect.StateMachine
 {
     public abstract class IState : StateBase<ModeSelectSceneManager, Trigger>, IActionDictionary, IModeSelecter
     {
-        protected ModeSelectSceneManager mOwner;
+        protected ISceneManager mOwner;
         public List<Action> Actions { get; set; }
         public Dictionary<int, Action> ActionDic { get; set; }
         protected Dictionary<int, string> ButtonNames { get; set; }
@@ -80,6 +83,16 @@ namespace ModeSelect.StateMachine
             {
                 Actions.Add(null);
             }
+        }
+        protected void CreatePopup(string msg)
+        {
+            (GameObject, Action) toggle = PopupController.CreateInstance(msg);
+            GameObject go = toggle.Item1;
+            go.transform.SetParent(GameObject.Find("Canvas").transform);
+            go.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+            go.transform.localScale = Vector3.one;
+            go.GetComponentInChildren<TextMeshProUGUI>().text = msg;
+            deleteAction += () => { toggle.Item2.Invoke(); };
         }
     }
 }

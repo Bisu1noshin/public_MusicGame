@@ -15,10 +15,11 @@ namespace ModeSelect
         {
             InitAction();
             
-            deleteAction += Button.ButtonManager.CreateInstance(this, 0, 4, "シングルプレイ", () => { Debug.Log("Button Selected 1"); }, false);
+            deleteAction += Button.ButtonManager.CreateInstance(this, 0, 4, "シングルプレイ", () => { mOwner.mStateMachine.ExecuteTriggerAction(Trigger.Single); }, false);
             deleteAction += Button.ButtonManager.CreateInstance(this, 1, 4, "マルチプレイ", () => { Debug.Log("Button Selected 2"); }, false);
             deleteAction += Button.ButtonManager.CreateInstance(this, 2, 4, "設定", () => { Debug.Log("Button Selected 3"); }, false);
             deleteAction += Button.ButtonManager.CreateInstance(this, 3, 4, "タイトルに戻る", () => { Debug.Log("Button Selected 4"); }, false);
+            mOwner.CreateCursol();
         }
 
         protected override void OnUpdate(float deltaTime)
@@ -28,7 +29,7 @@ namespace ModeSelect
         }
         protected override void OnExit()
         {
-
+            mOwner.DeleteCursol();
         }
         void InitAction()
         {

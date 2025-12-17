@@ -15,15 +15,15 @@ namespace ModeSelect
         Home, Single, Multi, Setting, BacktoTitle, Enter, Back
     }
 
-    public class ModeSelectSceneManager : MonoBehaviour
+    public class ModeSelectSceneManager : MonoBehaviour, ISceneManager
     {
         public int[] SelectNum { get; set; }
         public AudioSource mAudio { get; private set; }
         public AudioClip[] mAudioClips { get; private set; }
 
-        public StateMachine<State, Trigger> mStateMachine;
+        public StateMachine<State, Trigger> mStateMachine { get; set; }
 
-        public RectTransform CursolRect;
+        public RectTransform CursolRect { get; set; }
         GameObject Cursol;
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Awake()
@@ -36,7 +36,6 @@ namespace ModeSelect
             mAudioClips[2] = Resources.Load<AudioClip>("SoundEffect/Scroll");
             mAudioClips[3] = Resources.Load<AudioClip>("SoundEffect/Beep");
             SetupStateMachine();
-            CreateCursol();
         }
 
         // Update is called once per frame
@@ -46,8 +45,10 @@ namespace ModeSelect
         }
         void SetupStateMachine()
         {
-            //mStateMachine = new StateMachine<State, Trigger>(State.Home);
-            mStateMachine.SetupState(State.Home, new HomeState(this, mStateMachine));
+            // 12/17 変更　これでいいのか...？
+            mStateMachine = new StateMachine<State, Trigger>(State.Home, new HomeState(this, mStateMachine));
+
+            //mStateMachine.SetupState(State.Home, new HomeState(this, mStateMachine));
             mStateMachine.SetupState(State.Single, new SingleState(this, mStateMachine));
             mStateMachine.SetupState(State.Multi, new MultiState(this, mStateMachine));
             mStateMachine.SetupState(State.Setting, new SettingState(this, mStateMachine));
@@ -62,7 +63,7 @@ namespace ModeSelect
 
             
         }
-        void CreateCursol()
+        public void CreateCursol()
         {
             Cursol = Instantiate(Resources.Load<GameObject>("ModeSelect/Cursol"));
             Cursol.transform.SetParent(GameObject.Find("Canvas").transform);
@@ -71,16 +72,36 @@ namespace ModeSelect
             CursolRect = Cursol.GetComponent<RectTransform>();
             CursolRect.anchoredPosition = new(-350, 0);
         }
+        public void DeleteCursol() { Destroy(Cursol); }
+        public static GameObject CreatePopup()
+        {
+            GameObject go = Instantiate(Resources.Load<GameObject>("ModeSelect/Popup"));
+            return go;
+        }
+        public static void DeleteObj(GameObject obj) { Destroy(obj); }
     }
 
     public interface IModeSelecter
     {
         List<Action> Actions { get; set; }
         int[] SelectNum { get; }
+        
     }
     public interface IActionDictionary
     {
         Dictionary<int, Action> ActionDic { get; }
+    }
+    public interface ICursolController
+    {
+        void CreateCursol();
+        void DeleteCursol();
+    }
+    public interface ISceneManager : ICursolController
+    {
+        StateMachine<State, Trigger> mStateMachine { get; set; }
+        AudioSource mAudio { get; }
+        AudioClip[] mAudioClips { get; }
+        RectTransform CursolRect { get; set; }
     }
 }
 
