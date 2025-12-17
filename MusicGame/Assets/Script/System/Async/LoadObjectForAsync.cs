@@ -3,29 +3,26 @@ using Cysharp.Threading.Tasks;
 
 namespace LoadForAsync
 {
-    public class LoadObjectForAsync<TClass>
+    public class LoadObjectForAsync<TClass> : MonoBehaviour, SceneInfromation<TClass>
         where TClass : UnityEngine.Object
     {
+        public string NewSceneName => "LoadObjectForAsyncScene";
 
-        private readonly string FilePath;
+        public LoadObjectTable<TClass> ObjectTable => new();
+        private LoadObject<TextAsset> TextAsset;
 
-        public TClass Object { get; private set; } = default;
-
-        public LoadObjectForAsync(string filePath)
+        private void Start()
         {
-            FilePath = filePath;
+            // オブジェクトテーブルの初期化
+            ObjectTable.Initilize();
+
+            // アセットの追加
+            ObjectTable.AddGameObject(TextAsset);
         }
 
-        public async UniTask AsyncLoad()
+        private void Update()
         {
-            ResourceRequest request = Resources.LoadAsync<TClass>(FilePath);
-
-            while (!request.isDone)
-            {
-                await UniTask.Yield();
-            }
-
-            this.Object = request.asset as TClass;
+            
         }
     }
 }

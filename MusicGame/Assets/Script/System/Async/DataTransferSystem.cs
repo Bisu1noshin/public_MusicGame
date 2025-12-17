@@ -6,12 +6,13 @@ using UnityEngine.SceneManagement;
 
 namespace LoadForAsync
 {
-    public interface SceneInfromation
+    public interface SceneInfromation<TClass>
+        where TClass:UnityEngine.Object
     {
         public string NewSceneName { get; }
 
-        // public 
-    }
+        public LoadObjectTable<TClass> ObjectTable { get; }
+}
 
     public class DataTransferSystem
     {
@@ -43,8 +44,9 @@ namespace LoadForAsync
         /// 未ロードのリソースが存在するゲームシーンに遷移するシーンマネージャー
         /// </summary>
         /// <returns></returns>
-        public static async UniTask<T> LoadAndFindSceneInformation<T>(string sceneName)
-            where T : SceneInfromation
+        public static async UniTask<T> LoadAndFindSceneInformation<T, TClass>(string sceneName)
+            where T : SceneInfromation<TClass>
+            where TClass : UnityEngine.Object
         {
             await SceneManager.LoadSceneAsync(sceneName,LoadSceneMode.Single).ToUniTask();
             Scene scene = SceneManager.GetSceneByName(sceneName);
