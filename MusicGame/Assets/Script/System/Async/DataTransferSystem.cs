@@ -9,6 +9,8 @@ namespace LoadForAsync
     public interface SceneInfromation
     {
         public string NewSceneName { get; }
+
+        // public 
     }
 
     public class DataTransferSystem
@@ -38,7 +40,7 @@ namespace LoadForAsync
         }
 
         /// <summary>
-        /// 未ロードのリソースがのゲームシーンに遷移するシーンマネージャー
+        /// 未ロードのリソースが存在するゲームシーンに遷移するシーンマネージャー
         /// </summary>
         /// <returns></returns>
         public static async UniTask<T> LoadAndFindSceneInformation<T>(string sceneName)

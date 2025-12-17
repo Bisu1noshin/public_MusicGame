@@ -5,18 +5,13 @@ namespace Notes {
 
     public class HoldNotes : NotesObject
     {
-        private const float perfectLenge = 0.033f;
-        private const float goodLenge = 0.05f;
-        private int index = default;
-        private bool isFirst;
-
         public override void SetInitilizeNotes(NotesInformaiton i_)
         {
             // 幅の再定義
             var average = 2.0f * i_.BPMInfo.MusicBPM / i_.BPMInfo.NotesBPM;
 
             // 最大値の設定
-            Max_holdCnt = (int)(i_.Notes.range * average) + 1;
+            Max_holdCnt = (int)(i_.Notes.range * average);
 
             // スプライトの調整
             {
@@ -42,9 +37,7 @@ namespace Notes {
             // 変数の初期化
             {
                 score = new NotesScoreData(Max_holdCnt + 1);
-                index = 1;
                 score.SetScore(NotesScore.Miss, 0);
-                isFirst = true;
                 CreateTime = i_.CteateTime;
                 Judg = i_.Judgment;
                 DebugInfo = i_.DebugInfo;
