@@ -15,7 +15,13 @@ namespace Notes
             AnsTrigger = (PlayerState)(i_.Notes.dir);
 
             // BPMの定義
-            BPMInfo = i_.BPMInfo;            
+            BPMInfo = i_.BPMInfo;
+
+            // スプライトの調整
+            {
+                var value = 2.5f;
+                transform.GetChild(0).localScale = new Vector3(value, value, value);
+            }
 
             // 変数の初期化
             {
@@ -28,7 +34,7 @@ namespace Notes
 
             // ステートマシンの初期化
             {
-                st = new StateMachine<NotesState, NotesTrigger>(NotesState.Idle);
+                st = new StateMachine<NotesState, NotesTrigger>(NotesState.Idle,new FlickIdleState(this, st));
 
                 // ステートマシーンの初期化
                 st.SetupState(NotesState.Idle, new FlickIdleState(this, st));

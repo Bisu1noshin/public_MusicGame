@@ -5,30 +5,25 @@ namespace Notes {
 
     public class HoldNotes : NotesObject
     {
-        private const float perfectLenge = 0.033f;
-        private const float goodLenge = 0.05f;
-        private int index = default;
-        private bool isFirst;
-        private int max_index;
-
         public override void SetInitilizeNotes(NotesInformaiton i_)
         {
             // 幅の再定義
             var average = 2.0f * i_.BPMInfo.MusicBPM / i_.BPMInfo.NotesBPM;
 
             // 最大値の設定
-            max_index = (int)(i_.Notes.range * average);
-            Max_holdCnt = (int)(i_.Notes.range * average) + 1;
+            Max_holdCnt = (int)(i_.Notes.range * average);
 
             // スプライトの調整
             {
-                for (int i = 0; i < max_index; i++)
+                for (int i = 0; i < Max_holdCnt; i++)
                 {
-                    float speed = 60.0f / (float)i_.BPMInfo.MusicBPM / 4.0f;
-                    float value = 0.7f;
-                    Vector3 vector = new Vector3(0, 2.5f * value / 2.0f + 2.5f * value * i, 0);
+                    var value = 60.0 / i_.BPMInfo.MusicBPM / 2.0 * 8.0 + 1.0 / 15.0;
+                    var Y_Point = (value + 1.0) / 2.0 + value * i;
+                    Vector3 vector = new Vector3(0, (float)Y_Point, 0);
+                    var rot = new Vector3(0, 0, 180f * i);
                     transform.GetChild(i).localPosition = vector;
-                    transform.GetChild(i).localScale = new Vector3(1, value, 1);
+                    transform.GetChild(i).localRotation = Quaternion.Euler(rot);
+                    transform.GetChild(i).localScale = new Vector3(1, (float)value / 2.5f, 1) * 2.5f;
                     transform.GetChild(i).gameObject.gameObject.SetActive(true);
                 }
             }
@@ -41,10 +36,8 @@ namespace Notes {
 
             // 変数の初期化
             {
-                score = new NotesScoreData(Max_holdCnt);
-                index = 1;
+                score = new NotesScoreData(Max_holdCnt + 1);
                 score.SetScore(NotesScore.Miss, 0);
-                isFirst = true;
                 CreateTime = i_.CteateTime;
                 Judg = i_.Judgment;
                 DebugInfo = i_.DebugInfo;
@@ -52,7 +45,7 @@ namespace Notes {
 
             // ステートマシンの初期化
             {
-                st = new StateMachine<NotesState, NotesTrigger>(NotesState.Idle);
+                st = new StateMachine<NotesState, NotesTrigger>(NotesState.Idle, new HoldIdleState(this, st));
 
                 // ステートマシーンの初期化
                 st.SetupState(NotesState.Idle, new HoldIdleState(this, st));

@@ -39,7 +39,7 @@ namespace ModeSelect
         }
         void SetupStateMachine()
         {
-            mStateMachine = new StateMachine<State, Trigger>(State.Home);
+            //mStateMachine = new StateMachine<State, Trigger>(State.Home);
             mStateMachine.SetupState(State.Home, new HomeState(this, mStateMachine));
         }
         
