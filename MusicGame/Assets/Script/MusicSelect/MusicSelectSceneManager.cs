@@ -283,10 +283,10 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
         mCurrNotesData = new string[4];
         mSceneState = SceneState.MusicSelect;
         mAudio = GetComponent<AudioSource>();
-        enter = Resources.Load<AudioClip>("MusicSelecter/Sound/Enter");
-        cancel = Resources.Load<AudioClip>("MusicSelecter/Sound/Cancel");
-        scroll = Resources.Load<AudioClip>("MusicSelecter/Sound/Scroll");
-        beep = Resources.Load<AudioClip>("MusicSelecter/Sound/Beep");
+        enter = Resources.Load<AudioClip>("SoundEffect/Enter");
+        cancel = Resources.Load<AudioClip>("SoundEffect/Cancel");
+        scroll = Resources.Load<AudioClip>("SoundEffect/Scroll");
+        beep = Resources.Load<AudioClip>("SoundEffect/Beep");
     }
 }
 

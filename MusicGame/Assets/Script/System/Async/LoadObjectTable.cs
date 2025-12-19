@@ -2,20 +2,43 @@
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using UnityEditor.SceneManagement;
+using UnityEngine;
 
 namespace LoadForAsync
 {
     public class LoadObjectTable<TClass>
         where TClass : UnityEngine.Object
     {
-        public List<LoadObject<TClass>> ObjectTable { get; private set; }
+        public List<LoadObject<TClass>> ObjectTable { get; private set; } = default;
+
+        // 読み込み成功フラグ
         public int successCnt { get; private set; }
 
         // コンストラクタ
-        public void Initilize(List<LoadObject<TClass>> loadObjects)
+        public void Initilize()
         {
-            ObjectTable = loadObjects;
+            ObjectTable = new();
             successCnt = 0;
+        }
+
+        public void AddGameObject<T>(LoadObject<T> loadObject)
+            where T : UnityEngine.Object
+        {
+            //ObjectTable.Add(loadObject as TClass);
+        }
+
+        public async UniTask<bool> LoadAsyncObjects()
+        {
+            int index = 0;
+
+            while (ObjectTable.Count <= successCnt)
+            {
+                await ObjectTable[index].AsyncLoadObject();
+                successCnt++;
+            }
+
+            return true;
         }
     }
 
@@ -35,8 +58,14 @@ namespace LoadForAsync
         {
             if (assets != null) { return false; }
 
-            //assets =
-                //await LoadObjectForAsync.AsyncLoad<TClass>((filePath));
+            ResourceRequest request = Resources.LoadAsync<TClass>(filePath);
+
+            while (!request.isDone)
+            {
+                await UniTask.Yield();
+            }
+
+            this.assets = request.asset as TClass;
 
             return true;
         }

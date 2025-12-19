@@ -1,0 +1,29 @@
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace ModeSelect.StateMachine
+{
+    public class SingleState : IState
+    {
+        public SingleState(ModeSelectSceneManager owner, IStateMachine<Trigger> st) : base(owner, st)
+        {
+            ReserveNullActionList(1);
+        }
+        protected override void OnEnter()
+        {
+            //Actions = new List<Action>(1);
+            layer = 0;
+            CreatePopup("シングルプレイを開始します。\nよろしいですか？");
+            ModeSelect.Player.backAction = () => mOwner.mStateMachine.ExecuteTriggerAction(Trigger.Home);
+        }
+        protected override void OnUpdate(float deltaTime)
+        {
+            base.OnUpdate(deltaTime);
+        }
+        protected override void OnExit()
+        {
+            
+        }
+    }
+}
