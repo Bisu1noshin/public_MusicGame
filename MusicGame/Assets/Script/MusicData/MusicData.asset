@@ -29,7 +29,17 @@ MonoBehaviour:
     musicPath: Music/gengaozo
     demoMusicPath: 
     BPM: 153
-    jacketPath: 
+    jacketPath: Image/MusicJacket/G_e_n_g_a_o_z_o
     normalPath: 
     hardPath: 
     expertPath: TextData/NotesData/gengaozo/Gengaozo_EXPERT
+  - id: 2
+    name: Chronomia
+    composerName: Lime
+    musicPath: Music/Chronomia
+    demoMusicPath: 
+    BPM: 227
+    jacketPath: Image/MusicJacket/Chronomia
+    normalPath: 
+    hardPath: 
+    expertPath: 

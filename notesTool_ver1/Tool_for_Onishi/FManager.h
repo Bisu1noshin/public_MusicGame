@@ -45,8 +45,8 @@ private:
 	float time;
 
 	float bpm; //4分音符が1分間に入る個数
-	std::string musicName = "./data/gengaozo.mp3"; //使う音楽のファイル名を入れる
-	const std::string filename = "./data/Gengaozo_HARD.txt";
+	std::string musicName = "./data/Chronomia.mp3"; //使う音楽のファイル名を入れる
+	const std::string filename = "./data/Chronomia_EXPERT.txt";
 
 	NotesManager* mNotesManager;
 	std::stringstream ss;

@@ -854,7 +854,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "\u30B7\u30E3\u30A4\u30CB\u30F3\u30B0\u30B9\u30BF\u30FC\n\u3000\u97F3\u697D:\u9B54\u738B\u9B42\xAE\nG
-    e n g a o z o\n\u3000\u4F5C\u66F2:-45\n\nURL\u7B49\u306FReadMe\u306B\u8A18\u8F09"
+    e n g a o z o\n\u3000\u4F5C\u66F2:-45\nChronomia\n\u3000\u4F5C\u66F2:Lime\n\nURL\u7B49\u306FReadMe\u306B\u8A18\u8F09"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6746cba2a7d2e3c4abf2219fb2b582f7, type: 2}
   m_sharedMaterial: {fileID: 3474744287128314936, guid: 6746cba2a7d2e3c4abf2219fb2b582f7, type: 2}
