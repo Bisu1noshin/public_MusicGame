@@ -6,12 +6,14 @@ using UnityEngine.SceneManagement;
 
 namespace LoadForAsync
 {
-    public interface SceneInfromation<TClass>
-        where TClass:UnityEngine.Object
+    public interface SceneInfromation
     {
         public string NewSceneName { get; }
 
-        public LoadObjectTable<TClass> ObjectTable { get; }
+        /// <summary>
+        /// オブジェクトをロードする関数
+        /// </summary>
+        //public async UniTask LoadAsyncObjects();    
 }
 
     public class DataTransferSystem
@@ -25,7 +27,7 @@ namespace LoadForAsync
         {
             const string sceneName = "LoadScene";
 
-            await SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single).ToUniTask();
+            var task = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
             Scene scene = SceneManager.GetSceneByName(sceneName);
 
             if (!scene.IsValid() || !scene.isLoaded)
@@ -44,11 +46,10 @@ namespace LoadForAsync
         /// 未ロードのリソースが存在するゲームシーンに遷移するシーンマネージャー
         /// </summary>
         /// <returns></returns>
-        public static async UniTask<T> LoadAndFindSceneInformation<T, TClass>(string sceneName)
-            where T : SceneInfromation<TClass>
-            where TClass : UnityEngine.Object
+        public static async UniTask<T> LoadAndFindSceneInformation<T>(string sceneName)
+            where T : UnityEngine.Object
         {
-            await SceneManager.LoadSceneAsync(sceneName,LoadSceneMode.Single).ToUniTask();
+            var task = SceneManager.LoadSceneAsync(sceneName,LoadSceneMode.Single);
             Scene scene = SceneManager.GetSceneByName(sceneName);
 
             if (!scene.IsValid() || !scene.isLoaded)

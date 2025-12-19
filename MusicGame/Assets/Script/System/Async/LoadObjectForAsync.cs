@@ -1,23 +1,25 @@
 ﻿using UnityEngine;
 using Cysharp.Threading.Tasks;
+using Unity.VisualScripting;
 
 namespace LoadForAsync
 {
-    public class LoadObjectForAsync<TClass> : MonoBehaviour, SceneInfromation<TClass>
-        where TClass : UnityEngine.Object
+    public class LoadObjectForAsync : MonoBehaviour
     {
+        [SerializeField] private AssetLoadConfig loadConfig;
+        [SerializeField] private string ObjectKye;
+        private LoadObjectTable loadObjectTable = new();
+
         public string NewSceneName => "LoadObjectForAsyncScene";
 
-        public LoadObjectTable<TClass> ObjectTable => new();
-        private LoadObject<TextAsset> TextAsset;
-
-        private void Start()
+        private async void Start()
         {
-            // オブジェクトテーブルの初期化
-            ObjectTable.Initilize();
+            await loadObjectTable.LoadAllAssetsAsync(loadConfig);
 
-            // アセットの追加
-            ObjectTable.AddGameObject(TextAsset);
+            var Prefab = loadObjectTable.GetAsset<GameObject>(ObjectKye);
+
+            if (Prefab != null) Debug.Log("Ok.Prefab");
+            else Debug.Log("Non.Prefab");
         }
 
         private void Update()

@@ -1,73 +1,78 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using UnityEditor.SceneManagement;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.InputSystem;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace LoadForAsync
 {
-    public class LoadObjectTable<TClass>
-        where TClass : UnityEngine.Object
+    public class LoadObjectTable
     {
-        public List<LoadObject<TClass>> ObjectTable { get; private set; } = default;
+        // オブジェクト型で保持する
+        // キーはAssetReferenceのRuntimeKey
+        private Dictionary<string, Object> _loadedCache = new Dictionary<string, Object>();
 
-        // 読み込み成功フラグ
-        public int successCnt { get; private set; }
+        // メモリ解放用のハンドルを保存
+        private List<AsyncOperationHandle> _handles = new List<AsyncOperationHandle>();
 
-        // コンストラクタ
-        public void Initilize()
+        public async UniTask LoadAllAssetsAsync(AssetLoadConfig config)
         {
-            ObjectTable = new();
-            successCnt = 0;
-        }
+            var tasks = new List<UniTask<(string key, Object asset)>>();
 
-        public void AddGameObject<T>(LoadObject<T> loadObject)
-            where T : UnityEngine.Object
-        {
-            //ObjectTable.Add(loadObject as TClass);
-        }
-
-        public async UniTask<bool> LoadAsyncObjects()
-        {
-            int index = 0;
-
-            while (ObjectTable.Count <= successCnt)
+            foreach (var reference in config.ReferencesAssets)
             {
-                await ObjectTable[index].AsyncLoadObject();
-                successCnt++;
+                tasks.Add(LoadAsObjectAsync(reference));
             }
 
-            return true;
-        }
-    }
+            // 全て並列でロード?
+            var results = await UniTask.WhenAll(tasks);
 
-    public class LoadObject<TClass>
-        where TClass : UnityEngine.Object
-    {
-        public TClass assets;
-        public string filePath;
-
-        public LoadObject(string file)
-        {
-            assets = null;
-            filePath = file;
-        }
-
-        public async UniTask<bool> AsyncLoadObject()
-        {
-            if (assets != null) { return false; }
-
-            ResourceRequest request = Resources.LoadAsync<TClass>(filePath);
-
-            while (!request.isDone)
+            foreach (var result in results)
             {
-                await UniTask.Yield();
+                if (result.asset == null) continue; // 失敗したら無視
+                _loadedCache.TryAdd(result.key, result.asset);// オブジェクトの登録
+                Debug.LogWarning($"Asset key {result.key}");
             }
+        }
 
-            this.assets = request.asset as TClass;
+        /// <summary>
+        /// 読み込み非同期処理
+        /// </summary>
+        /// <param name="reference">AssetReference</param>
+        /// <returns></returns>
+        private async UniTask<(string, Object)> LoadAsObjectAsync(LoadObject reference)
+        {
+            var handle = reference.AssetReference.LoadAssetAsync<Object>();
+            _handles.Add(handle); // 解放用にハンドルを保持
 
-            return true;
+            var asset = await handle.ToUniTask();
+            return (reference.ObjectPath, asset);
+        }
+
+        /// <summary>
+        /// 型を指定してキャッシュから取り出すメソッド
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="reference">指定のオブジェクトの名前</param>
+        /// <returns>取得できないときはnull</returns>
+        public T GetAsset<T>(string reference) where T : Object
+        {
+            return _loadedCache.TryGetValue(reference, out var obj) ? obj as T : null;
+        }
+
+        /// <summary>
+        /// 全メモリ解放
+        /// </summary>
+        public void ReleaseAll()
+        {
+            foreach (var handle in _handles)
+            {
+                Addressables.Release(handle);
+            }
+            _loadedCache.Clear();
+            _handles.Clear();
         }
     }
 }

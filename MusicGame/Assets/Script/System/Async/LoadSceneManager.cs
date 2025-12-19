@@ -8,18 +8,18 @@ namespace LoadForAsync
     public sealed class LoadSceneManager<TClass> : MonoBehaviour
         where TClass : UnityEngine.Object
     {
-        public List<LoadObject<TClass>> ObjectTable { get; private set; }
-        public int successCnt { get; private set; }
+       ////ublic List<LoadObject<TClass>> ObjectTable { get; private set; }
+       // public int successCnt { get; private set; }
 
-        // コンストラクタ
-        public void Initilize(List<LoadObject<TClass>> loadObjects)
-        {
-            ObjectTable = loadObjects;
-            successCnt = 0;
-        }
-        private void Start()
-        {
+       // // コンストラクタ
+       // public void Initilize(List<LoadObject<TClass>> loadObjects)
+       // {
+       //     ObjectTable = loadObjects;
+       //     successCnt = 0;
+       // }
+       // private void Start()
+       // {
             
-        }
+       // }
     }
 }
