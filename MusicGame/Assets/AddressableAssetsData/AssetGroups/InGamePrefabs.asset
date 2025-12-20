@@ -14,7 +14,47 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_GroupName: InGamePrefabs
   m_GUID: 7efc537c11c068846bdc39bf8a4e9f71
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 17ea9d533758c45439947e39c95bbb7e
+    m_Address: Assets/Prefab/Hold/HoldNotes_Up.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1f2242e5beab18e4ea5e103fc1d195d4
+    m_Address: Assets/Prefab/Flick/FlickNotes_Down.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 68333038cfd22fe408dca8374a4fbc48
+    m_Address: Assets/Prefab/Hold/HoldNotes_Left.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 927b5f78b9984da4697030a470d76b1b
+    m_Address: Assets/Prefab/Hold/HoldNotes_Right.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a355d2d840cb8674cb56bb765ee6d3a6
+    m_Address: Assets/Prefab/Hold/HoldNotes_Down.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d874dd67c13767a4d9c20f8750b04976
+    m_Address: Assets/Prefab/Flick/FlickNotes_Right.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e330b3410e9f14143aa6f6ed349c3fe0
+    m_Address: Assets/Prefab/Flick/FlickNotes_Up.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eb43fe7e561a26a49b580c8d4db68095
+    m_Address: Assets/Prefab/Flick/FlickNotes_Left.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 058bd306260b5f848af6f38b77fa2c8d, type: 2}
   m_SchemaSet:

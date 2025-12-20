@@ -6,14 +6,10 @@ using UnityEngine.SceneManagement;
 
 namespace LoadForAsync
 {
-    public interface SceneInfromation
+    public interface ISetAsyncObjects
     {
-        public string NewSceneName { get; }
-
-        /// <summary>
-        /// オブジェクトをロードする関数
-        /// </summary>
-        //public async UniTask LoadAsyncObjects();    
+        // オブジェクトをロードする関数
+        public void SetAsyncObjects(LoadObjectTable ObjectTable);    
 }
 
     public class DataTransferSystem
@@ -22,12 +18,11 @@ namespace LoadForAsync
         /// リソース読み込みシーンに遷移するシーンマネージャー
         /// </summary>
         /// <returns></returns>
-        public static async UniTask<T> LoadSceneRef<T>()
-            where T : DataTransferSystem
+        public static async UniTask LoadSceneRef(AssetLoadConfig loadConfig,string NextSceneName)
         {
             const string sceneName = "LoadScene";
 
-            var task = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
+            await SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single).ToUniTask();
             Scene scene = SceneManager.GetSceneByName(sceneName);
 
             if (!scene.IsValid() || !scene.isLoaded)
@@ -35,33 +30,41 @@ namespace LoadForAsync
                 throw new Exception(sceneName + "は存在しないです");
             }
 
-            T presenter = scene.GetRootGameObjects()
-                       .Select(go => go.GetComponent<T>())
+            ILoadSceneManager presenter = scene.GetRootGameObjects()
+                       .Select(go => go.GetComponent<ILoadSceneManager>())
                        .FirstOrDefault(p => p != null);
 
-            return presenter;
+            presenter.AssetConfig = loadConfig;
+            presenter.NextSceneName = NextSceneName;
         }
 
         /// <summary>
         /// 未ロードのリソースが存在するゲームシーンに遷移するシーンマネージャー
         /// </summary>
         /// <returns></returns>
-        public static async UniTask<T> LoadAndFindSceneInformation<T>(string sceneName)
-            where T : UnityEngine.Object
+        public static async UniTask LoadAndSetSceneRef(LoadObjectTable ObjectTable, string NextSceneName)
         {
-            var task = SceneManager.LoadSceneAsync(sceneName,LoadSceneMode.Single);
-            Scene scene = SceneManager.GetSceneByName(sceneName);
+            await SceneManager.LoadSceneAsync(NextSceneName, LoadSceneMode.Single).ToUniTask();
+            Scene scene = SceneManager.GetSceneByName(NextSceneName);
 
             if (!scene.IsValid() || !scene.isLoaded)
             {
-                throw new Exception(sceneName + "は存在しないです");
+                throw new Exception(NextSceneName + "は存在しないです");
             }
 
-            T presenter = scene.GetRootGameObjects()
-                       .Select(go => go.GetComponent<T>())
-                       .FirstOrDefault(p => p != null);
+            var presenters = scene.GetRootGameObjects()
+                            .SelectMany(go => go.GetComponentsInChildren<ISetAsyncObjects>()) 
+                            .ToList();
 
-            return presenter;
+            if (presenters.Any())
+            {
+                foreach (var p in presenters)
+                {
+                    p.SetAsyncObjects(ObjectTable);
+                }
+            }
+
+            ObjectTable.ReleaseAll();
         }
 
     }

@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using Unity.VisualScripting;
+using Cysharp.Threading.Tasks.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.InputSystem;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace LoadForAsync
@@ -33,7 +32,6 @@ namespace LoadForAsync
             {
                 if (result.asset == null) continue; // 失敗したら無視
                 _loadedCache.TryAdd(result.key, result.asset);// オブジェクトの登録
-                Debug.LogWarning($"Asset key {result.key}");
             }
         }
 
@@ -42,7 +40,7 @@ namespace LoadForAsync
         /// </summary>
         /// <param name="reference">AssetReference</param>
         /// <returns></returns>
-        private async UniTask<(string, Object)> LoadAsObjectAsync(LoadObject reference)
+        private async UniTask<(string, Object)> LoadAsObjectAsync(AssetReferenceObject reference)
         {
             var handle = reference.AssetReference.LoadAssetAsync<Object>();
             _handles.Add(handle); // 解放用にハンドルを保持
@@ -75,4 +73,19 @@ namespace LoadForAsync
             _handles.Clear();
         }
     }
+
+    public sealed class LoadObject<T>
+        where T : UnityEngine.Object
+    {
+        public string ObjectPath { get; set; }
+
+        public T Asset { get; set; }
+
+        public LoadObject(string path)
+        {
+            ObjectPath = path;
+            Asset = default(T);
+        }
+    }
+
 }

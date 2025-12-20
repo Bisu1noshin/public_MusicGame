@@ -6,17 +6,18 @@ using LoadForAsync;
 using Cysharp.Threading.Tasks;
 using TMPro;
 using System;
+using NUnit.Framework.Interfaces;
 
 namespace Notes {
 
-    public class NotesManager : MonoBehaviour
+    public class NotesManager : MonoBehaviour, ISetAsyncObjects
     {
         [SerializeField] private Vector3[] NotesPosition = new Vector3[2];
         [SerializeField] private NotesManagerDatabase NotesManagerData;
 
         public float InGameTime = default;
 
-        private AudioSource audioSource;
+        [SerializeField] private AudioSource audioSource;
 
         private NotesData notesData;
         [SerializeField] private int BPM = 158;
@@ -34,6 +35,10 @@ namespace Notes {
             "_Down",
             "_Left"
         };
+        private readonly string[] NotesPath = new string[2]{
+            "FlickNotes",
+            "HoldNotes",
+        };
 
         private const string FlicNotesPath = "Notes/Flick/FlickNotes";
         private const string HoldNotesPath = "Notes/Hold/HoldNotes";
@@ -42,14 +47,14 @@ namespace Notes {
         // ノーツのプレファブ
         private GameObject[,] notes;
 
-        private async UniTask Awake()
+        private void Awake()
         {
             // 変数の初期化
             {
                 createIndex = new int[2];
                 createIndex_max = new int[2];
                 notesData = new NotesData();
-                notes = new GameObject[3,4];
+                notes = new GameObject[2,4];
 
                 InGameTime = 0;
 
@@ -62,47 +67,48 @@ namespace Notes {
                 m_path = NotesManagerData.fData.MusicFilePath;
             }
 
-            // ノーツオブジェクトの読み込み
-            for (int i = 0; i < 4; i++)
+            // static変数の処理
             {
-                notes[0, i] = Resources.Load<GameObject>(FlicNotesPath + NotesDir[i]);
-                notes[1, i] = Resources.Load<GameObject>(HoldNotesPath + NotesDir[i]);
-                notes[2, i] = Resources.Load<GameObject>(RushNotesPath);
+                InGameTime = new();
+                InGameTime = 0;
             }
-            
 
-            // ノーツの配置データの読み込み
             TextEditor.TextEditor text = new(m_path, n_path);
-            notesData = text.NotesReadTxt(); 
 
-            // 生成用にデータを編集
-            NotesDataConversion notesDataConversion = new NotesDataConversion(notesData);
-            notesData = notesDataConversion.GetData();
+            // リソースの読み込み
+            {
+                if (audioSource.resource == null)
+                {
+#if UNITY_EDITOR
+                    // ノーツオブジェクトの読み込み
+                    for (int i = 0; i < 4; i++)
+                    {
+                        notes[0, i] = Resources.Load<GameObject>(FlicNotesPath + NotesDir[i]);
+                        notes[1, i] = Resources.Load<GameObject>(HoldNotesPath + NotesDir[i]);
+                    }
+
+                    // ノーツの配置データの読み込み           
+                    notesData = text.NotesReadTxt();
+
+                    // 生成用にデータを編集
+                    NotesDataConversion notesDataConversion = new NotesDataConversion(notesData);
+                    notesData = notesDataConversion.GetData();
+
+                    // 楽曲選択
+                    {
+                        audioSource.resource = Resources.Load<AudioResource>(m_path);
+                    }
+#endif
+                }
+            }
+
+            // 曲の再生速度の変更
+            audioSource.pitch = NotesManagerData.nData.MusicSpeed;
 
             // ノーツの最大値の定義
             for (int i = 0; i < createIndex_max.Length; i++)
             {
                 createIndex_max[i] = notesData.notes[i].Count;
-            }
-
-            // 楽曲選択
-            {
-                audioSource = GetComponent<AudioSource>();
-
-                audioSource.resource = Resources.Load<AudioResource>(m_path);
-
-                // 曲の再生速度の変更
-                audioSource.pitch = NotesManagerData.nData.MusicSpeed;
-
-                //AudioResource audio = await LoadObjectForAsync.AsyncLoad<AudioResource>(m_path);
-                //if (audio != null) { Debug.Log("ロードできました"); }
-                //audioSource.resource = audio;
-            }
-
-            // static変数の処理
-            {
-                InGameTime = new();
-                InGameTime = 0;
             }
         }
 
@@ -130,7 +136,7 @@ namespace Notes {
             // ノーツの召喚
             for (int i = 0; i < createIndex.Length; i++)
             {
-                if (createIndex[i] < createIndex_max[i])
+                if (createIndex[i] < notesData.notes[i].Count)
                 {
                     Notes n = notesData.notes[i][createIndex[i]];
                     createIndex[i] += CreateNotes(n, i, createIndex[i]);
@@ -208,6 +214,31 @@ namespace Notes {
             GameObject go = NotesGenerator.CreateNotes(informaiton);
 
             return true;
+        }
+
+        public void SetAsyncObjects(LoadObjectTable ObjectTable)
+        {
+            notes = new GameObject[2, 4];
+
+            // アセットの読み込み
+            for (int i = 0; i < 2; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    notes[i, j] = ObjectTable.GetAsset<GameObject>(NotesPath[i] + NotesDir[j]);
+                }
+            }
+
+            audioSource.resource = ObjectTable.GetAsset<AudioResource>("Music");
+
+            TextEditor.TextEditor text = new(m_path, ObjectTable.GetAsset<TextAsset>("TextAsset"));
+            notesData = text.NotesReadTxt();
+
+            // 生成用にデータを編集
+            NotesDataConversion notesDataConversion = new NotesDataConversion(notesData);
+            notesData = notesDataConversion.GetData();
+
+            Debug.Log("SuccessAsync");
         }
     }
 }

@@ -14,7 +14,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_GroupName: InGameMusics
   m_GUID: abefa510f4e647b4e86f2fdb31beeeae
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 0fae8e63a01b5ef44b15b53695c287aa
+    m_Address: Assets/Prefab/Music/gengaozo.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ed7bc92822d36b742a4d4a3764fd26b2
+    m_Address: Assets/Prefab/Music/Chronomia.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f2c301171e7effe4eb3a5abcd8593621
+    m_Address: Assets/Prefab/Music/ShiningStar.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 058bd306260b5f848af6f38b77fa2c8d, type: 2}
   m_SchemaSet:

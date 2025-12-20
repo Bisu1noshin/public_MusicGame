@@ -10,76 +10,23 @@ namespace TextEditor {
     public class TextEditor
     {
         // メンバー変数
-        string NotesRootPath = default; //譜面全体を管理するフォルダのパス
-        string musicFilePath = default; //曲情報を管理するファイルのパス
+        private string NotesRootPath = default; //譜面全体を管理するフォルダのパス
+        private string musicFilePath = default; //曲情報を管理するファイルのパス
+
+        private TextAsset TextAsset;
 
         // コンストラクタ
         public TextEditor(string m_path, string n_path) {
             musicFilePath = m_path;
             NotesRootPath = n_path;
+            TextAsset = null;
         }
 
-        /// <summary>
-        /// テキストからデータを取得変換
-        /// </summary>
-        /// <param name="data"></param>
-        //public void GetData(DataClass data1, DataClass data2)
-        //{
-
-        //    // 処理に失敗したらnull
-        //    if (data1 == null || data2 == null) return;
-
-        //    TextAsset ta = Resources.Load(filePath) as TextAsset;
-        //    string[] strs = ta.text.Split('\n');
-        //    int textCnt = 0;
-        //    foreach (string str in strs)
-        //    {
-        //        if (textCnt == 1)
-        //        {
-        //            //bpm読み取り　変数への代入は後々
-        //            int bpm_ = int.Parse(str);
-        //        }
-        //        //2行目以降はノーツ情報を読み取って生成
-        //        if (textCnt > 1)
-        //        {
-        //            string[] notesInfo = str.Split(",");
-        //            int infoCnt = 0;
-        //            int time = 0, dirN = 0, typeN = 0, laneN = 0;
-        //            foreach (string note in notesInfo)
-        //            {
-        //                int value = int.Parse(note);
-        //                switch (infoCnt)
-        //                {
-        //                    case 0:
-        //                        time = value;
-        //                        break;
-        //                    case 1:
-        //                        dirN = value;
-        //                        break;
-        //                    case 2:
-        //                        typeN = value;
-        //                        break;
-        //                    case 3:
-        //                        laneN = value;
-        //                        break;
-        //                    default:
-        //                        break;
-        //                }
-        //                infoCnt++;
-        //            }
-        //            Notes.Notes notes = new(time, dirN, typeN);
-        //            if (laneN == 0)
-        //            {
-        //                data1.AddNotes(notes);
-        //            }
-        //            else
-        //            {
-        //                data2.AddNotes(notes);
-        //            }
-        //        }
-        //        textCnt++;
-        //    }
-        //}
+        public TextEditor(string m_path, TextAsset textAsset)
+        {
+            musicFilePath = m_path;
+            TextAsset = textAsset;
+        }
 
         public string GetFilePath(string musicName, string level)
         {
@@ -94,11 +41,14 @@ namespace TextEditor {
 
             TextAsset textFile;
 
+            if (TextAsset != null) { textFile = TextAsset; }
+            else
+            {
+                textFile = Resources.Load(NotesRootPath) as TextAsset;
+            }
+
             //Dataは複数形ないよ
             List<string[]> textDatas = new List<string[]>();
-
-            //NotesRootPathは飽くまでも親フォルダのパスとして設計したので、この場合はmusicFilePathが適切かなと
-            textFile = Resources.Load(NotesRootPath) as TextAsset;
 
             int height = 0;
 

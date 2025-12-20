@@ -13,11 +13,11 @@ namespace LoadForAsync
         /// <summary>
         /// ロードさせるオブジェクトのList
         /// </summary>
-        public List<LoadObject> ReferencesAssets;
+        public List<AssetReferenceObject> ReferencesAssets;
     }
 
     [System.Serializable]
-    public class LoadObject
+    public class AssetReferenceObject
     {
         [Tooltip("オブジェクトのパッシュ")]
         public string ObjectPath;

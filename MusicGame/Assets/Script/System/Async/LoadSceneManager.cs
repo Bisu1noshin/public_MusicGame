@@ -2,24 +2,31 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 namespace LoadForAsync
 {
-    public sealed class LoadSceneManager<TClass> : MonoBehaviour
-        where TClass : UnityEngine.Object
+    public sealed class LoadSceneManager : MonoBehaviour, ILoadSceneManager
     {
-       ////ublic List<LoadObject<TClass>> ObjectTable { get; private set; }
-       // public int successCnt { get; private set; }
+        // 読み込み用のクラス
+        private LoadObjectTable loadObjectTable = new();
 
-       // // コンストラクタ
-       // public void Initilize(List<LoadObject<TClass>> loadObjects)
-       // {
-       //     ObjectTable = loadObjects;
-       //     successCnt = 0;
-       // }
-       // private void Start()
-       // {
-            
-       // }
+        public AssetLoadConfig AssetConfig { get; set; }
+
+        public string NextSceneName { get; set; }
+
+        private async void Start()
+        {
+            await loadObjectTable.LoadAllAssetsAsync(AssetConfig);
+
+            await DataTransferSystem.LoadAndSetSceneRef(loadObjectTable, NextSceneName);
+        }
+    }
+
+    public interface ILoadSceneManager
+    {
+        public AssetLoadConfig AssetConfig { get; set; }
+
+        public string NextSceneName { get; set; }
     }
 }

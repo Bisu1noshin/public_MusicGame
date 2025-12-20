@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71c6124b98fcf5245a084f2ee62775f6, type: 3}
+  m_Name: InGameAssetConfig
+  m_EditorClassIdentifier: 
+  ReferencesAssets:
+  - ObjectPath: FlickNotes_Up
+    AssetReference:
+      m_AssetGUID: e330b3410e9f14143aa6f6ed349c3fe0
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - ObjectPath: FlickNotes_Left
+    AssetReference:
+      m_AssetGUID: eb43fe7e561a26a49b580c8d4db68095
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 1
+  - ObjectPath: FlickNotes_Right
+    AssetReference:
+      m_AssetGUID: d874dd67c13767a4d9c20f8750b04976
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 1
+  - ObjectPath: FlickNotes_Down
+    AssetReference:
+      m_AssetGUID: 1f2242e5beab18e4ea5e103fc1d195d4
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - ObjectPath: HoldNotes_Left
+    AssetReference:
+      m_AssetGUID: 68333038cfd22fe408dca8374a4fbc48
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 1
+  - ObjectPath: HoldNotes_Right
+    AssetReference:
+      m_AssetGUID: 927b5f78b9984da4697030a470d76b1b
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 1
+  - ObjectPath: HoldNotes_Up
+    AssetReference:
+      m_AssetGUID: 17ea9d533758c45439947e39c95bbb7e
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 1
+  - ObjectPath: HoldNotes_Down
+    AssetReference:
+      m_AssetGUID: a355d2d840cb8674cb56bb765ee6d3a6
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - ObjectPath: Music
+    AssetReference:
+      m_AssetGUID: f2c301171e7effe4eb3a5abcd8593621
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - ObjectPath: TextAsset
+    AssetReference:
+      m_AssetGUID: 3226cbb96552f6f41918e188bb32dc12
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 1
