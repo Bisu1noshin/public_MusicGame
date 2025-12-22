@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace ModeSelect
 {
@@ -16,16 +17,18 @@ namespace ModeSelect
             InitAction();
             deleteAction = null;
             deleteAction += Button.ButtonManager.CreateInstance(this, 0, 4, "シングルプレイ", () => { mOwner.mStateMachine.ExecuteTriggerAction(Trigger.Single); }, false);
-            deleteAction += Button.ButtonManager.CreateInstance(this, 1, 4, "マルチプレイ", () => { Debug.Log("Button Selected 2"); }, false);
-            deleteAction += Button.ButtonManager.CreateInstance(this, 2, 4, "設定", () => { Debug.Log("Button Selected 3"); }, false);
-            deleteAction += Button.ButtonManager.CreateInstance(this, 3, 4, "タイトルに戻る", () => { Debug.Log("Button Selected 4"); }, false);
+            deleteAction += Button.ButtonManager.CreateInstance(this, 1, 4, "マルチプレイ", () => { mOwner.mStateMachine.ExecuteTriggerAction(Trigger.Multi); }, false);
+            deleteAction += Button.ButtonManager.CreateInstance(this, 2, 4, "設定", () => { mOwner.mStateMachine.ExecuteTriggerAction(Trigger.Setting); }, false);
+            deleteAction += Button.ButtonManager.CreateInstance(this, 3, 4, "タイトルに戻る", () => { SceneManager.LoadScene("Ooo_Title"); }, false);
             mOwner.CreateCursol();
+            
         }
 
         protected override void OnUpdate(float deltaTime)
         {
             base.OnUpdate(deltaTime);
             mOwner.CursolRect.anchoredPosition = new(-350.0f, -(SelectNum[0] - (4 - 1) / 2.0f) * 250.0f);
+            Player.backAction = () => PlayBeepSound();
         }
         protected override void OnExit()
         {

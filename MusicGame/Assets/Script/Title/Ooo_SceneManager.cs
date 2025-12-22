@@ -14,7 +14,7 @@ public class Ooo_SceneManager : MonoBehaviour
         if (Input.anyKeyDown)
         {
             // シーン遷移
-            SceneChange("Test_MusicSelectScene");
+            SceneChange("Test_ModeSelectScene");
         }
     }
 

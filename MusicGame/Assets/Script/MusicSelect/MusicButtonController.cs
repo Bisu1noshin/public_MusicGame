@@ -35,7 +35,7 @@ public class MusicButtonController : MonoBehaviour
 
     void Start()
     {
-        if (id == 0)
+        if (id == mSelecter.SelectNum[0])
         {
             mProperty.SetProperty(mText.text, audioPath, imagePath);
         }

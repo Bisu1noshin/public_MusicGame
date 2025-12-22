@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Kanda/NotesTest.unity
     guid: 59c97817304ba484f9c279e8c6e09d08
   - enabled: 1
+    path: Assets/Scenes/Kameda/Test_ModeSelectScene.unity
+    guid: 10c381ab56b122247a5f205e3ea7f5d9
+  - enabled: 1
     path: Assets/Scenes/Kameda/Test_MusicSelectScene.unity
     guid: ec1630ec4ade81a458558bd89774be29
   - enabled: 1

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace ModeSelect.StateMachine
 {
@@ -17,7 +18,9 @@ namespace ModeSelect.StateMachine
             layer = 0;
             deleteAction = null;
             PopupController.CreateInstance("シングルプレイを開始します。\nよろしいですか？", out deleteAction);
+            Actions[0] = () => SceneManager.LoadScene("Test_MusicSelectScene");
             ModeSelect.Player.backAction = () => mOwner.mStateMachine.ExecuteTriggerAction(Trigger.Home);
+            ModeSelect.Player.backAction += deleteAction;
         }
         protected override void OnUpdate(float deltaTime)
         {

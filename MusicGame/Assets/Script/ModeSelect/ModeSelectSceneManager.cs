@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using ModeSelect.StateMachine;
+using Notes;
 
 namespace ModeSelect
 {
@@ -19,6 +20,8 @@ namespace ModeSelect
         public int[] SelectNum { get; set; }
         public AudioSource mAudio { get; private set; }
         public AudioClip[] mAudioClips { get; private set; }
+
+        public NotesManager mNotesManager;
 
         public StateMachine<State, Trigger> mStateMachine { get; set; }
 
@@ -101,6 +104,7 @@ namespace ModeSelect
         AudioSource mAudio { get; }
         AudioClip[] mAudioClips { get; }
         RectTransform CursolRect { get; set; }
+        NotesManager mNotesManager { get; set; }
     }
 }
 

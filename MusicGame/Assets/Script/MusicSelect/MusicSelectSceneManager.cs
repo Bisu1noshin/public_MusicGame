@@ -52,15 +52,6 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
         Init();
 
         CreateMusicButtons().Invoke();
-
-        //これはダミーデータ
-        //foreach (MusicData md in mDataBase.musicDatabase)
-        //{
-        //    for (int i = 0; i < 4; ++i)
-        //    {
-        //        MakeNotesData(ref md.notesData[i]);
-        //    }
-        //}
     }
 
     void Update()
@@ -161,10 +152,18 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
                 untouchableTimer = 0.2f;
                 break;
             case SceneState.LevelSelect:
-                DeleteAndExecuteAction(CreatePopup());
-                mAudio.PlayOneShot(enter);
-                timer = 0.1f;
-                untouchableTimer = 0.1f;
+                if (mCurrNotesData[SelectNum[1]] == string.Empty)
+                {
+                    mAudio.PlayOneShot(beep);
+                    return;
+                }
+                else
+                {
+                    DeleteAndExecuteAction(CreatePopup());
+                    mAudio.PlayOneShot(enter);
+                    timer = 0.1f;
+                    untouchableTimer = 0.1f;
+                }
                 break;
             case SceneState.EnterGame:
                 LoadSceneRef(mCurrMusicPath, mCurrNotesData[SelectNum[1]]);
@@ -182,6 +181,7 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
         switch (mSceneState)
         {
             case SceneState.MusicSelect:
+                SceneManager.LoadScene("Test_ModeSelectScene");
                 break;
             case SceneState.LevelSelect:
                 DeleteAndExecuteAction(CreateMusicButtons());
@@ -227,19 +227,13 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
         Action f = () => {
             for (int i = 0; i < 3; i++)
             {
-                deleteAction += LevelButtonController.CreateInstance(i, levelName[i], ss);
+                deleteAction += LevelButtonController.CreateInstance(i, levelName[i], ss, mCurrNotesData[i] == string.Empty);
                 maxValue = i;
             }
             CreateGUI();
         };
         return f;
     }
-
-    //void MakeNotesData(ref NotesData md_)
-    //{
-    //    TextEditor.TextEditor text = new("Music/ShiningStar", "TextData/NotesData/ShiningStar/ShiningStar_NORMAL");
-    //    md_ = text.NotesReadTxt();
-    //}
 
     void DeleteObj()
     {
@@ -282,7 +276,6 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
         deleteAction += GUIController.CreateInstance("決定(A)", new(-180.0f, -50.0f));
         deleteAction += GUIController.CreateInstance("戻る(B)", new(0.0f, -50.0f));
     }
-
     void Init()
     {
         if (!GameObject.Find("Player_forMusicSelect"))
