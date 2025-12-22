@@ -6,12 +6,19 @@ public sealed class InputKeyBind {
 
     public InputActionse inputActionse { get; private set; }
 
-    public InputKeyBind() {
+    public InputKeyBind(Notes.InputDevice inputDevice) {
 
         inputActionse = new InputActionse();
 
-        // 仮
-        InitilizeBindGamepad();
+        switch (inputDevice)
+        {
+            case Notes.InputDevice.Controller:
+                InitilizeBindGamepad();
+                break;
+            case Notes.InputDevice.KyeBord:
+                InitilizeBindGamepad();
+                break;
+        }    
     }
 
     /// <summary>
@@ -63,7 +70,11 @@ public sealed class InputKeyBind {
         .With("Right", "<Keyboard>/d");
 
         if (inputActionse._RightStick.bindings.Count == 0)
-            inputActionse._RightStick.AddBinding("<Mouse>/Position");
+            inputActionse._LeftStick.AddCompositeBinding("2DVector")
+        .With("Up", "<Keyboard>/upArrow")
+        .With("Down", "<Keyboard>/downArrow")
+        .With("Left", "<Keyboard>/leftArrow")
+        .With("Right", "<Keyboard>/rightArrow");
 
         if (inputActionse._ButtonA.bindings.Count == 0)
             inputActionse._ButtonA.AddBinding("<Keyboard>/space");

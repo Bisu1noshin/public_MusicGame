@@ -12,6 +12,7 @@ namespace Notes
     {
         public NotesManagerForFileData fData;
         public NotesManagerForNotesData nData;
+        public NotesManagerPlayerConfig PlayerConfig;
     }
 
     [System.Serializable]
@@ -52,6 +53,36 @@ namespace Notes
         public float MusicSpeed;
 
         [Tooltip("オートモード")]
-        public bool AuotPlay;
+        public bool AutoPlay;
     }
+
+    [System.Serializable]
+    public class NotesManagerPlayerConfig
+    {
+        [Tooltip("レーンの反転")]
+        public bool LaneCahge;
+
+        [Tooltip("オートモード")]
+        public bool AutoPlay;
+
+        [Tooltip("ノーツの上下反転")]
+        public bool UpDownCahge;
+
+        [Tooltip("ノーツの左右反転")]
+        public bool LeftRightCahge;
+
+        [Tooltip("プレイヤーのデバイス")]
+        public InputDevice InputDevice;
+
+        [Range(0, 3)]
+        [Tooltip("ノーツの速度")]
+        public float NotesSpeed;
+    }
+
+    public enum InputDevice
+    {
+        Non = -1,
+        Controller = 0,
+        KyeBord=1
+    };
 }

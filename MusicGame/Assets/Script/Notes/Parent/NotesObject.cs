@@ -72,7 +72,7 @@ namespace Notes {
             // オートプレイの処理
             if (timeCnt >= Judg.CreateTimeDelay)
             {
-                if (Judg.AuotPlay)
+                if (Judg.AutoPlay)
                 {
                     InGamePlayer.NotesAction[(int)DebugInfo.NotesLane]?.Invoke(AnsTrigger, Judg.CreateTimeDelay + CreateTime);
                 }                   

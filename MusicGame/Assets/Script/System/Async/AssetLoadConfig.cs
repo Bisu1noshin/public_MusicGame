@@ -14,6 +14,8 @@ namespace LoadForAsync
         /// ロードさせるオブジェクトのList
         /// </summary>
         public List<AssetReferenceObject> ReferencesAssets;
+
+        public int MusicBPM;
     }
 
     [System.Serializable]
