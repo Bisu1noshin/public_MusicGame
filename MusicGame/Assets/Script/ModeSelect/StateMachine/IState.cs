@@ -84,15 +84,6 @@ namespace ModeSelect.StateMachine
                 Actions.Add(null);
             }
         }
-        protected void CreatePopup(string msg)
-        {
-            (GameObject, Action) toggle = PopupController.CreateInstance(msg);
-            GameObject go = toggle.Item1;
-            go.transform.SetParent(GameObject.Find("Canvas").transform);
-            go.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
-            go.transform.localScale = Vector3.one;
-            go.GetComponentInChildren<TextMeshProUGUI>().text = msg;
-            deleteAction += () => { toggle.Item2.Invoke(); };
-        }
+        
     }
 }

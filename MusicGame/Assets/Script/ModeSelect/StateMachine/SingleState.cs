@@ -9,12 +9,14 @@ namespace ModeSelect.StateMachine
         public SingleState(ModeSelectSceneManager owner, IStateMachine<Trigger> st) : base(owner, st)
         {
             ReserveNullActionList(1);
+            Debug.Log("SingleState ready");
         }
         protected override void OnEnter()
         {
             //Actions = new List<Action>(1);
             layer = 0;
-            CreatePopup("シングルプレイを開始します。\nよろしいですか？");
+            deleteAction = null;
+            PopupController.CreateInstance("シングルプレイを開始します。\nよろしいですか？", out deleteAction);
             ModeSelect.Player.backAction = () => mOwner.mStateMachine.ExecuteTriggerAction(Trigger.Home);
         }
         protected override void OnUpdate(float deltaTime)

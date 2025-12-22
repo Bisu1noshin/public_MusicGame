@@ -14,7 +14,7 @@ namespace ModeSelect
         protected override void OnEnter()
         {
             InitAction();
-            
+            deleteAction = null;
             deleteAction += Button.ButtonManager.CreateInstance(this, 0, 4, "シングルプレイ", () => { mOwner.mStateMachine.ExecuteTriggerAction(Trigger.Single); }, false);
             deleteAction += Button.ButtonManager.CreateInstance(this, 1, 4, "マルチプレイ", () => { Debug.Log("Button Selected 2"); }, false);
             deleteAction += Button.ButtonManager.CreateInstance(this, 2, 4, "設定", () => { Debug.Log("Button Selected 3"); }, false);

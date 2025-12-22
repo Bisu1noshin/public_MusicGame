@@ -2,25 +2,36 @@
 using TMPro;
 using UnityEngine;
 
-public class PopupController : MonoBehaviour
+namespace ModeSelect
 {
-    public TextMeshProUGUI mText;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Awake()
+    public class PopupController : MonoBehaviour
     {
-        mText = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-    }
+        public TextMeshProUGUI mText;
+        // Start is called once before the first execution of Update after the MonoBehaviour is created
+        void Awake()
+        {
+            mText = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
+        // Update is called once per frame
+        void Update()
+        {
         
-    }
-    public static (GameObject, Action) CreateInstance(string msg)
-    {
-        GameObject go = Instantiate(Resources.Load<GameObject>("ModeSelect/Popup"));
-        go.GetComponent<PopupController>().mText.text = msg;
-        Action f = () => { Destroy(go); };
-        return (go, f);
+        }
+        public void SetText(string str_)
+        {
+            mText.text = str_;
+        }
+        public static void CreateInstance(string msg ,out Action f)
+        {
+            GameObject res = Resources.Load<GameObject>("ModeSelect/Popup");
+            Debug.Log($"Load : {res.name}");
+            GameObject go = Instantiate(res);        
+            go.transform.SetParent(GameObject.Find("Canvas").transform);
+            go.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+            go.transform.localScale = Vector3.one;
+            go.GetComponent<PopupController>().SetText(msg);
+            f = () => { Destroy(go); };
+        }
     }
 }
