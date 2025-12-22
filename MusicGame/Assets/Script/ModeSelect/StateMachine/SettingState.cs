@@ -7,10 +7,11 @@ namespace ModeSelect.StateMachine
 {
     public class SettingState : IState
     {
-        
+        NotesManagerDatabase mDataBase;
         public SettingState(ModeSelectSceneManager owner, IStateMachine<Trigger> st) : base(owner, st)
         {
             ReserveNullActionList(1);
+            mDataBase = mOwner.GetNotesManager();
         }
         protected override void OnEnter()
         {
@@ -25,6 +26,10 @@ namespace ModeSelect.StateMachine
         protected override void OnExit()
         {
             
+        }
+        void InitDic()
+        {
+            //次回　Dictionary登録から
         }
     }
 }

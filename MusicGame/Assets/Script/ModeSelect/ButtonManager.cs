@@ -18,12 +18,10 @@ namespace ModeSelect
             IModeSelecter mSelecter;
             State mState;
             TextMeshProUGUI mText;
-            RectTransform mRect;
             int id;
             void Awake()
             {
                 mText = GetComponentInChildren<TextMeshProUGUI>();
-                mRect = GetComponent<RectTransform>();
             }
             void Update()
             {
@@ -66,7 +64,7 @@ namespace ModeSelect
                 }
                 mSelecter.Actions[id] = action_;
             }
-            public static Action CreateInstance(IModeSelecter owner, int id_, int maxId_, string text_, Action action_, bool destroyAnim)
+            public static Action CreateInstance(IModeSelecter owner, int id_, int maxId_, string text_, Action action_, bool destroyAnim = false)
             {
                 GameObject res = Resources.Load<GameObject>("ModeSelect/ModeButton");
                 GameObject go = Instantiate(res);
@@ -83,6 +81,12 @@ namespace ModeSelect
                 bm.SetInfo(owner, id_, text_, action_);
                 Action f = () => { bm.DeleteButton(destroyAnim); };
                 return f;
+            }
+            private void OnDisable()
+            {
+                if (mSelecter.deleteAction != null) mSelecter.deleteAction = null;
+                if (Player.enterAction != null) Player.enterAction = null;
+                if (Player.backAction != null) Player.backAction = null;
             }
         }
         public interface IButtonController

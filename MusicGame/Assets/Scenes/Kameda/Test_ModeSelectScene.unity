@@ -593,7 +593,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19de5b779da413e48a5a6ef310d6537b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CursolRect: {fileID: 0}
+  mNotesManager: {fileID: 11400000, guid: 0894919679aa8644e892fc74176583fe, type: 2}
 --- !u!82 &1964978669
 AudioSource:
   m_ObjectHideFlags: 0

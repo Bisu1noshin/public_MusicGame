@@ -22,7 +22,7 @@ namespace ModeSelect
         {
             mText.text = str_;
         }
-        public static void CreateInstance(string msg ,out Action f)
+        public static Action CreateInstance(string msg)
         {
             GameObject res = Resources.Load<GameObject>("ModeSelect/Popup");
             Debug.Log($"Load : {res.name}");
@@ -31,7 +31,8 @@ namespace ModeSelect
             go.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
             go.transform.localScale = Vector3.one;
             go.GetComponent<PopupController>().SetText(msg);
-            f = () => { Destroy(go); };
+            Action f = () => { Destroy(go); };
+            return f;
         }
     }
 }

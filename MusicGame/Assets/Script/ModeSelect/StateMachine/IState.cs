@@ -15,7 +15,7 @@ namespace ModeSelect.StateMachine
         protected Dictionary<int, string> ButtonNames { get; set; }
         public int[] SelectNum { get; protected set; }
         protected int layer;
-        protected Action deleteAction;
+        public Action deleteAction { get; set; }
         protected GameObject buttonPre;
         public IState(ModeSelectSceneManager owner, IStateMachine<Trigger> st) : base(owner, st)
         {

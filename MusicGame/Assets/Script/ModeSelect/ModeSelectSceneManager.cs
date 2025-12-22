@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using ModeSelect.StateMachine;
 using Notes;
+using System.Data;
 
 namespace ModeSelect
 {
@@ -21,7 +22,7 @@ namespace ModeSelect
         public AudioSource mAudio { get; private set; }
         public AudioClip[] mAudioClips { get; private set; }
 
-        public NotesManager mNotesManager;
+        [SerializeField] public NotesManagerDatabase mNotesManager;
 
         public StateMachine<State, Trigger> mStateMachine { get; set; }
 
@@ -75,19 +76,14 @@ namespace ModeSelect
             CursolRect.anchoredPosition = new(-350, 0);
         }
         public void DeleteCursol() { Destroy(Cursol); }
-        public static GameObject CreatePopup()
-        {
-            GameObject go = Instantiate(Resources.Load<GameObject>("ModeSelect/Popup"));
-            return go;
-        }
-        public static void DeleteObj(GameObject obj) { Destroy(obj); }
+        public NotesManagerDatabase GetNotesManager() { return mNotesManager; }
     }
 
     public interface IModeSelecter
     {
         List<Action> Actions { get; set; }
         int[] SelectNum { get; }
-        
+        Action deleteAction { get; set; }
     }
     public interface IActionDictionary
     {
@@ -98,13 +94,14 @@ namespace ModeSelect
         void CreateCursol();
         void DeleteCursol();
     }
+
     public interface ISceneManager : ICursolController
     {
         StateMachine<State, Trigger> mStateMachine { get; set; }
         AudioSource mAudio { get; }
         AudioClip[] mAudioClips { get; }
         RectTransform CursolRect { get; set; }
-        NotesManager mNotesManager { get; set; }
+        NotesManagerDatabase GetNotesManager();
     }
 }
 

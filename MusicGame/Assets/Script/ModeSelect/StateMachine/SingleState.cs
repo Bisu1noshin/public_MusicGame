@@ -17,7 +17,7 @@ namespace ModeSelect.StateMachine
             //Actions = new List<Action>(1);
             layer = 0;
             deleteAction = null;
-            PopupController.CreateInstance("シングルプレイを開始します。\nよろしいですか？", out deleteAction);
+            deleteAction += PopupController.CreateInstance("シングルプレイを開始します。\nよろしいですか？");
             Actions[0] = () => SceneManager.LoadScene("Test_MusicSelectScene");
             ModeSelect.Player.backAction = () => mOwner.mStateMachine.ExecuteTriggerAction(Trigger.Home);
             ModeSelect.Player.backAction += deleteAction;

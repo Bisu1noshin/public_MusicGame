@@ -10,6 +10,7 @@ using UnityEditor;
 using UnityEngine.AddressableAssets;
 using UnityEditor.AddressableAssets.Settings;
 using UnityEditor.AddressableAssets;
+using GameInfo;
 
 public enum SceneState
 {
@@ -166,6 +167,7 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
                 }
                 break;
             case SceneState.EnterGame:
+                SingletonDataManager.instance.SetMusicId(mDataBase.musicDatabase[SelectNum[0]]);
                 LoadSceneRef(mCurrMusicPath, mCurrNotesData[SelectNum[1]]);
                 break;
         }
