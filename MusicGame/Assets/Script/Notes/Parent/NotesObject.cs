@@ -56,7 +56,7 @@ namespace Notes {
 
         protected virtual void Start() {
 
-            fallSpeed = Judg.CreateTimeDelay * 8.0f;
+            fallSpeed = (transform.position.y + 3f) / Judg.CreateTimeDelay;
             holdCnt = 0;
         }
 

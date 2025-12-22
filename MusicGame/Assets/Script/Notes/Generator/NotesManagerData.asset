@@ -13,19 +13,19 @@ MonoBehaviour:
   m_Name: NotesManagerData
   m_EditorClassIdentifier: 
   fData:
-    MusicFilePath: Music/gengaozo
-    NotesDataFilePath: TextData/NotesData/gengaozo/Gengaozo_EXPERT
+    MusicFilePath: Music/ShiningStar
+    NotesDataFilePath: TextData/NotesData/ShiningStar/ShiningStar_HARD
   nData:
-    CreateTimeDelay: 0
-    JudgmentTimeDelay: 0
-    PerfectTime: 0
-    GoodTime: 0
-    MusicSpeed: 0
-    AutoPlay: 0
-  PlayerConfig:
-    LaneCahge: 0
+    CreateTimeDelay: 1
+    JudgmentTimeDelay: 0.05
+    PerfectTime: 0.03
+    GoodTime: 0.05
+    MusicSpeed: 1
     AutoPlay: 1
-    UpDownCahge: 0
-    LeftRightCahge: 0
+  PlayerConfig:
+    LaneCahge: 1
+    AutoPlay: 1
+    UpDownCahge: 1
+    LeftRightCahge: 1
     InputDevice: 0
-    NotesSpeed: 0
+    NotesSpeed: 0.5

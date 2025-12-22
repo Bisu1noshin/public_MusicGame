@@ -88,6 +88,8 @@ namespace Notes {
     {
         public float CteateTime { get; private set; }
 
+        public float NotesSpeed { get; private set; }
+
         public NotesInstantInfo InstantInfo { get; private set; }
 
         public BPMInfo BPMInfo { get; private set; }
@@ -99,8 +101,9 @@ namespace Notes {
         public NotesManagerForNotesData Judgment { get; private set; }
 
         public NotesInformaiton
-            (float create, NotesInstantInfo instantInfo,Notes n, BPMInfo bpm, NotesManagerForNotesData j, NotesDebugInfo debugInfo)
+            (float create,float speed, NotesInstantInfo instantInfo,Notes n, BPMInfo bpm, NotesManagerForNotesData j, NotesDebugInfo debugInfo)
         {
+            NotesSpeed = speed;
             CteateTime = create;
             Notes = n;
             InstantInfo = instantInfo;

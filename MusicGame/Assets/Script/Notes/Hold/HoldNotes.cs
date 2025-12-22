@@ -17,9 +17,9 @@ namespace Notes {
             {
                 for (int i = 0; i < Max_holdCnt; i++)
                 {
-                    var value = 60.0 / i_.BPMInfo.MusicBPM / 2.0 * 8.0 + 1.0 / 15.0;
+                    var value = 60.0 / i_.BPMInfo.MusicBPM / 2.0 * 16.0 / i_.Judgment.CreateTimeDelay*i_.NotesSpeed + 1.0 / 15.0;
                     var Y_Point = (value + 1.0) / 2.0 + value * i;
-                    Vector3 vector = new Vector3(0, (float)Y_Point, 0);
+                    var vector = new Vector3(0, (float)Y_Point, 0);
                     var rot = new Vector3(0, 0, 180f * i);
                     transform.GetChild(i).localPosition = vector;
                     transform.GetChild(i).localRotation = Quaternion.Euler(rot);
