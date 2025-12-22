@@ -12,6 +12,7 @@ namespace Notes
     {
         public NotesManagerForFileData fData;
         public NotesManagerForNotesData nData;
+        public NotesManagerPlayerConfig PlayerConfig;
     }
 
     [System.Serializable]
@@ -54,4 +55,18 @@ namespace Notes
         [Tooltip("オートモード")]
         public bool AuotPlay;
     }
+
+    [System.Serializable]
+    public class NotesManagerPlayerConfig
+    {
+        [Tooltip("レーンの反転")]
+        public bool LaneCahge;
+
+        [Tooltip("オートモード")]
+        public bool AuotPlay;
+
+        //[Tooltip("オートモード")]
+        //public bool AuotPlay;
+    }
+
 }

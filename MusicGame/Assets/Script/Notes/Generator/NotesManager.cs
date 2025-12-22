@@ -1,12 +1,11 @@
 ﻿using System.Linq;
 using UnityEngine;
 using UnityEngine.Audio;
+using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using LoadForAsync;
 using Cysharp.Threading.Tasks;
-using TMPro;
 using System;
-using NUnit.Framework.Interfaces;
 
 namespace Notes {
 
@@ -14,6 +13,7 @@ namespace Notes {
     {
         [SerializeField] private Vector3[] NotesPosition = new Vector3[2];
         [SerializeField] private NotesManagerDatabase NotesManagerData;
+        [SerializeField] private MusicDatabase musicDatabase;
 
         public float InGameTime = default;
 
