@@ -27,7 +27,7 @@ MonoBehaviour:
     name: G e n g a o z o
     composerName: -45
     musicPath: gengaozo.mp3
-    demoMusicPath: 
+    demoMusicPath: gengaozo_Demo.mp3
     BPM: 153
     jacketPath: G_e_n_g_a_o_z_o
     normalPath: 
@@ -37,7 +37,7 @@ MonoBehaviour:
     name: Chronomia
     composerName: Lime
     musicPath: Chronomia.mp3
-    demoMusicPath: 
+    demoMusicPath: Chronimia_Demo.mp3
     BPM: 227
     jacketPath: Chronomia
     normalPath: 
