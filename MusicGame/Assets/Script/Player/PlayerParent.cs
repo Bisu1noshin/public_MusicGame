@@ -14,9 +14,12 @@ namespace Player {
         private InputAction _ButtonX;
         private InputAction _ButtonY;
 
+        protected Notes.InputDevice inputDevice;
+
         protected virtual void Awake()
         {
-            inputKey = new InputKeyBind();
+            SetPlayerInput();
+            inputKey = new InputKeyBind(inputDevice);
 
             _LeftStick = inputKey.inputActionse._LeftStick;
             _RightStick = inputKey.inputActionse._RightStick;
@@ -82,6 +85,11 @@ namespace Player {
         abstract protected void RightStickStarted(Vector2 vec);
         abstract protected void RightStickPerformed(Vector2 vec);
         abstract protected void RightStickCanceled(Vector2 vec);
+
+        protected virtual void SetPlayerInput() {
+
+            inputDevice = Notes.InputDevice.Controller;
+        }
         
 
         // Actionのメソッド
