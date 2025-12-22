@@ -16,28 +16,28 @@ MonoBehaviour:
   - id: 0
     name: "\u30B7\u30E3\u30A4\u30CB\u30F3\u30B0\u30B9\u30BF\u30FC"
     composerName: "\u9B54\u738B\u9B42"
-    musicPath: Music/ShiningStar
-    demoMusicPath: DemoMusic/ShiningStar_Demo
+    musicPath: ShiningStar.mp3
+    demoMusicPath: ShiningStar_Demo.mp3
     BPM: 158
     jacketPath: ShiningStar
-    normalPath: TextData/NotesData/ShiningStar/ShiningStar_NORMAL
-    hardPath: TextData/NotesData/ShiningStar/ShiningStar_HARD
-    expertPath: TextData/NotesData/ShiningStar/ShiningStar_EXPERT
+    normalPath: ShiningStar/ShiningStar_NORMAL.txt
+    hardPath: ShiningStar/ShiningStar_HARD.txt
+    expertPath: ShiningStar/ShiningStar_EXPERT.txt
   - id: 1
     name: G e n g a o z o
     composerName: -45
-    musicPath: Music/gengaozo
-    demoMusicPath: 
+    musicPath: gengaozo.mp3
+    demoMusicPath: gengaozo_Demo.mp3
     BPM: 153
     jacketPath: G_e_n_g_a_o_z_o
     normalPath: 
     hardPath: 
-    expertPath: TextData/NotesData/gengaozo/Gengaozo_EXPERT
+    expertPath: gengaozo/Gengaozo_EXPERT.txt
   - id: 2
     name: Chronomia
     composerName: Lime
-    musicPath: Music/Chronomia
-    demoMusicPath: 
+    musicPath: Chronomia.mp3
+    demoMusicPath: Chronimia_Demo.mp3
     BPM: 227
     jacketPath: Chronomia
     normalPath: 
