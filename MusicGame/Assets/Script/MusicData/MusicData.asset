@@ -19,7 +19,7 @@ MonoBehaviour:
     musicPath: Music/ShiningStar
     demoMusicPath: DemoMusic/ShiningStar_Demo
     BPM: 158
-    jacketPath: Image/MusicJacket/ShiningStar
+    jacketPath: ShiningStar
     normalPath: TextData/NotesData/ShiningStar/ShiningStar_NORMAL
     hardPath: TextData/NotesData/ShiningStar/ShiningStar_HARD
     expertPath: TextData/NotesData/ShiningStar/ShiningStar_EXPERT
@@ -29,7 +29,7 @@ MonoBehaviour:
     musicPath: Music/gengaozo
     demoMusicPath: 
     BPM: 153
-    jacketPath: Image/MusicJacket/G_e_n_g_a_o_z_o
+    jacketPath: G_e_n_g_a_o_z_o
     normalPath: 
     hardPath: 
     expertPath: TextData/NotesData/gengaozo/Gengaozo_EXPERT
@@ -39,7 +39,7 @@ MonoBehaviour:
     musicPath: Music/Chronomia
     demoMusicPath: 
     BPM: 227
-    jacketPath: Image/MusicJacket/Chronomia
+    jacketPath: Chronomia
     normalPath: 
     hardPath: 
     expertPath: 

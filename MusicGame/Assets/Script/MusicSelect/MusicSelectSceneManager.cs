@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using LoadForAsync;
 using Notes;
 using Player;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEditor;
+using UnityEngine.AddressableAssets;
+using UnityEditor.AddressableAssets.Settings;
+using UnityEditor.AddressableAssets;
 
 public enum SceneState
 {
@@ -27,6 +32,7 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
     public int MaxValue => maxValue;
     public MusicDatabase mDataBase;
     string[] mCurrNotesData;
+    string mCurrMusicPath;
     public SceneState mSceneState { get; private set; }
     float timer = 0.0f;
     public float untouchableTimer { get; private set; }
@@ -37,6 +43,9 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
         "EXPERT",
         "ULTIMATE"
     };
+
+    // 追記
+    [SerializeField] private AssetLoadConfig AssetLoadConfig;
 
     private void Awake()
     {
@@ -145,6 +154,7 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
                 mCurrNotesData[0] = mDataBase.musicDatabase[selectNum[0]].normalPath;
                 mCurrNotesData[1] = mDataBase.musicDatabase[selectNum[0]].hardPath;
                 mCurrNotesData[2] = mDataBase.musicDatabase[selectNum[0]].expertPath;
+                mCurrMusicPath = mDataBase.musicDatabase[selectNum[0]].musicPath;
                 DeleteAndExecuteAction(CreateLevelButtons());
                 mAudio.PlayOneShot(enter);
                 timer = 0.15f;
@@ -157,7 +167,7 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
                 untouchableTimer = 0.1f;
                 break;
             case SceneState.EnterGame:
-                SceneManager.LoadScene("NotesTest");
+                LoadSceneRef(mCurrMusicPath, mCurrNotesData[SelectNum[1]]);
                 break;
         }
         if (mSceneState != SceneState.EnterGame)
@@ -205,7 +215,7 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
             deleteAction += PropertyController.CreateInstance();
             foreach (MusicData m in mDataBase.musicDatabase)
             {
-                deleteAction += MusicButtonController.CreateInstance(m.name, m.id, m.demoMusicPath);
+                deleteAction += MusicButtonController.CreateInstance(m.name, m.id, m.demoMusicPath, m.jacketPath); ;
             }
             CreateGUI();
         };
@@ -287,6 +297,29 @@ public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSele
         cancel = Resources.Load<AudioClip>("SoundEffect/Cancel");
         scroll = Resources.Load<AudioClip>("SoundEffect/Scroll");
         beep = Resources.Load<AudioClip>("SoundEffect/Beep");
+    }
+
+    // 追記
+    private async void LoadSceneRef(string musicPath_, string notesPath_)
+    {
+        // 選択された楽曲とノーツのファイルを設定
+        foreach (var obj in AssetLoadConfig.ReferencesAssets)
+        {
+            if (obj.ObjectPath == "Music")
+            {
+                var guid = AssetDatabase.AssetPathToGUID("Assets/Prefab/Music/" + musicPath_);
+                obj.AssetReference = new AssetReference(guid);
+            }
+
+            if (obj.ObjectPath == "TextAsset")
+            {
+                var guid = AssetDatabase.AssetPathToGUID("Assets/Prefab/TextData/NotesData/" + notesPath_);
+                obj.AssetReference = new AssetReference(guid);
+            }
+        }
+
+        string naxtSceneName = "NotesTest";
+        await DataTransferSystem.LoadSceneRef(AssetLoadConfig, naxtSceneName);
     }
 }
 

@@ -610,6 +610,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mDataBase: {fileID: 11400000, guid: 9d2520c407abb1f4a9e0d9943adf30fb, type: 2}
+  AssetLoadConfig: {fileID: 11400000, guid: 21f3559674afc3641a624a71bb59143e, type: 2}
 --- !u!4 &1946049574
 Transform:
   m_ObjectHideFlags: 0

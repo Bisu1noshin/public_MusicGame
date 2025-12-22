@@ -21,7 +21,7 @@ public class MusicButtonController : MonoBehaviour
     TextScroller mTextScroller;
     PropertyController mProperty;
     int id;
-    string audioPath;
+    string audioPath, imagePath;
 
     private void Awake()
     {
@@ -63,7 +63,7 @@ public class MusicButtonController : MonoBehaviour
                     if (!mTextScroller.enabled)
                     {
                         mTextScroller.enabled = true;
-                        mProperty.SetProperty(mText.text, audioPath, string.Empty);
+                        mProperty.SetProperty(mText.text, audioPath, imagePath);
                     }
                 }
                 else
@@ -89,14 +89,14 @@ public class MusicButtonController : MonoBehaviour
         }
         
     }
-    public void SetInfo(string text_, int id_, string audioPath_)
+    public void SetInfo(string text_, int id_, string audioPath_, string imagePath_)
     {
         mText.text = text_;
         id = id_;
         audioPath = audioPath_;
-        
+        imagePath = imagePath_;
     }
-    public static Action CreateInstance(string text_, int id_, string audioPath_)
+    public static Action CreateInstance(string text_, int id_, string audioPath_, string imagePath_)
     {
         GameObject go = Instantiate(Resources.Load<GameObject>("MusicSelecter/MusicButton"));
         go.name = text_;
@@ -104,7 +104,7 @@ public class MusicButtonController : MonoBehaviour
         go.transform.SetLocalPositionAndRotation(new(-1360.0f, id_ * 1.3f * buttonPadding, 0.0f), Quaternion.identity);
         go.transform.localScale = Vector3.one;
         MusicButtonController mbc = go.GetComponent<MusicButtonController>();
-        mbc.SetInfo(text_, id_, audioPath_);
+        mbc.SetInfo(text_, id_, audioPath_, imagePath_);
 
         Action f = () => { mbc.mState = ButtonState.Dead; };
 

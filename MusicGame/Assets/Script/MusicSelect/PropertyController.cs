@@ -8,7 +8,7 @@ public class PropertyController : MonoBehaviour
     //IMusicSelecter mSelecter;
     TextMeshProUGUI mText;
     AudioSource mAudio;
-    Image mThumbnail;
+    [SerializeField]Image mThumbnail;
     ButtonState mState;
     RectTransform mRect;
 
@@ -61,7 +61,7 @@ public class PropertyController : MonoBehaviour
         }
         if (imagePath != string.Empty) 
         {
-            mThumbnail = Resources.Load<Image>(imagePath);
+            mThumbnail.sprite = Resources.Load<Sprite>("Image/MusicJacket/" + imagePath);
         }
     }
     string CreateMusicPath(string path_)
