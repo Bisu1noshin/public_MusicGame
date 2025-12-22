@@ -16,9 +16,16 @@ MonoBehaviour:
     MusicFilePath: Music/gengaozo
     NotesDataFilePath: TextData/NotesData/gengaozo/Gengaozo_EXPERT
   nData:
-    CreateTimeDelay: 1
+    CreateTimeDelay: 0
     JudgmentTimeDelay: 0
-    PerfectTime: 0.03
-    GoodTime: 0.05
-    MusicSpeed: 3
-    AuotPlay: 1
+    PerfectTime: 0
+    GoodTime: 0
+    MusicSpeed: 0
+    AutoPlay: 0
+  PlayerConfig:
+    LaneCahge: 0
+    AutoPlay: 1
+    UpDownCahge: 0
+    LeftRightCahge: 0
+    InputDevice: 0
+    NotesSpeed: 0

@@ -53,7 +53,7 @@ namespace Notes
         public float MusicSpeed;
 
         [Tooltip("オートモード")]
-        public bool AuotPlay;
+        public bool AutoPlay;
     }
 
     [System.Serializable]
@@ -63,10 +63,26 @@ namespace Notes
         public bool LaneCahge;
 
         [Tooltip("オートモード")]
-        public bool AuotPlay;
+        public bool AutoPlay;
 
-        //[Tooltip("オートモード")]
-        //public bool AuotPlay;
+        [Tooltip("ノーツの上下反転")]
+        public bool UpDownCahge;
+
+        [Tooltip("ノーツの左右反転")]
+        public bool LeftRightCahge;
+
+        [Tooltip("プレイヤーのデバイス")]
+        public InputDevice InputDevice;
+
+        [Range(0, 3)]
+        [Tooltip("ノーツの速度")]
+        public float NotesSpeed;
     }
 
+    public enum InputDevice
+    {
+        Non = -1,
+        Controller = 0,
+        KyeBord=1
+    };
 }

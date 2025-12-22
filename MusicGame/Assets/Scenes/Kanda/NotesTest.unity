@@ -261,9 +261,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ee173a2e3768024b8d4b806d2c81018, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NotesPosition:
-  - {x: -2, y: 5, z: 0}
-  - {x: 2, y: 5, z: 0}
   NotesManagerData: {fileID: 11400000, guid: 0894919679aa8644e892fc74176583fe, type: 2}
   InGameTime: 0
   audioSource: {fileID: 462764129}

@@ -49,8 +49,6 @@ namespace Player
             }
 
             notes = new NotesObject[2];
-
-            manager = GameObject.Find("NotesGenarator").GetComponent<Notes.NotesManager>();
         }
 
         private void Update()
@@ -108,16 +106,10 @@ namespace Player
             state[1] = InputAction(vec);
         }
 
-        private void OnTriggerEnter2D(Collider2D collision)
+        protected override void SetPlayerInput()
         {
-            int lane = 1;
-            if (collision.gameObject.transform.position.x < 0) { lane = 0; }
-
-            if (collision.gameObject.TryGetComponent<Notes.NotesObject>(out var n_))
-            {
-                if (notes[lane] != null) { notes[lane] = null; }
-                notes[lane] = n_;
-            }
+            manager = GameObject.Find("NotesGenarator").GetComponent<Notes.NotesManager>();
+            this.inputDevice = manager.NotesManagerData.PlayerConfig.InputDevice;
         }
 
         private PlayerState InputAction(Vector3 vec) {

@@ -11,9 +11,8 @@ namespace Notes {
 
     public class NotesManager : MonoBehaviour, ISetAsyncObjects
     {
-        [SerializeField] private Vector3[] NotesPosition = new Vector3[2];
-        [SerializeField] private NotesManagerDatabase NotesManagerData;
-        [SerializeField] private MusicDatabase musicDatabase;
+        private Vector3[] NotesPosition = new Vector3[2];
+        [SerializeField] public NotesManagerDatabase NotesManagerData;
 
         public float InGameTime = default;
 
@@ -56,6 +55,17 @@ namespace Notes {
                 notesData = new NotesData();
                 notes = new GameObject[2,4];
 
+                for (int i = 0; i < NotesPosition.Length; i++)
+                { 
+                    int value = -1 + i * 2;
+                    if (NotesManagerData.PlayerConfig.LaneCahge) value *= -1;
+                    if (NotesManagerData.PlayerConfig.NotesSpeed == 0)
+                    {
+                        throw new Exception("0はできません");
+                    }
+                    NotesPosition[i] = new Vector3(2.0f * value, 5.0f, 0f);
+                }
+                
                 InGameTime = 0;
 
             }
@@ -154,17 +164,38 @@ namespace Notes {
             float hakuTime = 60.0f / (float)notesData.BPM;
             float CreateTime = hakuTime * (float)n_.time;
 
+            // ノーツの方向指定の変更
+            var _notes = n_;
+
+            if (NotesManagerData.PlayerConfig.UpDownCahge)
+            {
+                Direction direction = n_.dir;
+                if (n_.dir == Direction.Top) { direction = Direction.Down; }
+                if (n_.dir == Direction.Down) { direction = Direction.Top; }
+                _notes = new(n_.time, (int)direction, (int)n_.kind, n_.range);
+            }
+
+            if (NotesManagerData.PlayerConfig.LeftRightCahge)
+            {
+                Direction direction = n_.dir;
+                if (n_.dir == Direction.Left) { direction = Direction.Right; }
+                if (n_.dir == Direction.Right) { direction = Direction.Left; }
+                _notes = new(n_.time, (int)direction, (int)n_.kind, n_.range);
+            }
+
             // ノーツ生成に必要なデータの構築
             BPMInfo BPMInfo = new(m_bpm: BPM, n_bpm: notesData.BPM);
-            NotesInstantInfo instantInfo = new(notes[(int)n_.kind, (int)n_.dir], NotesPosition[lane]);
+            NotesInstantInfo instantInfo = new(notes[(int)_notes.kind, (int)_notes.dir], NotesPosition[lane]);
             NotesDebugInfo debugInfo = new(index + 1, (NotesLane)lane);
+            var _NotesManagerData = NotesManagerData.nData;
+            _NotesManagerData.AutoPlay = NotesManagerData.PlayerConfig.AutoPlay;
 
             NotesInformaiton informaiton = new(
                 create: CreateTime,
-                n: n_,
+                n: _notes,
                 bpm: BPMInfo,
                 instantInfo: instantInfo,
-                j: NotesManagerData.nData,
+                j: _NotesManagerData,
                 debugInfo: debugInfo
                 );
 
