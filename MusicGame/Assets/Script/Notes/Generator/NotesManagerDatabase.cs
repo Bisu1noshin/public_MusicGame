@@ -36,15 +36,15 @@ namespace Notes
         [Tooltip("召喚から判定までのディレイ")]
         public float CreateTimeDelay;
 
-        [Range(0, 1)]
+        [Range(0, 0.1f)]
         [Tooltip("ノーツ判定のディレイ")]
         public float JudgmentTimeDelay;
 
-        [Range(0, 1)]
+        [Range(0, 0.1f)]
         [Tooltip("Perfect判定の幅")]
         public float PerfectTime;
 
-        [Range(0, 1)]
+        [Range(0, 0.1f)]
         [Tooltip("Good判定の幅")]
         public float GoodTime;
 

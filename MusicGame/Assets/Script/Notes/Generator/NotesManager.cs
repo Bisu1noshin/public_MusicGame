@@ -63,7 +63,10 @@ namespace Notes {
                     {
                         throw new Exception("0はできません");
                     }
-                    NotesPosition[i] = new Vector3(2.0f * value, 5.0f, 0f);
+
+                    var indexY = 16f * NotesManagerData.PlayerConfig.NotesSpeed;
+
+                    NotesPosition[i] = new Vector3(2.0f * value, indexY - 3f, 0f);
                 }
                 
                 InGameTime = 0;
@@ -101,7 +104,7 @@ namespace Notes {
                     notesData = text.NotesReadTxt();
 
                     // 生成用にデータを編集
-                    NotesDataConversion notesDataConversion = new NotesDataConversion(notesData);
+                    var notesDataConversion = new NotesDataConversion(notesData);
                     notesData = notesDataConversion.GetData();
 
                     // 楽曲選択
@@ -184,14 +187,15 @@ namespace Notes {
             }
 
             // ノーツ生成に必要なデータの構築
-            BPMInfo BPMInfo = new(m_bpm: BPM, n_bpm: notesData.BPM);
-            NotesInstantInfo instantInfo = new(notes[(int)_notes.kind, (int)_notes.dir], NotesPosition[lane]);
-            NotesDebugInfo debugInfo = new(index + 1, (NotesLane)lane);
+            var BPMInfo = new BPMInfo(m_bpm: BPM, n_bpm: notesData.BPM);
+            var instantInfo = new NotesInstantInfo(notes[(int)_notes.kind, (int)_notes.dir], NotesPosition[lane]);
+            var debugInfo = new NotesDebugInfo(index + 1, (NotesLane)lane);
             var _NotesManagerData = NotesManagerData.nData;
             _NotesManagerData.AutoPlay = NotesManagerData.PlayerConfig.AutoPlay;
 
             NotesInformaiton informaiton = new(
                 create: CreateTime,
+                speed: NotesManagerData.PlayerConfig.NotesSpeed,
                 n: _notes,
                 bpm: BPMInfo,
                 instantInfo: instantInfo,
@@ -204,7 +208,7 @@ namespace Notes {
             {
                 if (n_.kind != NotesKind.Rush)
                 {
-                    GameObject go = NotesGenerator.CreateNotes(informaiton);
+                    NotesGenerator.CreateNotes(informaiton);
                 }
                 
                 return 1;
@@ -215,7 +219,7 @@ namespace Notes {
 
         private bool DebugMusic()
         {
-            if (InGameTime >= 1f)
+            if (InGameTime >= NotesManagerData.nData.CreateTimeDelay)
             {
                 audioSource.Play();
                 return false;
@@ -235,6 +239,7 @@ namespace Notes {
             
             NotesInformaiton informaiton = new(
                 create: 0,
+                speed: NotesManagerData.PlayerConfig.NotesSpeed,
                 n: notes_,
                 bpm: BPMInfo,
                 instantInfo: instantInfo,
@@ -266,7 +271,7 @@ namespace Notes {
             notesData = text.NotesReadTxt();
 
             // 生成用にデータを編集
-            NotesDataConversion notesDataConversion = new NotesDataConversion(notesData);
+            var notesDataConversion = new NotesDataConversion(notesData);
             notesData = notesDataConversion.GetData();
 
             Debug.Log("SuccessAsync");
