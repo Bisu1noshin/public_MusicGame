@@ -1,30 +1,31 @@
 ﻿using UnityEngine;
 
-public class Onishi_EscapeGame : MonoBehaviour
+public class AllSceneManager : MonoBehaviour
 {
-    public static Onishi_EscapeGame instance;
+    public static AllSceneManager instance;
 
     private void Awake()
     {
-        if (instance) { Destroy(this.gameObject); }
+        if (instance)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
 
         if (instance == null)
             instance = this;
 
         DontDestroyOnLoad(this.gameObject);
 
-#if UNITY_EDITOR
-#else
         // マウスカーソル非表示
         Cursor.visible = false;
-#endif       
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        //Escでゲームを抜ける
-        if (Input.GetKey(KeyCode.Escape))
+        // ゲーム終了の処理
+        // エディター上はPlay終了
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;

@@ -9,7 +9,9 @@ namespace LoadForAsync
     public interface ISetAsyncObjects
     {
         // オブジェクトをロードする関数
-        public void SetAsyncObjects(LoadObjectTable ObjectTable);    
+        public void SetAsyncObjects(LoadObjectTable ObjectTable);
+
+        public Action ReleaseAll { get; set; }
 }
 
     public class DataTransferSystem
@@ -61,10 +63,9 @@ namespace LoadForAsync
                 foreach (var p in presenters)
                 {
                     p.SetAsyncObjects(ObjectTable);
+                    p.ReleaseAll = () => { ObjectTable.ReleaseAll(); };
                 }
             }
-
-            ObjectTable.ReleaseAll();
         }
 
     }

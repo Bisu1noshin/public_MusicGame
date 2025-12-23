@@ -65,6 +65,8 @@ namespace LoadForAsync
         /// </summary>
         public void ReleaseAll()
         {
+            if (_handles.Count == 0) { return; }
+
             foreach (var handle in _handles)
             {
                 Addressables.Release(handle);

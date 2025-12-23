@@ -3,13 +3,10 @@ using System.Collections.Generic;
 using LoadForAsync;
 using Notes;
 using Player;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEditor;
 using UnityEngine.AddressableAssets;
-using UnityEditor.AddressableAssets.Settings;
-using UnityEditor.AddressableAssets;
 using GameInfo;
 
 namespace MusicSelect
@@ -49,6 +46,8 @@ namespace MusicSelect
 
         // 追記
         [SerializeField] private AssetLoadConfig AssetLoadConfig;
+        [SerializeField] private List<AssetPair> musicList;
+        [SerializeField] private List<AssetPair> textList;
 
         private void Awake()
         {
@@ -304,14 +303,15 @@ namespace MusicSelect
             {
                 if (obj.ObjectPath == "Music")
                 {
-                    var guid = AssetDatabase.AssetPathToGUID("Assets/Prefab/Music/" + musicPath_);
-                    obj.AssetReference = new AssetReference(guid);
+                    // リストの中から musicPath_ と一致するものを探す
+                    var found = musicList.Find(x => x.key == musicPath_);
+                    if (found != null) obj.AssetReference = found.assetRef;
                 }
 
                 if (obj.ObjectPath == "TextAsset")
                 {
-                    var guid = AssetDatabase.AssetPathToGUID("Assets/Prefab/TextData/NotesData/" + notesPath_);
-                    obj.AssetReference = new AssetReference(guid);
+                    var found = textList.Find(x => x.key == notesPath_);
+                    if (found != null) obj.AssetReference = found.assetRef;
                 }
             }
 
@@ -336,5 +336,12 @@ namespace MusicSelect
         int[] SelectNum { get; }
         int MaxValue { get; }
         float untouchableTimer { get; }
+    }
+
+    [System.Serializable]
+    public class AssetPair
+    {
+        public string key; 
+        public AssetReference assetRef;
     }
 }
