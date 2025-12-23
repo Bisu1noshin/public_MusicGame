@@ -64,6 +64,10 @@ namespace ModeSelect
                 }
                 mSelecter.Actions[id] = action_;
             }
+            public float ReturnY(int me, int max)
+            {
+                return -(me - (max - 1) / 2.0f) * (540 / max * 2);
+            }
             public static Action CreateInstance(IModeSelecter owner, int id_, int maxId_, string text_, Action action_, bool destroyAnim = false)
             {
                 GameObject res = Resources.Load<GameObject>("ModeSelect/ModeButton");
@@ -71,15 +75,11 @@ namespace ModeSelect
                 go.name = text_;
                 go.transform.SetParent(GameObject.Find("Canvas").transform.GetChild(1).transform);
                 go.transform.localScale = Vector3.one;
-                go.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
                 
-                {
-                    float currNum = -(id_ - (maxId_ - 1) / 2.0f) * 250;
-                    go.transform.localPosition = new(-350, currNum);
-                }
                 ButtonManager bm = go.GetComponent<ButtonManager>();
+                go.transform.SetLocalPositionAndRotation(new Vector2(-350.0f, bm.ReturnY(id_, maxId_)), Quaternion.identity);
                 bm.SetInfo(owner, id_, text_, action_);
-                Action f = () => { bm.DeleteButton(destroyAnim); };
+                Action f = () =>  bm.DeleteButton(destroyAnim);
                 return f;
             }
             private void OnDisable()

@@ -48,7 +48,6 @@ namespace ModeSelect
         }
         void SetupStateMachine()
         {
-            // 12/17 変更　これでいいのか...？
             mStateMachine = new StateMachine<State, Trigger>(State.Home, new HomeState(this, mStateMachine));
 
             //mStateMachine.SetupState(State.Home, new HomeState(this, mStateMachine));
@@ -79,12 +78,7 @@ namespace ModeSelect
         public NotesManagerDatabase GetNotesManager() { return mNotesManager; }
     }
 
-    public interface IModeSelecter
-    {
-        List<Action> Actions { get; set; }
-        int[] SelectNum { get; }
-        Action deleteAction { get; set; }
-    }
+    
     public interface IActionDictionary
     {
         Dictionary<int, Action> ActionDic { get; }

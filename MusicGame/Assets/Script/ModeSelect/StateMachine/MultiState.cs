@@ -14,7 +14,7 @@ namespace ModeSelect.StateMachine
         {
             InitAction();
             deleteAction = null;
-            deleteAction += PopupController.CreateInstance("このモードは現在\n利用できません。");
+            deleteAction += PopupController.CreateInstance(this, "このモードは現在\n利用できません。");
             
             //deleteAction += Button.ButtonManager.CreateInstance(this, 0, 2, "1P", () => { Debug.Log("Multi Owner pressed"); }, false);
             //deleteAction += Button.ButtonManager.CreateInstance(this, 1, 2, "2P", () => { Debug.Log("Multi Client pressed"); }, false);
