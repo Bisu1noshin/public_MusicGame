@@ -1,6 +1,7 @@
 ﻿using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelButtonController : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class LevelButtonController : MonoBehaviour
         }
         mRect = GetComponent<RectTransform>();
         mState = ButtonState.Appear;
+
     }
     // Update is called once per frame
     void Update()
@@ -91,7 +93,7 @@ public class LevelButtonController : MonoBehaviour
     {
         return (id_ + 1) * -200.0f + 350.0f;
     }
-    public static Action CreateInstance(int id_, string str_, SceneState ss = SceneState.LevelSelect)
+    public static Action CreateInstance(int id_, string str_, SceneState ss = SceneState.LevelSelect, bool cantSelect = false)
     {
         GameObject res = Resources.Load("MusicSelecter/LevelButton") as GameObject;
         GameObject go = Instantiate(res);
@@ -99,6 +101,10 @@ public class LevelButtonController : MonoBehaviour
         go.transform.localRotation = Quaternion.identity;
         go.name = str_;
         go.transform.localScale = Vector3.one;
+        if (cantSelect)
+        {
+            go.GetComponent<Image>().color = Color.gray;
+        }
         
         LevelButtonController lbc = go.GetComponent<LevelButtonController>();
         lbc.SetProperty(id_, str_);

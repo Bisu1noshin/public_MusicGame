@@ -571,6 +571,7 @@ GameObject:
   - component: {fileID: 934257521729994779}
   - component: {fileID: 9073735969568210151}
   - component: {fileID: 1602432492599989720}
+  - component: {fileID: 123566729340601023}
   m_Layer: 5
   m_Name: Popup
   m_TagString: Untagged
@@ -638,3 +639,16 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &123566729340601023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6856655271830476735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be400d6a2a5bbd04da6cc866043a6fbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mText: {fileID: 0}

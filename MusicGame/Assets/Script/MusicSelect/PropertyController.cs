@@ -8,7 +8,7 @@ public class PropertyController : MonoBehaviour
     //IMusicSelecter mSelecter;
     TextMeshProUGUI mText;
     AudioSource mAudio;
-    Image mThumbnail;
+    [SerializeField]Image mThumbnail;
     ButtonState mState;
     RectTransform mRect;
 
@@ -55,20 +55,16 @@ public class PropertyController : MonoBehaviour
         mText.text = text;
         if (audioPath != string.Empty) 
         {
-            AudioClip clip = Resources.Load(CreateMusicPath(audioPath)) as AudioClip;
+            AudioClip clip = Resources.Load("DemoMusic/" + audioPath) as AudioClip;
             mAudio.clip = clip;
             mAudio.Play();
         }
         if (imagePath != string.Empty) 
         {
-            mThumbnail = Resources.Load<Image>(imagePath);
+            mThumbnail.sprite = Resources.Load<Sprite>("Image/MusicJacket/" + imagePath);
         }
     }
-    string CreateMusicPath(string path_)
-    {
-        string res = "DemoMusic/" + path_;
-        return res;
-    }
+    
     public static Action CreateInstance()
     {
         GameObject go = Instantiate(Resources.Load<GameObject>("MusicSelecter/Property"));

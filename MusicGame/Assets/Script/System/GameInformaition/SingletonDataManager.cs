@@ -13,7 +13,7 @@ namespace GameInfo
     {
         public static SingletonDataManager instance;
         public List<NotesScore> score;
-        public int musicId { get; private set; }
+        public MusicData MusicData { get; private set; }
 
         private void Awake()
         {
@@ -39,9 +39,9 @@ namespace GameInfo
             }
         }
 
-        public void SetMusicId(int num)
+        public void SetMusicId(MusicData data)
         {
-            musicId = num;
+            MusicData = data;
         }
 
         public void DestroyInstance()
