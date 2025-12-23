@@ -18,14 +18,14 @@ MonoBehaviour:
   nData:
     CreateTimeDelay: 0
     JudgmentTimeDelay: 0
-    PerfectTime: 0
-    GoodTime: 0
-    MusicSpeed: 0
-    AutoPlay: 0
+    PerfectTime: 0.2
+    GoodTime: 0.5
+    MusicSpeed: 1
+    AutoPlay: 1
   PlayerConfig:
     LaneCahge: 0
     AutoPlay: 1
     UpDownCahge: 0
     LeftRightCahge: 0
     InputDevice: 0
-    NotesSpeed: 0
+    NotesSpeed: 0.1
