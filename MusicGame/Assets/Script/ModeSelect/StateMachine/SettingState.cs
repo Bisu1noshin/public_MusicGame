@@ -29,7 +29,7 @@ namespace ModeSelect.StateMachine
         }
         void InitDic()
         {
-            //次回　Dictionary登録から
+            ActionDic.Add(0, () => )
         }
     }
 }
