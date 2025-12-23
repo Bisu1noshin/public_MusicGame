@@ -42,4 +42,4 @@ MonoBehaviour:
     jacketPath: Chronomia
     normalPath: 
     hardPath: 
-    expertPath: 
+    expertPath: Chronomia/Chronomia_EXPERT.txt
