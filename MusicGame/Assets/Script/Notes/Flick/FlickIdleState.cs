@@ -37,6 +37,8 @@ namespace Notes
             float DiscriminationTime = ActiveTime - owner.CreateTime;
             InGamePlayer.NotesAction[(int)owner.DebugInfo.NotesLane] -= ActiveNotes;
 
+            Debug.Log("DiscriminationTime :" + (1.0f - DiscriminationTime));
+
             if (state == owner.AnsTrigger)
             {
                 // perfectの処理

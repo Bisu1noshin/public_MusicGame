@@ -16,7 +16,7 @@ public sealed class InputKeyBind {
                 InitilizeBindGamepad();
                 break;
             case Notes.InputDevice.KyeBord:
-                InitilizeBindGamepad();
+                InitilizeBindKeyboard();
                 break;
         }    
     }
@@ -70,7 +70,7 @@ public sealed class InputKeyBind {
         .With("Right", "<Keyboard>/d");
 
         if (inputActionse._RightStick.bindings.Count == 0)
-            inputActionse._LeftStick.AddCompositeBinding("2DVector")
+            inputActionse._RightStick.AddCompositeBinding("2DVector")
         .With("Up", "<Keyboard>/upArrow")
         .With("Down", "<Keyboard>/downArrow")
         .With("Left", "<Keyboard>/leftArrow")

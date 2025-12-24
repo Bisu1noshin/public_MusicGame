@@ -27,5 +27,5 @@ MonoBehaviour:
     AutoPlay: 1
     UpDownCahge: 0
     LeftRightCahge: 0
-    InputDevice: 0
-    NotesSpeed: 0.5
+    InputDevice: 1
+    NotesSpeed: 0.7

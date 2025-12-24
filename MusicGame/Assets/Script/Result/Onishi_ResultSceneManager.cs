@@ -56,13 +56,15 @@ public class Onishi_ResultSceneManager : MonoBehaviour
                 if (scoreCnt[1] == 0) newSprite = Resources.Load("Image/Result/AP_kari") as Texture2D;
                 else newSprite = Resources.Load("Image/Result/FC_kari") as Texture2D;
             }
-            else newSprite = Resources.Load("Image/Result/Clear_kari") as Texture2D;
+            else if ((float)(score / (scoreCnt[0] + scoreCnt[1] + scoreCnt[2]) * 2) >= 0.7)
+            {
+                newSprite = Resources.Load("Image/Result/Clear_kari") as Texture2D;
+            }
+            else newSprite = Resources.Load("Image/Result/Failed_kari") as Texture2D;
             Img_ClearLamp.GetComponent<RawImage>().texture = newSprite;
         }
 
         //楽曲情報の取得
-        //未着手
-        //仮で画面表示変更だけ-2025/11/11
         {
             var md = SingletonDataManager.instance.MusicData;
             if (md != null)
