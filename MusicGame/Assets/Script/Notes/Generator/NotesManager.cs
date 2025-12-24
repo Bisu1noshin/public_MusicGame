@@ -228,7 +228,7 @@ namespace Notes {
 
         private bool DebugMusic()
         {
-            if (InGameTime >= NotesManagerData.nData.CreateTimeDelay)
+            if (InGameTime >= NotesManagerData.nData.CreateTimeDelay- Time.fixedDeltaTime)
             {
                 audioSource.Play();
                 return false;

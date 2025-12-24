@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using Notes;
 using GameInfo;
+using UnityEngine.SceneManagement;
 
 public class Onishi_ResultSceneManager : MonoBehaviour
 {
@@ -63,11 +64,30 @@ public class Onishi_ResultSceneManager : MonoBehaviour
         //未着手
         //仮で画面表示変更だけ-2025/11/11
         {
-            Texture2D newTexture = Resources.Load("Image/MusicJacket/ShiningStar") as Texture2D;
-            Img_MusicJacket.texture = newTexture;
-            Txt_MusicName.text = "Totemo Nagai Kyokumei Demo Yoyuu De Nagareru ~Totemo Sugoi~";
+            var md = SingletonDataManager.instance.MusicData;
+            if (md != null)
+            {
+                string jacket = "Image/MusicJacket/" + md.jacketPath;
+                Texture2D newTexture = Resources.Load(jacket) as Texture2D;
+                Img_MusicJacket.texture = newTexture;
+                Txt_MusicName.text = md.name;
+            }
+            else
+            {
+                string jacket = "Image/MusicJacket/MusicJacket_kari";
+                Texture2D newTexture = Resources.Load(jacket) as Texture2D;
+                Img_MusicJacket.texture = newTexture;
+                Txt_MusicName.text = "TBD";
+            }
+            
+        }
+    }
 
-
+    private void Update()
+    {
+        if (Input.anyKeyDown)
+        {
+            SceneManager.LoadScene("Ooo_Title");
         }
     }
 }
