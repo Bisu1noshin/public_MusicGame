@@ -28,28 +28,24 @@ namespace ModeSelect.StateMachine
             //Layerが変わったとき
             if (mPrevLayer != layer)
             {
-                if (layer > mPrevLayer)
+                if (mOwner.ExistCursol) { mOwner.DeleteCursol(); }
+                if (mPrevLayer < layer)
                 {
                     SelectNum[layer] = 0;
+                    ReplaceEnterAction(Actions[SelectNum[layer]]);
                 }
-                if (mPrevLayer == 0)
-                {
-                    mOwner.DeleteCursol();
-                }
-                
             }
             //カーソル操作
             if (layer == 0)
             {
                 SetPropertyText(SelectNum[0]);
-                mOwner.CursolRect.anchoredPosition = new(-350.0f, -(SelectNum[0] - (6 - 1) / 2.0f) * (540 / 6 * 2));
+                if (mOwner.ExistCursol) mOwner.CursolRect.anchoredPosition = new(-350.0f, -(SelectNum[0] - (6 - 1) / 2.0f) * (540 / 6 * 2));
             }
 
             if (layer == 1 && mPopup_NotesSpeed != null)
             {
                 mPopup_NotesSpeed.SetValue(mCurrSpeed);
             }
-            ReplaceEnterAction(Actions[SelectNum[layer]]);
             mPrevLayer = layer;
         }
         protected override void OnExit()
@@ -60,13 +56,24 @@ namespace ModeSelect.StateMachine
         /// <summary>
         /// 　Dictionary初期化　派生先の挙動を登録する
         /// 　すっごい見にくいのはご容赦
-        ///
-        /// 12/24 06:56 追記
-        /// 　幾分見やすくなりました
         /// </summary>
         void InitDic()
         {
-            ActionDic.Add(0, () => CreateDicAction(
+            //ActionDic.Add(0, () =>
+            //{
+            //    ReplaceNullActionList(0);
+            //    layer++;
+            //    deleteAction += PopupController.CreateInstance(this,
+            //    "オートプレイを" + (mDataBase.AutoPlay ? "OFF" : "ON") + "にします。\nよろしいですか？", () => { mDataBase.AutoPlay = !mDataBase.AutoPlay; layer--; });
+            //    Player.backAction = () => { deleteAction?.Invoke(); layer--; };
+            //});
+
+            //ActionDic.Add(1, () => { ReplaceNullActionList(0); layer++; deleteAction += PopupController.CreateInstance(this, "レーン反転を" + (mDataBase.LaneCahge ? "OFF" : "ON") + "にします。\nよろしいですか？", () => { mDataBase.LaneCahge = !mDataBase.LaneCahge; layer--; }); Player.backAction = () => { deleteAction?.Invoke(); layer--; }; });
+            //ActionDic.Add(2, () => { ReplaceNullActionList(0); layer++; deleteAction += PopupController.CreateInstance(this, "操作の上下反転を" + (mDataBase.UpDownCahge ? "OFF" : "ON") + "にします。\nよろしいですか？", () => { mDataBase.UpDownCahge = !mDataBase.UpDownCahge; layer--; }); Player.backAction = () => { deleteAction?.Invoke(); layer--; }; });
+            //ActionDic.Add(3, () => { ReplaceNullActionList(0); layer++; deleteAction += PopupController.CreateInstance(this, "操作の左右反転を" + (mDataBase.LeftRightCahge ? "OFF" : "ON") + "にします。\nよろしいですか？", () => { mDataBase.LeftRightCahge = !mDataBase.LeftRightCahge; layer--; }); Player.backAction = () => { deleteAction?.Invoke(); layer--; }; });
+            //ActionDic.Add(4, () => { ReplaceNullActionList(0); layer++; deleteAction += PopupController.CreateInstance(this, "操作デバイスを" + (mDataBase.InputDevice == InputDevice.Controller ? "キーボード" : "コントローラー") + "にします。\nよろしいですか？", () => { mDataBase.InputDevice = mDataBase.InputDevice == InputDevice.Controller ? InputDevice.KyeBord : InputDevice.Controller; layer--; }); Player.backAction = () => { deleteAction?.Invoke(); layer--; }; });
+            //ActionDic.Add(5, () => { ReplaceNullActionList(0); layer++; (PopupController, Action) tuple = PopupController.CreateInstanceForNotesSpeed(mDataBase.InputDevice == InputDevice.Controller); mPopup_NotesSpeed = tuple.Item1; deleteAction += () => { tuple.Item2.Invoke(); mPopup_NotesSpeed = null; }; mCurrSpeed = mDataBase.NotesSpeed; Player.backAction = () => { deleteAction?.Invoke(); layer--; }; Actions.Add(() => { mDataBase.NotesSpeed = mCurrSpeed; layer--; }); Player.vecAction = (Vector2) => ChangeCurrSpeed(Vector2); });
+            ActionDic.Add(0, CreateDicAction(
                 () =>
                 {
                     layer++;
@@ -74,9 +81,9 @@ namespace ModeSelect.StateMachine
                     "オートプレイを" + (mDataBase.AutoPlay ? "OFF" : "ON") + "にします。\nよろしいですか？");
                 },
                 () => { mDataBase.AutoPlay = !mDataBase.AutoPlay; layer--; },
-                () => { layer--; SetupLayer0(); })
-            );
-            ActionDic.Add(1, () => CreateDicAction(
+                () => { layer--; SetupLayer0(); }
+            ));
+            ActionDic.Add(1, CreateDicAction(
                 () =>
                 {
                     layer++;
@@ -84,9 +91,9 @@ namespace ModeSelect.StateMachine
                         "レーン反転を" + (mDataBase.LaneCahge ? "OFF" : "ON") + "にします。\nよろしいですか？");
                 },
                 () => { mDataBase.LaneCahge = !mDataBase.LaneCahge; layer--; },
-                () => { layer--; SetupLayer0(); })
-            );
-            ActionDic.Add(2, () => CreateDicAction(
+                () => { layer--; SetupLayer0(); }
+            ));
+            ActionDic.Add(2, CreateDicAction(
                 () =>
                 {
                     layer++;
@@ -94,9 +101,9 @@ namespace ModeSelect.StateMachine
                         "操作の上下反転を" + (mDataBase.UpDownCahge ? "OFF" : "ON") + "にします。\nよろしいですか？");
                 },
                 () => { mDataBase.UpDownCahge = !mDataBase.UpDownCahge; layer--; },
-                () => { layer--; SetupLayer0(); })
-                );
-            ActionDic.Add(3, () => CreateDicAction(
+                () => { layer--; SetupLayer0(); }
+            ));
+            ActionDic.Add(3, CreateDicAction(
                 () =>
                 {
                     layer++;
@@ -104,9 +111,9 @@ namespace ModeSelect.StateMachine
                         "操作の左右反転を" + (mDataBase.LeftRightCahge ? "OFF" : "ON") + "にします。\nよろしいですか？");
                 },
                 () => { mDataBase.LeftRightCahge = !mDataBase.LeftRightCahge; layer--; },
-                () => { layer--; SetupLayer0(); })
-                );
-            ActionDic.Add(4, () => CreateDicAction(
+                () => { layer--; SetupLayer0(); }
+            ));
+            ActionDic.Add(4, CreateDicAction(
                 () =>
                 {
                     layer++;
@@ -114,9 +121,9 @@ namespace ModeSelect.StateMachine
                         "操作デバイスを" + (mDataBase.InputDevice == InputDevice.Controller ? "キーボード" : "コントローラー") + "にします。\nよろしいですか？");
                 },
                 () => { mDataBase.InputDevice = mDataBase.InputDevice == InputDevice.Controller ? InputDevice.KyeBord : InputDevice.Controller; layer--; },
-                () => { layer--; SetupLayer0(); })
-                );
-            ActionDic.Add(5, () => CreateDicAction(
+                () => { layer--; SetupLayer0(); }
+            ));
+            ActionDic.Add(5, CreateDicAction(
                 () =>
                 {
                     layer++;
@@ -125,14 +132,14 @@ namespace ModeSelect.StateMachine
                     deleteAction += () => { tuple.Item2.Invoke(); mPopup_NotesSpeed = null; };
                     mCurrSpeed = mDataBase.NotesSpeed;
                 },
-                () => { mDataBase.NotesSpeed = mCurrSpeed; layer--; },
-                () => { layer--; SetupLayer0(); },
-                () => Player.vecAction = (Vector2) => ChangeCurrSpeed(Vector2))
-                );
+                () => { mDataBase.NotesSpeed = mCurrSpeed; layer--; Player.vecAction = (Vector2) => Scroll(Vector2); },
+                () => { layer--; Player.vecAction = (Vector2) => Scroll(Vector2); SetupLayer0();  },
+                () => Player.vecAction = (Vector2) => ChangeCurrSpeed(Vector2)
+            ));
         }
 
         //初期画面のセット
-        void SetupLayer0() 
+        void SetupLayer0()
         {
             ReplaceNullActionList(6);
             deleteAction = null;
@@ -149,6 +156,7 @@ namespace ModeSelect.StateMachine
             Player.backAction = () => { deleteAction?.Invoke(); mOwner.mStateMachine.ExecuteTriggerAction(Trigger.Home); };
             Player.vecAction = (Vector2) => Scroll(Vector2);
             mOwner.CreateCursol();
+            ReplaceEnterAction(Actions[SelectNum[0]]);
         }
 
         /// <summary>
@@ -158,7 +166,7 @@ namespace ModeSelect.StateMachine
         void ChangeCurrSpeed(Vector2 vec)
         {
             mCurrSpeed += vec.y * 0.1f;
-            mCurrSpeed = ((int)(mCurrSpeed * 10.0f)) / 10;
+            //mCurrSpeed = ((int)(mCurrSpeed * 10.0f)) / 10;
             if (mCurrSpeed > 3.0f) { mCurrSpeed = 3.0f; }
             if (mCurrSpeed < 0.3f) { mCurrSpeed = 0.3f; }
         }
@@ -168,7 +176,7 @@ namespace ModeSelect.StateMachine
         {
             if (mProperty == null) return;
             string str;
-            switch(v)
+            switch (v)
             {
                 case 0:
                     str = "オートプレイの設定ができます。\n現在：" + (mDataBase.AutoPlay ? "ON" : "OFF");
@@ -197,23 +205,24 @@ namespace ModeSelect.StateMachine
 
         Action CreateDicAction(Action init, Action enter, Action back, Action vec = null)
         {
-            
-            Action _enter = () => { Actions.Clear(); Actions.Add(enter); };
-            Action _back = () => Player.backAction = () => { Debug.Log("Back"); deleteAction?.Invoke(); back?.Invoke(); };
-            Action ret = () => { Debug.Log("Action"); init?.Invoke(); _enter.Invoke(); _back.Invoke(); vec?.Invoke(); };
+            Action _enter = () => {
+                Actions.Clear();
+                Actions.Add(enter);
+                ReplaceEnterAction(Actions[0]);
+            };
+            Action _back = () => {
+                Player.backAction = () => {
+                    deleteAction?.Invoke();
+                    back?.Invoke();
+                };
+            };
+            Action ret = () => {
+                _enter.Invoke();
+                init?.Invoke();
+                _back.Invoke();
+                vec?.Invoke();
+            };
             return ret;
-        }
-
-        Action CreateDicAction(Action init, List<Action> enter, Action back, Action vec = null)
-        {
-
-            Action _enter = () => { Actions.Clear(); Actions.AddRange(enter); };
-            Action _back = () => { deleteAction?.Invoke(); back?.Invoke(); };
-            if (vec != null)
-            {
-                return init + _enter + _back + vec;
-            }
-            return init + _enter + _back;
         }
     }
 }

@@ -28,6 +28,7 @@ namespace ModeSelect
 
         public RectTransform CursolRect { get; set; }
         GameObject Cursol;
+        public bool ExistCursol => Cursol != null;
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Awake()
         {
@@ -85,6 +86,7 @@ namespace ModeSelect
     }
     public interface ICursolController
     {
+        bool ExistCursol { get; }
         void CreateCursol();
         void DeleteCursol();
     }

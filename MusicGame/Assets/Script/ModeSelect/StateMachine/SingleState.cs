@@ -18,9 +18,9 @@ namespace ModeSelect.StateMachine
             layer = 0;
             deleteAction = null;
             deleteAction += PopupController.CreateInstance(this, "シングルプレイを開始します。\nよろしいですか？");
-            Actions[0] = () => SceneManager.LoadScene("Test_MusicSelectScene");
-            ModeSelect.Player.backAction = () => mOwner.mStateMachine.ExecuteTriggerAction(Trigger.Home);
-            ModeSelect.Player.backAction += deleteAction;
+            Player.enterAction = () => { deleteAction?.Invoke(); SceneManager.LoadScene("Test_MusicSelectScene"); };
+            Player.backAction = () => mOwner.mStateMachine.ExecuteTriggerAction(Trigger.Home);
+            Player.backAction += deleteAction;
         }
         protected override void OnUpdate(float deltaTime)
         {

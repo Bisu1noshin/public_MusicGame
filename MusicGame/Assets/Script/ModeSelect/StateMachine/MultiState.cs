@@ -19,12 +19,11 @@ namespace ModeSelect.StateMachine
             //deleteAction += Button.ButtonManager.CreateInstance(this, 0, 2, "1P", () => { Debug.Log("Multi Owner pressed"); }, false);
             //deleteAction += Button.ButtonManager.CreateInstance(this, 1, 2, "2P", () => { Debug.Log("Multi Client pressed"); }, false);
 
-            ModeSelect.Player.backAction = () => mOwner.mStateMachine.ExecuteTriggerAction(Trigger.Home);
-            Player.backAction += deleteAction;
+            
         }
         protected override void OnUpdate(float deltaTime)
         {
-            Player.enterAction = () => PlayBeepSound();
+            
         }
         protected override void OnExit()
         {
@@ -33,9 +32,10 @@ namespace ModeSelect.StateMachine
         void InitAction()
         {
             layer = 0;
-            ModeSelect.Player.vecAction += (vector2) => Scroll(vector2);
-            ReplaceEnterAction(Actions[SelectNum[layer]]);
-            ModeSelect.Player.backAction += () => { };
+            Player.vecAction = null;
+            Player.backAction = () => mOwner.mStateMachine.ExecuteTriggerAction(Trigger.Home);
+            Player.backAction += deleteAction;
+            Player.enterAction = () => PlayBeepSound();
         }
     }
 }

@@ -32,11 +32,11 @@ namespace ModeSelect
             mProperty = tuple.Item1;
             deleteAction += tuple.Item2;
             mOwner.CreateCursol();
+            ReplaceEnterAction(Actions[SelectNum[0]]);
         }
 
         protected override void OnUpdate(float deltaTime)
         {
-            ReplaceEnterAction(Actions[SelectNum[0]]);
             mProperty.SetText(explaination[SelectNum[0]]);
             mOwner.CursolRect.anchoredPosition = new(-350.0f, -(SelectNum[0] - (4 - 1) / 2.0f) * (540 / 4 * 2));
             Player.backAction = () => PlayBeepSound();
@@ -48,8 +48,9 @@ namespace ModeSelect
         void InitAction()
         {
             layer = 0;
-            ModeSelect.Player.vecAction = (vector2) => Scroll(vector2);
+            Player.vecAction = (vector2) => Scroll(vector2);
             deleteAction = null;
+            Player.backAction = null;
         }
     }
 }
