@@ -26,7 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Kanda/LoadScene.unity
     guid: ebff2698750c3914ba8ff492c4c3bfe9
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Kanda/PlayerInput.unity
     guid: 8d77811bca5cd66488ade267d08fdc6d
   m_configObjects:
