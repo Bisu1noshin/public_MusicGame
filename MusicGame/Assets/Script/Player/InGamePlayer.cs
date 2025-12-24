@@ -51,7 +51,7 @@ namespace Player
             notes = new NotesObject[2];
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             // ノーツの処理
             {

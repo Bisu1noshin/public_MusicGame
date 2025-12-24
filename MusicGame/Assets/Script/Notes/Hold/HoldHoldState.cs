@@ -55,9 +55,8 @@ namespace Notes
         protected override void OnExit()
         {
             base.OnExit();
-
-            if (owner.holdCnt >= owner.Max_holdCnt - 1)
-                InGamePlayer.NotesAction[(int)owner.DebugInfo.NotesLane] -= ActiveNotes;
+            
+            InGamePlayer.NotesAction[(int)owner.DebugInfo.NotesLane] -= ActiveNotes;
         }
 
         // 発火イベント

@@ -25,6 +25,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7fff62294b1ff004582148bd31d9e31d
+    m_Address: Assets/Prefab/TextData/NotesData/Chronomia/Chronomia_EXPERT.txt
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: af99e4f6226a31c4ebd5f50630fb10a7
     m_Address: Assets/Prefab/TextData/NotesData/gengaozo/Gengaozo_EXPERT.txt
     m_ReadOnly: 0

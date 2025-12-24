@@ -15,6 +15,7 @@ namespace Notes {
         [SerializeField] public NotesManagerDatabase NotesManagerData;
 
         public float InGameTime = default;
+        public Action ReleaseAll { get; set; }
 
         [SerializeField] private AudioSource audioSource;
 
@@ -125,10 +126,10 @@ namespace Notes {
             }
         }
 
-        private void Start()
+        private void OnDisable()
         {
-            // 一章節開けてから再製
-            //audioSource.Play();
+            // メモリの解放
+            ReleaseAll?.Invoke();
         }
 
         private void FixedUpdate()
@@ -186,10 +187,18 @@ namespace Notes {
                 _notes = new(n_.time, (int)direction, (int)n_.kind, n_.range);
             }
 
+            var NotesLane = (NotesLane)lane;
+            if (NotesManagerData.PlayerConfig.LaneCahge)
+            {
+                if (NotesLane == NotesLane.Left) NotesLane = NotesLane.Right;
+                if (NotesLane == NotesLane.Right) NotesLane = NotesLane.Left;
+            }
+
+            var debugInfo = new NotesDebugInfo(index + 1, (NotesLane)lane);
+
             // ノーツ生成に必要なデータの構築
             var BPMInfo = new BPMInfo(m_bpm: BPM, n_bpm: notesData.BPM);
             var instantInfo = new NotesInstantInfo(notes[(int)_notes.kind, (int)_notes.dir], NotesPosition[lane]);
-            var debugInfo = new NotesDebugInfo(index + 1, (NotesLane)lane);
             var _NotesManagerData = NotesManagerData.nData;
             _NotesManagerData.AutoPlay = NotesManagerData.PlayerConfig.AutoPlay;
 

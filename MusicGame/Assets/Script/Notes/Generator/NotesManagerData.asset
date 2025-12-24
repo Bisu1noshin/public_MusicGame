@@ -21,11 +21,11 @@ MonoBehaviour:
     PerfectTime: 0.03
     GoodTime: 0.05
     MusicSpeed: 1
-    AutoPlay: 1
+    AutoPlay: 0
   PlayerConfig:
-    LaneCahge: 1
-    AutoPlay: 1
-    UpDownCahge: 1
-    LeftRightCahge: 1
+    LaneCahge: 0
+    AutoPlay: 0
+    UpDownCahge: 0
+    LeftRightCahge: 0
     InputDevice: 0
     NotesSpeed: 0.5

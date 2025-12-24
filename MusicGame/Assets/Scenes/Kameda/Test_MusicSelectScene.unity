@@ -625,6 +625,64 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mDataBase: {fileID: 11400000, guid: 9d2520c407abb1f4a9e0d9943adf30fb, type: 2}
   AssetLoadConfig: {fileID: 11400000, guid: 21f3559674afc3641a624a71bb59143e, type: 2}
+  musicList:
+  - key: ShiningStar.mp3
+    assetRef:
+      m_AssetGUID: f2c301171e7effe4eb3a5abcd8593621
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - key: gengaozo.mp3
+    assetRef:
+      m_AssetGUID: 0fae8e63a01b5ef44b15b53695c287aa
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - key: Chronomia.mp3
+    assetRef:
+      m_AssetGUID: ed7bc92822d36b742a4d4a3764fd26b2
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  textList:
+  - key: ShiningStar/ShiningStar_NORMAL.txt
+    assetRef:
+      m_AssetGUID: f01ba9f867e24b543af16740b0836dde
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 1
+  - key: ShiningStar/ShiningStar_HARD.txt
+    assetRef:
+      m_AssetGUID: 3226cbb96552f6f41918e188bb32dc12
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 1
+  - key: ShiningStar/ShiningStar_EXPERT.txt
+    assetRef:
+      m_AssetGUID: af99e4f6226a31c4ebd5f50630fb10a7
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 1
+  - key: gengaozo/Gengaozo_EXPERT.txt
+    assetRef:
+      m_AssetGUID: af99e4f6226a31c4ebd5f50630fb10a7
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 1
+  - key: Chronomia/Chronomia_EXPERT.txt
+    assetRef:
+      m_AssetGUID: 7fff62294b1ff004582148bd31d9e31d
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
 --- !u!4 &1946049574
 Transform:
   m_ObjectHideFlags: 0
