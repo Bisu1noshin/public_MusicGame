@@ -34,6 +34,10 @@ namespace ModeSelect.StateMachine
                     SelectNum[layer] = 0;
                     ReplaceEnterAction(Actions[SelectNum[layer]]);
                 }
+                if (mPrevLayer == 1 && layer == 0)
+                {
+                    SetupLayer0();
+                }
             }
             //カーソル操作
             if (layer == 0)
@@ -75,13 +79,16 @@ namespace ModeSelect.StateMachine
             //ActionDic.Add(5, () => { ReplaceNullActionList(0); layer++; (PopupController, Action) tuple = PopupController.CreateInstanceForNotesSpeed(mDataBase.InputDevice == InputDevice.Controller); mPopup_NotesSpeed = tuple.Item1; deleteAction += () => { tuple.Item2.Invoke(); mPopup_NotesSpeed = null; }; mCurrSpeed = mDataBase.NotesSpeed; Player.backAction = () => { deleteAction?.Invoke(); layer--; }; Actions.Add(() => { mDataBase.NotesSpeed = mCurrSpeed; layer--; }); Player.vecAction = (Vector2) => ChangeCurrSpeed(Vector2); });
             ActionDic.Add(0, CreateDicAction(
                 () =>
+                //入った時の挙動
                 {
                     layer++;
                     deleteAction += PopupController.CreateInstance(this,
                     "オートプレイを" + (mDataBase.AutoPlay ? "OFF" : "ON") + "にします。\nよろしいですか？");
                 },
+                //決定した時の挙動
                 () => { mDataBase.AutoPlay = !mDataBase.AutoPlay; layer--; },
-                () => { layer--; SetupLayer0(); }
+                //戻る時の挙動
+                () => { layer--; }
             ));
             ActionDic.Add(1, CreateDicAction(
                 () =>
@@ -91,7 +98,7 @@ namespace ModeSelect.StateMachine
                         "レーン反転を" + (mDataBase.LaneCahge ? "OFF" : "ON") + "にします。\nよろしいですか？");
                 },
                 () => { mDataBase.LaneCahge = !mDataBase.LaneCahge; layer--; },
-                () => { layer--; SetupLayer0(); }
+                () => { layer--; }
             ));
             ActionDic.Add(2, CreateDicAction(
                 () =>
@@ -101,7 +108,7 @@ namespace ModeSelect.StateMachine
                         "操作の上下反転を" + (mDataBase.UpDownCahge ? "OFF" : "ON") + "にします。\nよろしいですか？");
                 },
                 () => { mDataBase.UpDownCahge = !mDataBase.UpDownCahge; layer--; },
-                () => { layer--; SetupLayer0(); }
+                () => { layer--; }
             ));
             ActionDic.Add(3, CreateDicAction(
                 () =>
@@ -111,7 +118,7 @@ namespace ModeSelect.StateMachine
                         "操作の左右反転を" + (mDataBase.LeftRightCahge ? "OFF" : "ON") + "にします。\nよろしいですか？");
                 },
                 () => { mDataBase.LeftRightCahge = !mDataBase.LeftRightCahge; layer--; },
-                () => { layer--; SetupLayer0(); }
+                () => { layer--; }
             ));
             ActionDic.Add(4, CreateDicAction(
                 () =>
@@ -121,19 +128,20 @@ namespace ModeSelect.StateMachine
                         "操作デバイスを" + (mDataBase.InputDevice == InputDevice.Controller ? "キーボード" : "コントローラー") + "にします。\nよろしいですか？");
                 },
                 () => { mDataBase.InputDevice = mDataBase.InputDevice == InputDevice.Controller ? InputDevice.KyeBord : InputDevice.Controller; layer--; },
-                () => { layer--; SetupLayer0(); }
+                () => { layer--; }
             ));
             ActionDic.Add(5, CreateDicAction(
                 () =>
                 {
                     layer++;
-                    (PopupController, Action) tuple = PopupController.CreateInstanceForNotesSpeed(mDataBase.InputDevice == InputDevice.Controller);
+                    (PopupController, Action) tuple =
+                    PopupController.CreateInstanceForNotesSpeed(mDataBase.InputDevice == InputDevice.Controller);
                     mPopup_NotesSpeed = tuple.Item1;
                     deleteAction += () => { tuple.Item2.Invoke(); mPopup_NotesSpeed = null; };
                     mCurrSpeed = mDataBase.NotesSpeed;
                 },
                 () => { mDataBase.NotesSpeed = mCurrSpeed; layer--; Player.vecAction = (Vector2) => Scroll(Vector2); },
-                () => { layer--; Player.vecAction = (Vector2) => Scroll(Vector2); SetupLayer0();  },
+                () => { layer--; Player.vecAction = (Vector2) => Scroll(Vector2); },
                 () => Player.vecAction = (Vector2) => ChangeCurrSpeed(Vector2)
             ));
         }
