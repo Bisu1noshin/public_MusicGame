@@ -69,6 +69,7 @@ namespace ModeSelect
                 {
                     PlayShiftSound();
                 }
+                ReplaceEnterAction(Actions[SelectNum[layer]]);
             }
             protected void SetButtonAction(int id_, string name_,  Action action_)
             {
@@ -78,8 +79,8 @@ namespace ModeSelect
             }
             protected void ReplaceEnterAction(Action action_)
             {
-                ModeSelect.Player.enterAction = deleteAction;
-                ModeSelect.Player.enterAction += action_;
+                Player.enterAction = deleteAction;
+                Player.enterAction += action_;
             }
             protected void ReserveNullActionList(int cap)
             {

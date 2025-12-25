@@ -8,8 +8,8 @@ namespace ModeSelect
 {
     public class Player : PlayerParent
     {
-        public static Action enterAction { get; set; }
-        public static Action backAction { get; set; }
+        [SerializeField]public static Action enterAction { get; set; }
+        [SerializeField]public static Action backAction { get; set; }
         public static Action<Vector2> vecAction { get; set; }
         float time, lastPerformedTime;
         const float LeastContinuePerformeTime = 0.5f; //長押し判定開始時間
