@@ -15,11 +15,13 @@ namespace Player {
         private InputAction _ButtonY;
 
         protected Notes.InputDevice inputDevice;
+        protected InputActionType ActionType;
 
         protected virtual void Awake()
         {
             SetPlayerInput();
-            inputKey = new InputKeyBind(inputDevice);
+            SetPlayerInputActionType();
+            inputKey = new InputKeyBind(inputDevice, ActionType);
 
             _LeftStick = inputKey.inputActionse._LeftStick;
             _RightStick = inputKey.inputActionse._RightStick;
@@ -69,6 +71,16 @@ namespace Player {
             _ButtonY.canceled -= EnterButtonY;
         }
 
+        private void OnDestroy()
+        {
+            _LeftStick.Dispose();
+            _RightStick.Dispose();
+            _ButtonA.Dispose();
+            _ButtonB.Dispose();
+            _ButtonX.Dispose();
+            _ButtonY.Dispose();
+        }
+
         // 抽象メソッド
 
         abstract protected void OnButtonA();
@@ -86,9 +98,14 @@ namespace Player {
         abstract protected void RightStickPerformed(Vector2 vec);
         abstract protected void RightStickCanceled(Vector2 vec);
 
-        protected virtual void SetPlayerInput() {
-
+        protected virtual void SetPlayerInput()
+        {
             inputDevice = Notes.InputDevice.Controller;
+        }
+
+        protected virtual void SetPlayerInputActionType()
+        {
+            ActionType = InputActionType.Value;
         }
         
 

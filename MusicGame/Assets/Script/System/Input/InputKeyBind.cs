@@ -6,9 +6,9 @@ public sealed class InputKeyBind {
 
     public InputActionse inputActionse { get; private set; }
 
-    public InputKeyBind(Notes.InputDevice inputDevice) {
+    public InputKeyBind(Notes.InputDevice inputDevice,InputActionType actionType) {
 
-        inputActionse = new InputActionse();
+        inputActionse = new InputActionse(actionType);
 
         switch (inputDevice)
         {
@@ -24,9 +24,9 @@ public sealed class InputKeyBind {
     /// <summary>
     /// カスタマイズしたキーバインドを割り当てる
     /// </summary>
-    public void SetKeyBind(InputAction action) {
+    public void SetKeyBind(InputAction action)
+    {
 
-        
     }
 
     /// <summary>

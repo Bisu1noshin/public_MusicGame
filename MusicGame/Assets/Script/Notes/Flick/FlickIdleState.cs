@@ -19,6 +19,8 @@ namespace Notes
         protected override void OnExit()
         {
             base.OnExit();
+
+            owner.transform.GetChild(0).gameObject.SetActive(false);
         }
 
         protected override void OnUpdate(float deltaTime)

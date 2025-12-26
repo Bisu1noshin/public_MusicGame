@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
+
 namespace Player
 {
     public enum PlayerState {
@@ -112,7 +114,12 @@ namespace Player
             this.inputDevice = manager.NotesManagerData.PlayerConfig.InputDevice;
         }
 
-        private PlayerState InputAction(Vector3 vec) {
+        protected override void SetPlayerInputActionType()
+        {
+            ActionType = InputActionType.PassThrough;
+        }
+
+        private PlayerState InputAction(Vector2 vec) {
 
             PlayerState state = PlayerState.Idle;
 

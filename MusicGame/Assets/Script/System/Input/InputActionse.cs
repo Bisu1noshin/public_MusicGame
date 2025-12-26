@@ -1,12 +1,10 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 
 //入力した値をを管理する構造体
 public class ReciveInputValue
 {
-
     public Vector2 moveVec { get; set; }
     public Vector2 Lookvec { get; set; }
     public bool BottonA { get; set; }
@@ -38,9 +36,9 @@ public sealed class InputActionse
     public InputAction _ButtonY { get; private set; }
 
     // コンストラクタ
-    public InputActionse()
+    public InputActionse(InputActionType actionType)
     {
-        InitilizeInputActionse();
+        InitilizeInputActionse(actionType);
     }
 
     // イベントアクションの有効化
@@ -66,10 +64,10 @@ public sealed class InputActionse
     }
 
     // 初期化
-    public void InitilizeInputActionse()
+    public void InitilizeInputActionse(InputActionType actionType)
     {
-        _LeftStick = new InputAction(name: "Move", type: InputActionType.Value, expectedControlType: "Vector2");
-        _RightStick = new InputAction(name: "Look", type: InputActionType.Value, expectedControlType: "Vector2");
+        _LeftStick = new InputAction(name: "Move", type: actionType, expectedControlType: "Vector2");
+        _RightStick = new InputAction(name: "Look", type: actionType, expectedControlType: "Vector2");
         _ButtonA = new InputAction(name: "ButtonA", type: InputActionType.Button, expectedControlType: "Button");
         _ButtonB = new InputAction(name: "ButtonB", type: InputActionType.Button, expectedControlType: "Button");
         _ButtonX = new InputAction(name: "ButtonX", type: InputActionType.Button, expectedControlType: "Button");

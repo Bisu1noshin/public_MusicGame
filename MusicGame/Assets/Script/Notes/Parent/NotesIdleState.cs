@@ -32,7 +32,7 @@ namespace Notes
 
         protected override void OnExit()
         {
-            
+            InGamePlayer.NotesAction[(int)owner.DebugInfo.NotesLane] -= ActiveNotes;
         }
 
         // 発火イベント
