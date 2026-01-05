@@ -64,12 +64,13 @@ namespace ModeSelect.StateMachine
         void InitStates()
         {
             StateMachine = new(SState.Home, new Setting.Setting_Home(this, StateMachine));
+
             StateMachine.SetupState(SState.Auto, new Setting.Setting_Auto(this, StateMachine));
-            StateMachine.SetupState(SState.Auto, new Setting.Setting_Lane(this, StateMachine));
-            StateMachine.SetupState(SState.Auto, new Setting.Setting_LR(this, StateMachine));
-            StateMachine.SetupState(SState.Auto, new Setting.Setting_UD(this, StateMachine));
-            StateMachine.SetupState(SState.Auto, new Setting.Setting_Device(this, StateMachine));
-            StateMachine.SetupState(SState.Auto, new Setting.Setting_Speed(this, StateMachine));
+            StateMachine.SetupState(SState.Lane, new Setting.Setting_Lane(this, StateMachine));
+            StateMachine.SetupState(SState.LR, new Setting.Setting_LR(this, StateMachine));
+            StateMachine.SetupState(SState.UD, new Setting.Setting_UD(this, StateMachine));
+            StateMachine.SetupState(SState.Device, new Setting.Setting_Device(this, StateMachine));
+            StateMachine.SetupState(SState.Speed, new Setting.Setting_Speed(this, StateMachine));
 
             StateMachine.AddTransition(SState.Home, SState.Auto, STrigger.Auto);
             StateMachine.AddTransition(SState.Auto, SState.Home, STrigger.Home);
