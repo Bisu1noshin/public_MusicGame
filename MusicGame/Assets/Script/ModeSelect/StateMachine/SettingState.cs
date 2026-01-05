@@ -7,25 +7,13 @@ namespace ModeSelect.StateMachine
 {
     public enum SState
     {
-        Home,
-        Auto,
-        Lane,
-        LR,
-        UD,
-        Device,
-        Speed
+        None = -1, Home, Auto, Lane, LR, UD, Device, Speed
     }
     public enum STrigger
     {
-        Home,
-        Auto,
-        Lane,
-        LR,
-        UD,
-        Device,
-        Speed
+        Home, Auto, Lane, LR, UD, Device, Speed
     }
-    public class SettingState : IState, ISettingState
+    public class SettingState : Kameda_StateParent, ISettingState
     {
         public NotesManagerPlayerConfig PlayerConfig { get; set; }
         public PropertyController mProperty { get; private set; }
@@ -35,11 +23,13 @@ namespace ModeSelect.StateMachine
         
         public SettingState(ModeSelectSceneManager owner, IStateMachine<Trigger> st) : base(owner, st)
         {
-            PlayerConfig = mOwner.GetNotesManager().PlayerConfig;
-            InitStates();
+            PlayerConfig = mOwner.GetPlayerConfig();
+            
         }
         protected override void OnEnter()
         {
+            InitStates();
+            Debug.Log("Setting State started");
             deleteAction += Button.ButtonManager.CreateInstance(this, 0, 6, "オートプレイ");
             deleteAction += Button.ButtonManager.CreateInstance(this, 1, 6, "レーン反転");
             deleteAction += Button.ButtonManager.CreateInstance(this, 2, 6, "上下反転");
@@ -52,19 +42,21 @@ namespace ModeSelect.StateMachine
         }
         protected override void OnUpdate(float deltaTime)
         {
-            StateMachine.Update(deltaTime);
+            StateMachine?.Update(deltaTime);
         }
         protected override void OnExit()
         {
             mOwner.TryDeleteCursol();
             deleteAction?.Invoke();
             deleteAction = null;
+            StateMachine = null;
         }
 
         void InitStates()
         {
-            StateMachine = new(SState.Home, new Setting.Setting_Home(this, StateMachine));
+            StateMachine = new(SState.None, null);
 
+            StateMachine.SetupState(SState.Home, new Setting.Setting_Home(this, StateMachine));
             StateMachine.SetupState(SState.Auto, new Setting.Setting_Auto(this, StateMachine));
             StateMachine.SetupState(SState.Lane, new Setting.Setting_Lane(this, StateMachine));
             StateMachine.SetupState(SState.LR, new Setting.Setting_LR(this, StateMachine));
@@ -72,6 +64,7 @@ namespace ModeSelect.StateMachine
             StateMachine.SetupState(SState.Device, new Setting.Setting_Device(this, StateMachine));
             StateMachine.SetupState(SState.Speed, new Setting.Setting_Speed(this, StateMachine));
 
+            StateMachine.AddTransition(SState.None, SState.Home, STrigger.Home);
             StateMachine.AddTransition(SState.Home, SState.Auto, STrigger.Auto);
             StateMachine.AddTransition(SState.Auto, SState.Home, STrigger.Home);
 
@@ -89,6 +82,8 @@ namespace ModeSelect.StateMachine
 
             StateMachine.AddTransition(SState.Home, SState.Speed, STrigger.Speed);
             StateMachine.AddTransition(SState.Speed, SState.Home, STrigger.Home);
+
+            StateMachine.ExecuteTriggerAction(STrigger.Home);
         }
     }
 

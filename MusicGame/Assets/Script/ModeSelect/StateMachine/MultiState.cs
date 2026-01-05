@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ModeSelect.StateMachine
 {
-    public class MultiState : IState
+    public class MultiState : Kameda_StateParent
     {
         public MultiState(ModeSelectSceneManager owner, IStateMachine<Trigger> st) : base(owner, st)
         {
@@ -27,14 +27,13 @@ namespace ModeSelect.StateMachine
         }
         protected override void OnExit()
         {
-            
+            deleteAction?.Invoke();
+            deleteAction = null;
         }
         void InitAction()
         {
-            layer = 0;
             Player.vecAction = null;
-            Player.backAction = () => mOwner.mStateMachine.ExecuteTriggerAction(Trigger.Home);
-            Player.backAction += deleteAction;
+            Player.backAction = () => stateMachine.ExecuteTriggerAction(Trigger.Home);
             Player.enterAction = () => PlayBeepSound();
         }
     }

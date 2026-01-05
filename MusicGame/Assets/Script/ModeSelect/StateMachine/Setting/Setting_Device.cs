@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
 using System;
 
 namespace ModeSelect.StateMachine.Setting
@@ -15,7 +14,7 @@ namespace ModeSelect.StateMachine.Setting
 
         protected override void OnEnter()
         {
-            deleteAction += PopupController.CreateInstance("オートプレイを" +
+            deleteAction += PopupController.CreateInstance("使用デバイスを" +
                 (mOwner.PlayerConfig.InputDevice == Notes.InputDevice.Controller ? "キーボード" : "コントローラー") +
                 "にします。よろしいですか？");
             Player.enterAction = () =>
@@ -28,6 +27,9 @@ namespace ModeSelect.StateMachine.Setting
                 {
                     mOwner.PlayerConfig.InputDevice = Notes.InputDevice.Controller;
                 }
+                //プレイヤーを作り直す
+                Player.destroyAction?.Invoke();
+                GameObject.Instantiate(Resources.Load<GameObject>("ModeSelect/Player"));
                 mOwner.StateMachine.ExecuteTriggerAction(STrigger.Home);
             };
             Player.backAction = () =>

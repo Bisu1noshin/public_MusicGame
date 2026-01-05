@@ -15,18 +15,19 @@ namespace ModeSelect.StateMachine.Setting
             mOwner = owner;
             actions = new Action[6]
             {
-                () => { mOwner.StateMachine.ExecuteTriggerAction(STrigger.Auto); },
-                () => { mOwner.StateMachine.ExecuteTriggerAction(STrigger.Lane); },
-                () => { mOwner.StateMachine.ExecuteTriggerAction(STrigger.LR); },
-                () => { mOwner.StateMachine.ExecuteTriggerAction(STrigger.UD); },
-                () => { mOwner.StateMachine.ExecuteTriggerAction(STrigger.Device); },
-                () => { mOwner.StateMachine.ExecuteTriggerAction(STrigger.Speed); }
+                () => { stateMachine.ExecuteTriggerAction(STrigger.Auto); },
+                () => { stateMachine.ExecuteTriggerAction(STrigger.Lane); },
+                () => { stateMachine.ExecuteTriggerAction(STrigger.LR); },
+                () => { stateMachine.ExecuteTriggerAction(STrigger.UD); },
+                () => { stateMachine.ExecuteTriggerAction(STrigger.Device); },
+                () => { stateMachine.ExecuteTriggerAction(STrigger.Speed); }
             };
             
         }
 
         protected override void OnEnter()
         {
+            Debug.Log("Setting_Home started");
             mSelectNum = 0;
             mPrevSelectNum = 0;
             Player.vecAction = (Vector2) => Scroll(Vector2);

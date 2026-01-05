@@ -3,6 +3,7 @@ using Player;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SubsystemsImplementation;
 
 namespace ModeSelect
 {
@@ -11,10 +12,20 @@ namespace ModeSelect
         public static Action enterAction { get; set; }
         public static Action backAction { get; set; }
         public static Action<Vector2> vecAction { get; set; }
+
+        public static Action destroyAction { get; private set; }
+
         float time, lastPerformedTime;
         const float LeastContinuePerformeTime = 0.5f; //長押し判定開始時間
         const float IntervalPerfomeTime = 0.1f; //長押し入力の判定同士の間
         Vector2 moveVec = Vector2.zero;
+        ISceneManager sceneManager;
+        private void Awake()
+        {
+            sceneManager = GameObject.Find("SceneManager").GetComponent<ModeSelectSceneManager>();
+            base.Awake();
+            destroyAction = () => Destroy(this.gameObject);
+        }
         private void Update()
         {
             if (moveVec != Vector2.zero)
@@ -28,9 +39,19 @@ namespace ModeSelect
             }
             
         }
+
+        protected override void SetPlayerInput()
+        {
+            if (sceneManager._DebugMode)
+            {
+                inputDevice = Notes.InputDevice.KyeBord;
+            }
+            else inputDevice = sceneManager.GetPlayerConfig().InputDevice;
+        }
+
         protected override void OnButtonA()
         {
-            enterAction?.Invoke();
+            enterAction.Invoke();
             enterAction = null;
         }
         protected override void OnButtonB()
