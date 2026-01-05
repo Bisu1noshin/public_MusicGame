@@ -68,7 +68,7 @@ namespace ModeSelect
             {
                 return -(me - (max - 1) / 2.0f) * (540 / max * 2);
             }
-            public static Action CreateInstance(IModeSelecter owner, int id_, int maxId_, string text_, Action action_, bool destroyAnim = false)
+            public static Action CreateInstance(IModeSelecter owner, int id_, int maxId_, string text_, Action action_ = null, bool destroyAnim = false)
             {
                 GameObject res = Resources.Load<GameObject>("ModeSelect/ModeButton");
                 GameObject go = Instantiate(res);

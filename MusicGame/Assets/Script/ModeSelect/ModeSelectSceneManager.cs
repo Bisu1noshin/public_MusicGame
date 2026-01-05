@@ -28,7 +28,6 @@ namespace ModeSelect
 
         public RectTransform CursolRect { get; set; }
         GameObject Cursol;
-        public bool ExistCursol => Cursol != null;
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Awake()
         {
@@ -51,7 +50,6 @@ namespace ModeSelect
         {
             mStateMachine = new StateMachine<State, Trigger>(State.Home, new HomeState(this, mStateMachine));
 
-            //mStateMachine.SetupState(State.Home, new HomeState(this, mStateMachine));
             mStateMachine.SetupState(State.Single, new SingleState(this, mStateMachine));
             mStateMachine.SetupState(State.Multi, new MultiState(this, mStateMachine));
             mStateMachine.SetupState(State.Setting, new SettingState(this, mStateMachine));
@@ -75,7 +73,7 @@ namespace ModeSelect
             CursolRect = Cursol.GetComponent<RectTransform>();
             CursolRect.anchoredPosition = new(-350, 0);
         }
-        public void DeleteCursol() { Destroy(Cursol); }
+        public void TryDeleteCursol() { if(Cursol != null) Destroy(Cursol); }
         public NotesManagerDatabase GetNotesManager() { return mNotesManager; }
     }
 
@@ -86,9 +84,9 @@ namespace ModeSelect
     }
     public interface ICursolController
     {
-        bool ExistCursol { get; }
         void CreateCursol();
-        void DeleteCursol();
+        void TryDeleteCursol();
+        RectTransform CursolRect { get; set; }
     }
 
     public interface ISceneManager : ICursolController
@@ -96,7 +94,6 @@ namespace ModeSelect
         StateMachine<State, Trigger> mStateMachine { get; set; }
         AudioSource mAudio { get; }
         AudioClip[] mAudioClips { get; }
-        RectTransform CursolRect { get; set; }
         NotesManagerDatabase GetNotesManager();
     }
 }

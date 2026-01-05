@@ -32,7 +32,7 @@ namespace ModeSelect
             }
             protected override void OnUpdate(float deltaTime)
             {
-                ReplaceEnterAction(Actions[SelectNum[layer]]);
+                //ReplaceEnterAction(Actions[SelectNum[layer]]);
             }
             protected void PlayEnterSound()
             {

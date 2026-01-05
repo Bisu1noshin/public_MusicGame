@@ -9,6 +9,7 @@ namespace ModeSelect
         public TextMeshProUGUI mText;
         TextMeshProUGUI mCurrValue; //普段使いはしないこと！！！エラーになります
         bool normal = true;
+
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Awake()
         {
@@ -31,7 +32,7 @@ namespace ModeSelect
             if (normal) { return; }
             mCurrValue.text = "現在：" + v_.ToString();
         }
-        public static Action CreateInstance(IModeSelecter owner, string msg, Action act = null)
+        public static Action CreateInstance(string msg)
         {
             GameObject res = Resources.Load<GameObject>("ModeSelect/Popup");
             GameObject go = Instantiate(res);
@@ -40,7 +41,6 @@ namespace ModeSelect
             go.transform.localScale = Vector3.one;
             var ppc = go.GetComponent<PopupController>();
             ppc.SetText(msg);
-            if (act != null) { owner.Actions.Add(act); }
             Action f = () => Destroy(go);
             return f;
         }

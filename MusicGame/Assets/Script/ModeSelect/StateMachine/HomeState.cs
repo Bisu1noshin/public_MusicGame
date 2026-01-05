@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace ModeSelect
+namespace ModeSelect.StateMachine
 {
     public class HomeState : IState
     {
@@ -43,7 +43,7 @@ namespace ModeSelect
         }
         protected override void OnExit()
         {
-            mOwner.DeleteCursol();
+            mOwner.TryDeleteCursol();
         }
         void InitAction()
         {
