@@ -594,6 +594,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mNotesManager: {fileID: 11400000, guid: 0894919679aa8644e892fc74176583fe, type: 2}
+  DebugMode: 1
+  CurrentState: 0
 --- !u!82 &1964978669
 AudioSource:
   m_ObjectHideFlags: 0

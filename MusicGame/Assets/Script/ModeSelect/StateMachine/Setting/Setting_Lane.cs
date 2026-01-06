@@ -4,33 +4,43 @@ using System;
 
 namespace ModeSelect.StateMachine.Setting
 {
-    public class Setting_Lane : StateBase<SettingState, STrigger>
+    public class Setting_Lane : Kameda_StateParent<ISettingState, STrigger>
     {
-        Action deleteAction;
-        ISettingState mOwner;
-        public Setting_Lane(SettingState owner, IStateMachine<STrigger> st) : base(owner, st)
+        public Setting_Lane(ISettingState owner, IStateMachine<STrigger> st) : base(owner, st)
         {
-            mOwner = owner;
+
         }
 
         protected override void OnEnter()
         {
             deleteAction += PopupController.CreateInstance("レーン反転を" +
-                (mOwner.PlayerConfig.LaneCahge ? "OFF" : "ON") + "にします。よろしいですか？");
+                (owner.PlayerConfig.LaneCahge ? "OFF" : "ON") + "にします。よろしいですか？");
             Player.enterAction = () =>
             {
-                mOwner.PlayerConfig.LaneCahge = !mOwner.PlayerConfig.LaneCahge;
-                mOwner.StateMachine.ExecuteTriggerAction(STrigger.Home);
+                PlayEnterSound();
+                owner.PlayerConfig.LaneCahge = !owner.PlayerConfig.LaneCahge;
+                stateMachine.ExecuteTriggerAction(STrigger.Home);
             };
             Player.backAction = () =>
             {
-                mOwner.StateMachine.ExecuteTriggerAction(STrigger.Home);
+                PlayCancelSound();
+                stateMachine.ExecuteTriggerAction(STrigger.Home);
             };
             Player.vecAction = null;
         }
         protected override void OnUpdate(float deltaTime)
         {
-
+            Player.enterAction ??= () =>
+            {
+                PlayEnterSound();
+                owner.PlayerConfig.LaneCahge = !owner.PlayerConfig.LaneCahge;
+                stateMachine.ExecuteTriggerAction(STrigger.Home);
+            };
+            Player.backAction ??= () =>
+            {
+                PlayCancelSound();
+                stateMachine.ExecuteTriggerAction(STrigger.Home);
+            };
         }
         protected override void OnExit()
         {

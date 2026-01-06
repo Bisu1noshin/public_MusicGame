@@ -5,37 +5,48 @@ using System.Buffers;
 
 namespace ModeSelect.StateMachine.Setting
 {
-    public class Setting_Auto : StateBase<SettingState, STrigger>
+    public class Setting_Auto : Kameda_StateParent<ISettingState, STrigger>
     {
-        Action deleteAction;
-        ISettingState mOwner;
-        public Setting_Auto(SettingState owner, IStateMachine<STrigger> st) : base(owner, st)
+        public Setting_Auto(ISettingState owner, IStateMachine<STrigger> st) : base(owner, st)
         {
-            mOwner = owner;
+
         }
 
         protected override void OnEnter()
         {
             deleteAction += PopupController.CreateInstance("オートプレイを" +
-                (mOwner.PlayerConfig.AutoPlay ? "OFF" : "ON") + "にします。よろしいですか？");
+                (owner.PlayerConfig.AutoPlay ? "OFF" : "ON") + "にします。よろしいですか？");
             Player.enterAction = () =>
             {
-                mOwner.PlayerConfig.AutoPlay = !mOwner.PlayerConfig.AutoPlay;
-                mOwner.StateMachine.ExecuteTriggerAction(STrigger.Home);
+                PlayEnterSound();
+                owner.PlayerConfig.AutoPlay = !owner.PlayerConfig.AutoPlay;
+                stateMachine.ExecuteTriggerAction(STrigger.Home);
             };
             Player.backAction = () =>
             {
-                mOwner.StateMachine.ExecuteTriggerAction(STrigger.Home);
+                PlayCancelSound();
+                stateMachine.ExecuteTriggerAction(STrigger.Home);
             };
             Player.vecAction = null;
         }
         protected override void OnUpdate(float deltaTime)
         {
-
+            Player.enterAction ??= () =>
+            {
+                PlayEnterSound();
+                owner.PlayerConfig.AutoPlay = !owner.PlayerConfig.AutoPlay;
+                stateMachine.ExecuteTriggerAction(STrigger.Home);
+            };
+            Player.backAction ??= () =>
+            {
+                PlayCancelSound();
+                stateMachine.ExecuteTriggerAction(STrigger.Home);
+            };
         }
         protected override void OnExit()
         {
             deleteAction?.Invoke();
+            deleteAction = null;
         }
     }
 }

@@ -26,7 +26,7 @@ namespace ModeSelect
 
         public StateMachine<State, Trigger> mStateMachine { get; set; }
 
-        [Header("デバッグモード")] bool DebugMode = default;
+        [SerializeField] bool DebugMode = default;
 
         [SerializeField] State CurrentState;
 
@@ -95,7 +95,6 @@ namespace ModeSelect
 
     public interface ISceneManager : ICursolController
     {
-        StateMachine<State, Trigger> mStateMachine { get; set; }
         AudioSource mAudio { get; }
         AudioClip[] mAudioClips { get; }
         NotesManagerPlayerConfig GetPlayerConfig();

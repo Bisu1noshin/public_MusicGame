@@ -5,9 +5,9 @@ using UnityEngine.SceneManagement;
 
 namespace ModeSelect.StateMachine
 {
-    public class SingleState : Kameda_StateParent
+    public class SingleState : Kameda_StateParent<ISceneManager, Trigger>
     {
-        public SingleState(ModeSelectSceneManager owner, IStateMachine<Trigger> st) : base(owner, st)
+        public SingleState(ISceneManager owner, IStateMachine<Trigger> st) : base(owner, st)
         {
 
         }
@@ -15,12 +15,30 @@ namespace ModeSelect.StateMachine
         {
             Debug.Log("SingleState started");
             deleteAction += PopupController.CreateInstance("シングルプレイを開始します。\nよろしいですか？");
-            Player.enterAction = () => { SceneManager.LoadScene("Test_MusicSelectScene"); };
-            Player.backAction = () => stateMachine.ExecuteTriggerAction(Trigger.Home);
+            Player.enterAction = () =>
+            {
+                PlayEnterSound();
+                SceneManager.LoadScene("Test_MusicSelectScene");
+            };
+            Player.backAction = () =>
+            {
+                PlayCancelSound();
+                stateMachine.ExecuteTriggerAction(Trigger.Home);
+            };
+            Player.vecAction = null;
         }
         protected override void OnUpdate(float deltaTime)
         {
-            
+            Player.enterAction ??= () =>
+            {
+                PlayEnterSound();
+                SceneManager.LoadScene("Test_MusicSelectScene");
+            };
+            Player.backAction ??= () =>
+            {
+                PlayCancelSound();
+                stateMachine.ExecuteTriggerAction(Trigger.Home);
+            };
         }
         protected override void OnExit()
         {

@@ -3,48 +3,68 @@ using System;
 
 namespace ModeSelect.StateMachine.Setting
 {
-    public class Setting_Device : StateBase<SettingState, STrigger>
+    public class Setting_Device : Kameda_StateParent<ISettingState, STrigger>
     {
-        Action deleteAction;
-        ISettingState mOwner;
-        public Setting_Device(SettingState owner, IStateMachine<STrigger> st) : base(owner, st)
+        public Setting_Device(ISettingState owner, IStateMachine<STrigger> st) : base(owner, st)
         {
-            mOwner = owner;
         }
 
         protected override void OnEnter()
         {
             deleteAction += PopupController.CreateInstance("使用デバイスを" +
-                (mOwner.PlayerConfig.InputDevice == Notes.InputDevice.Controller ? "キーボード" : "コントローラー") +
+                (owner.PlayerConfig.InputDevice == Notes.InputDevice.Controller ? "キーボード" : "コントローラー") +
                 "にします。よろしいですか？");
             Player.enterAction = () =>
             {
-                if (mOwner.PlayerConfig.InputDevice == Notes.InputDevice.Controller)
+                PlayEnterSound();
+                if (owner.PlayerConfig.InputDevice == Notes.InputDevice.Controller)
                 {
-                    mOwner.PlayerConfig.InputDevice = Notes.InputDevice.KyeBord;
+                    owner.PlayerConfig.InputDevice = Notes.InputDevice.KyeBord;
                 }
                 else
                 {
-                    mOwner.PlayerConfig.InputDevice = Notes.InputDevice.Controller;
+                    owner.PlayerConfig.InputDevice = Notes.InputDevice.Controller;
                 }
                 //プレイヤーを作り直す
                 Player.destroyAction?.Invoke();
                 GameObject.Instantiate(Resources.Load<GameObject>("ModeSelect/Player"));
-                mOwner.StateMachine.ExecuteTriggerAction(STrigger.Home);
+                stateMachine.ExecuteTriggerAction(STrigger.Home);
             };
             Player.backAction = () =>
             {
-                mOwner.StateMachine.ExecuteTriggerAction(STrigger.Home);
+                PlayCancelSound();
+                stateMachine.ExecuteTriggerAction(STrigger.Home);
             };
             Player.vecAction = null;
         }
         protected override void OnUpdate(float deltaTime)
         {
-
+            Player.enterAction ??= () =>
+            {
+                PlayEnterSound();
+                if (owner.PlayerConfig.InputDevice == Notes.InputDevice.Controller)
+                {
+                    owner.PlayerConfig.InputDevice = Notes.InputDevice.KyeBord;
+                }
+                else
+                {
+                    owner.PlayerConfig.InputDevice = Notes.InputDevice.Controller;
+                }
+                //プレイヤーを作り直す
+                Player.destroyAction?.Invoke();
+                GameObject.Instantiate(Resources.Load<GameObject>("ModeSelect/Player"));
+                stateMachine.ExecuteTriggerAction(STrigger.Home);
+            };
+            Player.backAction ??= () =>
+            {
+                PlayCancelSound();
+                stateMachine.ExecuteTriggerAction(STrigger.Home);
+            };
         }
         protected override void OnExit()
         {
             deleteAction?.Invoke();
+            deleteAction = null;
         }
     }
 }

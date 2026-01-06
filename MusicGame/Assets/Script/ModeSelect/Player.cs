@@ -51,7 +51,7 @@ namespace ModeSelect
 
         protected override void OnButtonA()
         {
-            enterAction.Invoke();
+            enterAction?.Invoke();
             enterAction = null;
         }
         protected override void OnButtonB()

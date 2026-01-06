@@ -15,10 +15,8 @@ namespace ModeSelect
         
         public class ButtonManager : MonoBehaviour, IButtonController
         {
-            IModeSelecter mSelecter;
             State mState;
             TextMeshProUGUI mText;
-            int id;
             void Awake()
             {
                 mText = GetComponentInChildren<TextMeshProUGUI>();
@@ -48,17 +46,15 @@ namespace ModeSelect
                     Destroy(gameObject);
                 }
             }
-            public void SetInfo(IModeSelecter owner, int id_, string text_)
+            public void SetInfo(string text_)
             {
-                mSelecter = owner;
-                id = id_;
                 mText.text = text_;
             }
             public float ReturnY(int me, int max)
             {
                 return -(me - (max - 1) / 2.0f) * (540 / max * 2);
             }
-            public static Action CreateInstance(IModeSelecter owner, int id_, int maxId_, string text_, bool destroyAnim = false)
+            public static Action CreateInstance(int id_, int maxId_, string text_, bool destroyAnim = false)
             {
                 GameObject res = Resources.Load<GameObject>("ModeSelect/ModeButton");
                 GameObject go = Instantiate(res);
@@ -68,13 +64,12 @@ namespace ModeSelect
                 
                 ButtonManager bm = go.GetComponent<ButtonManager>();
                 go.transform.SetLocalPositionAndRotation(new Vector2(-350.0f, bm.ReturnY(id_, maxId_)), Quaternion.identity);
-                bm.SetInfo(owner, id_, text_);
+                bm.SetInfo(text_);
                 Action f = () =>  bm.DeleteButton(destroyAnim);
                 return f;
             }
             private void OnDisable()
             {
-                if (mSelecter.deleteAction != null) mSelecter.deleteAction = null;
                 if (Player.enterAction != null) Player.enterAction = null;
                 if (Player.backAction != null) Player.backAction = null;
             }
