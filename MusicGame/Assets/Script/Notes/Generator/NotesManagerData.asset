@@ -20,11 +20,11 @@ MonoBehaviour:
     JudgmentTimeDelay: 0.1
     PerfectTime: 0.04
     GoodTime: 0.07
-    MusicSpeed: 1
-    AutoPlay: 0
+    MusicSpeed: 3
+    AutoPlay: 1
   PlayerConfig:
     LaneCahge: 0
-    AutoPlay: 0
+    AutoPlay: 1
     UpDownCahge: 0
     LeftRightCahge: 0
     InputDevice: 1

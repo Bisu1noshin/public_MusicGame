@@ -71,16 +71,16 @@ MonoBehaviour:
       m_EditorAssetChanged: 0
   - ObjectPath: Music
     AssetReference:
-      m_AssetGUID: f2c301171e7effe4eb3a5abcd8593621
+      m_AssetGUID: ed7bc92822d36b742a4d4a3764fd26b2
       m_SubObjectName: 
       m_SubObjectGUID: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
   - ObjectPath: TextAsset
     AssetReference:
-      m_AssetGUID: 3226cbb96552f6f41918e188bb32dc12
+      m_AssetGUID: 7fff62294b1ff004582148bd31d9e31d
       m_SubObjectName: 
       m_SubObjectGUID: 
       m_SubObjectType: 
-      m_EditorAssetChanged: 1
+      m_EditorAssetChanged: 0
   MusicBPM: 0

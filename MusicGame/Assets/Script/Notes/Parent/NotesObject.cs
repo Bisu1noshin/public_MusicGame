@@ -63,9 +63,6 @@ namespace Notes {
 
         protected virtual void FixedUpdate()
         {
-            // ステートマシンの更新
-            st.Update(Time.fixedDeltaTime * Judg.MusicSpeed);
-
             // 落下処理
             transform.position += new Vector3(0, -1 * fallSpeed * Time.fixedDeltaTime * Judg.MusicSpeed, 0);
 
@@ -77,6 +74,9 @@ namespace Notes {
                     InGamePlayer.NotesAction[(int)DebugInfo.NotesLane]?.Invoke(AnsTrigger, Judg.CreateTimeDelay + CreateTime);
                 }                   
             }
+
+            // ステートマシンの更新
+            st.Update(Time.fixedDeltaTime * Judg.MusicSpeed);
 
             timeCnt += Time.fixedDeltaTime * Judg.MusicSpeed;
         }
