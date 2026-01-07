@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: NotesManagerData
   m_EditorClassIdentifier: 
   fData:
-    MusicFilePath: Music/ShiningStar
-    NotesDataFilePath: TextData/NotesData/ShiningStar/ShiningStar_HARD
+    MusicFilePath: Music/Chronomia
+    NotesDataFilePath: TextData/NotesData/Chronomia/Chronomia_HARD
   nData:
     CreateTimeDelay: 1
     JudgmentTimeDelay: 0.1

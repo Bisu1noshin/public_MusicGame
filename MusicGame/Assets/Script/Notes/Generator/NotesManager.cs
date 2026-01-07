@@ -170,35 +170,43 @@ namespace Notes {
 
             // ノーツの方向指定の変更
             var _notes = n_;
-
-            if (NotesManagerData.PlayerConfig.UpDownCahge)
-            {
-                Direction direction = n_.dir;
-                if (n_.dir == Direction.Top) { direction = Direction.Down; }
-                if (n_.dir == Direction.Down) { direction = Direction.Top; }
-                _notes = new(n_.time, (int)direction, (int)n_.kind, n_.range);
-            }
-
-            if (NotesManagerData.PlayerConfig.LeftRightCahge)
-            {
-                Direction direction = n_.dir;
-                if (n_.dir == Direction.Left) { direction = Direction.Right; }
-                if (n_.dir == Direction.Right) { direction = Direction.Left; }
-                _notes = new(n_.time, (int)direction, (int)n_.kind, n_.range);
-            }
-
             var NotesLane = (NotesLane)lane;
-            if (NotesManagerData.PlayerConfig.LaneCahge)
+
+            // プレイヤーコンフィグに合わせてリサイズ
             {
-                if (NotesLane == NotesLane.Left) NotesLane = NotesLane.Right;
-                if (NotesLane == NotesLane.Right) NotesLane = NotesLane.Left;
+                if (NotesManagerData.PlayerConfig.UpDownCahge)
+                {
+                    Direction direction = n_.dir;
+                    if (n_.dir == Direction.Top) { direction = Direction.Down; }
+                    if (n_.dir == Direction.Down) { direction = Direction.Top; }
+                    _notes = new(n_.time, (int)direction, (int)n_.kind, n_.range);
+                }
+
+                if (NotesManagerData.PlayerConfig.LeftRightCahge)
+                {
+                    Direction direction = n_.dir;
+                    if (n_.dir == Direction.Left) { direction = Direction.Right; }
+                    if (n_.dir == Direction.Right) { direction = Direction.Left; }
+                    _notes = new(n_.time, (int)direction, (int)n_.kind, n_.range);
+                }
+
+                if (NotesManagerData.PlayerConfig.LaneCahge)
+                {
+                    if (NotesLane == NotesLane.Left) NotesLane = NotesLane.Right;
+                    if (NotesLane == NotesLane.Right) NotesLane = NotesLane.Left;
+                }
             }
 
+            // ラッシュが出た時の制御文
             var debugInfo = new NotesDebugInfo(index + 1, (NotesLane)lane);
+            var notesKind = _notes.kind;
+            var notesRange = (int)_notes.dir;
+            if (notesKind == NotesKind.Rush) notesKind = 0;
+            if (notesRange < 0) notesRange = 0;
 
             // ノーツ生成に必要なデータの構築
             var BPMInfo = new BPMInfo(m_bpm: BPM, n_bpm: notesData.BPM);
-            var instantInfo = new NotesInstantInfo(notes[(int)_notes.kind, (int)_notes.dir], NotesPosition[lane]);
+            var instantInfo = new NotesInstantInfo(notes[(int)notesKind, notesRange], NotesPosition[lane]);
             var _NotesManagerData = NotesManagerData.nData;
             _NotesManagerData.AutoPlay = NotesManagerData.PlayerConfig.AutoPlay;
 
