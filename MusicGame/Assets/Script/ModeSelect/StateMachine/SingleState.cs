@@ -5,30 +5,45 @@ using UnityEngine.SceneManagement;
 
 namespace ModeSelect.StateMachine
 {
-    public class SingleState : IState
+    public class SingleState : Kameda_StateParent<ISceneManager, Trigger>
     {
-        public SingleState(ModeSelectSceneManager owner, IStateMachine<Trigger> st) : base(owner, st)
+        public SingleState(ISceneManager owner, IStateMachine<Trigger> st) : base(owner, st)
         {
-            ReserveNullActionList(1);
-            Debug.Log("SingleState ready");
+
         }
         protected override void OnEnter()
         {
-            //Actions = new List<Action>(1);
-            layer = 0;
-            deleteAction = null;
+            Debug.Log("SingleState started");
             deleteAction += PopupController.CreateInstance("シングルプレイを開始します。\nよろしいですか？");
-            Player.enterAction = () => { deleteAction?.Invoke(); SceneManager.LoadScene("Test_MusicSelectScene"); };
-            Player.backAction = () => mOwner.mStateMachine.ExecuteTriggerAction(Trigger.Home);
-            Player.backAction += deleteAction;
+            Player.enterAction = () =>
+            {
+                PlayEnterSound();
+                SceneManager.LoadScene("Test_MusicSelectScene");
+            };
+            Player.backAction = () =>
+            {
+                PlayCancelSound();
+                stateMachine.ExecuteTriggerAction(Trigger.Home);
+            };
+            Player.vecAction = null;
         }
         protected override void OnUpdate(float deltaTime)
         {
-            base.OnUpdate(deltaTime);
+            Player.enterAction ??= () =>
+            {
+                PlayEnterSound();
+                SceneManager.LoadScene("Test_MusicSelectScene");
+            };
+            Player.backAction ??= () =>
+            {
+                PlayCancelSound();
+                stateMachine.ExecuteTriggerAction(Trigger.Home);
+            };
         }
         protected override void OnExit()
         {
-            
+            deleteAction?.Invoke();
+            deleteAction = null;
         }
     }
 }

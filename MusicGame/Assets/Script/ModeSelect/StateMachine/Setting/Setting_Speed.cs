@@ -4,15 +4,13 @@ using System;
 
 namespace ModeSelect.StateMachine.Setting
 {
-    public class Setting_Speed : StateBase<SettingState, STrigger>
+    public class Setting_Speed : Kameda_StateParent<ISettingState, STrigger>
     {
-        Action deleteAction;
-        ISettingState mOwner;
         PopupController mPopup;
         float mCurrSpeed;
-        public Setting_Speed(SettingState owner, IStateMachine<STrigger> st) : base(owner, st)
+        public Setting_Speed(ISettingState owner, IStateMachine<STrigger> st) : base(owner, st)
         {
-            mOwner = owner;
+            
         }
 
         protected override void OnEnter()
@@ -20,25 +18,40 @@ namespace ModeSelect.StateMachine.Setting
             (PopupController, Action) tuple = PopupController.CreateInstanceForNotesSpeed(true);
             mPopup = tuple.Item1;
             deleteAction += tuple.Item2;
-            mCurrSpeed = mOwner.PlayerConfig.NotesSpeed;
+            mCurrSpeed = owner.PlayerConfig.NotesSpeed;
             Player.enterAction = () =>
             {
-                mOwner.PlayerConfig.NotesSpeed = mCurrSpeed;
-                mOwner.StateMachine.ExecuteTriggerAction(STrigger.Home);
+                PlayEnterSound();
+                owner.PlayerConfig.NotesSpeed = mCurrSpeed;
+                stateMachine.ExecuteTriggerAction(STrigger.Home);
             };
             Player.backAction = () =>
             {
-                mOwner.StateMachine.ExecuteTriggerAction(STrigger.Home);
+                PlayCancelSound();
+                stateMachine.ExecuteTriggerAction(STrigger.Home);
             };
             Player.vecAction = (Vector2) => ChangeCurrSpeed(Vector2);
         }
         protected override void OnUpdate(float deltaTime)
         {
             mPopup.SetValue(mCurrSpeed);
+            Player.enterAction ??= () =>
+            {
+                PlayEnterSound();
+                owner.PlayerConfig.NotesSpeed = mCurrSpeed;
+                stateMachine.ExecuteTriggerAction(STrigger.Home);
+            };
+            Player.backAction ??= () =>
+            {
+                PlayCancelSound();
+                stateMachine.ExecuteTriggerAction(STrigger.Home);
+            };
+            Player.vecAction ??= (Vector2) => ChangeCurrSpeed(Vector2);
         }
         protected override void OnExit()
         {
             deleteAction?.Invoke();
+            deleteAction = null;
         }
         /// <summary>
         /// 　ノーツ速度を変える関数　vecActionに突っ込む
@@ -47,7 +60,6 @@ namespace ModeSelect.StateMachine.Setting
         void ChangeCurrSpeed(Vector2 vec)
         {
             mCurrSpeed += vec.y * 0.1f;
-            //mCurrSpeed = ((int)(mCurrSpeed * 10.0f)) / 10;
             if (mCurrSpeed > 3.0f) { mCurrSpeed = 3.0f; }
             if (mCurrSpeed < 0.3f) { mCurrSpeed = 0.3f; }
         }

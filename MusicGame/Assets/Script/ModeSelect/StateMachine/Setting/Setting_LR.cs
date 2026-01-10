@@ -4,37 +4,48 @@ using System;
 
 namespace ModeSelect.StateMachine.Setting
 {
-    public class Setting_LR : StateBase<SettingState, STrigger>
+    public class Setting_LR : Kameda_StateParent<ISettingState, STrigger>
     {
-        Action deleteAction;
-        ISettingState mOwner;
-        public Setting_LR(SettingState owner, IStateMachine<STrigger> st) : base(owner, st)
+        public Setting_LR(ISettingState owner, IStateMachine<STrigger> st) : base(owner, st)
         {
-            mOwner = owner;
+            
         }
 
         protected override void OnEnter()
         {
             deleteAction += PopupController.CreateInstance("左右反転を" +
-                (mOwner.PlayerConfig.LeftRightCahge ? "OFF" : "ON") + "にします。よろしいですか？");
+                (owner.PlayerConfig.LeftRightCahge ? "OFF" : "ON") + "にします。よろしいですか？");
             Player.enterAction = () =>
             {
-                mOwner.PlayerConfig.LeftRightCahge = !mOwner.PlayerConfig.LeftRightCahge;
-                mOwner.StateMachine.ExecuteTriggerAction(STrigger.Home);
+                PlayEnterSound();
+                owner.PlayerConfig.LeftRightCahge = !owner.PlayerConfig.LeftRightCahge;
+                stateMachine.ExecuteTriggerAction(STrigger.Home);
             };
             Player.backAction = () =>
             {
-                mOwner.StateMachine.ExecuteTriggerAction(STrigger.Home);
+                PlayCancelSound();
+                stateMachine.ExecuteTriggerAction(STrigger.Home);
             };
             Player.vecAction = null;
         }
         protected override void OnUpdate(float deltaTime)
         {
-
+            Player.enterAction ??= () =>
+            {
+                PlayEnterSound();
+                owner.PlayerConfig.LeftRightCahge = !owner.PlayerConfig.LeftRightCahge;
+                stateMachine.ExecuteTriggerAction(STrigger.Home);
+            };
+            Player.backAction ??= () =>
+            {
+                PlayCancelSound();
+                stateMachine.ExecuteTriggerAction(STrigger.Home);
+            };
         }
         protected override void OnExit()
         {
             deleteAction?.Invoke();
+            deleteAction = null;
         }
     }
 }
