@@ -9,18 +9,30 @@ namespace ModeSelect
 {
     namespace StateMachine
     {
-        public abstract class StateParent : StateBase<ModeSelectSceneManager, Trigger>, IModeSelecter
+        public abstract class IState : StateBase<ModeSelectSceneManager, Trigger>, IActionDictionary, IModeSelecter
         {
             protected ISceneManager mOwner;
             public List<Action> Actions { get; set; }
-            public int mSelectNum { get; protected set; }
+            public Dictionary<int, Action> ActionDic { get; set; }
+            protected Dictionary<int, string> ButtonNames { get; set; }
+            public int[] SelectNum { get; protected set; }
+            protected int layer;
             public Action deleteAction { get; set; }
-            public StateParent(ModeSelectSceneManager owner, IStateMachine<Trigger> st) : base(owner, st)
+            protected GameObject buttonPre;
+            public IState(ModeSelectSceneManager owner, IStateMachine<Trigger> st) : base(owner, st)
             {
                 mOwner = owner;
                 Actions = new();
-                mSelectNum = 0;
+                SelectNum = new int[6];
+                ActionDic = new();
+                ButtonNames = new();
+                layer = 0;
                 deleteAction = null;
+                buttonPre = Resources.Load<GameObject>("ModeSelect/ModeButton");
+            }
+            protected override void OnUpdate(float deltaTime)
+            {
+                //ReplaceEnterAction(Actions[SelectNum[layer]]);
             }
             protected void PlayEnterSound()
             {
@@ -42,21 +54,28 @@ namespace ModeSelect
             {
                 if (vector2 == Vector2.zero) return;
 
-                mSelectNum += vector2.y < 0.0f ? 1 : -1;
-                if (mSelectNum < 0)
+                SelectNum[layer] += vector2.y < 0.0f ? 1 : -1;
+                if (SelectNum[layer] < 0)
                 {
-                    mSelectNum = 0;
+                    SelectNum[layer] = 0;
                     PlayBeepSound();
                 }
-                else if (mSelectNum > Actions.Count - 1)
+                else if (SelectNum[layer] > Actions.Count - 1)
                 {
-                    mSelectNum = Actions.Count - 1;
+                    SelectNum[layer] = Actions.Count - 1;
                     PlayBeepSound();
                 }
                 else
                 {
                     PlayShiftSound();
                 }
+                ReplaceEnterAction(Actions[SelectNum[layer]]);
+            }
+            protected void SetButtonAction(int id_, string name_,  Action action_)
+            {
+                if (ActionDic.ContainsKey(id_)) { Debug.Log($"Error! : id({id_}) is already exist");  return; }
+                ActionDic.Add(id_, action_);
+                ButtonNames.Add(id_, name_);
             }
             protected void ReplaceEnterAction(Action action_)
             {
@@ -82,7 +101,7 @@ namespace ModeSelect
     public interface IModeSelecter
     {
         List<Action> Actions { get; set; }
-        int mSelectNum { get; }
+        int[] SelectNum { get; }
         Action deleteAction { get; set; }
     }
 }

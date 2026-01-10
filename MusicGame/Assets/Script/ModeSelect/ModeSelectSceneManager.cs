@@ -13,7 +13,7 @@ namespace ModeSelect
     }
     public enum Trigger
     {
-        Home, Single, Multi, Setting, BacktoTitle
+        Home, Single, Multi, Setting, BacktoTitle, Enter, Back
     }
 
     public class ModeSelectSceneManager : MonoBehaviour, ISceneManager
@@ -23,7 +23,6 @@ namespace ModeSelect
         public AudioClip[] mAudioClips { get; private set; }
 
         [SerializeField] public NotesManagerDatabase mNotesManager;
-        [SerializeField][Header("デバッグモード")] bool debug = default;
 
         public StateMachine<State, Trigger> mStateMachine { get; set; }
 
@@ -46,28 +45,6 @@ namespace ModeSelect
         void Update()
         {
             mStateMachine.Update(Time.deltaTime);
-            if (debug)
-            {
-                if (Input.GetKeyDown(KeyCode.E))
-                {
-                    Player.enterAction?.Invoke();
-                    Player.enterAction = null;
-                }
-                if (Input.GetKeyDown(KeyCode.Q))
-                {
-                    Player.backAction?.Invoke();
-                    Player.backAction = null;
-                }
-                if (Input.GetKeyDown(KeyCode.W))
-                {
-                    Player.vecAction?.Invoke(new(0.0f, 1.0f));
-                }
-                if (Input.GetKeyDown(KeyCode.S))
-                {
-                    Player.vecAction?.Invoke(new(0.0f, -1.0f));
-                }
-            }
-            Debug.Log($"Current_State : {mStateMachine.GetState()}");
         }
         void SetupStateMachine()
         {
@@ -100,6 +77,11 @@ namespace ModeSelect
         public NotesManagerDatabase GetNotesManager() { return mNotesManager; }
     }
 
+    
+    public interface IActionDictionary
+    {
+        Dictionary<int, Action> ActionDic { get; }
+    }
     public interface ICursolController
     {
         void CreateCursol();

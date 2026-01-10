@@ -4,51 +4,37 @@ using UnityEngine;
 
 namespace ModeSelect.StateMachine
 {
-<<<<<<< HEAD
-    public class MultiState : Kameda_StateParent<ISceneManager, Trigger>
-=======
-    public class MultiState : StateParent
->>>>>>> fd1bb35 (ノートPCのコミット忘れ　すぐ消す)
+    public class MultiState : IState
     {
-        public MultiState(ISceneManager owner, IStateMachine<Trigger> st) : base(owner, st)
+        public MultiState(ModeSelectSceneManager owner, IStateMachine<Trigger> st) : base(owner, st)
         {
-
+            ReserveNullActionList(1);
         }
         protected override void OnEnter()
         {
             InitAction();
             deleteAction = null;
             deleteAction += PopupController.CreateInstance("このモードは現在\n利用できません。");
+            
+            //deleteAction += Button.ButtonManager.CreateInstance(this, 0, 2, "1P", () => { Debug.Log("Multi Owner pressed"); }, false);
+            //deleteAction += Button.ButtonManager.CreateInstance(this, 1, 2, "2P", () => { Debug.Log("Multi Client pressed"); }, false);
+
+            
         }
         protected override void OnUpdate(float deltaTime)
         {
-            Player.backAction ??= () =>
-            {
-                PlayCancelSound();
-                stateMachine.ExecuteTriggerAction(Trigger.Home);
-            };
-            Player.enterAction ??= () => PlayBeepSound();
+            
         }
         protected override void OnExit()
         {
-            deleteAction?.Invoke();
-<<<<<<< HEAD
-            deleteAction = null;
-=======
->>>>>>> fd1bb35 (ノートPCのコミット忘れ　すぐ消す)
+            
         }
         void InitAction()
         {
+            layer = 0;
             Player.vecAction = null;
-<<<<<<< HEAD
-            Player.backAction = () =>
-            {
-                PlayCancelSound();
-                stateMachine.ExecuteTriggerAction(Trigger.Home);
-            };
-=======
             Player.backAction = () => mOwner.mStateMachine.ExecuteTriggerAction(Trigger.Home);
->>>>>>> fd1bb35 (ノートPCのコミット忘れ　すぐ消す)
+            Player.backAction += deleteAction;
             Player.enterAction = () => PlayBeepSound();
         }
     }
