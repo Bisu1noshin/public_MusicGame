@@ -9,7 +9,7 @@ namespace ModeSelect
 {
     public enum State
     {
-        None = -1, Home, Single, Multi, Setting, BacktoTitle
+        Home, Single, Multi, Setting, BacktoTitle
     }
     public enum Trigger
     {
@@ -23,14 +23,9 @@ namespace ModeSelect
         public AudioClip[] mAudioClips { get; private set; }
 
         [SerializeField] public NotesManagerDatabase mNotesManager;
+        [SerializeField][Header("デバッグモード")] bool debug = default;
 
         public StateMachine<State, Trigger> mStateMachine { get; set; }
-
-        [SerializeField] bool DebugMode = default;
-
-        [SerializeField] State CurrentState;
-
-        public bool _DebugMode => DebugMode;
 
         public RectTransform CursolRect { get; set; }
         GameObject Cursol;
@@ -51,18 +46,37 @@ namespace ModeSelect
         void Update()
         {
             mStateMachine.Update(Time.deltaTime);
-            CurrentState = mStateMachine.GetState();
+            if (debug)
+            {
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    Player.enterAction?.Invoke();
+                    Player.enterAction = null;
+                }
+                if (Input.GetKeyDown(KeyCode.Q))
+                {
+                    Player.backAction?.Invoke();
+                    Player.backAction = null;
+                }
+                if (Input.GetKeyDown(KeyCode.W))
+                {
+                    Player.vecAction?.Invoke(new(0.0f, 1.0f));
+                }
+                if (Input.GetKeyDown(KeyCode.S))
+                {
+                    Player.vecAction?.Invoke(new(0.0f, -1.0f));
+                }
+            }
+            Debug.Log($"Current_State : {mStateMachine.GetState()}");
         }
         void SetupStateMachine()
         {
-            mStateMachine = new(State.None, null);
+            mStateMachine = new StateMachine<State, Trigger>(State.Home, new HomeState(this, mStateMachine));
 
-            mStateMachine.SetupState(State.Home, new HomeState(this, mStateMachine));
             mStateMachine.SetupState(State.Single, new SingleState(this, mStateMachine));
             mStateMachine.SetupState(State.Multi, new MultiState(this, mStateMachine));
             mStateMachine.SetupState(State.Setting, new SettingState(this, mStateMachine));
 
-            mStateMachine.AddTransition(State.None, State.Home, Trigger.Home);
             mStateMachine.AddTransition(State.Home, State.Single, Trigger.Single);
             mStateMachine.AddTransition(State.Home, State.Multi, Trigger.Multi);
             mStateMachine.AddTransition(State.Home, State.Setting, Trigger.Setting);
@@ -71,7 +85,7 @@ namespace ModeSelect
             mStateMachine.AddTransition(State.Multi, State.Home, Trigger.Home);
             mStateMachine.AddTransition(State.Setting, State.Home, Trigger.Home);
 
-            mStateMachine.ExecuteTriggerAction(Trigger.Home);
+            
         }
         public void CreateCursol()
         {
@@ -83,7 +97,7 @@ namespace ModeSelect
             CursolRect.anchoredPosition = new(-350, 0);
         }
         public void TryDeleteCursol() { if(Cursol != null) Destroy(Cursol); }
-        public NotesManagerPlayerConfig GetPlayerConfig() { return mNotesManager.PlayerConfig; }
+        public NotesManagerDatabase GetNotesManager() { return mNotesManager; }
     }
 
     public interface ICursolController
@@ -95,10 +109,10 @@ namespace ModeSelect
 
     public interface ISceneManager : ICursolController
     {
+        StateMachine<State, Trigger> mStateMachine { get; set; }
         AudioSource mAudio { get; }
         AudioClip[] mAudioClips { get; }
-        NotesManagerPlayerConfig GetPlayerConfig();
-        bool _DebugMode { get; }
+        NotesManagerDatabase GetNotesManager();
     }
 }
 

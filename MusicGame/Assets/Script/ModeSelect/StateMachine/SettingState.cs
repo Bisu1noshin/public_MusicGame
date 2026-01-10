@@ -13,7 +13,11 @@ namespace ModeSelect.StateMachine
     {
         Home, Auto, Lane, LR, UD, Device, Speed
     }
+<<<<<<< HEAD
     public class SettingState : Kameda_StateParent<ISceneManager, Trigger>, ISettingState
+=======
+    public class SettingState : StateParent, ISettingState
+>>>>>>> fd1bb35 (ノートPCのコミット忘れ　すぐ消す)
     {
         public NotesManagerPlayerConfig PlayerConfig { get; set; }
         public PropertyController mProperty { get; private set; }
@@ -26,6 +30,7 @@ namespace ModeSelect.StateMachine
         }
         protected override void OnEnter()
         {
+<<<<<<< HEAD
             InitStates();
             mSceneManager.CreateCursol();
             deleteAction += Button.ButtonManager.CreateInstance(0, 6, "オートプレイ");
@@ -34,6 +39,15 @@ namespace ModeSelect.StateMachine
             deleteAction += Button.ButtonManager.CreateInstance(3, 6, "上下反転");
             deleteAction += Button.ButtonManager.CreateInstance(4, 6, "デバイス変更");
             deleteAction += Button.ButtonManager.CreateInstance(5, 6, "ノーツ速度");
+=======
+            deleteAction = null;
+            deleteAction += Button.ButtonManager.CreateInstance(this, 0, 6, "オートプレイ");
+            deleteAction += Button.ButtonManager.CreateInstance(this, 1, 6, "レーン反転");
+            deleteAction += Button.ButtonManager.CreateInstance(this, 2, 6, "上下反転");
+            deleteAction += Button.ButtonManager.CreateInstance(this, 3, 6, "左右反転");
+            deleteAction += Button.ButtonManager.CreateInstance(this, 4, 6, "デバイス変更");
+            deleteAction += Button.ButtonManager.CreateInstance(this, 5, 6, "ノーツ速度");
+>>>>>>> fd1bb35 (ノートPCのコミット忘れ　すぐ消す)
             (PropertyController, Action) tuple = PropertyController.CreateInstance();
             mProperty = tuple.Item1;
             deleteAction += tuple.Item2;
@@ -42,19 +56,37 @@ namespace ModeSelect.StateMachine
         }
         protected override void OnUpdate(float deltaTime)
         {
+<<<<<<< HEAD
             mStateMachine.Update(deltaTime);
+=======
+            StateMachine.Update(deltaTime);
+            Debug.Log($"Current_SState : {StateMachine.GetState()}");
+>>>>>>> fd1bb35 (ノートPCのコミット忘れ　すぐ消す)
         }
         protected override void OnExit()
         {
             mSceneManager.TryDeleteCursol();
             deleteAction?.Invoke();
+<<<<<<< HEAD
             deleteAction = null;
             mStateMachine = null;
+=======
+>>>>>>> fd1bb35 (ノートPCのコミット忘れ　すぐ消す)
         }
 
         void InitStates()
         {
+<<<<<<< HEAD
             mStateMachine = new(SState.None, null);
+=======
+            StateMachine = new(SState.Home, new Setting.Setting_Home(this, StateMachine));
+            StateMachine.SetupState(SState.Auto, new Setting.Setting_Auto(this, StateMachine));
+            StateMachine.SetupState(SState.Lane, new Setting.Setting_Lane(this, StateMachine));
+            StateMachine.SetupState(SState.LR, new Setting.Setting_LR(this, StateMachine));
+            StateMachine.SetupState(SState.UD, new Setting.Setting_UD(this, StateMachine));
+            StateMachine.SetupState(SState.Device, new Setting.Setting_Device(this, StateMachine));
+            StateMachine.SetupState(SState.Speed, new Setting.Setting_Speed(this, StateMachine));
+>>>>>>> fd1bb35 (ノートPCのコミット忘れ　すぐ消す)
 
             mStateMachine.SetupState(SState.Home, new Setting.Setting_Home(this, mStateMachine));
             mStateMachine.SetupState(SState.Auto, new Setting.Setting_Auto(this, mStateMachine));
