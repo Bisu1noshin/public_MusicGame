@@ -33,8 +33,7 @@ namespace ModeSelect.StateMachine.Setting
             };
             ReplaceEnterAction(mSelectNum);
             mProperty = owner.mProperty;
-            //最初のフレームでEnterActionがNULLになってしまうようなので、1フレーム遅れて反映されるよう調整
-            mPrevSelectNum = mSelectNum + 1;
+            mPrevSelectNum = mSelectNum;
         }
         protected override void OnUpdate(float deltaTime)
         {
@@ -49,12 +48,6 @@ namespace ModeSelect.StateMachine.Setting
                 ReplaceEnterAction(mSelectNum);
             }
             mPrevSelectNum = mSelectNum;
-
-            Player.backAction ??= () =>
-            {
-                PlayCancelSound();
-                owner.BackToHome();
-            };
         }
         protected override void OnExit()
         {

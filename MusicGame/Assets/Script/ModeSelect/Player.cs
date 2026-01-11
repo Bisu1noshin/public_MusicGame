@@ -20,8 +20,9 @@ namespace ModeSelect
         const float IntervalPerfomeTime = 0.1f; //長押し入力の判定同士の間
         Vector2 moveVec = Vector2.zero;
         ISceneManager sceneManager;
-        private void Awake()
+        protected override void Awake()
         {
+            name = "Player";
             sceneManager = GameObject.Find("SceneManager").GetComponent<ModeSelectSceneManager>();
             base.Awake();
             destroyAction = () => Destroy(this.gameObject);
@@ -52,12 +53,10 @@ namespace ModeSelect
         protected override void OnButtonA()
         {
             enterAction?.Invoke();
-            enterAction = null;
         }
         protected override void OnButtonB()
         {
             backAction?.Invoke();
-            backAction = null;
         }
         
         protected override void LeftStickStarted(Vector2 vec)

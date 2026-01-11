@@ -18,7 +18,7 @@ namespace MusicSelect
         EnterGame
     }
 
-    public class MusicSelectSceneManager : MonoBehaviour, IMusicSelecter, ILevelSelecter
+    public class MusicSelectSceneManager : MonoBehaviour, ISceneManager
     {
         public static float MaxX => 960.0f;
         private Action deleteAction = null, createAction = null;
@@ -38,11 +38,14 @@ namespace MusicSelect
         public float untouchableTimer { get; private set; }
         readonly string[] levelName =
         {
-        "NORMAL",
-        "HARD",
-        "EXPERT",
-        "ULTIMATE"
-    };
+            "NORMAL",
+            "HARD",
+            "EXPERT",
+            "ULTIMATE"
+        };
+
+        [SerializeField] NotesManagerDatabase mNotesManager;
+        public bool UseKeyboard => mNotesManager.PlayerConfig.InputDevice == InputDevice.KyeBord;
 
         // 追記
         [SerializeField] private AssetLoadConfig AssetLoadConfig;
@@ -207,7 +210,8 @@ namespace MusicSelect
 
         Player_forMusicSelect CreatePlayer()
         {
-            GameObject res = Resources.Load("MusicSelecter/Player_forMusicSelect") as GameObject;
+            GameObject res = Resources.Load<GameObject>("MusicSelecter/Player_forMusicSelect");
+            Debug.Log($"res : {res.name}");
             GameObject instance = Instantiate(res);
             return instance.GetComponent<Player_forMusicSelect>();
         }
@@ -281,7 +285,7 @@ namespace MusicSelect
         }
         void Init()
         {
-            if (!GameObject.Find("Player_forMusicSelect"))
+            if (!GameObject.Find("Player"))
             {
                 CreatePlayer();
             }
@@ -318,6 +322,10 @@ namespace MusicSelect
             string naxtSceneName = "NotesTest";
             await DataTransferSystem.LoadSceneRef(AssetLoadConfig, naxtSceneName);
         }
+    }
+    public interface ISceneManager : IMusicSelecter, ILevelSelecter
+    {
+        bool UseKeyboard { get; }
     }
 
     public interface IMusicSelecter

@@ -30,21 +30,12 @@ namespace ModeSelect.StateMachine.Setting
         }
         protected override void OnUpdate(float deltaTime)
         {
-            Player.enterAction ??= () =>
-            {
-                PlayEnterSound();
-                owner.PlayerConfig.LaneCahge = !owner.PlayerConfig.LaneCahge;
-                stateMachine.ExecuteTriggerAction(STrigger.Home);
-            };
-            Player.backAction ??= () =>
-            {
-                PlayCancelSound();
-                stateMachine.ExecuteTriggerAction(STrigger.Home);
-            };
+
         }
         protected override void OnExit()
         {
             deleteAction?.Invoke();
+            deleteAction = null;
         }
     }
 }
