@@ -73,6 +73,6 @@ private:
 	Vector2 mousePos;
 
 	const int NOTES_SIZE = 32;
-	const int shosetsu_num = 4; //¬ßü‚ğ‰½–{‚²‚Æ‚É“ü‚ê‚é‚©
+	const int shosetsu_num = 8; //¬ßü‚ğ‰½–{‚²‚Æ‚É“ü‚ê‚é‚©
 	const Color little_clear_color = Color(1.f, 1.f, 1.f, .25f);
 };
