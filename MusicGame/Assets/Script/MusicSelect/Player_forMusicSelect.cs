@@ -15,10 +15,10 @@ namespace MusicSelect
 
         protected override void Awake()
         {
+            base.Awake();
             name = "Player";
             mSelecter = GameObject.Find("SceneManager").GetComponent<MusicSelectSceneManager>();
             SetPlayerInput();
-            base.Awake();
         }
 
         private void Start()
@@ -27,6 +27,8 @@ namespace MusicSelect
         }
         protected override void SetPlayerInput()
         {
+            var b = mSelecter.UseKeyboard;
+
             if (mSelecter.UseKeyboard)
             {
                 inputDevice = Notes.InputDevice.KyeBord;
