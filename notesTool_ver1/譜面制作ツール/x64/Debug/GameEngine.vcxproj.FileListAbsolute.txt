@@ -1,2 +1,0 @@
-D:\24ci0204\musicgame\public_MusicGame\notesTool_ver1\Tool_for_Onishi\x64\Debug\GameEngine.exe
-D:\24ci0204\musicgame\public_MusicGame\notesTool_ver1\譜面制作ツール\x64\Debug\GameEngine.exe
