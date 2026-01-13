@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5153447682992888217}
-  - component: {fileID: 4548533601568829158}
+  - component: {fileID: 3620676799911853920}
   m_Layer: 0
   m_Name: Player_forMusicSelect
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4548533601568829158
+--- !u!114 &3620676799911853920
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

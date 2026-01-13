@@ -30,17 +30,7 @@ namespace ModeSelect.StateMachine.Setting
         }
         protected override void OnUpdate(float deltaTime)
         {
-            Player.enterAction ??= () =>
-            {
-                PlayEnterSound();
-                owner.PlayerConfig.UpDownCahge = !owner.PlayerConfig.UpDownCahge;
-                stateMachine.ExecuteTriggerAction(STrigger.Home);
-            };
-            Player.backAction ??= () =>
-            {
-                PlayCancelSound();
-                stateMachine.ExecuteTriggerAction(STrigger.Home);
-            };
+
         }
         protected override void OnExit()
         {

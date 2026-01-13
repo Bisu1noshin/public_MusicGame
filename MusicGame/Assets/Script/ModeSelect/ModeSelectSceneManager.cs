@@ -13,7 +13,7 @@ namespace ModeSelect
     }
     public enum Trigger
     {
-        Home, Single, Multi, Setting, BacktoTitle
+        Home, Single, Multi, Setting, BacktoTitle, Enter, Back
     }
 
     public class ModeSelectSceneManager : MonoBehaviour, ISceneManager
@@ -26,14 +26,12 @@ namespace ModeSelect
 
         public StateMachine<State, Trigger> mStateMachine { get; set; }
 
-        [SerializeField] bool DebugMode = default;
-
-        [SerializeField] State CurrentState;
-
-        public bool _DebugMode => DebugMode;
-
         public RectTransform CursolRect { get; set; }
         GameObject Cursol;
+
+        [SerializeField] bool DebugMode;
+        public bool _DebugMode => DebugMode;
+
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Awake()
         {
@@ -51,11 +49,10 @@ namespace ModeSelect
         void Update()
         {
             mStateMachine.Update(Time.deltaTime);
-            CurrentState = mStateMachine.GetState();
         }
         void SetupStateMachine()
         {
-            mStateMachine = new(State.None, null);
+            mStateMachine = new StateMachine<State, Trigger>(State.None, null);
 
             mStateMachine.SetupState(State.Home, new HomeState(this, mStateMachine));
             mStateMachine.SetupState(State.Single, new SingleState(this, mStateMachine));
@@ -86,6 +83,11 @@ namespace ModeSelect
         public NotesManagerPlayerConfig GetPlayerConfig() { return mNotesManager.PlayerConfig; }
     }
 
+    
+    public interface IActionDictionary
+    {
+        Dictionary<int, Action> ActionDic { get; }
+    }
     public interface ICursolController
     {
         void CreateCursol();
@@ -95,6 +97,7 @@ namespace ModeSelect
 
     public interface ISceneManager : ICursolController
     {
+        StateMachine<State, Trigger> mStateMachine { get; set; }
         AudioSource mAudio { get; }
         AudioClip[] mAudioClips { get; }
         NotesManagerPlayerConfig GetPlayerConfig();

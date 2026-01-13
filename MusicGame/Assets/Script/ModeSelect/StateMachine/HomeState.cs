@@ -9,25 +9,24 @@ namespace ModeSelect.StateMachine
     public class HomeState : Kameda_StateParent<ISceneManager, Trigger>
     {
         PropertyController mProperty;
-        int mPrevSelectNum = 0;
-        readonly string[] explaination = new string[]
+        int mPrevSelectNum;
+        string[] explaination = new string[]
         {
             "シングルプレイで遊びます",
             "マルチプレイで遊びます",
             "ゲームプレイの設定ができます",
             "タイトルに戻ります"
         };
-        public HomeState(ISceneManager owner, IStateMachine<Trigger> st) : base(owner, st)
+        public HomeState(ModeSelectSceneManager owner, IStateMachine<Trigger> st) : base(owner, st)
         {
-            mActions = new List<Action>()
+            mActions = new()
             {
                 () => stateMachine.ExecuteTriggerAction(Trigger.Single),
                 () => stateMachine.ExecuteTriggerAction(Trigger.Multi),
                 () => stateMachine.ExecuteTriggerAction(Trigger.Setting),
                 () => SceneManager.LoadScene("Ooo_Title")
             };
-            mSelectNum = 0;
-            mPrevSelectNum = 0;
+            
         }
         protected override void OnEnter()
         {
@@ -40,31 +39,32 @@ namespace ModeSelect.StateMachine
             (PropertyController, Action) tuple = PropertyController.CreateInstance();
             mProperty = tuple.Item1;
             deleteAction += tuple.Item2;
-            mSceneManager.CreateCursol();
-            mPrevSelectNum = mSelectNum + 1;
+            owner.CreateCursol();
         }
 
         protected override void OnUpdate(float deltaTime)
         {
-            if (stateMachine == null) Debug.Log("StateMachine is NULL!!");
-            mProperty?.SetText(explaination[mSelectNum]);
-            if (mSceneManager.CursolRect != null) mSceneManager.CursolRect.anchoredPosition = new(-350.0f, -(mSelectNum - (4 - 1) / 2.0f) * (540 / 4 * 2));
-            Player.backAction ??= () => PlayBeepSound();
-
-            if (mSelectNum != mPrevSelectNum) ReplaceEnterAction(mSelectNum);
+            mProperty.SetText(explaination[mSelectNum]);
+            if (owner.CursolRect) owner.CursolRect.anchoredPosition = new(-350.0f, -(mSelectNum - (4 - 1) / 2.0f) * (540 / 4 * 2));
+            if (mSelectNum != mPrevSelectNum)
+            {
+                ReplaceEnterAction(mSelectNum);
+            }
             mPrevSelectNum = mSelectNum;
         }
         protected override void OnExit()
         {
+            owner.TryDeleteCursol();
             deleteAction?.Invoke();
-            deleteAction = null;
-            mSceneManager.TryDeleteCursol();
+
         }
         void InitAction()
         {
             Player.vecAction = (vector2) => Scroll(vector2);
-            Player.backAction = null;
-            ReplaceEnterAction(mSelectNum);
+            deleteAction = null;
+            Player.backAction = () => PlayBeepSound();
+            Player.enterAction = mActions[mSelectNum];
+            mPrevSelectNum = mSelectNum;
         }
         void ReplaceEnterAction(int value)
         {
