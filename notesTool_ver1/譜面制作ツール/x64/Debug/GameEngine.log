@@ -1,4 +1,5 @@
-﻿  GameEngine.vcxproj -> D:\24ci0204\musicgame\public_MusicGame\notesTool_ver1\譜面制作ツール\x64\Debug\GameEngine.exe
+﻿  Fmanager.cpp
+  GameEngine.vcxproj -> D:\24ci0204\musicgame\public_MusicGame\notesTool_ver1\譜面制作ツール\x64\Debug\GameEngine.exe
   D:\24ci0204\musicgame\public_MusicGame\notesTool_ver1\譜面制作ツール\External\SDL3-3.2.14\lib\x64\SDL3.dll
   D:\24ci0204\musicgame\public_MusicGame\notesTool_ver1\譜面制作ツール\External\SDL3-3.2.14\lib\x64\SDL3_image.dll
   D:\24ci0204\musicgame\public_MusicGame\notesTool_ver1\譜面制作ツール\External\SDL3-3.2.14\lib\x64\SDL3_ttf.dll
