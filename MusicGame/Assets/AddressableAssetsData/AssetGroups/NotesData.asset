@@ -15,23 +15,28 @@ MonoBehaviour:
   m_GroupName: NotesData
   m_GUID: 8a965d16329e5124f99b747bdfb77786
   m_SerializeEntries:
-  - m_GUID: 31c1ae91f702f814ea390961998daa1a
-    m_Address: Assets/Prefab/TextData/NotesData/ShiningStar/ShiningStar_EXPERT.txt
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 3226cbb96552f6f41918e188bb32dc12
-    m_Address: Assets/Prefab/TextData/NotesData/ShiningStar/ShiningStar_HARD.txt
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7fff62294b1ff004582148bd31d9e31d
-    m_Address: Assets/Prefab/TextData/NotesData/Chronomia/Chronomia_EXPERT.txt
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: af99e4f6226a31c4ebd5f50630fb10a7
+  - m_GUID: 41f34407f34b73a40b1fd0ab10dd5753
     m_Address: Assets/Prefab/TextData/NotesData/gengaozo/Gengaozo_EXPERT.txt
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4ac371e352db55743ad50ac396af720b
+    m_Address: Assets/Prefab/TextData/NotesData/Chronomia/Chronomia_HARD.txt
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c1624fd4506bd1046a983066356e152e
+    m_Address: Assets/Prefab/TextData/NotesData/Chronomia/Chronomia_EXPERT 1.txt
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d9e15cc26bdc8604eb4da5450e0744b1
+    m_Address: Assets/Prefab/TextData/NotesData/ShiningStar/ShiningStar_HARD 1.txt
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dd570ee3224c9c5448bae66f3504bd93
+    m_Address: Assets/Prefab/TextData/NotesData/ShiningStar/ShiningStar_EXPERT 1.txt
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

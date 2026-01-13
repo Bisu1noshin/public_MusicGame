@@ -658,32 +658,39 @@ MonoBehaviour:
       m_EditorAssetChanged: 1
   - key: ShiningStar/ShiningStar_HARD.txt
     assetRef:
-      m_AssetGUID: 3226cbb96552f6f41918e188bb32dc12
-      m_SubObjectName: 
-      m_SubObjectGUID: 
-      m_SubObjectType: 
-      m_EditorAssetChanged: 1
-  - key: ShiningStar/ShiningStar_EXPERT.txt
-    assetRef:
-      m_AssetGUID: af99e4f6226a31c4ebd5f50630fb10a7
-      m_SubObjectName: 
-      m_SubObjectGUID: 
-      m_SubObjectType: 
-      m_EditorAssetChanged: 1
-  - key: gengaozo/Gengaozo_EXPERT.txt
-    assetRef:
-      m_AssetGUID: af99e4f6226a31c4ebd5f50630fb10a7
-      m_SubObjectName: 
-      m_SubObjectGUID: 
-      m_SubObjectType: 
-      m_EditorAssetChanged: 1
-  - key: Chronomia/Chronomia_EXPERT.txt
-    assetRef:
-      m_AssetGUID: 7fff62294b1ff004582148bd31d9e31d
+      m_AssetGUID: d9e15cc26bdc8604eb4da5450e0744b1
       m_SubObjectName: 
       m_SubObjectGUID: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
+  - key: ShiningStar/ShiningStar_EXPERT.txt
+    assetRef:
+      m_AssetGUID: dd570ee3224c9c5448bae66f3504bd93
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - key: gengaozo/Gengaozo_EXPERT.txt
+    assetRef:
+      m_AssetGUID: 41f34407f34b73a40b1fd0ab10dd5753
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - key: Chronomia/Chronomia_EXPERT.txt
+    assetRef:
+      m_AssetGUID: c1624fd4506bd1046a983066356e152e
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - key: Chronomia/Chronomia_HARD.txt
+    assetRef:
+      m_AssetGUID: 4ac371e352db55743ad50ac396af720b
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 1
 --- !u!4 &1946049574
 Transform:
   m_ObjectHideFlags: 0
