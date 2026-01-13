@@ -35,18 +35,6 @@ namespace ModeSelect.StateMachine.Setting
         protected override void OnUpdate(float deltaTime)
         {
             mPopup.SetValue(mCurrSpeed);
-            Player.enterAction ??= () =>
-            {
-                PlayEnterSound();
-                owner.PlayerConfig.NotesSpeed = mCurrSpeed;
-                stateMachine.ExecuteTriggerAction(STrigger.Home);
-            };
-            Player.backAction ??= () =>
-            {
-                PlayCancelSound();
-                stateMachine.ExecuteTriggerAction(STrigger.Home);
-            };
-            Player.vecAction ??= (Vector2) => ChangeCurrSpeed(Vector2);
         }
         protected override void OnExit()
         {

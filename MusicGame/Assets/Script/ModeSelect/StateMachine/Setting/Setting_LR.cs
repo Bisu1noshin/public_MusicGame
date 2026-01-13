@@ -30,17 +30,6 @@ namespace ModeSelect.StateMachine.Setting
         }
         protected override void OnUpdate(float deltaTime)
         {
-            Player.enterAction ??= () =>
-            {
-                PlayEnterSound();
-                owner.PlayerConfig.LeftRightCahge = !owner.PlayerConfig.LeftRightCahge;
-                stateMachine.ExecuteTriggerAction(STrigger.Home);
-            };
-            Player.backAction ??= () =>
-            {
-                PlayCancelSound();
-                stateMachine.ExecuteTriggerAction(STrigger.Home);
-            };
         }
         protected override void OnExit()
         {

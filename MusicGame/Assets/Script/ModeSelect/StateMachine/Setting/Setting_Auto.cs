@@ -31,17 +31,6 @@ namespace ModeSelect.StateMachine.Setting
         }
         protected override void OnUpdate(float deltaTime)
         {
-            Player.enterAction ??= () =>
-            {
-                PlayEnterSound();
-                owner.PlayerConfig.AutoPlay = !owner.PlayerConfig.AutoPlay;
-                stateMachine.ExecuteTriggerAction(STrigger.Home);
-            };
-            Player.backAction ??= () =>
-            {
-                PlayCancelSound();
-                stateMachine.ExecuteTriggerAction(STrigger.Home);
-            };
         }
         protected override void OnExit()
         {
