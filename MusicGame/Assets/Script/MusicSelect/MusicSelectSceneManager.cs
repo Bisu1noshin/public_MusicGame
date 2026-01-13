@@ -45,7 +45,7 @@ namespace MusicSelect
         };
 
         [SerializeField] NotesManagerDatabase mNotesManager;
-        public bool UseKeyboard => mNotesManager.PlayerConfig.InputDevice == InputDevice.KyeBord;
+        public bool UseKeyboard => mNotesManager != null ? mNotesManager.PlayerConfig.InputDevice == InputDevice.KyeBord : true;
 
         // 追記
         [SerializeField] private AssetLoadConfig AssetLoadConfig;

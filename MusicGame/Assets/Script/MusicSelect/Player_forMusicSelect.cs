@@ -15,10 +15,10 @@ namespace MusicSelect
 
         protected override void Awake()
         {
-            base.Awake();
-            name = "Player";
             mSelecter = GameObject.Find("SceneManager").GetComponent<MusicSelectSceneManager>();
             SetPlayerInput();
+            base.Awake();
+            name = "Player";
         }
 
         private void Start()
