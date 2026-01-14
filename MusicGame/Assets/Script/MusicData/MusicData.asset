@@ -40,6 +40,6 @@ MonoBehaviour:
     demoMusicPath: Chronomia_Demo
     BPM: 227
     jacketPath: Chronomia
-    normalPath: 
+    normalPath: Chronomia/Chronomia_NORMAL.txt
     hardPath: Chronomia/Chronomia_HARD.txt
     expertPath: Chronomia/Chronomia_EXPERT.txt
