@@ -1,0 +1,83 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: SelectSceneResources
+  m_EditorClassIdentifier: 
+  m_GroupName: SelectSceneResources
+  m_GUID: ede93d6d21980a349ae431c3401bd6fd
+  m_SerializeEntries:
+  - m_GUID: 0e8e235a7f431a54f99777329c3b2c10
+    m_Address: Assets/Prefab/SelectSceneResources/ModeSelect/Cursol.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 277614fbd087ab6498dec28d87cadf7a
+    m_Address: Assets/Prefab/SelectSceneResources/MusicSelecter/GUI.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 30b1fc23b5734a94999d1cf5bc286a0e
+    m_Address: Assets/Prefab/SelectSceneResources/MusicSelecter/MusicButton.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 53228227644095d489297c167efb6e5b
+    m_Address: Assets/Prefab/SelectSceneResources/MusicSelecter/Property.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7ab0b30a5635c3b448e273dc5a983916
+    m_Address: Assets/Prefab/SelectSceneResources/ModeSelect/Property.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 85bc33d1fecc01f4c9240ef09053b2c0
+    m_Address: Assets/Prefab/SelectSceneResources/MusicSelecter/Player_forMusicSelect.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 949bd90c4f00649469a204451e7a1475
+    m_Address: Assets/Prefab/SelectSceneResources/ModeSelect/Player.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: aeb62818a3cb42f43a2af0ed0c49f36b
+    m_Address: Assets/Prefab/SelectSceneResources/ModeSelect/Popup.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b441860ebc21ea942855f75f77dbcf7a
+    m_Address: Assets/Prefab/SelectSceneResources/MusicSelecter/Popup_EnterGame.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b744ce43e36dcab4890066d1b02d352f
+    m_Address: Assets/Prefab/SelectSceneResources/MusicSelecter/LevelButton.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e795e8e113d452e49985ef2515c33545
+    m_Address: Assets/Prefab/SelectSceneResources/ModeSelect/Popup_forNotesSpeed.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f5c1f17a946f78648891683ad0609d9b
+    m_Address: Assets/Prefab/SelectSceneResources/ModeSelect/ModeButton.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 058bd306260b5f848af6f38b77fa2c8d, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: acb38d31ea372584a8ef6a3581d0c6d4, type: 2}
+    - {fileID: 11400000, guid: 2e066f83a62e1084bbf8fac20b32f83d, type: 2}

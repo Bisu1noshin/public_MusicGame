@@ -1,0 +1,100 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71c6124b98fcf5245a084f2ee62775f6, type: 3}
+  m_Name: SelectSceneRes
+  m_EditorClassIdentifier: 
+  ReferencesAssets:
+  - ObjectPath: Mode_Button
+    AssetReference:
+      m_AssetGUID: f5c1f17a946f78648891683ad0609d9b
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - ObjectPath: Mode_Cursol
+    AssetReference:
+      m_AssetGUID: 0e8e235a7f431a54f99777329c3b2c10
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 1
+  - ObjectPath: Mode_Popup
+    AssetReference:
+      m_AssetGUID: aeb62818a3cb42f43a2af0ed0c49f36b
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 1
+  - ObjectPath: Mode_Popup_Speed
+    AssetReference:
+      m_AssetGUID: e795e8e113d452e49985ef2515c33545
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 1
+  - ObjectPath: Mode_Player
+    AssetReference:
+      m_AssetGUID: 949bd90c4f00649469a204451e7a1475
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 1
+  - ObjectPath: Mode_Property
+    AssetReference:
+      m_AssetGUID: 7ab0b30a5635c3b448e273dc5a983916
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 1
+  - ObjectPath: Music_Music_Button
+    AssetReference:
+      m_AssetGUID: 30b1fc23b5734a94999d1cf5bc286a0e
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 1
+  - ObjectPath: Music_Level_Button
+    AssetReference:
+      m_AssetGUID: b744ce43e36dcab4890066d1b02d352f
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 1
+  - ObjectPath: Music_Player
+    AssetReference:
+      m_AssetGUID: 85bc33d1fecc01f4c9240ef09053b2c0
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 1
+  - ObjectPath: Music_Popup
+    AssetReference:
+      m_AssetGUID: b441860ebc21ea942855f75f77dbcf7a
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 1
+  - ObjectPath: Music_Property
+    AssetReference:
+      m_AssetGUID: 53228227644095d489297c167efb6e5b
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 1
+  - ObjectPath: Music_GUI
+    AssetReference:
+      m_AssetGUID: 277614fbd087ab6498dec28d87cadf7a
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 1
+  MusicBPM: 0
