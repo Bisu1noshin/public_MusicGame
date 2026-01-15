@@ -72,7 +72,7 @@ namespace TextEditor {
                 int lane = (int)Convert.ToSingle(textDatas[i][3]);
 
                 //[i]は行数。
-                int time = (int)Convert.ToSingle(textDatas[i][0]);
+                float time = (float)Convert.ToSingle(textDatas[i][0]);
                 int dirN = (int)Convert.ToSingle(textDatas[i][1]);
                 int kind = (int)Convert.ToSingle(textDatas[i][2]);
 

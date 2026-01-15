@@ -32,7 +32,7 @@ namespace Notes
     // ノーツを召喚するための構造体
     public class Notes
     {
-        public Notes(int time_, int dirN, int kind, int lenge = 0)
+        public Notes(float time_, int dirN, int kind, int lenge = 0)
         {
             this.time = time_;
             this.dir = (Direction)dirN;
@@ -42,7 +42,7 @@ namespace Notes
 
         // メンバー変数
 
-        public int time { get; private set; }
+        public float time { get; private set; }
 
         public Direction dir { get; private set; }
 

@@ -166,7 +166,7 @@ namespace Notes {
         private int CreateNotes(Notes n_, int lane,int index)
         {
             float hakuTime = 60.0f / (float)notesData.BPM;
-            float CreateTime = hakuTime * (float)n_.time;
+            float CreateTime = hakuTime * n_.time;
 
             // ノーツの方向指定の変更
             var _notes = n_;

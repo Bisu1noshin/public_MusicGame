@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fData:
     MusicFilePath: Music/Chronomia
-    NotesDataFilePath: TextData/NotesData/Chronomia/Chronomia_HARD
+    NotesDataFilePath: TextData/NotesData/test
   nData:
     CreateTimeDelay: 1
     JudgmentTimeDelay: 0.1
