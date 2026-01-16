@@ -20,6 +20,16 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 683856a4908f85641bd97ca60e1659f0
+    m_Address: Assets/Prefab/Kameda_Resources/ModeSelect/ModeButton.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c0069a582376a4d4ea8ac5dceac63842
+    m_Address: Assets/AddressableAssetsData/As
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 058bd306260b5f848af6f38b77fa2c8d, type: 2}
   m_SchemaSet:
