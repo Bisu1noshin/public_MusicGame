@@ -25,10 +25,10 @@ namespace ModeSelect.StateMachine
             deleteAction = null;
         }
 
-        protected void PlayEnterSound() => mSceneManager.mAudio.PlayOneShot(mSceneManager.mAudioClips[0]);
-        protected void PlayCancelSound() => mSceneManager.mAudio.PlayOneShot(mSceneManager.mAudioClips[1]);
-        protected void PlayShiftSound() => mSceneManager.mAudio.PlayOneShot(mSceneManager.mAudioClips[2]);
-        protected void PlayBeepSound() => mSceneManager.mAudio.PlayOneShot(mSceneManager.mAudioClips[3]);
+        protected void PlayEnterSound() => mSceneManager.PlaySound(0);
+        protected void PlayCancelSound() => mSceneManager.PlaySound(1);
+        protected void PlayShiftSound() => mSceneManager.PlaySound(2);
+        protected void PlayBeepSound() => mSceneManager.PlaySound(3);
 
         protected void Scroll(Vector2 vector2)
         {

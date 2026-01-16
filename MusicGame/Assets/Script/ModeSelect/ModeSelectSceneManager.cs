@@ -18,6 +18,8 @@ namespace ModeSelect
 
     public class ModeSelectSceneManager : MonoBehaviour, ISceneManager
     {
+        IResourceManager resource;
+        public IResourceManager mResource => resource;
         public int[] SelectNum { get; set; }
         public AudioSource mAudio { get; private set; }
         public AudioClip[] mAudioClips { get; private set; }
@@ -37,6 +39,7 @@ namespace ModeSelect
         {
             if (!GameObject.Find("Player")) { Instantiate(Resources.Load<GameObject>("ModeSelect/Player")); }
             mAudio = GetComponent<AudioSource>();
+            resource = GameObject.Find("ResourceManager").GetComponent<Kameda_ResourceManager>();
             mAudioClips = new AudioClip[4];
             mAudioClips[0] = Resources.Load<AudioClip>("SoundEffect/Enter");
             mAudioClips[1] = Resources.Load<AudioClip>("SoundEffect/Cancel");
@@ -81,12 +84,10 @@ namespace ModeSelect
         }
         public void TryDeleteCursol() { if(Cursol != null) Destroy(Cursol); }
         public NotesManagerPlayerConfig GetPlayerConfig() { return mNotesManager.PlayerConfig; }
-    }
-
-    
-    public interface IActionDictionary
-    {
-        Dictionary<int, Action> ActionDic { get; }
+        public void PlaySound(int value)
+        {
+            mAudio.PlayOneShot(mAudioClips[value]);
+        }
     }
     public interface ICursolController
     {
@@ -98,10 +99,10 @@ namespace ModeSelect
     public interface ISceneManager : ICursolController
     {
         StateMachine<State, Trigger> mStateMachine { get; set; }
-        AudioSource mAudio { get; }
-        AudioClip[] mAudioClips { get; }
+        void PlaySound(int value);
         NotesManagerPlayerConfig GetPlayerConfig();
         bool _DebugMode { get; }
+        IResourceManager mResource { get; }
     }
 }
 

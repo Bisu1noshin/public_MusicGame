@@ -30,8 +30,18 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3175fceacc5705d4790182a542911afb
+    m_Address: Assets/Prefab/SelectSceneResources/SoundEffect/Cancel.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 53228227644095d489297c167efb6e5b
     m_Address: Assets/Prefab/SelectSceneResources/MusicSelecter/Property.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 74b36b5b3b7cf384ba551572adf26116
+    m_Address: Assets/Prefab/SelectSceneResources/SoundEffect/Scroll.mp3
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -42,6 +52,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 85bc33d1fecc01f4c9240ef09053b2c0
     m_Address: Assets/Prefab/SelectSceneResources/MusicSelecter/Player_forMusicSelect.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8ab891a0e89aa02419ee52cdaeb3c467
+    m_Address: Assets/Prefab/SelectSceneResources/SoundEffect/Enter.mp3
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -62,6 +77,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b744ce43e36dcab4890066d1b02d352f
     m_Address: Assets/Prefab/SelectSceneResources/MusicSelecter/LevelButton.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dc399500b2c96ab4cb56186dd92a48a5
+    m_Address: Assets/Prefab/SelectSceneResources/SoundEffect/Beep.mp3
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
