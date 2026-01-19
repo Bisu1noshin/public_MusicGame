@@ -20,6 +20,8 @@ namespace MusicSelect
 
     public class MusicSelectSceneManager : MonoBehaviour, ISceneManager
     {
+        IResourceManager resManager;
+        public IResourceManager Resource => resManager;
         public static float MaxX => 960.0f;
         private Action deleteAction = null, createAction = null;
         AudioSource mAudio;
@@ -47,6 +49,8 @@ namespace MusicSelect
         [SerializeField] NotesManagerDatabase mNotesManager;
         public bool UseKeyboard => mNotesManager != null ? mNotesManager.PlayerConfig.InputDevice == InputDevice.KyeBord : true;
 
+        Dictionary.Dic<string, GameObject> res;
+
         // 追記
         [SerializeField] private AssetLoadConfig AssetLoadConfig;
         [SerializeField] private List<AssetPair> musicList;
@@ -63,7 +67,8 @@ namespace MusicSelect
         {
             if (timer <= 0.0f && createAction != null)
             {
-                CreateObj();
+                createAction?.Invoke();
+                createAction = null;
             }
             if (timer > 0.0f)
             {
@@ -73,6 +78,33 @@ namespace MusicSelect
             {
                 untouchableTimer -= Time.deltaTime;
             }
+        }
+
+        void Init()
+        {
+            resManager = GameObject.Find("ResourceManager").GetComponent<Kameda_ResourceManager>();
+            if (!GameObject.Find("Player"))
+            {
+                CreatePlayer();
+            }
+            selectNum = new int[3];
+            mCurrNotesData = new string[4];
+            mSceneState = SceneState.MusicSelect;
+            mAudio = GetComponent<AudioSource>();
+            enter = resManager.GetAudioClip("Enter");
+            cancel = resManager.GetAudioClip("Cancel");
+            scroll = resManager.GetAudioClip("Scroll");
+            beep = resManager.GetAudioClip("Beep");
+
+            res = new(new()
+            {
+                { "MusicButton", Resource.GetGameObject("Music_Button", false) },
+                { "LevelButton", Resource.GetGameObject("Level_Button", false) },
+                { "Property", Resource.GetGameObject("Property", false) },
+                { "Popup", Resource.GetGameObject("Popup", false) },
+                { "Player", Resource.GetGameObject("Player", false) },
+                { "GUI", Resource.GetGameObject("GUI", false) }
+            });
         }
 
         public void GoForward()
@@ -164,7 +196,7 @@ namespace MusicSelect
                     }
                     else
                     {
-                        DeleteAndExecuteAction(CreatePopup());
+                        DeleteAndExecuteAction(() => deleteAction += MakePopupInstance());
                         mAudio.PlayOneShot(enter);
                         timer = 0.1f;
                         untouchableTimer = 0.1f;
@@ -210,8 +242,7 @@ namespace MusicSelect
 
         Player_forMusicSelect CreatePlayer()
         {
-            GameObject res = Resources.Load<GameObject>("MusicSelecter/Player_forMusicSelect");
-            Debug.Log($"res : {res.name}");
+            GameObject res = this.res.GetValue("Player");
             GameObject instance = Instantiate(res);
             return instance.GetComponent<Player_forMusicSelect>();
         }
@@ -224,7 +255,8 @@ namespace MusicSelect
                 {
                     deleteAction += MusicButtonController.CreateInstance(m.name, m.id, currentNum, m.demoMusicPath, m.jacketPath);
                 }
-                CreateGUI();
+                deleteAction += GUIController.CreateInstance(res.GetValue("GUI"), "決定(A)", new(-180.0f, -50.0f));
+                deleteAction += GUIController.CreateInstance(res.GetValue("GUI"), "戻る(B)", new(0.0f, -50.0f));
             };
             return f;
         }
@@ -234,41 +266,25 @@ namespace MusicSelect
             Action f = () => {
                 for (int i = 0; i < 3; i++)
                 {
-                    deleteAction += LevelButtonController.CreateInstance(i, levelName[i], ss, mCurrNotesData[i] == string.Empty);
+                    deleteAction += LevelButtonController.CreateInstance(res.GetValue("LevelButton"), i, levelName[i], ss, mCurrNotesData[i] == string.Empty);
                     maxValue = i;
                 }
-                CreateGUI();
+                deleteAction += GUIController.CreateInstance(res.GetValue("GUI"), "決定(A)", new(-180.0f, -50.0f));
+                deleteAction += GUIController.CreateInstance(res.GetValue("GUI"), "戻る(B)", new(0.0f, -50.0f));
             };
             return f;
         }
 
-        void DeleteObj()
+        void DeleteAndExecuteAction(Action action)
         {
             deleteAction?.Invoke();
             deleteAction = null;
-        }
-
-        void CreateObj()
-        {
-            createAction?.Invoke();
-            createAction = null;
-        }
-
-        void DeleteAndExecuteAction(Action action)
-        {
-            DeleteObj();
             createAction += action;
-        }
-
-        Action CreatePopup()
-        {
-            Action f = () => { deleteAction += MakePopupInstance(); };
-            return f;
         }
 
         Action MakePopupInstance()
         {
-            var loadObj = Resources.Load<GameObject>("MusicSelecter/Popup_EnterGame");
+            var loadObj = res.GetValue("Popup");
 
             GameObject go = Instantiate(loadObj);
             go.transform.SetParent(GameObject.Find("Canvas").transform);
@@ -277,26 +293,6 @@ namespace MusicSelect
 
             Action f = () => { Destroy(go); };
             return f;
-        }
-        void CreateGUI()
-        {
-            deleteAction += GUIController.CreateInstance("決定(A)", new(-180.0f, -50.0f));
-            deleteAction += GUIController.CreateInstance("戻る(B)", new(0.0f, -50.0f));
-        }
-        void Init()
-        {
-            if (!GameObject.Find("Player"))
-            {
-                CreatePlayer();
-            }
-            selectNum = new int[3];
-            mCurrNotesData = new string[4];
-            mSceneState = SceneState.MusicSelect;
-            mAudio = GetComponent<AudioSource>();
-            enter = Resources.Load<AudioClip>("SoundEffect/Enter");
-            cancel = Resources.Load<AudioClip>("SoundEffect/Cancel");
-            scroll = Resources.Load<AudioClip>("SoundEffect/Scroll");
-            beep = Resources.Load<AudioClip>("SoundEffect/Beep");
         }
 
         // 追記
@@ -326,6 +322,7 @@ namespace MusicSelect
     public interface ISceneManager : IMusicSelecter, ILevelSelecter
     {
         bool UseKeyboard { get; }
+        IResourceManager Resource { get; }
     }
 
     public interface IMusicSelecter

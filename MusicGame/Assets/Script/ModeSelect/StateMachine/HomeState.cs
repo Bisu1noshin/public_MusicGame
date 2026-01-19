@@ -32,20 +32,20 @@ namespace ModeSelect.StateMachine
         {
             InitAction();
             
-            deleteAction += Button.ButtonManager.CreateInstance(0, 4, "シングルプレイ");
-            deleteAction += Button.ButtonManager.CreateInstance(1, 4, "マルチプレイ");
-            deleteAction += Button.ButtonManager.CreateInstance(2, 4, "設定");
-            deleteAction += Button.ButtonManager.CreateInstance(3, 4, "タイトルに戻る");
-            (PropertyController, Action) tuple = PropertyController.CreateInstance();
+            deleteAction += CreateButtonInstance(0, 4, "シングルプレイ");
+            deleteAction += CreateButtonInstance(1, 4, "マルチプレイ");
+            deleteAction += CreateButtonInstance(2, 4, "設定");
+            deleteAction += CreateButtonInstance(3, 4, "タイトルに戻る");
+            (PropertyController, Action) tuple = CreatePropertyInstance();
             mProperty = tuple.Item1;
             deleteAction += tuple.Item2;
-            owner.CreateCursol();
+            owner.CreateCursor();
         }
 
         protected override void OnUpdate(float deltaTime)
         {
             mProperty.SetText(explaination[mSelectNum]);
-            if (owner.CursolRect) owner.CursolRect.anchoredPosition = new(-350.0f, -(mSelectNum - (4 - 1) / 2.0f) * (540 / 4 * 2));
+            if (owner.CursorRect) owner.CursorRect.anchoredPosition = new(-350.0f, -(mSelectNum - (4 - 1) / 2.0f) * (540 / 4 * 2));
             if (mSelectNum != mPrevSelectNum)
             {
                 ReplaceEnterAction(mSelectNum);
@@ -54,7 +54,7 @@ namespace ModeSelect.StateMachine
         }
         protected override void OnExit()
         {
-            owner.TryDeleteCursol();
+            owner.TryDeleteCursor();
             deleteAction?.Invoke();
 
         }

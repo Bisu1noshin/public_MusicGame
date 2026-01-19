@@ -54,9 +54,8 @@ namespace ModeSelect
             {
                 return -(me - (max - 1) / 2.0f) * (540 / max * 2);
             }
-            public static Action CreateInstance(int id_, int maxId_, string text_, bool destroyAnim = false)
+            public static Action CreateInstance(int id_, int maxId_, GameObject res, string text_, bool destroyAnim = false)
             {
-                GameObject res = Resources.Load<GameObject>("ModeSelect/ModeButton");
                 GameObject go = Instantiate(res);
                 go.name = text_;
                 go.transform.SetParent(GameObject.Find("Canvas").transform.GetChild(1).transform);

@@ -14,7 +14,7 @@ namespace ModeSelect.StateMachine.Setting
 
         protected override void OnEnter()
         {
-            deleteAction += PopupController.CreateInstance("オートプレイを" +
+            deleteAction += CreatePopupInstance("オートプレイを" +
                 (owner.PlayerConfig.AutoPlay ? "OFF" : "ON") + "にします。よろしいですか？");
             Player.enterAction = () =>
             {

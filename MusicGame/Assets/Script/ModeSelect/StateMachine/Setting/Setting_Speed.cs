@@ -15,7 +15,7 @@ namespace ModeSelect.StateMachine.Setting
 
         protected override void OnEnter()
         {
-            (PopupController, Action) tuple = PopupController.CreateInstanceForNotesSpeed(true);
+            (PopupController, Action) tuple = CreateSpeedPopupInstance(true);
             mPopup = tuple.Item1;
             deleteAction += tuple.Item2;
             mCurrSpeed = owner.PlayerConfig.NotesSpeed;

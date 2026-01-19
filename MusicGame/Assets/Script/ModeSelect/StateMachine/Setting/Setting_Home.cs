@@ -38,9 +38,9 @@ namespace ModeSelect.StateMachine.Setting
         protected override void OnUpdate(float deltaTime)
         {
             SetPropertyText(mSelectNum);
-            if (mSceneManager.CursolRect != null)
+            if (mSceneManager.CursorRect != null)
             {
-                mSceneManager.CursolRect.anchoredPosition = new(-350, -(mSelectNum - (6 - 1) / 2.0f) * (540 / 6 * 2));
+                mSceneManager.CursorRect.anchoredPosition = new(-350, -(mSelectNum - (6 - 1) / 2.0f) * (540 / 6 * 2));
             }
 
             if (mSelectNum != mPrevSelectNum)

@@ -12,7 +12,7 @@ namespace LoadForAsync
         public void SetAsyncObjects(LoadObjectTable ObjectTable);
 
         public Action ReleaseAll { get; set; }
-}
+    }
 
     public class DataTransferSystem
     {

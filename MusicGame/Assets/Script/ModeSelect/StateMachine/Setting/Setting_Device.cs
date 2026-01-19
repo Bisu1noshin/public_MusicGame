@@ -11,7 +11,7 @@ namespace ModeSelect.StateMachine.Setting
 
         protected override void OnEnter()
         {
-            deleteAction += PopupController.CreateInstance("使用デバイスを" +
+            deleteAction += CreatePopupInstance("使用デバイスを" +
                 (owner.PlayerConfig.InputDevice == Notes.InputDevice.Controller ? "キーボード" : "コントローラー") +
                 "にします。よろしいですか？");
             Player.enterAction = () =>

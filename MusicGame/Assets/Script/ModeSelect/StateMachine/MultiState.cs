@@ -13,7 +13,7 @@ namespace ModeSelect.StateMachine
         protected override void OnEnter()
         {
             deleteAction = null;
-            deleteAction += PopupController.CreateInstance("このモードは現在\n利用できません。");
+            deleteAction += CreatePopupInstance("このモードは現在\n利用できません。");
             Player.enterAction = () => PlayBeepSound();
             Player.backAction = () =>
             {

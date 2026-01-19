@@ -96,9 +96,8 @@ namespace MusicSelect
         {
             return (id_ + 1) * -200.0f + 350.0f;
         }
-        public static Action CreateInstance(int id_, string str_, SceneState ss = SceneState.LevelSelect, bool cantSelect = false)
+        public static Action CreateInstance(GameObject res, int id_, string str_, SceneState ss = SceneState.LevelSelect, bool cantSelect = false)
         {
-            GameObject res = Resources.Load("MusicSelecter/LevelButton") as GameObject;
             GameObject go = Instantiate(res);
             go.transform.SetParent(GameObject.Find("Canvas").transform.GetChild(1).transform);
             go.transform.localRotation = Quaternion.identity;

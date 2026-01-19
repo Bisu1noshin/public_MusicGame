@@ -14,7 +14,7 @@ namespace ModeSelect.StateMachine
         protected override void OnEnter()
         {
             deleteAction = null;
-            deleteAction += PopupController.CreateInstance("シングルプレイを開始します。\nよろしいですか？");
+            deleteAction += CreatePopupInstance("シングルプレイを開始します。\nよろしいですか？");
             Player.enterAction = () => SceneManager.LoadScene("Test_MusicSelectScene");
             Player.backAction = () =>
             {

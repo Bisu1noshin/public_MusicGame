@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using ModeSelect.StateMachine;
 using Notes;
 using System.Data;
+using UnityEngine.AddressableAssets;
+using Mono.Cecil;
+using Cysharp.Threading.Tasks;
+using LoadForAsync;
 
 namespace ModeSelect
 {
@@ -18,18 +22,21 @@ namespace ModeSelect
 
     public class ModeSelectSceneManager : MonoBehaviour, ISceneManager
     {
-        IResourceManager resource;
-        public IResourceManager mResource => resource;
-        public int[] SelectNum { get; set; }
-        public AudioSource mAudio { get; private set; }
-        public AudioClip[] mAudioClips { get; private set; }
+        IResourceManager resManager;
+        public IResourceManager Resource => resManager;
+        
+        public Action ReleaseAll { get; set; }
+
+        AudioSource mAudio;
+        AudioClip[] mAudioClips;
 
         [SerializeField] public NotesManagerDatabase mNotesManager;
 
         public StateMachine<State, Trigger> mStateMachine { get; set; }
 
-        public RectTransform CursolRect { get; set; }
-        GameObject Cursol;
+        public RectTransform CursorRect { get; set; }
+        GameObject mCursor, mCursorRes;
+        GameObject mPlayer, mPlayerRes;
 
         [SerializeField] bool DebugMode;
         public bool _DebugMode => DebugMode;
@@ -37,14 +44,11 @@ namespace ModeSelect
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Awake()
         {
-            if (!GameObject.Find("Player")) { Instantiate(Resources.Load<GameObject>("ModeSelect/Player")); }
+            resManager = GameObject.Find("ResourceManager").GetComponent<Kameda_ResourceManager>();
+            SetObjects();
+            if (!mPlayer) { mPlayer = Instantiate(mPlayerRes); }
             mAudio = GetComponent<AudioSource>();
-            resource = GameObject.Find("ResourceManager").GetComponent<Kameda_ResourceManager>();
-            mAudioClips = new AudioClip[4];
-            mAudioClips[0] = Resources.Load<AudioClip>("SoundEffect/Enter");
-            mAudioClips[1] = Resources.Load<AudioClip>("SoundEffect/Cancel");
-            mAudioClips[2] = Resources.Load<AudioClip>("SoundEffect/Scroll");
-            mAudioClips[3] = Resources.Load<AudioClip>("SoundEffect/Beep");
+            
             SetupStateMachine();
         }
 
@@ -73,36 +77,46 @@ namespace ModeSelect
 
             mStateMachine.ExecuteTriggerAction(Trigger.Home);
         }
-        public void CreateCursol()
+        public void CreateCursor()
         {
-            Cursol = Instantiate(Resources.Load<GameObject>("ModeSelect/Cursol"));
-            Cursol.transform.SetParent(GameObject.Find("Canvas").transform);
-            Cursol.transform.localScale = Vector3.one;
-            Cursol.transform.localRotation = Quaternion.identity;
-            CursolRect = Cursol.GetComponent<RectTransform>();
-            CursolRect.anchoredPosition = new(-350, 0);
+            mCursor = Instantiate(mCursorRes);
+            mCursor.transform.SetParent(GameObject.Find("Canvas").transform);
+            mCursor.transform.localScale = Vector3.one;
+            mCursor.transform.localRotation = Quaternion.identity;
+            CursorRect = mCursor.GetComponent<RectTransform>();
+            CursorRect.anchoredPosition = new(-350, 0);
         }
-        public void TryDeleteCursol() { if(Cursol != null) Destroy(Cursol); }
+        public void TryDeleteCursor() { if(mCursor != null) Destroy(mCursor); }
         public NotesManagerPlayerConfig GetPlayerConfig() { return mNotesManager.PlayerConfig; }
         public void PlaySound(int value)
         {
             mAudio.PlayOneShot(mAudioClips[value]);
         }
+        void SetObjects()
+        {
+            mAudioClips = new AudioClip[4];
+            mAudioClips[0] = resManager.GetAudioClip("Enter");
+            mAudioClips[1] = resManager.GetAudioClip("Cancel");
+            mAudioClips[2] = resManager.GetAudioClip("Scroll");
+            mAudioClips[3] = resManager.GetAudioClip("Beep");
+            mCursorRes = resManager.GetGameObject("mCursor", true);
+            mPlayerRes = resManager.GetGameObject("Player", true);
+        }
     }
-    public interface ICursolController
+    public interface ICursorController
     {
-        void CreateCursol();
-        void TryDeleteCursol();
-        RectTransform CursolRect { get; set; }
+        void CreateCursor();
+        void TryDeleteCursor();
+        RectTransform CursorRect { get; set; }
     }
 
-    public interface ISceneManager : ICursolController
+    public interface ISceneManager : ICursorController
     {
         StateMachine<State, Trigger> mStateMachine { get; set; }
         void PlaySound(int value);
         NotesManagerPlayerConfig GetPlayerConfig();
         bool _DebugMode { get; }
-        IResourceManager mResource { get; }
+        IResourceManager Resource { get; }
     }
 }
 

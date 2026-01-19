@@ -27,14 +27,14 @@ namespace ModeSelect.StateMachine
         }
         protected override void OnEnter()
         {
-            owner.CreateCursol();
-            deleteAction += Button.ButtonManager.CreateInstance(0, 6, "オートプレイ");
-            deleteAction += Button.ButtonManager.CreateInstance(1, 6, "レーン反転");
-            deleteAction += Button.ButtonManager.CreateInstance(2, 6, "上下反転");
-            deleteAction += Button.ButtonManager.CreateInstance(3, 6, "左右反転");
-            deleteAction += Button.ButtonManager.CreateInstance(4, 6, "デバイス変更");
-            deleteAction += Button.ButtonManager.CreateInstance(5, 6, "ノーツ速度");
-            (PropertyController, Action) tuple = PropertyController.CreateInstance();
+            owner.CreateCursor();
+            deleteAction += CreateButtonInstance(0, 6, "オートプレイ");
+            deleteAction += CreateButtonInstance(1, 6, "レーン反転");
+            deleteAction += CreateButtonInstance(2, 6, "上下反転");
+            deleteAction += CreateButtonInstance(3, 6, "左右反転");
+            deleteAction += CreateButtonInstance(4, 6, "デバイス変更");
+            deleteAction += CreateButtonInstance(5, 6, "ノーツ速度");
+            (PropertyController, Action) tuple = CreatePropertyInstance();
             mProperty = tuple.Item1;
             deleteAction += tuple.Item2;
             InitStates();
@@ -45,7 +45,7 @@ namespace ModeSelect.StateMachine
         }
         protected override void OnExit()
         {
-            owner.TryDeleteCursol();
+            owner.TryDeleteCursor();
             deleteAction?.Invoke();
             deleteAction = null;
         }
