@@ -52,4 +52,5 @@ private:
 	std::stringstream ss;
 
 	const int short_skip_time = 500; //i‚Ş or –ß‚é•b”(ƒ~ƒŠ•b)
+	//NewYorkBackRaise
 };
