@@ -5,31 +5,31 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Ooo/Ooo_Title.unity
     guid: 04dadac62f809004d8d29338cdc6ba33
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Kanda/OffLine/NotesTest.unity
     guid: 59c97817304ba484f9c279e8c6e09d08
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Kameda/Test_ModeSelectScene.unity
     guid: 10c381ab56b122247a5f205e3ea7f5d9
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Kameda/Test_MusicSelectScene.unity
     guid: ec1630ec4ade81a458558bd89774be29
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Onishi/Onishi_Credit.unity
     guid: 202384ae57444b24ba6cd543eeb638e7
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Onishi/Onishi_Result.unity
     guid: 827b6887297f22f44bcc36b0736f3c67
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Kanda/OffLine/LoadScene.unity
     guid: ebff2698750c3914ba8ff492c4c3bfe9
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Kanda/PlayerInput.unity
     guid: 8d77811bca5cd66488ade267d08fdc6d
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Kanda/OnLine/OnLinetest.unity
     guid: fa8e7e836f4bd2c4c8f070298cbc75e9
   m_configObjects:

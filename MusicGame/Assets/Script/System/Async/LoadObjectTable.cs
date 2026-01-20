@@ -10,7 +10,6 @@ namespace LoadForAsync
     public class LoadObjectTable
     {
         // オブジェクト型で保持する
-        // キーはAssetReferenceのRuntimeKey
         private Dictionary<string, Object> _loadedCache = new Dictionary<string, Object>();
 
         // メモリ解放用のハンドルを保存

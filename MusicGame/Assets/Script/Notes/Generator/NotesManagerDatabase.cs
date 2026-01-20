@@ -24,7 +24,7 @@ namespace Notes
         public string MusicFilePath;
 
         [Tooltip("ノーツのファイルパッシュ")]
-        public string NotesDataFilePath;
+        public List<string> NotesDataFilePath;
     }
 
     [System.Serializable]

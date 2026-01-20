@@ -58,11 +58,11 @@ namespace Notes
 
         // メンバー変数
 
-        public int BPM { get; private set; }
+        public float BPM { get; private set; }
 
         public List<Notes>[] notes { get; set; }
 
-        public NotesData(int bpm = 0)
+        public NotesData(float bpm = 0)
         {
             BPM = bpm;
             notes = new List<Notes>[2];
