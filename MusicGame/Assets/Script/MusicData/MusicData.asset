@@ -43,3 +43,13 @@ MonoBehaviour:
     normalPath: Chronomia/Chronomia_NORMAL.txt
     hardPath: Chronomia/Chronomia_HARD.txt
     expertPath: Chronomia/Chronomia_EXPERT.txt
+  - id: 3
+    name: New York Back Raise
+    composerName: "saaa + kei_iwata + stuv + \u308F\u304B\u3069\u308A"
+    musicPath: NewYorkBackRaise.mp3
+    demoMusicPath: 
+    BPM: 160
+    jacketPath: 
+    normalPath: 
+    hardPath: 
+    expertPath: NewYorkBackRaise/NewYorkBackRaise_EXPERT.txt

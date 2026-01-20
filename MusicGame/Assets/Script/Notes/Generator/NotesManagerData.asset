@@ -13,10 +13,9 @@ MonoBehaviour:
   m_Name: NotesManagerData
   m_EditorClassIdentifier: 
   fData:
-    MusicFilePath: Music/Chronomia
+    MusicFilePath: Music/NewYorkBackRaise
     NotesDataFilePath:
-    - TextData/NotesData/ShiningStar/ShiningStar_NORMAL
-    - TextData/NotesData/ShiningStar/ShiningStar_NORMAL
+    - TextData/NotesData/NewYorkBackRaise/NewYorkBackRaise_EXPERT
   nData:
     CreateTimeDelay: 1
     JudgmentTimeDelay: 0.1
