@@ -45,12 +45,12 @@ private:
 	float time;
 
 	float bpm; //4分音符が1分間に入る個数
-	std::string musicName = "./data/NewYorkBackRaise.mp3"; //使う音楽のファイル名を入れる
-	const std::string filename = "./data/NewYorkBackRaise_EXPERT.txt";
+	std::string musicName = "./data/NewYorkBackRaise_2nd.mp3"; //使う音楽のファイル名を入れる
+	const std::string filename = "./data/NewYorkBackRaise_EXPERT_2nd.txt";
 
 	NotesManager* mNotesManager;
 	std::stringstream ss;
 
 	const int short_skip_time = 500; //進む or 戻る秒数(ミリ秒)
-	//NewYorkBackRaise
+	//https://sdvx.in/chunithm/09/09027mst.htm
 };
