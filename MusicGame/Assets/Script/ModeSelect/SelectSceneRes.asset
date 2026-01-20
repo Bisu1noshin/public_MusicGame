@@ -97,4 +97,32 @@ MonoBehaviour:
       m_SubObjectGUID: 
       m_SubObjectType: 
       m_EditorAssetChanged: 1
+  - ObjectPath: SE_Enter
+    AssetReference:
+      m_AssetGUID: 8ab891a0e89aa02419ee52cdaeb3c467
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - ObjectPath: SE_Cancel
+    AssetReference:
+      m_AssetGUID: 3175fceacc5705d4790182a542911afb
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 1
+  - ObjectPath: SE_Beep
+    AssetReference:
+      m_AssetGUID: dc399500b2c96ab4cb56186dd92a48a5
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 1
+  - ObjectPath: SE_Scroll
+    AssetReference:
+      m_AssetGUID: 74b36b5b3b7cf384ba551572adf26116
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 1
   MusicBPM: 0

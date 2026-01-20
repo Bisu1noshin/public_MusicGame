@@ -13,7 +13,7 @@ namespace ModeSelect.StateMachine.Setting
 
         protected override void OnEnter()
         {
-            deleteAction += PopupController.CreateInstance("上下反転を" +
+            deleteAction += CreatePopupInstance("上下反転を" +
                 (owner.PlayerConfig.UpDownCahge ? "OFF" : "ON") + "にします。よろしいですか？");
             Player.enterAction = () =>
             {

@@ -22,9 +22,9 @@ namespace ModeSelect
         {
             mText.text = msg;
         }
-        public static (PropertyController, Action) CreateInstance()
+        public static (PropertyController, Action) CreateInstance(GameObject res)
         {
-            GameObject go = Instantiate(Resources.Load<GameObject>("ModeSelect/Property"));
+            GameObject go = Instantiate(res);
             go.transform.SetParent(GameObject.Find("Canvas").transform);
             go.transform.SetLocalPositionAndRotation(new Vector2(500, 0), Quaternion.identity);
             go.transform.localScale = Vector3.one;

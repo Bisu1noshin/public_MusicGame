@@ -52,9 +52,9 @@ namespace MusicSelect
             mText.text = str_;
             mOffsetPos = offset;
         }
-        public static Action CreateInstance(string str_, Vector2 offset)
+        public static Action CreateInstance(GameObject res, string str_, Vector2 offset)
         {
-            GameObject go = Instantiate(Resources.Load<GameObject>("MusicSelecter/GUI"));
+            GameObject go = Instantiate(res);
             go.transform.SetParent(GameObject.Find("Canvas").transform);
             go.transform.SetLocalPositionAndRotation(Vector2.zero, Quaternion.identity);
             go.transform.localScale = Vector3.one * 0.5f;

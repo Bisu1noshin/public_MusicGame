@@ -13,7 +13,7 @@ namespace ModeSelect.StateMachine.Setting
 
         protected override void OnEnter()
         {
-            deleteAction += PopupController.CreateInstance("レーン反転を" +
+            deleteAction += CreatePopupInstance("レーン反転を" +
                 (owner.PlayerConfig.LaneCahge ? "OFF" : "ON") + "にします。よろしいですか？");
             Player.enterAction = () =>
             {

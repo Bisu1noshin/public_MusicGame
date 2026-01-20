@@ -23,7 +23,7 @@ namespace ModeSelect
                 mCurrValue = transform.GetChild(1).GetComponent<TextMeshProUGUI>();
             }
         }
-        public void SetText(string str_)
+        public void Setnfo(string str_)
         {
             mText.text = str_;
         }
@@ -32,28 +32,27 @@ namespace ModeSelect
             if (normal) { return; }
             mCurrValue.text = "現在：" + v_.ToString();
         }
-        public static Action CreateInstance(string msg)
+        public static Action CreateInstance(string msg, GameObject res)
         {
-            GameObject res = Resources.Load<GameObject>("ModeSelect/Popup");
             GameObject go = Instantiate(res);
             go.transform.SetParent(GameObject.Find("Canvas").transform);
             go.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
             go.transform.localScale = Vector3.one;
             var ppc = go.GetComponent<PopupController>();
-            ppc.SetText(msg);
+            ppc.Setnfo(msg);
             Action f = () => Destroy(go);
             return f;
         }
 
-        public static (PopupController, Action) CreateInstanceForNotesSpeed(bool isController)
+        public static (PopupController, Action) CreateInstanceForNotesSpeed(bool isController, GameObject res)
         {
-            GameObject go = Instantiate(Resources.Load<GameObject>("ModeSelect/Popup_forNotesSpeed"));
+            GameObject go = Instantiate(res);
             go.transform.SetParent(GameObject.Find("Canvas").transform);
             go.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
             go.transform.localScale = Vector3.one;
             var ppc = go.GetComponent<PopupController>();
             ppc.SetInfo(false);
-            ppc.SetText((isController ? "左スティック上下" : "WキーとSキー") + "で\nノーツ速度の調整ができます。");
+            ppc.Setnfo((isController ? "左スティック上下" : "WキーとSキー") + "で\nノーツ速度の調整ができます。");
             Action f = () => Destroy(go);
             return (ppc, f);
         }
