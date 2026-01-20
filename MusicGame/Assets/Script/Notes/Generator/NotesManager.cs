@@ -296,7 +296,7 @@ namespace Notes {
             int index = 1;
             foreach (var path in n_paths)
             {
-                TextEditor.TextEditor textEditor = new(m_path, ObjectTable.GetAsset<TextAsset>("TextAsset_" + index.ToString()));
+                TextEditor.TextEditor textEditor = new(m_path, ObjectTable.GetAsset<TextAsset>("TextAsset"));
                 NotesData data = textEditor.NotesReadTxt();
                 data = NotesDataConversion.NotesDataReSize(data);
                 notesDatas.Add(data);
