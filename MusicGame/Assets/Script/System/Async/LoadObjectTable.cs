@@ -29,8 +29,15 @@ namespace LoadForAsync
 
             foreach (var result in results)
             {
-                if (result.asset == null) continue; // 失敗したら無視
-                _loadedCache.TryAdd(result.key, result.asset);// オブジェクトの登録
+                // 失敗したら無視
+                if (result.asset == null)
+                {
+                    Debug.LogError(result.key + "is null!!");
+                    continue;
+                }
+
+                // オブジェクトの登録
+                _loadedCache.TryAdd(result.key, result.asset);
             }
         }
 
@@ -56,7 +63,12 @@ namespace LoadForAsync
         /// <returns>取得できないときはnull</returns>
         public T GetAsset<T>(string reference) where T : Object
         {
-            return _loadedCache.TryGetValue(reference, out var obj) ? obj as T : null;
+            var o = _loadedCache.TryGetValue(reference, out var obj) ? obj as T : null;
+            if (o == null)
+            {
+                Debug.LogError(reference + "is null!!");
+            }
+            return o;
         }
 
         /// <summary>
@@ -72,6 +84,8 @@ namespace LoadForAsync
             }
             _loadedCache.Clear();
             _handles.Clear();
+
+            Debug.Log("ReleaseAll");
         }
     }
 

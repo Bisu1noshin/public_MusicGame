@@ -307,11 +307,6 @@ namespace Notes {
 
             Debug.Log("SuccessAsync");
         }
-
-        private void CreateNotesData()
-        {
-
-        }
     }
 }
 

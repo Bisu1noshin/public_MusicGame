@@ -25,6 +25,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a534b3fc500e43d47bcd33a25556cee0
+    m_Address: Assets/Prefab/TextData/NotesData/Chronomia/Chronomia_NORMAL.txt
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c1624fd4506bd1046a983066356e152e
     m_Address: Assets/Prefab/TextData/NotesData/Chronomia/Chronomia_EXPERT 1.txt
     m_ReadOnly: 0

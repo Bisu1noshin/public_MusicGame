@@ -47,9 +47,10 @@ namespace LoadForAsync
         public static async UniTask LoadAndSetSceneRef(LoadObjectTable ObjectTable, string NextSceneName)
         {
             await SceneManager.LoadSceneAsync(NextSceneName, LoadSceneMode.Single).ToUniTask();
+
             Scene scene = SceneManager.GetSceneByName(NextSceneName);
 
-            if (!scene.IsValid() || !scene.isLoaded)
+            if (!scene.IsValid())
             {
                 throw new Exception(NextSceneName + "は存在しないです");
             }
@@ -63,10 +64,9 @@ namespace LoadForAsync
                 foreach (var p in presenters)
                 {
                     p.SetAsyncObjects(ObjectTable);
-                    p.ReleaseAll = () => { ObjectTable.ReleaseAll(); };
+                    p.ReleaseAll = () => ObjectTable.ReleaseAll();
                 }
             }
         }
-
     }
 }
