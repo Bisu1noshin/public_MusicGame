@@ -250,7 +250,7 @@ namespace MusicSelect
         Action CreateMusicButtons(int currentNum = 0)
         {
             Action f = () => {
-                deleteAction += PropertyController.CreateInstance();
+                deleteAction += PropertyController.CreateInstance(res.GetValue("Property"));
                 foreach (MusicData m in mDataBase.musicDatabase)
                 {
                     deleteAction += MusicButtonController.CreateInstance(m.name, m.id, currentNum, m.demoMusicPath, m.jacketPath);

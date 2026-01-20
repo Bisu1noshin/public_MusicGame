@@ -67,9 +67,9 @@ namespace MusicSelect
             }
         }
 
-        public static Action CreateInstance()
+        public static Action CreateInstance(GameObject res)
         {
-            GameObject go = Instantiate(Resources.Load<GameObject>("MusicSelecter/Property"));
+            GameObject go = Instantiate(res);
             go.name = "Property";
             go.transform.SetParent(GameObject.Find("Canvas").transform);
             go.transform.localRotation = Quaternion.identity;

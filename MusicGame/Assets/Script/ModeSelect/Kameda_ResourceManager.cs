@@ -54,7 +54,10 @@ public class Kameda_ResourceManager : MonoBehaviour, IResourceManager, ISetAsync
             { "Enter", ObjectTable.GetAsset<AudioClip>("SE_Enter") },
             { "Cancel", ObjectTable.GetAsset<AudioClip>("SE_Cancel") },
             { "Scroll", ObjectTable.GetAsset<AudioClip>("SE_Scroll") },
-            { "Beep", ObjectTable.GetAsset<AudioClip>("SE_Beep") }
+            { "Beep", ObjectTable.GetAsset<AudioClip>("SE_Beep") },
+            { "ShiningStar", ObjectTable.GetAsset<AudioClip>("Demo_ShiningStar") },
+            { "G_e_n_g_a_o_z_o", ObjectTable.GetAsset<AudioClip>("Demo_G_e_n_g_a_o_z_o") },
+            { "Chronomia", ObjectTable.GetAsset<AudioClip>("Demo_Chronomia") }
         });
 
         loaded = true;
