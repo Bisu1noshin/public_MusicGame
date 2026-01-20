@@ -63,7 +63,7 @@ namespace TextEditor {
                 height++; // 行数加算
             }
 
-            int BPM = (int)Convert.ToSingle(textDatas[1][0]);
+            float BPM = (float)Convert.ToSingle(textDatas[1][0]);
 
             NotesData data = new NotesData(BPM);
 

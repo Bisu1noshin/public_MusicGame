@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using LoadForAsync;
 using Cysharp.Threading.Tasks;
 using System;
+using Unity.VisualScripting;
 
 namespace Notes {
 
@@ -27,6 +28,7 @@ namespace Notes {
         private bool goinstance = false;
 
         private string n_path = "TextData/NotesData/ShiningStar/ShiningStar_NORMAL";
+        private List<string> n_paths;
         private string m_path = "Music/ShiningStar";
 
         private readonly string[] NotesDir = new string[4]{
@@ -77,7 +79,7 @@ namespace Notes {
             // スクリプタルオブジェクトから読み込み
             if (NotesManagerData != null)
             {
-                n_path = NotesManagerData.fData.NotesDataFilePath;
+                n_paths = NotesManagerData.fData.NotesDataFilePath;
                 m_path = NotesManagerData.fData.MusicFilePath;
             }
 
@@ -101,12 +103,17 @@ namespace Notes {
                         notes[1, i] = Resources.Load<GameObject>(HoldNotesPath + NotesDir[i]);
                     }
 
-                    // ノーツの配置データの読み込み           
-                    notesData = text.NotesReadTxt();
-
                     // 生成用にデータを編集
-                    var notesDataConversion = new NotesDataConversion(notesData);
-                    notesData = notesDataConversion.GetData();
+                    List<NotesData> notesDatas = new List<NotesData>();
+                    foreach (var path in n_paths)
+                    {
+                        TextEditor.TextEditor textEditor = new(m_path, path);
+                        NotesData data = textEditor.NotesReadTxt();
+                        data = NotesDataConversion.NotesDataReSize(data);
+                        notesDatas.Add(data);
+                    }
+                    
+                    notesData = NotesDataConversion.NotesDataSum(notesDatas);
 
                     // 楽曲選択
                     {
@@ -205,8 +212,8 @@ namespace Notes {
             if (notesRange < 0) notesRange = 0;
 
             // ノーツ生成に必要なデータの構築
-            var BPMInfo = new BPMInfo(m_bpm: BPM, n_bpm: notesData.BPM);
-            var instantInfo = new NotesInstantInfo(notes[(int)notesKind, notesRange], NotesPosition[lane]);
+            var BPMInfo = new BPMInfo(m_bpm: BPM, n_bpm: (int)notesData.BPM);
+            var instantInfo = new NotesInstantInfo(notes[(int)notesKind, notesRange], NotesPosition[(int)NotesLane]);
             var _NotesManagerData = NotesManagerData.nData;
             _NotesManagerData.AutoPlay = NotesManagerData.PlayerConfig.AutoPlay;
 
@@ -250,7 +257,7 @@ namespace Notes {
             Notes notes_ = new(0, 0, 2, 3);
 
             // ノーツ生成に必要なデータの構築
-            BPMInfo BPMInfo = new(m_bpm: BPM, n_bpm: notesData.BPM);
+            BPMInfo BPMInfo = new(m_bpm: BPM, n_bpm: (int)notesData.BPM);
             NotesInstantInfo instantInfo = new(notes[(int)notes_.kind, (int)notes_.dir], NotesPosition[0]);
             NotesDebugInfo debugInfo = new(0, (NotesLane)0);
             
@@ -284,14 +291,26 @@ namespace Notes {
 
             audioSource.resource = ObjectTable.GetAsset<AudioResource>("Music");
 
-            TextEditor.TextEditor text = new(m_path, ObjectTable.GetAsset<TextAsset>("TextAsset"));
-            notesData = text.NotesReadTxt();
-
             // 生成用にデータを編集
-            var notesDataConversion = new NotesDataConversion(notesData);
-            notesData = notesDataConversion.GetData();
+            List<NotesData> notesDatas = new List<NotesData>();
+            int index = 1;
+            foreach (var path in n_paths)
+            {
+                TextEditor.TextEditor textEditor = new(m_path, ObjectTable.GetAsset<TextAsset>("TextAsset_" + index.ToString()));
+                NotesData data = textEditor.NotesReadTxt();
+                data = NotesDataConversion.NotesDataReSize(data);
+                notesDatas.Add(data);
+                index++;
+            }
+
+            notesData = NotesDataConversion.NotesDataSum(notesDatas);
 
             Debug.Log("SuccessAsync");
+        }
+
+        private void CreateNotesData()
+        {
+
         }
     }
 }
