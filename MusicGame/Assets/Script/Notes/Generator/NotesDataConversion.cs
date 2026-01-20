@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.IO;
+using Steamworks;
 
 namespace Notes
 {
@@ -192,12 +193,16 @@ namespace Notes
                     notesData.notes[1][(notesData.notes[1].Count - 1)].time,
                 };
 
+                float lastTime = new();
+                if (LastTime[0] > LastTime[1]) { lastTime = LastTime[0]; }
+                else { lastTime = LastTime[1]; }
+
                 for (int lane = 0; lane < 2; lane++)
                 {
                     for (int index = 0; index < data[i].notes[lane].Count; index++)
                     {
                         float CreateTime = data[i].notes[lane][index].time;
-                        CreateTime += LastTime[lane] + Delay;
+                        CreateTime += lastTime + Delay;
 
                         Notes notes = new Notes(
                             time_: CreateTime,
@@ -208,7 +213,7 @@ namespace Notes
 
                         notesData.notes[lane].Add(notes);
                     }
-                    
+
                 }
             }
 

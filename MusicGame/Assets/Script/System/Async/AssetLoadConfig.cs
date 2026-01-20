@@ -21,6 +21,12 @@ namespace LoadForAsync
     [System.Serializable]
     public class AssetReferenceObject
     {
+        public AssetReferenceObject(string path, AssetReference reference)
+        {
+            this.ObjectPath = path;
+            this.AssetReference = reference;
+        }
+
         [Tooltip("オブジェクトのパッシュ")]
         public string ObjectPath;
 

@@ -5,7 +5,6 @@ using ModeSelect.StateMachine;
 using Notes;
 using System.Data;
 using UnityEngine.AddressableAssets;
-using Mono.Cecil;
 using Cysharp.Threading.Tasks;
 using LoadForAsync;
 
@@ -42,7 +41,7 @@ namespace ModeSelect
         public bool _DebugMode => DebugMode;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Awake()
+        void Start()
         {
             resManager = GameObject.Find("ResourceManager").GetComponent<Kameda_ResourceManager>();
             SetObjects();

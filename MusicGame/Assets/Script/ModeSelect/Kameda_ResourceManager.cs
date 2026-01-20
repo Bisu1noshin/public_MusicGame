@@ -13,7 +13,7 @@ public class Kameda_ResourceManager : MonoBehaviour, IResourceManager, ISetAsync
     Dictionary.Dic<string, AudioClip> mAudioRes;
     bool loaded = false;
     
-    void Awake()
+    void Start()
     {
         DontDestroyOnLoad(this);
         if (!loaded)
@@ -22,6 +22,7 @@ public class Kameda_ResourceManager : MonoBehaviour, IResourceManager, ISetAsync
             SetSyncObjects();
         }
     }
+
     void OnDisable()
     {
         ReleaseAll?.Invoke();
@@ -55,7 +56,9 @@ public class Kameda_ResourceManager : MonoBehaviour, IResourceManager, ISetAsync
             { "Scroll", ObjectTable.GetAsset<AudioClip>("SE_Scroll") },
             { "Beep", ObjectTable.GetAsset<AudioClip>("SE_Beep") }
         });
+
         loaded = true;
+        Debug.Log("ModeSelectSceneManager is SuccessAsync");
     }
     void SetSyncObjects()
     {

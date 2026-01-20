@@ -54,7 +54,7 @@ namespace MusicSelect
         // 追記
         [SerializeField] private AssetLoadConfig AssetLoadConfig;
         [SerializeField] private List<AssetPair> musicList;
-        [SerializeField] private List<AssetPair> textList;
+        [SerializeField] private List<TextAssetPair> textList;
 
         private void Awake()
         {
@@ -298,8 +298,11 @@ namespace MusicSelect
         // 追記
         private async void LoadSceneRef(string musicPath_, string notesPath_)
         {
-            // 選択された楽曲とノーツのファイルを設定
-            foreach (var obj in AssetLoadConfig.ReferencesAssets)
+            // 直接書き換えない
+            var references = AssetLoadConfig.ReferencesAssets;
+
+            // 選択された楽曲を設定
+            foreach (var obj in references)
             {
                 if (obj.ObjectPath == "Music")
                 {
@@ -307,11 +310,21 @@ namespace MusicSelect
                     var found = musicList.Find(x => x.key == musicPath_);
                     if (found != null) obj.AssetReference = found.assetRef;
                 }
+            }
 
-                if (obj.ObjectPath == "TextAsset")
+            // 選択されたノーツファイルを設定
+            {
+                var found = textList.Find(x => x.key == notesPath_);
+                if (found != null)
                 {
-                    var found = textList.Find(x => x.key == notesPath_);
-                    if (found != null) obj.AssetReference = found.assetRef;
+                    int index = 1;
+                    foreach (var text in found.assetRefs)
+                    {
+                        AssetReferenceObject asset =
+                            new("TextAsset_" + index.ToString(), text);
+                        references.Add(asset);
+                        index++;
+                    }                    
                 }
             }
 
@@ -348,5 +361,12 @@ namespace MusicSelect
     {
         public string key; 
         public AssetReference assetRef;
+    }
+
+    [System.Serializable]
+    public class TextAssetPair
+    {
+        public string key;
+        public List<AssetReference> assetRefs;
     }
 }

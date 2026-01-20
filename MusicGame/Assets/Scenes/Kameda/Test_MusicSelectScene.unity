@@ -624,6 +624,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mDataBase: {fileID: 11400000, guid: 9d2520c407abb1f4a9e0d9943adf30fb, type: 2}
+  mNotesManager: {fileID: 11400000, guid: 0894919679aa8644e892fc74176583fe, type: 2}
   AssetLoadConfig: {fileID: 11400000, guid: 21f3559674afc3641a624a71bb59143e, type: 2}
   musicList:
   - key: ShiningStar.mp3
@@ -649,43 +650,50 @@ MonoBehaviour:
       m_EditorAssetChanged: 0
   textList:
   - key: ShiningStar/ShiningStar_NORMAL.txt
-    assetRef:
-      m_AssetGUID: f01ba9f867e24b543af16740b0836dde
+    assetRefs:
+    - m_AssetGUID: f01ba9f867e24b543af16740b0836dde
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - key: ShiningStar/ShiningStar_HARD.txt
+    assetRefs:
+    - m_AssetGUID: d9e15cc26bdc8604eb4da5450e0744b1
       m_SubObjectName: 
       m_SubObjectGUID: 
       m_SubObjectType: 
       m_EditorAssetChanged: 1
-  - key: ShiningStar/ShiningStar_HARD.txt
-    assetRef:
-      m_AssetGUID: d9e15cc26bdc8604eb4da5450e0744b1
-      m_SubObjectName: 
-      m_SubObjectGUID: 
-      m_SubObjectType: 
-      m_EditorAssetChanged: 0
   - key: ShiningStar/ShiningStar_EXPERT.txt
-    assetRef:
-      m_AssetGUID: dd570ee3224c9c5448bae66f3504bd93
+    assetRefs:
+    - m_AssetGUID: dd570ee3224c9c5448bae66f3504bd93
       m_SubObjectName: 
       m_SubObjectGUID: 
       m_SubObjectType: 
-      m_EditorAssetChanged: 0
-  - key: gengaozo/Gengaozo_EXPERT.txt
-    assetRef:
-      m_AssetGUID: 41f34407f34b73a40b1fd0ab10dd5753
+      m_EditorAssetChanged: 1
+  - key: Chronomia/Chronomia_NORMAL.txt
+    assetRefs:
+    - m_AssetGUID: a534b3fc500e43d47bcd33a25556cee0
       m_SubObjectName: 
       m_SubObjectGUID: 
       m_SubObjectType: 
-      m_EditorAssetChanged: 0
-  - key: Chronomia/Chronomia_EXPERT.txt
-    assetRef:
-      m_AssetGUID: c1624fd4506bd1046a983066356e152e
-      m_SubObjectName: 
-      m_SubObjectGUID: 
-      m_SubObjectType: 
-      m_EditorAssetChanged: 0
+      m_EditorAssetChanged: 1
   - key: Chronomia/Chronomia_HARD.txt
-    assetRef:
-      m_AssetGUID: 4ac371e352db55743ad50ac396af720b
+    assetRefs:
+    - m_AssetGUID: 4ac371e352db55743ad50ac396af720b
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 1
+  - key: Chronomia/Chronomia_EXPERT.txt
+    assetRefs:
+    - m_AssetGUID: c1624fd4506bd1046a983066356e152e
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 1
+  - key: gengaozo/Gengaozo_EXPERT.txt
+    assetRefs:
+    - m_AssetGUID: 41f34407f34b73a40b1fd0ab10dd5753
       m_SubObjectName: 
       m_SubObjectGUID: 
       m_SubObjectType: 
