@@ -11,6 +11,7 @@ public class Kameda_ResourceManager : MonoBehaviour, IResourceManager, ISetAsync
     Dictionary.Dic<string, GameObject> mModeObjectRes;
     Dictionary.Dic<string, GameObject> mMusicObjectRes;
     Dictionary.Dic<string, AudioClip> mAudioRes;
+    Dictionary.Dic<string, Sprite> mSpriteRes;
     bool loaded = false;
     
     void Start()
@@ -58,6 +59,12 @@ public class Kameda_ResourceManager : MonoBehaviour, IResourceManager, ISetAsync
             { "ShiningStar", ObjectTable.GetAsset<AudioClip>("Demo_ShiningStar") },
             { "G_e_n_g_a_o_z_o", ObjectTable.GetAsset<AudioClip>("Demo_G_e_n_g_a_o_z_o") },
             { "Chronomia", ObjectTable.GetAsset<AudioClip>("Demo_Chronomia") }
+        });
+        mSpriteRes = new(new()
+        {
+            { "ShiningStar", ObjectTable.GetAsset <Sprite>("Jacket_ShiningStar") },
+            { "G_e_n_g_a_o_z_o", ObjectTable.GetAsset<Sprite>("Jacket_G_e_n_g_a_o_z_o") },
+            { "Chronomia", ObjectTable.GetAsset<Sprite>("Jacket_Chronomia") }
         });
 
         loaded = true;
@@ -118,10 +125,20 @@ public class Kameda_ResourceManager : MonoBehaviour, IResourceManager, ISetAsync
         }
         return mAudioRes.GetValue(path);
     }
+    public Sprite GetSprite(string path)
+    {
+        if (path == null)
+        {
+            Debug.LogError("Error! path is NULL");
+            return null;
+        }
+        return mSpriteRes.GetValue(path);
+    }
 }
 
 public interface IResourceManager
 {
     GameObject GetGameObject(string path, bool isModeRes = true);
     AudioClip GetAudioClip(string path);
+    Sprite GetSprite(string path);
 }

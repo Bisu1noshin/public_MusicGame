@@ -52,23 +52,23 @@ namespace MusicSelect
             }
         }
 
-        public void SetProperty(string text, string audioPath, string imagePath)
+        public void SetProperty(string text, AudioClip audio, Sprite image)
         {
             mText.text = text;
-            if (audioPath != string.Empty)
+            if (audio != null)
             {
-                AudioClip clip = Resources.Load("DemoMusic/" + audioPath) as AudioClip;
-                mAudio.clip = clip;
+                mAudio.clip = audio;
                 mAudio.Play();
             }
-            if (imagePath != string.Empty)
+            if (image != null)
             {
-                mThumbnail.sprite = Resources.Load<Sprite>("Image/MusicJacket/" + imagePath);
+                mThumbnail.sprite = image;
             }
         }
 
-        public static Action CreateInstance(GameObject res)
+        public static (PropertyController, Action) CreateInstance(GameObject res)
         {
+            if (res == null) res = Resources.Load<GameObject>("MusicSelecter/Property");
             GameObject go = Instantiate(res);
             go.name = "Property";
             go.transform.SetParent(GameObject.Find("Canvas").transform);
@@ -78,7 +78,7 @@ namespace MusicSelect
             pc.mRect.anchoredPosition = new(550.0f, -1000.0f);
 
             Action f = () => { pc.mState = ButtonState.Dead; };
-            return f;
+            return (pc, f);
         }
     }
 

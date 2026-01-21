@@ -14,17 +14,13 @@ namespace MusicSelect
     }
     public class MusicButtonController : MonoBehaviour
     {
-
-
         [SerializeField] public ButtonState mState { get; private set; }
         IMusicSelecter mSelecter;
         const float buttonPadding = 180;
         TextMeshProUGUI mText;
         RectTransform mRect;
         TextScroller mTextScroller;
-        PropertyController mProperty;
         int id;
-        string audioPath, imagePath;
 
         private void Awake()
         {
@@ -32,16 +28,11 @@ namespace MusicSelect
             mRect = GetComponent<RectTransform>();
             mSelecter = GameObject.Find("SceneManager").GetComponent<MusicSelectSceneManager>();
             mTextScroller = GetComponentInChildren<TextScroller>();
-            mProperty = GameObject.Find("Property").GetComponent<PropertyController>();
             mState = ButtonState.Appear;
         }
 
         void Start()
         {
-            if (id == mSelecter.SelectNum[0])
-            {
-                mProperty.SetProperty(mText.text, audioPath, imagePath);
-            }
         }
 
         void Update()
@@ -66,7 +57,6 @@ namespace MusicSelect
                         if (!mTextScroller.enabled)
                         {
                             mTextScroller.enabled = true;
-                            mProperty.SetProperty(mText.text, audioPath, imagePath);
                         }
                     }
                     else
@@ -92,22 +82,21 @@ namespace MusicSelect
             }
 
         }
-        public void SetInfo(string text_, int id_, string audioPath_, string imagePath_)
+        public void SetInfo(string text_, int id_)
         {
             mText.text = text_;
             id = id_;
-            audioPath = audioPath_;
-            imagePath = imagePath_;
         }
-        public static Action CreateInstance(string text_, int id_, int currId_, string audioPath_, string imagePath_)
+        public static Action CreateInstance(GameObject res, string text_, int id_, int currId_)
         {
-            GameObject go = Instantiate(Resources.Load<GameObject>("MusicSelecter/MusicButton"));
+            if (res == null) res = Resources.Load<GameObject>("MusicSelecter/MusicButton");
+            GameObject go = Instantiate(res);
             go.name = text_;
             go.transform.SetParent(GameObject.Find("Canvas").transform.GetChild(1).transform);
             go.transform.SetLocalPositionAndRotation(new(-1360.0f, (currId_ - id_) * 1.3f * buttonPadding, 0.0f), Quaternion.identity);
             go.transform.localScale = Vector3.one;
             MusicButtonController mbc = go.GetComponent<MusicButtonController>();
-            mbc.SetInfo(text_, id_, audioPath_, imagePath_);
+            mbc.SetInfo(text_, id_);
 
             Action f = () => { mbc.mState = ButtonState.Dead; };
 
