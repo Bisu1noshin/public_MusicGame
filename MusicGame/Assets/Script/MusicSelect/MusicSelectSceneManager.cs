@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using LoadForAsync;
 using Notes;
-using Player;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEditor;
 using UnityEngine.AddressableAssets;
 using GameInfo;
 
@@ -29,8 +27,10 @@ namespace MusicSelect
         private AudioClip enter, cancel, scroll, beep;
 
         int maxValue;
-        int[] selectNum;
-        public int[] SelectNum => selectNum;
+        int[] mSelectNum;
+        public int[] SelectNum => mSelectNum;
+        int mPrevSelectNum;
+        PropertyController mProperty;
         public int MaxValue => maxValue;
         public MusicDatabase mDataBase;
         string[] mCurrNotesData;
@@ -50,6 +50,7 @@ namespace MusicSelect
         public bool UseKeyboard => mNotesManager != null ? mNotesManager.PlayerConfig.InputDevice == InputDevice.KyeBord : true;
 
         Dictionary.Dic<string, GameObject> res;
+        List<DemoMusicInfo> demoPropertys;
 
         // 追記
         [SerializeField] private AssetLoadConfig AssetLoadConfig;
@@ -78,16 +79,20 @@ namespace MusicSelect
             {
                 untouchableTimer -= Time.deltaTime;
             }
+            if (mSceneState == SceneState.MusicSelect && mPrevSelectNum != mSelectNum[0])
+            {
+                DemoMusicInfo info = demoPropertys[mSelectNum[0]];
+                mProperty?.SetProperty(info.name, info.audio, info.sprite);
+                mPrevSelectNum = mSelectNum[0];
+            }
+            
         }
 
         void Init()
         {
             resManager = GameObject.Find("ResourceManager").GetComponent<Kameda_ResourceManager>();
-            if (!GameObject.Find("Player"))
-            {
-                CreatePlayer();
-            }
-            selectNum = new int[3];
+            
+            mSelectNum = new int[3];
             mCurrNotesData = new string[4];
             mSceneState = SceneState.MusicSelect;
             mAudio = GetComponent<AudioSource>();
@@ -105,6 +110,11 @@ namespace MusicSelect
                 { "Player", Resource.GetGameObject("Player", false) },
                 { "GUI", Resource.GetGameObject("GUI", false) }
             });
+
+            if (!GameObject.Find("Player"))
+            {
+                CreatePlayer();
+            }
         }
 
         public void GoForward()
@@ -114,24 +124,24 @@ namespace MusicSelect
             switch (mSceneState)
             {
                 case SceneState.MusicSelect:
-                    if (selectNum[0] >= mDataBase.musicDatabase.Count - 1)
+                    if (mSelectNum[0] >= mDataBase.musicDatabase.Count - 1)
                     {
                         mAudio.PlayOneShot(beep);
                     }
                     else
                     {
-                        selectNum[0]++;
+                        mSelectNum[0]++;
                         mAudio.PlayOneShot(scroll);
                     }
                     break;
                 case SceneState.LevelSelect:
-                    if (selectNum[1] > maxValue - 1)
+                    if (mSelectNum[1] > maxValue - 1)
                     {
                         mAudio.PlayOneShot(beep);
                     }
                     else
                     {
-                        selectNum[1]++;
+                        mSelectNum[1]++;
                         mAudio.PlayOneShot(scroll);
                     }
                     break;
@@ -147,24 +157,24 @@ namespace MusicSelect
             switch (mSceneState)
             {
                 case SceneState.MusicSelect:
-                    if (selectNum[0] <= 0)
+                    if (mSelectNum[0] <= 0)
                     {
                         mAudio.PlayOneShot(beep);
                     }
                     else
                     {
-                        selectNum[0]--;
+                        mSelectNum[0]--;
                         mAudio.PlayOneShot(scroll);
                     }
                     break;
                 case SceneState.LevelSelect:
-                    if (selectNum[1] <= 0)
+                    if (mSelectNum[1] <= 0)
                     {
                         mAudio.PlayOneShot(beep);
                     }
                     else
                     {
-                        selectNum[1]--;
+                        mSelectNum[1]--;
                         mAudio.PlayOneShot(scroll);
                     }
                     break;
@@ -179,10 +189,10 @@ namespace MusicSelect
             switch (mSceneState)
             {
                 case SceneState.MusicSelect:
-                    mCurrNotesData[0] = mDataBase.musicDatabase[selectNum[0]].normalPath;
-                    mCurrNotesData[1] = mDataBase.musicDatabase[selectNum[0]].hardPath;
-                    mCurrNotesData[2] = mDataBase.musicDatabase[selectNum[0]].expertPath;
-                    mCurrMusicPath = mDataBase.musicDatabase[selectNum[0]].musicPath;
+                    mCurrNotesData[0] = mDataBase.musicDatabase[mSelectNum[0]].normalPath;
+                    mCurrNotesData[1] = mDataBase.musicDatabase[mSelectNum[0]].hardPath;
+                    mCurrNotesData[2] = mDataBase.musicDatabase[mSelectNum[0]].expertPath;
+                    mCurrMusicPath = mDataBase.musicDatabase[mSelectNum[0]].musicPath;
                     DeleteAndExecuteAction(CreateLevelButtons());
                     mAudio.PlayOneShot(enter);
                     timer = 0.15f;
@@ -203,6 +213,7 @@ namespace MusicSelect
                     }
                     break;
                 case SceneState.EnterGame:
+                    Resource.ReleaseAll?.Invoke();
                     SingletonDataManager.instance.SetMusicId(mDataBase.musicDatabase[SelectNum[0]]);
                     LoadSceneRef(mCurrMusicPath, mCurrNotesData[SelectNum[1]]);
                     break;
@@ -226,6 +237,7 @@ namespace MusicSelect
                     mAudio.PlayOneShot(cancel);
                     timer = 0.02f;
                     untouchableTimer = 0.2f;
+                    mPrevSelectNum = mSelectNum[0];
                     break;
                 case SceneState.EnterGame:
                     DeleteAndExecuteAction(CreateLevelButtons(mSceneState));
@@ -250,13 +262,19 @@ namespace MusicSelect
         Action CreateMusicButtons(int currentNum = 0)
         {
             Action f = () => {
-                deleteAction += PropertyController.CreateInstance();
+                (PropertyController, Action) tuple =  PropertyController.CreateInstance(res.GetValue("Property"));
+                mProperty = tuple.Item1;
+                deleteAction += tuple.Item2;
+                demoPropertys = new();
                 foreach (MusicData m in mDataBase.musicDatabase)
                 {
-                    deleteAction += MusicButtonController.CreateInstance(m.name, m.id, currentNum, m.demoMusicPath, m.jacketPath);
+                    deleteAction += MusicButtonController.CreateInstance(res.GetValue("MusicButton"), m.name, m.id, currentNum);
+                    demoPropertys.Add(new(m.name, Resource.GetAudioClip(m.musicScriptData.fileName), Resource.GetSprite(m.musicScriptData.fileName)));
                 }
                 deleteAction += GUIController.CreateInstance(res.GetValue("GUI"), "決定(A)", new(-180.0f, -50.0f));
                 deleteAction += GUIController.CreateInstance(res.GetValue("GUI"), "戻る(B)", new(0.0f, -50.0f));
+                mPrevSelectNum = mSelectNum[0];
+                mProperty?.SetProperty(demoPropertys[mPrevSelectNum].name, demoPropertys[mPrevSelectNum].audio, demoPropertys[mPrevSelectNum].sprite);
             };
             return f;
         }
@@ -299,10 +317,11 @@ namespace MusicSelect
         private async void LoadSceneRef(string musicPath_, string notesPath_)
         {
             // 直接書き換えない
-            var references = AssetLoadConfig.ReferencesAssets;
+            var references = new AssetLoadConfig();
+            references = AssetLoadConfig;
 
             // 選択された楽曲を設定
-            foreach (var obj in references)
+            foreach (var obj in references.ReferencesAssets)
             {
                 if (obj.ObjectPath == "Music")
                 {
@@ -322,14 +341,14 @@ namespace MusicSelect
                     {
                         AssetReferenceObject asset =
                             new("TextAsset_" + index.ToString(), text);
-                        references.Add(asset);
+                        references.ReferencesAssets.Add(asset);
                         index++;
                     }                    
                 }
             }
 
             string naxtSceneName = "NotesTest";
-            await DataTransferSystem.LoadSceneRef(AssetLoadConfig, naxtSceneName);
+            await DataTransferSystem.LoadSceneRef(references, naxtSceneName);
         }
     }
     public interface ISceneManager : IMusicSelecter, ILevelSelecter
@@ -354,6 +373,19 @@ namespace MusicSelect
         int[] SelectNum { get; }
         int MaxValue { get; }
         float untouchableTimer { get; }
+    }
+
+    public class DemoMusicInfo
+    {
+        public string name;
+        public AudioClip audio;
+        public Sprite sprite;
+        public DemoMusicInfo(string name, AudioClip audio, Sprite sprite)
+        {
+            this.name = name;
+            this.audio = audio;
+            this.sprite = sprite;
+        }
     }
 
     [System.Serializable]

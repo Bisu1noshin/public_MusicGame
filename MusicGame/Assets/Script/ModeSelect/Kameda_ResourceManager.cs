@@ -11,6 +11,7 @@ public class Kameda_ResourceManager : MonoBehaviour, IResourceManager, ISetAsync
     Dictionary.Dic<string, GameObject> mModeObjectRes;
     Dictionary.Dic<string, GameObject> mMusicObjectRes;
     Dictionary.Dic<string, AudioClip> mAudioRes;
+    Dictionary.Dic<string, Sprite> mSpriteRes;
     bool loaded = false;
     
     void Start()
@@ -20,6 +21,16 @@ public class Kameda_ResourceManager : MonoBehaviour, IResourceManager, ISetAsync
         {
             Debug.LogWarning("Warning! Async load hasn't DONE");
             SetSyncObjects();
+        }
+
+        // 自分を破壊する処理の追加
+        {
+            Action deleateObject = () =>
+            {
+                if (this.gameObject != null) GameObject.Destroy(this.gameObject);
+            };
+
+            ReleaseAll += deleateObject;
         }
     }
 
@@ -54,7 +65,20 @@ public class Kameda_ResourceManager : MonoBehaviour, IResourceManager, ISetAsync
             { "Enter", ObjectTable.GetAsset<AudioClip>("SE_Enter") },
             { "Cancel", ObjectTable.GetAsset<AudioClip>("SE_Cancel") },
             { "Scroll", ObjectTable.GetAsset<AudioClip>("SE_Scroll") },
-            { "Beep", ObjectTable.GetAsset<AudioClip>("SE_Beep") }
+            { "Beep", ObjectTable.GetAsset<AudioClip>("SE_Beep") },
+            { "ShiningStar", ObjectTable.GetAsset<AudioClip>("Demo_ShiningStar") },
+            { "Gengaozo", ObjectTable.GetAsset<AudioClip>("Demo_G_e_n_g_a_o_z_o") },
+            { "Chronomia", ObjectTable.GetAsset<AudioClip>("Demo_Chronomia") },
+            //要修正
+            { "NewYorkBackRaise", null }
+        });
+        mSpriteRes = new(new()
+        {
+            { "ShiningStar", ObjectTable.GetAsset <Sprite>("Jacket_ShiningStar") },
+            { "Gengaozo", ObjectTable.GetAsset<Sprite>("Jacket_G_e_n_g_a_o_z_o") },
+            { "Chronomia", ObjectTable.GetAsset<Sprite>("Jacket_Chronomia") },
+            //要修正
+            { "NewYorkBackRaise", null }
         });
 
         loaded = true;
@@ -85,9 +109,23 @@ public class Kameda_ResourceManager : MonoBehaviour, IResourceManager, ISetAsync
             { "Enter", Resources.Load<AudioClip>("SoundEffect/Enter") },
             { "Cancel", Resources.Load<AudioClip>("SoundEffect/Cancel") },
             { "Scroll", Resources.Load<AudioClip>("SoundEffect/Scroll") },
-            { "Beep", Resources.Load<AudioClip>("SoundEffect/Beep") }
+            { "Beep", Resources.Load<AudioClip>("SoundEffect/Beep") },
+            { "ShiningStar", Resources.Load<AudioClip>("DemoMusic/ShiningStar") },
+            { "Gengaozo", Resources.Load<AudioClip>("DemoMusic/G_e_n_g_a_o_z_o") },
+            { "Chronomia", Resources.Load<AudioClip>("DemoMusic/Chronomia") },
+            //要修正
+            { "NewYorkBackRaise", null }
+        });
+        mSpriteRes = new(new()
+        {
+            { "ShiningStar", Resources.Load<Sprite>("Image/MusicJacket/ShiningStar") },
+            { "Gengaozo", Resources.Load<Sprite>("Image/MusicJacket/G_e_n_g_a_o_z_o") },
+            { "Chronomia", Resources.Load<Sprite>("Image/MusicJacket/Chronomia") },
+            //要修正
+            { "NewYorkBackRaise", null }
         });
         loaded = true;
+        Debug.Log("ModeSelectSceneManager is SuccessSync");
     }
 
     public GameObject GetGameObject(string path, bool isModeRes = true)
@@ -115,10 +153,22 @@ public class Kameda_ResourceManager : MonoBehaviour, IResourceManager, ISetAsync
         }
         return mAudioRes.GetValue(path);
     }
+    public Sprite GetSprite(string path)
+    {
+        if (path == null)
+        {
+            Debug.LogError("Error! path is NULL");
+            return null;
+        }
+        return mSpriteRes.GetValue(path);
+    }
 }
 
 public interface IResourceManager
 {
     GameObject GetGameObject(string path, bool isModeRes = true);
     AudioClip GetAudioClip(string path);
+    Sprite GetSprite(string path);
+
+    Action ReleaseAll { get; set; }
 }

@@ -24,7 +24,10 @@ namespace Dictionary
             }
             else
             {
-                Debug.LogError($"Error! key {key} is not found");
+                if (key != null)
+                    Debug.LogError($"Error!" + key + " is not found");
+                else
+                    Debug.LogError($"Error! key is NULL!!");
                 return default;
             }
         }

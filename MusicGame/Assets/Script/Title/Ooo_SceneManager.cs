@@ -7,7 +7,7 @@ public class Ooo_SceneManager : MonoBehaviour
     [SerializeField] AssetLoadConfig mAssetResources;
     private void Awake()
     {
-        Application.targetFrameRate = 60;
+        Application.targetFrameRate = 240;
     }
 
     private void Update()

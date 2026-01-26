@@ -23,6 +23,8 @@ MonoBehaviour:
     normalPath: ShiningStar/ShiningStar_NORMAL.txt
     hardPath: ShiningStar/ShiningStar_HARD.txt
     expertPath: ShiningStar/ShiningStar_EXPERT.txt
+    musicScriptData:
+      fileName: ShiningStar
   - id: 1
     name: G e n g a o z o
     composerName: -45
@@ -33,6 +35,8 @@ MonoBehaviour:
     normalPath: 
     hardPath: 
     expertPath: gengaozo/Gengaozo_EXPERT.txt
+    musicScriptData:
+      fileName: Gengaozo
   - id: 2
     name: Chronomia
     composerName: Lime
@@ -43,6 +47,8 @@ MonoBehaviour:
     normalPath: Chronomia/Chronomia_NORMAL.txt
     hardPath: Chronomia/Chronomia_HARD.txt
     expertPath: Chronomia/Chronomia_EXPERT.txt
+    musicScriptData:
+      fileName: Chronomia
   - id: 3
     name: New York Back Raise
     composerName: "saaa + kei_iwata + stuv + \u308F\u304B\u3069\u308A"
@@ -53,3 +59,5 @@ MonoBehaviour:
     normalPath: 
     hardPath: 
     expertPath: NewYorkBackRaise/NewYorkBackRaise_EXPERT.txt
+    musicScriptData:
+      fileName: NewYorkBackRaise

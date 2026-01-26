@@ -24,7 +24,7 @@ namespace ModeSelect.StateMachine
                 () => stateMachine.ExecuteTriggerAction(Trigger.Single),
                 () => stateMachine.ExecuteTriggerAction(Trigger.Multi),
                 () => stateMachine.ExecuteTriggerAction(Trigger.Setting),
-                () => SceneManager.LoadScene("Ooo_Title")
+                () => { owner.Resource.ReleaseAll?.Invoke(); SceneManager.LoadScene("Ooo_Title");  }
             };
             
         }
