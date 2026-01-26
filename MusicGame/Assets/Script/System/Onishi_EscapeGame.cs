@@ -13,6 +13,12 @@ public class Onishi_EscapeGame : MonoBehaviour
 
         DontDestroyOnLoad(this.gameObject);
 
+        // フレームレートの固定
+        {
+            QualitySettings.vSyncCount = 0;
+            Time.fixedDeltaTime = 1f / 120f;
+        }
+
 #if UNITY_EDITOR
 #else
         // マウスカーソル非表示

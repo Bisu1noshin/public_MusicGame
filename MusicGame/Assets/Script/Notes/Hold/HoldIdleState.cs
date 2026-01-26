@@ -10,7 +10,7 @@ namespace Notes
     {
         public HoldIdleState(NotesObject owner, IStateMachine<NotesTrigger> st) : base(owner, st)
         {
-
+            
         }
 
         protected override void OnEnter()
@@ -37,7 +37,7 @@ namespace Notes
         protected override void ActiveNotes(PlayerState state, float ActiveTime)
         {
             float DiscriminationTime = ActiveTime - owner.CreateTime;
-            InGamePlayer.NotesAction[(int)owner.DebugInfo.NotesLane] -= ActiveNotes;
+            InGamePlayer.NotesAction[(int)owner.DebugInfo.NotesLane] = null;
 
             if (state == owner.AnsTrigger)
             {

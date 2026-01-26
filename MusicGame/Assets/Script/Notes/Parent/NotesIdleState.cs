@@ -14,25 +14,22 @@ namespace Notes
 
         protected override void OnEnter()
         {
-            
+
         }
 
         protected override void OnUpdate(float deltaTime)
         {
             // ノーツのイベントをplayerにバインド
-            if (owner.timeCnt >= owner.Judg.CreateTimeDelay - owner.Judg.JudgmentTimeDelay)
+            if (InGamePlayer.NotesAction[(int)owner.DebugInfo.NotesLane] == null && isActionBind)
             {
-                if (isActionBind)
-                {
-                    InGamePlayer.NotesAction[(int)owner.DebugInfo.NotesLane] += ActiveNotes;
-                    isActionBind = false;
-                }
+                InGamePlayer.NotesAction[(int)owner.DebugInfo.NotesLane] = ActiveNotes;
+                isActionBind = false;
             }
         }
 
         protected override void OnExit()
         {
-            InGamePlayer.NotesAction[(int)owner.DebugInfo.NotesLane] -= ActiveNotes;
+            InGamePlayer.NotesAction[(int)owner.DebugInfo.NotesLane] = null;
         }
 
         // 発火イベント

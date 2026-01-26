@@ -78,6 +78,8 @@ namespace Notes
 
         public void DebugLogScore(int num = 0,NotesLane lane = 0)
         {
+            if (score[0] == NotesScore.Perfect) { return; }
+
             string s = "Log :" + num + " " + lane.ToString();
 
             for (int i = 0; i < score.Length; i++)

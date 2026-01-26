@@ -26,7 +26,7 @@ namespace Notes
 
         protected override void OnExit()
         {
-            
+
         }
 
         // 発火イベント
