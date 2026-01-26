@@ -75,9 +75,9 @@ namespace ModeSelect.StateMachine
         {
             return PropertyController.CreateInstance(mObjectRes.GetValueOrDefault("Property"));
         }
-        protected Action CreatePopupInstance(string str)
+        protected Action CreatePopupInstance(string str, int size = 96)
         {
-            return PopupController.CreateInstance(str, mObjectRes.GetValueOrDefault("Popup"));
+            return PopupController.CreateInstance(str, mObjectRes.GetValueOrDefault("Popup"), size);
         }
         protected (PopupController, Action) CreateSpeedPopupInstance(bool isKeyboard)
         {
