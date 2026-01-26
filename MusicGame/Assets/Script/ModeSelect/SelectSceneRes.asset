@@ -125,4 +125,46 @@ MonoBehaviour:
       m_SubObjectGUID: 
       m_SubObjectType: 
       m_EditorAssetChanged: 1
+  - ObjectPath: "Demo_\u30B7\u30E3\u30A4\u30CB\u30F3\u30B0\u30B9\u30BF\u30FC"
+    AssetReference:
+      m_AssetGUID: 09ada344bdf45d241a8f353f38ce79e7
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
+  - ObjectPath: Demo_G_e_n_g_a_o_z_o
+    AssetReference:
+      m_AssetGUID: 1127fc098607f9842b036c45a8fce93e
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 1
+  - ObjectPath: Deno_Chronomia
+    AssetReference:
+      m_AssetGUID: 0a17d073f5469fe4ea8c6598114bfdb3
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 1
+  - ObjectPath: Jacket_ShiningStar
+    AssetReference:
+      m_AssetGUID: 3e1273a088baae841b626ba5352d8b57
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 1
+  - ObjectPath: Jacket_G_e_n_g_a_o_z_o
+    AssetReference:
+      m_AssetGUID: 78b3d589360a2a641911490587549861
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 1
+  - ObjectPath: Jacket_Chronomia
+    AssetReference:
+      m_AssetGUID: 0b84454ddd4c9184fad1a6f001540dfd
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 1
   MusicBPM: 0

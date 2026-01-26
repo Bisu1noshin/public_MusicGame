@@ -15,8 +15,28 @@ MonoBehaviour:
   m_GroupName: SelectSceneResources
   m_GUID: ede93d6d21980a349ae431c3401bd6fd
   m_SerializeEntries:
+  - m_GUID: 09ada344bdf45d241a8f353f38ce79e7
+    m_Address: Assets/Prefab/SelectSceneResources/MusicSelecter/DemoMusic/ShiningStar_Demo.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0a17d073f5469fe4ea8c6598114bfdb3
+    m_Address: Assets/Prefab/SelectSceneResources/MusicSelecter/DemoMusic/Chronomia_Demo.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0b84454ddd4c9184fad1a6f001540dfd
+    m_Address: Assets/Prefab/SelectSceneResources/MusicSelecter/MusicJacket/Chronomia.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0e8e235a7f431a54f99777329c3b2c10
     m_Address: Assets/Prefab/SelectSceneResources/ModeSelect/Cursol.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1127fc098607f9842b036c45a8fce93e
+    m_Address: Assets/Prefab/SelectSceneResources/MusicSelecter/DemoMusic/gengaozo_Demo.mp3
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -35,6 +55,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3e1273a088baae841b626ba5352d8b57
+    m_Address: Assets/Prefab/SelectSceneResources/MusicSelecter/MusicJacket/ShiningStar.jpg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 53228227644095d489297c167efb6e5b
     m_Address: Assets/Prefab/SelectSceneResources/MusicSelecter/Property.prefab
     m_ReadOnly: 0
@@ -42,6 +67,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 74b36b5b3b7cf384ba551572adf26116
     m_Address: Assets/Prefab/SelectSceneResources/SoundEffect/Scroll.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 78b3d589360a2a641911490587549861
+    m_Address: Assets/Prefab/SelectSceneResources/MusicSelecter/MusicJacket/G_e_n_g_a_o_z_o.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

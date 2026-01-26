@@ -11,6 +11,7 @@ public class Kameda_ResourceManager : MonoBehaviour, IResourceManager, ISetAsync
     Dictionary.Dic<string, GameObject> mModeObjectRes;
     Dictionary.Dic<string, GameObject> mMusicObjectRes;
     Dictionary.Dic<string, AudioClip> mAudioRes;
+    Dictionary.Dic<string, Sprite> mSpriteRes;
     bool loaded = false;
     
     void Start()
@@ -21,16 +22,6 @@ public class Kameda_ResourceManager : MonoBehaviour, IResourceManager, ISetAsync
             Debug.LogWarning("Warning! Async load hasn't DONE");
             SetSyncObjects();
         }
-
-        // 自分を破壊する命令を追加
-        {
-            Action DestoroyFunk = () =>
-            {
-                if (this.gameObject != null) GameObject.Destroy(this.gameObject);
-            };
-
-            ReleaseAll += DestoroyFunk;
-        }     
     }
 
     void OnDisable()
@@ -64,7 +55,16 @@ public class Kameda_ResourceManager : MonoBehaviour, IResourceManager, ISetAsync
             { "Enter", ObjectTable.GetAsset<AudioClip>("SE_Enter") },
             { "Cancel", ObjectTable.GetAsset<AudioClip>("SE_Cancel") },
             { "Scroll", ObjectTable.GetAsset<AudioClip>("SE_Scroll") },
-            { "Beep", ObjectTable.GetAsset<AudioClip>("SE_Beep") }
+            { "Beep", ObjectTable.GetAsset<AudioClip>("SE_Beep") },
+            { "ShiningStar", ObjectTable.GetAsset<AudioClip>("Demo_ShiningStar") },
+            { "G_e_n_g_a_o_z_o", ObjectTable.GetAsset<AudioClip>("Demo_G_e_n_g_a_o_z_o") },
+            { "Chronomia", ObjectTable.GetAsset<AudioClip>("Demo_Chronomia") }
+        });
+        mSpriteRes = new(new()
+        {
+            { "ShiningStar", ObjectTable.GetAsset <Sprite>("Jacket_ShiningStar") },
+            { "G_e_n_g_a_o_z_o", ObjectTable.GetAsset<Sprite>("Jacket_G_e_n_g_a_o_z_o") },
+            { "Chronomia", ObjectTable.GetAsset<Sprite>("Jacket_Chronomia") }
         });
 
         loaded = true;
@@ -125,15 +125,20 @@ public class Kameda_ResourceManager : MonoBehaviour, IResourceManager, ISetAsync
         }
         return mAudioRes.GetValue(path);
     }
+    public Sprite GetSprite(string path)
+    {
+        if (path == null)
+        {
+            Debug.LogError("Error! path is NULL");
+            return null;
+        }
+        return mSpriteRes.GetValue(path);
+    }
 }
 
 public interface IResourceManager
 {
     GameObject GetGameObject(string path, bool isModeRes = true);
     AudioClip GetAudioClip(string path);
-
-    /// <summary>
-    /// メモリにのったリソースデータと自分を破壊するアクション
-    /// </summary>
-    Action ReleaseAll { get; set; }
+    Sprite GetSprite(string path);
 }

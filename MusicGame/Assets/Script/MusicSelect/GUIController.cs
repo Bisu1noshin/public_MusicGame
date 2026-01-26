@@ -54,6 +54,7 @@ namespace MusicSelect
         }
         public static Action CreateInstance(GameObject res, string str_, Vector2 offset)
         {
+            if (res == null) res = Resources.Load<GameObject>("MusicSelecter/GUI");
             GameObject go = Instantiate(res);
             go.transform.SetParent(GameObject.Find("Canvas").transform);
             go.transform.SetLocalPositionAndRotation(Vector2.zero, Quaternion.identity);
