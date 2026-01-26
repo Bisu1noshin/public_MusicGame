@@ -21,4 +21,12 @@ public class MusicData
     public string hardPath;
     public string expertPath;
     public Notes.NotesData[] notesData = new Notes.NotesData[4];
+    public MusicScriptData musicScriptData;
+}
+
+[System.Serializable]
+public sealed class MusicScriptData
+{
+    [Tooltip("コード上で呼び出す際の名前")]
+    public string fileName;
 }

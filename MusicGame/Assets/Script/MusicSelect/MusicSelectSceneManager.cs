@@ -91,10 +91,7 @@ namespace MusicSelect
         void Init()
         {
             resManager = GameObject.Find("ResourceManager").GetComponent<Kameda_ResourceManager>();
-            if (!GameObject.Find("Player"))
-            {
-                CreatePlayer();
-            }
+            
             mSelectNum = new int[3];
             mCurrNotesData = new string[4];
             mSceneState = SceneState.MusicSelect;
@@ -113,6 +110,11 @@ namespace MusicSelect
                 { "Player", Resource.GetGameObject("Player", false) },
                 { "GUI", Resource.GetGameObject("GUI", false) }
             });
+
+            if (!GameObject.Find("Player"))
+            {
+                CreatePlayer();
+            }
         }
 
         public void GoForward()
@@ -211,6 +213,7 @@ namespace MusicSelect
                     }
                     break;
                 case SceneState.EnterGame:
+                    Resource.ReleaseAll?.Invoke();
                     SingletonDataManager.instance.SetMusicId(mDataBase.musicDatabase[SelectNum[0]]);
                     LoadSceneRef(mCurrMusicPath, mCurrNotesData[SelectNum[1]]);
                     break;
@@ -266,7 +269,7 @@ namespace MusicSelect
                 foreach (MusicData m in mDataBase.musicDatabase)
                 {
                     deleteAction += MusicButtonController.CreateInstance(res.GetValue("MusicButton"), m.name, m.id, currentNum);
-                    demoPropertys.Add(new(m.name, Resource.GetAudioClip(m.name), Resource.GetSprite(m.name)));
+                    demoPropertys.Add(new(m.name, Resource.GetAudioClip(m.musicScriptData.fileName), Resource.GetSprite(m.musicScriptData.fileName)));
                 }
                 deleteAction += GUIController.CreateInstance(res.GetValue("GUI"), "決定(A)", new(-180.0f, -50.0f));
                 deleteAction += GUIController.CreateInstance(res.GetValue("GUI"), "戻る(B)", new(0.0f, -50.0f));
@@ -314,10 +317,11 @@ namespace MusicSelect
         private async void LoadSceneRef(string musicPath_, string notesPath_)
         {
             // 直接書き換えない
-            var references = AssetLoadConfig.ReferencesAssets;
+            var references = new AssetLoadConfig();
+            references = AssetLoadConfig;
 
             // 選択された楽曲を設定
-            foreach (var obj in references)
+            foreach (var obj in references.ReferencesAssets)
             {
                 if (obj.ObjectPath == "Music")
                 {
@@ -337,14 +341,14 @@ namespace MusicSelect
                     {
                         AssetReferenceObject asset =
                             new("TextAsset_" + index.ToString(), text);
-                        references.Add(asset);
+                        references.ReferencesAssets.Add(asset);
                         index++;
                     }                    
                 }
             }
 
             string naxtSceneName = "NotesTest";
-            await DataTransferSystem.LoadSceneRef(AssetLoadConfig, naxtSceneName);
+            await DataTransferSystem.LoadSceneRef(references, naxtSceneName);
         }
     }
     public interface ISceneManager : IMusicSelecter, ILevelSelecter
