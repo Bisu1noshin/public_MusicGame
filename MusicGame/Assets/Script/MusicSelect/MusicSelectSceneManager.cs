@@ -83,10 +83,7 @@ namespace MusicSelect
         void Init()
         {
             resManager = GameObject.Find("ResourceManager").GetComponent<Kameda_ResourceManager>();
-            if (!GameObject.Find("Player"))
-            {
-                CreatePlayer();
-            }
+            
             selectNum = new int[3];
             mCurrNotesData = new string[4];
             mSceneState = SceneState.MusicSelect;
@@ -105,6 +102,10 @@ namespace MusicSelect
                 { "Player", Resource.GetGameObject("Player", false) },
                 { "GUI", Resource.GetGameObject("GUI", false) }
             });
+            if (!GameObject.Find("Player"))
+            {
+                CreatePlayer();
+            }
         }
 
         public void GoForward()
@@ -203,6 +204,7 @@ namespace MusicSelect
                     }
                     break;
                 case SceneState.EnterGame:
+                    Resource.ReleaseAll?.Invoke();
                     SingletonDataManager.instance.SetMusicId(mDataBase.musicDatabase[SelectNum[0]]);
                     LoadSceneRef(mCurrMusicPath, mCurrNotesData[SelectNum[1]]);
                     break;
@@ -299,10 +301,10 @@ namespace MusicSelect
         private async void LoadSceneRef(string musicPath_, string notesPath_)
         {
             // 直接書き換えない
-            var references = AssetLoadConfig.ReferencesAssets;
+            var references = AssetLoadConfig;
 
             // 選択された楽曲を設定
-            foreach (var obj in references)
+            foreach (var obj in references.ReferencesAssets)
             {
                 if (obj.ObjectPath == "Music")
                 {
@@ -322,14 +324,14 @@ namespace MusicSelect
                     {
                         AssetReferenceObject asset =
                             new("TextAsset_" + index.ToString(), text);
-                        references.Add(asset);
+                        references.ReferencesAssets.Add(asset);
                         index++;
                     }                    
                 }
             }
 
             string naxtSceneName = "NotesTest";
-            await DataTransferSystem.LoadSceneRef(AssetLoadConfig, naxtSceneName);
+            await DataTransferSystem.LoadSceneRef(references, naxtSceneName);
         }
     }
     public interface ISceneManager : IMusicSelecter, ILevelSelecter

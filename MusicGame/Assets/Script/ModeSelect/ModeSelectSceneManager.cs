@@ -23,8 +23,6 @@ namespace ModeSelect
     {
         IResourceManager resManager;
         public IResourceManager Resource => resManager;
-        
-        public Action ReleaseAll { get; set; }
 
         AudioSource mAudio;
         AudioClip[] mAudioClips;

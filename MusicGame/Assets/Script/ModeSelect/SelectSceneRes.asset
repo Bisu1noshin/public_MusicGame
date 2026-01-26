@@ -20,7 +20,7 @@ MonoBehaviour:
       m_SubObjectGUID: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
-  - ObjectPath: Mode_Cursol
+  - ObjectPath: Mode_Cursor
     AssetReference:
       m_AssetGUID: 0e8e235a7f431a54f99777329c3b2c10
       m_SubObjectName: 

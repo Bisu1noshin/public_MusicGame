@@ -21,6 +21,16 @@ public class Kameda_ResourceManager : MonoBehaviour, IResourceManager, ISetAsync
             Debug.LogWarning("Warning! Async load hasn't DONE");
             SetSyncObjects();
         }
+
+        // 自分を破壊する命令を追加
+        {
+            Action DestoroyFunk = () =>
+            {
+                if (this.gameObject != null) GameObject.Destroy(this.gameObject);
+            };
+
+            ReleaseAll += DestoroyFunk;
+        }     
     }
 
     void OnDisable()
@@ -121,4 +131,9 @@ public interface IResourceManager
 {
     GameObject GetGameObject(string path, bool isModeRes = true);
     AudioClip GetAudioClip(string path);
+
+    /// <summary>
+    /// メモリにのったリソースデータと自分を破壊するアクション
+    /// </summary>
+    Action ReleaseAll { get; set; }
 }
