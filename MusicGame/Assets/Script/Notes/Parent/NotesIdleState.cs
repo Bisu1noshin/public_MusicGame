@@ -22,7 +22,7 @@ namespace Notes
             // ノーツのイベントをplayerにバインド
             if (owner.timeCnt >= owner.Judg.CreateTimeDelay - owner.Judg.JudgmentTimeDelay)
             {
-                if (isActionBind)
+                if (InGamePlayer.NotesAction[(int)owner.DebugInfo.NotesLane] == null && isActionBind)
                 {
                     InGamePlayer.NotesAction[(int)owner.DebugInfo.NotesLane] = ActiveNotes;
                     isActionBind = false;
