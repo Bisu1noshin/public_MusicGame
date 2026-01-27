@@ -58,6 +58,8 @@ namespace Notes {
 
             fallSpeed = (transform.position.y + 3f) / Judg.CreateTimeDelay;
             holdCnt = 0;
+
+            if (Judg.AutoPlay) { Judg.JudgmentTimeDelay = 0; }
         }
 
 
