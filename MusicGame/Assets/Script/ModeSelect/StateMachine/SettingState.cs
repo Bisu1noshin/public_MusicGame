@@ -48,6 +48,7 @@ namespace ModeSelect.StateMachine
             owner.TryDeleteCursor();
             deleteAction?.Invoke();
             deleteAction = null;
+            mStateMachine = null;
         }
 
         void InitStates()

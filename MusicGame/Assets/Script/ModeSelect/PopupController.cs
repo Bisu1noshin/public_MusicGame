@@ -23,23 +23,24 @@ namespace ModeSelect
                 mCurrValue = transform.GetChild(1).GetComponent<TextMeshProUGUI>();
             }
         }
-        public void Setnfo(string str_)
+        public void Setnfo(string str_, int size)
         {
             mText.text = str_;
+            mText.fontSize = size;
         }
         public void SetValue(float v_)
         {
             if (normal) { return; }
             mCurrValue.text = "現在：" + v_.ToString();
         }
-        public static Action CreateInstance(string msg, GameObject res)
+        public static Action CreateInstance(string msg, GameObject res, int size = 96)
         {
             GameObject go = Instantiate(res);
             go.transform.SetParent(GameObject.Find("Canvas").transform);
             go.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
             go.transform.localScale = Vector3.one;
             var ppc = go.GetComponent<PopupController>();
-            ppc.Setnfo(msg);
+            ppc.Setnfo(msg, size);
             Action f = () => Destroy(go);
             return f;
         }
@@ -52,7 +53,7 @@ namespace ModeSelect
             go.transform.localScale = Vector3.one;
             var ppc = go.GetComponent<PopupController>();
             ppc.SetInfo(false);
-            ppc.Setnfo((isController ? "左スティック上下" : "WキーとSキー") + "で\nノーツ速度の調整ができます。");
+            ppc.Setnfo((isController ? "左スティック上下" : "WキーとSキー") + "で\nノーツ速度の調整ができます。", 96);
             Action f = () => Destroy(go);
             return (ppc, f);
         }
