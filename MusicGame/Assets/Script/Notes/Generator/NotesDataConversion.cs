@@ -186,7 +186,7 @@ namespace Notes
 
             for (int i = 1; i < data.Count; i++)
             {
-                float Delay = 60.0f / data[0].BPM * data[i].BPM;
+                float Delay = data[i].BPM;
                 float[] LastTime = new float[2]
                 {
                     notesData.notes[0][(notesData.notes[0].Count - 1)].time,

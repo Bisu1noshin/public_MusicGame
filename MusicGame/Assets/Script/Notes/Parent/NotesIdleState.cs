@@ -20,10 +20,13 @@ namespace Notes
         protected override void OnUpdate(float deltaTime)
         {
             // ノーツのイベントをplayerにバインド
-            if (InGamePlayer.NotesAction[(int)owner.DebugInfo.NotesLane] == null && isActionBind)
+            if (owner.timeCnt >= owner.Judg.CreateTimeDelay - owner.Judg.JudgmentTimeDelay)
             {
-                InGamePlayer.NotesAction[(int)owner.DebugInfo.NotesLane] = ActiveNotes;
-                isActionBind = false;
+                if (isActionBind)
+                {
+                    InGamePlayer.NotesAction[(int)owner.DebugInfo.NotesLane] = ActiveNotes;
+                    isActionBind = false;
+                }
             }
         }
 
