@@ -11,7 +11,7 @@ public class TestSteam : MonoBehaviour
     protected Callback<LobbyMatchList_t> lobbyMatchList;
 
     private NetworkManager networkManager;
-    private const string HostAddressKey = "HostAddress";
+    private const string HostAddressKey = "卒業制作_MusicGame";
 
     void Start()
     {
