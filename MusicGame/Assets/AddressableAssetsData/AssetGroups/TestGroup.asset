@@ -15,6 +15,11 @@ MonoBehaviour:
   m_GroupName: TestGroup
   m_GUID: 1d191bc6505b8e74a809187a5247c6a3
   m_SerializeEntries:
+  - m_GUID: 1919300f592ee9341a9e707409fb19ac
+    m_Address: Assets/Prefab/Music/NewYorkBackRaise.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2d7b13354f3c7424b84ee74f05f4fb47
     m_Address: Notes/FlickNotes
     m_ReadOnly: 0

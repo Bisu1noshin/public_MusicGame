@@ -648,6 +648,13 @@ MonoBehaviour:
       m_SubObjectGUID: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
+  - key: NewYorkBackRaise.mp3
+    assetRef:
+      m_AssetGUID: 1919300f592ee9341a9e707409fb19ac
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: 
+      m_EditorAssetChanged: 0
   textList:
   - key: ShiningStar/ShiningStar_NORMAL.txt
     assetRefs:
