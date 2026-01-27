@@ -20,6 +20,16 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7fe6528b4ad19714492aff6510fb2abc
+    m_Address: TextData/NotesData/NewYorkBackRaise/NewYorkBackRaise_EXPERT
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b644373c2930d894780cdab897ce77ac
+    m_Address: TextData/NotesData/NewYorkBackRaise/NewYorkBackRaise_EXPERT_2nd
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 058bd306260b5f848af6f38b77fa2c8d, type: 2}
   m_SchemaSet:

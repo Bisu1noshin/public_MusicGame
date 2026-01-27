@@ -15,7 +15,8 @@ MonoBehaviour:
   fData:
     MusicFilePath: Music/NewYorkBackRaise
     NotesDataFilePath:
-    - TextData/NotesData/test
+    - TextData/NotesData/NewYorkBackRaise/NewYorkBackRaise_EXPERT
+    - TextData/NotesData/NewYorkBackRaise/NewYorkBackRaise_EXPERT_2nd
   nData:
     CreateTimeDelay: 1
     JudgmentTimeDelay: 0.1
