@@ -15,6 +15,7 @@ namespace ModeSelect.StateMachine
             "シングルプレイで遊びます",
             "マルチプレイで遊びます",
             "ゲームプレイの設定ができます",
+            "ゲーム制作者・作曲者を表示します",
             "タイトルに戻ります"
         };
         public HomeState(ModeSelectSceneManager owner, IStateMachine<Trigger> st) : base(owner, st)
@@ -24,6 +25,7 @@ namespace ModeSelect.StateMachine
                 () => stateMachine.ExecuteTriggerAction(Trigger.Single),
                 () => stateMachine.ExecuteTriggerAction(Trigger.Multi),
                 () => stateMachine.ExecuteTriggerAction(Trigger.Setting),
+                () => { owner.Resource.ReleaseAll?.Invoke(); SceneManager.LoadScene("Onishi_Credit"); },
                 () => { owner.Resource.ReleaseAll?.Invoke(); SceneManager.LoadScene("Ooo_Title");  }
             };
             
@@ -32,10 +34,12 @@ namespace ModeSelect.StateMachine
         {
             InitAction();
             
-            deleteAction += CreateButtonInstance(0, 4, "シングルプレイ");
-            deleteAction += CreateButtonInstance(1, 4, "マルチプレイ");
-            deleteAction += CreateButtonInstance(2, 4, "設定");
-            deleteAction += CreateButtonInstance(3, 4, "タイトルに戻る");
+            deleteAction += CreateButtonInstance(0, 5, "シングルプレイ");
+            deleteAction += CreateButtonInstance(1, 5, "マルチプレイ");
+            deleteAction += CreateButtonInstance(2, 5, "設定");
+            deleteAction += CreateButtonInstance(3, 5, "クレジット");
+            deleteAction += CreateButtonInstance(4, 5, "タイトルに戻る");
+            
             (PropertyController, Action) tuple = CreatePropertyInstance();
             mProperty = tuple.Item1;
             deleteAction += tuple.Item2;
@@ -45,7 +49,7 @@ namespace ModeSelect.StateMachine
         protected override void OnUpdate(float deltaTime)
         {
             mProperty.SetText(explaination[mSelectNum]);
-            if (owner.CursorRect) owner.CursorRect.anchoredPosition = new(-350.0f, -(mSelectNum - (4 - 1) / 2.0f) * (540 / 4 * 2));
+            if (owner.CursorRect) owner.CursorRect.anchoredPosition = new(-350.0f, -(mSelectNum - (5 - 1) / 2.0f) * (540 / 5 * 2));
             if (mSelectNum != mPrevSelectNum)
             {
                 ReplaceEnterAction(mSelectNum);
