@@ -63,12 +63,7 @@ namespace LoadForAsync
         /// <returns>取得できないときはnull</returns>
         public T GetAsset<T>(string reference) where T : Object
         {
-            var o = _loadedCache.TryGetValue(reference, out var obj) ? obj as T : null;
-            if (o == null)
-            {
-                Debug.LogError(reference + "is null!!");
-            }
-            return o;
+            return _loadedCache.TryGetValue(reference, out var obj) ? obj as T : null;
         }
 
         /// <summary>

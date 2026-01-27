@@ -698,7 +698,7 @@ MonoBehaviour:
       m_SubObjectGUID: 
       m_SubObjectType: 
       m_EditorAssetChanged: 1
-  - key: NewYorkBackRaise_EXPERT.txt
+  - key: NewYorkBackRaise/NewYorkBackRaise_EXPERT.txt
     assetRefs:
     - m_AssetGUID: 7fe6528b4ad19714492aff6510fb2abc
       m_SubObjectName: 

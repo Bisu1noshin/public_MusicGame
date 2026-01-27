@@ -91,6 +91,18 @@ namespace Notes {
 
             TextEditor.TextEditor text = new(m_path, n_path);
 
+            // 曲の再生速度の変更
+            audioSource.pitch = NotesManagerData.nData.MusicSpeed;
+
+            // ノーツの最大値の定義
+            for (int i = 0; i < createIndex_max.Length; i++)
+            {
+                createIndex_max[i] = notesData.notes[i].Count;
+            }
+        }
+
+        private void Start()
+        {
             // リソースの読み込み
             {
                 if (audioSource.resource == null)
@@ -112,7 +124,7 @@ namespace Notes {
                         data = NotesDataConversion.NotesDataReSize(data);
                         notesDatas.Add(data);
                     }
-                    
+
                     notesData = NotesDataConversion.NotesDataSum(notesDatas);
 
                     // 楽曲選択
@@ -121,15 +133,6 @@ namespace Notes {
                     }
 #endif
                 }
-            }
-
-            // 曲の再生速度の変更
-            audioSource.pitch = NotesManagerData.nData.MusicSpeed;
-
-            // ノーツの最大値の定義
-            for (int i = 0; i < createIndex_max.Length; i++)
-            {
-                createIndex_max[i] = notesData.notes[i].Count;
             }
         }
 
@@ -294,13 +297,23 @@ namespace Notes {
             // 生成用にデータを編集
             List<NotesData> notesDatas = new List<NotesData>();
             int index = 1;
-            foreach (var path in n_paths)
+
+            var textAsset = new List<TextAsset>();
+            while (true)
             {
-                TextEditor.TextEditor textEditor = new(m_path, ObjectTable.GetAsset<TextAsset>("TextAsset_" + index.ToString()));
+                var asset = ObjectTable.GetAsset<TextAsset>("TextAsset_" + index.ToString());
+                if (asset == null) break;
+
+                textAsset.Add(asset);
+                index++;
+            }
+
+            foreach (var path in textAsset)
+            {
+                TextEditor.TextEditor textEditor = new(m_path, path);
                 NotesData data = textEditor.NotesReadTxt();
                 data = NotesDataConversion.NotesDataReSize(data);
                 notesDatas.Add(data);
-                index++;
             }
 
             notesData = NotesDataConversion.NotesDataSum(notesDatas);
