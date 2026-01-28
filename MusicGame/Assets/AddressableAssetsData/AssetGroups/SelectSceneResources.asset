@@ -15,6 +15,11 @@ MonoBehaviour:
   m_GroupName: SelectSceneResources
   m_GUID: ede93d6d21980a349ae431c3401bd6fd
   m_SerializeEntries:
+  - m_GUID: 06f8b376da334a142a98ea7837976e73
+    m_Address: Assets/Prefab/SelectSceneResources/MusicSelecter/DemoMusic/NewYorkBackRaise_Demo.ogg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 09ada344bdf45d241a8f353f38ce79e7
     m_Address: Assets/Prefab/SelectSceneResources/MusicSelecter/DemoMusic/ShiningStar_Demo.mp3
     m_ReadOnly: 0
@@ -87,6 +92,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8ab891a0e89aa02419ee52cdaeb3c467
     m_Address: Assets/Prefab/SelectSceneResources/SoundEffect/Enter.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 917f5a8830173b141aadd7f8957f4a2b
+    m_Address: Assets/Prefab/SelectSceneResources/MusicSelecter/MusicJacket/NewYorkBackRaise.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
