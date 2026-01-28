@@ -46,8 +46,12 @@ namespace Notes {
 
         public int holdCnt;
 
-        private float fallSpeed;
+        private float fallSpeedY;
+        private float fallSpeedZ;
+        
         protected StateMachine<NotesState, NotesTrigger> st;
+
+        private Vector3 PerfectVec = new Vector3(1, 0.115470052f, -6.81273317f);
 
         protected void Awake()
         {
@@ -56,7 +60,8 @@ namespace Notes {
 
         protected virtual void Start() {
 
-            fallSpeed = (transform.position.y + 3f) / Judg.CreateTimeDelay;
+            fallSpeedY = PerfectVec.y - transform.position.y / Judg.CreateTimeDelay;
+            fallSpeedZ = PerfectVec.z - transform.position.z / Judg.CreateTimeDelay;
             holdCnt = 0;
 
             if (Judg.AutoPlay) { Judg.JudgmentTimeDelay = 0; }
@@ -66,8 +71,9 @@ namespace Notes {
         protected virtual void FixedUpdate()
         {
             // 落下処理
-            float speed = -1 * fallSpeed * Time.fixedDeltaTime * Judg.MusicSpeed;
-            transform.position += new Vector3(0, speed, speed * 5.96f / 5f);
+            float speedY = fallSpeedY * Time.fixedDeltaTime * Judg.MusicSpeed;
+            float speedZ = fallSpeedZ * Time.fixedDeltaTime * Judg.MusicSpeed;
+            transform.position += new Vector3(0, speedY, speedZ);
 
             // オートプレイの処理
             if (timeCnt >= Judg.CreateTimeDelay)

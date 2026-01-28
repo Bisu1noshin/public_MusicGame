@@ -17,13 +17,13 @@ namespace Notes {
             {
                 for (int i = 0; i < Max_holdCnt; i++)
                 {
-                    var value = 60.0 / i_.BPMInfo.MusicBPM / 2.0 * 16.0 / i_.Judgment.CreateTimeDelay*i_.NotesSpeed + 1.0 / 15.0;
+                    var value = 60.0 / i_.BPMInfo.MusicBPM / 2.0 * 7.412925 / i_.Judgment.CreateTimeDelay + 2 / 15;
                     var Y_Point = (value + 1.0) / 2.0 + value * i;
                     var vector = new Vector3(0, (float)Y_Point, 0);
                     var rot = new Vector3(0, 0, 180f * i);
                     transform.GetChild(i).localPosition = vector;
                     transform.GetChild(i).localRotation = Quaternion.Euler(rot);
-                    transform.GetChild(i).localScale = new Vector3(1, (float)value / 2.5f, 1) * 2.5f;
+                    transform.GetChild(i).localScale = new Vector3(1, (float)value / 1.732051f, 1) * 1.732051f;
                     transform.GetChild(i).gameObject.gameObject.SetActive(true);
                 }
             }

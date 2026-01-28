@@ -19,7 +19,7 @@ namespace Notes
 
             // スプライトの調整
             {
-                var value = 2.5f;
+                var value = 1.732051f;
                 transform.GetChild(0).localScale = new Vector3(value, value, value);
             }
 
