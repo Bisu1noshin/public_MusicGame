@@ -220,9 +220,24 @@ namespace Notes
             return notesData;
         }
 
-        public NotesData GetData()
+        public static int TotalNotesScore(NotesData data,int MusicBPM)
         {
-            return data;
+            int totalscore = 0;
+
+            for (int i = 0; i < data.notes.Length; i++)
+            {
+                foreach (var notes in data.notes[i])
+                {
+                    // 幅の再定義
+                    var average = 2.0f * MusicBPM / data.BPM;
+
+                    var cnt = (int)(notes.range * average);
+
+                    totalscore += (cnt + 1) * 2;
+                }
+            }
+           
+            return totalscore;
         }
     }
 }

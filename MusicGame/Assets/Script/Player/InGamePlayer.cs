@@ -110,7 +110,7 @@ namespace Player
 
         protected override void SetPlayerInput()
         {
-            manager = GameObject.Find("NotesGenarator").GetComponent<Notes.NotesManager>();
+            manager = GameObject.Find("Rail").GetComponent<Notes.NotesManager>();
             this.inputDevice = manager.NotesManagerData.PlayerConfig.InputDevice;
         }
 

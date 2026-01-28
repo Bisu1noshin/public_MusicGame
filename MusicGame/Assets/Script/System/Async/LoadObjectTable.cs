@@ -12,6 +12,9 @@ namespace LoadForAsync
         // オブジェクト型で保持する
         private Dictionary<string, Object> _loadedCache = new Dictionary<string, Object>();
 
+        // BPMを保存する
+        public int MusicBPM { get; private set; }
+
         // メモリ解放用のハンドルを保存
         private List<AsyncOperationHandle> _handles = new List<AsyncOperationHandle>();
 
@@ -39,6 +42,8 @@ namespace LoadForAsync
                 // オブジェクトの登録
                 _loadedCache.TryAdd(result.key, result.asset);
             }
+
+            MusicBPM = config.MusicBPM;
         }
 
         /// <summary>

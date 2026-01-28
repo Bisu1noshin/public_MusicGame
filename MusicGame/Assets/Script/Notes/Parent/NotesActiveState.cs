@@ -20,7 +20,7 @@ namespace Notes
 
             if (score == NotesScore.Miss) { return; }
 
-            Vector3 pos = new(owner.transform.position.x, -3.0f, 0);
+            var pos = new Vector3(owner.transform.position.x, -0.109999999f, -6.80000019f);
             GameObject.Instantiate(JugeEfect[(int)score - 1], pos, Quaternion.identity);
         }
 

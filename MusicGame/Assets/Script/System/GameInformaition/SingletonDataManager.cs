@@ -13,6 +13,7 @@ namespace GameInfo
     {
         public static SingletonDataManager instance;
         public List<NotesScore> score;
+        public int TotalScore { get; private set; }
         public MusicData MusicData { get; private set; }
 
         private void Awake()
@@ -28,6 +29,7 @@ namespace GameInfo
 
             DontDestroyOnLoad(this.gameObject);
             score = new();
+            TotalScore = 0;
         }
 
         public void SetScore(NotesScore[] s_)
@@ -36,6 +38,7 @@ namespace GameInfo
             {
                 // 配列から加算する
                 score.Add(s);
+                TotalScore += (int)s;
             }
         }
 

@@ -67,9 +67,10 @@ namespace Notes {
                         throw new Exception("0はできません");
                     }
 
-                    var indexY = 16f * NotesManagerData.PlayerConfig.NotesSpeed;
+                    var indexY = 4.84974194f;//16f * NotesManagerData.PlayerConfig.NotesSpeed;
+                    var indexZ = -1.10851252f;
 
-                    NotesPosition[i] = new Vector3(1.0f * value, indexY - 3f, 0f);
+                    NotesPosition[i] = new Vector3(1.0f * value, indexY, indexZ);
                 }
                 
                 InGameTime = 0;
@@ -317,6 +318,11 @@ namespace Notes {
             }
 
             notesData = NotesDataConversion.NotesDataSum(notesDatas);
+
+            // 正規のBPMをセットする
+            BPM = ObjectTable.MusicBPM;
+
+            var totalscore = NotesDataConversion.TotalNotesScore(notesData, BPM);
 
             Debug.Log("SuccessAsync");
         }
