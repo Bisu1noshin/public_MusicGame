@@ -124,7 +124,7 @@ namespace Notes {
                 typeof(RushNotes)
             };
 
-            Quaternion q = Quaternion.Euler(new Vector3(0, 0, 0));
+            Quaternion q = Quaternion.Euler(new Vector3(50, 0, 0));
             GameObject go = GameObject.Instantiate
                 (informaiton.InstantInfo.NotesObj, informaiton.InstantInfo.CreatePos, q);
 
