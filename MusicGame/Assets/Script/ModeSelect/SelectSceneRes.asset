@@ -146,6 +146,14 @@ MonoBehaviour:
       m_SubObjectGUID: 
       m_SubObjectType: 
       m_EditorAssetChanged: 1
+  - ObjectPath: Demo_NewYorkBackRaise
+    AssetReference:
+      m_AssetGUID: 06f8b376da334a142a98ea7837976e73
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      m_EditorAssetChanged: 0
   - ObjectPath: Jacket_ShiningStar
     AssetReference:
       m_AssetGUID: 3e1273a088baae841b626ba5352d8b57
@@ -166,6 +174,14 @@ MonoBehaviour:
     AssetReference:
       m_AssetGUID: 0b84454ddd4c9184fad1a6f001540dfd
       m_SubObjectName: Chronomia_0
+      m_SubObjectGUID: 
+      m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      m_EditorAssetChanged: 1
+  - ObjectPath: Jacket_NewYorkBackRaise
+    AssetReference:
+      m_AssetGUID: 917f5a8830173b141aadd7f8957f4a2b
+      m_SubObjectName: stage_0
       m_SubObjectGUID: 
       m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null

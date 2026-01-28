@@ -2,7 +2,6 @@
 using TMPro;
 using UnityEngine.UI;
 using DG.Tweening;
-using Notes;
 using GameInfo;
 using UnityEngine.SceneManagement;
 

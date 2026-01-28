@@ -53,9 +53,9 @@ MonoBehaviour:
     name: New York Back Raise
     composerName: "saaa + kei_iwata + stuv + \u308F\u304B\u3069\u308A"
     musicPath: NewYorkBackRaise.mp3
-    demoMusicPath: 
+    demoMusicPath: NewYorkBackRaise_Demo
     BPM: 160
-    jacketPath: 
+    jacketPath: NewYorkBackRaise
     normalPath: 
     hardPath: 
     expertPath: NewYorkBackRaise/NewYorkBackRaise_EXPERT.txt

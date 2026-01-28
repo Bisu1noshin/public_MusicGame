@@ -70,7 +70,7 @@ public class Kameda_ResourceManager : MonoBehaviour, IResourceManager, ISetAsync
             { "Gengaozo", ObjectTable.GetAsset<AudioClip>("Demo_G_e_n_g_a_o_z_o") },
             { "Chronomia", ObjectTable.GetAsset<AudioClip>("Demo_Chronomia") },
             //要修正
-            { "NewYorkBackRaise", null }
+            { "NewYorkBackRaise", ObjectTable.GetAsset<AudioClip>("Demo_NewYorkBackRaise") }
         });
         mSpriteRes = new(new()
         {
@@ -78,7 +78,7 @@ public class Kameda_ResourceManager : MonoBehaviour, IResourceManager, ISetAsync
             { "Gengaozo", ObjectTable.GetAsset<Sprite>("Jacket_G_e_n_g_a_o_z_o") },
             { "Chronomia", ObjectTable.GetAsset<Sprite>("Jacket_Chronomia") },
             //要修正
-            { "NewYorkBackRaise", null }
+            { "NewYorkBackRaise", ObjectTable.GetAsset<Sprite>("Jacket_NewYorkBackRaise") }
         });
 
         loaded = true;
@@ -114,7 +114,7 @@ public class Kameda_ResourceManager : MonoBehaviour, IResourceManager, ISetAsync
             { "Gengaozo", Resources.Load<AudioClip>("DemoMusic/G_e_n_g_a_o_z_o") },
             { "Chronomia", Resources.Load<AudioClip>("DemoMusic/Chronomia") },
             //要修正
-            { "NewYorkBackRaise", null }
+            { "NewYorkBackRaise", Resources.Load<AudioClip>("DemoMusic/NewYorkBackRaise") }
         });
         mSpriteRes = new(new()
         {
@@ -122,7 +122,7 @@ public class Kameda_ResourceManager : MonoBehaviour, IResourceManager, ISetAsync
             { "Gengaozo", Resources.Load<Sprite>("Image/MusicJacket/G_e_n_g_a_o_z_o") },
             { "Chronomia", Resources.Load<Sprite>("Image/MusicJacket/Chronomia") },
             //要修正
-            { "NewYorkBackRaise", null }
+            { "NewYorkBackRaise", Resources.Load<Sprite>("Image/MusicJacket/NewYorkBackRaise") }
         });
         loaded = true;
         Debug.Log("ModeSelectSceneManager is SuccessSync");
