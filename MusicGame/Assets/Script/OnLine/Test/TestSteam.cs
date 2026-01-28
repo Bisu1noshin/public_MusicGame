@@ -37,7 +37,7 @@ public class TestSteam : MonoBehaviour
     public void HostLobby()
     {
         // 公開ロビーを最大4人で作成
-        SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypePublic, 4);
+        SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypePublic, 2);
     }
 
     // Steam側でロビーが作られたら呼ばれる
@@ -45,14 +45,18 @@ public class TestSteam : MonoBehaviour
     {
         if (callback.m_eResult != EResult.k_EResultOK) return;
 
-        // Mirrorのホストを開始
         networkManager.StartHost();
 
-        // ロビーデータに自分のSteamIDを書き込む（これを見た人が接続してくる）
         CSteamID lobbyId = new CSteamID(callback.m_ulSteamIDLobby);
+
+        // 検索で見つけられるように、フィルター用のキーをセットする
+        // 第2引数は検索時に一致させるための目印。ここでは自分のSteamIDを文字列で入れている
         SteamMatchmaking.SetLobbyData(lobbyId, HostAddressKey, SteamUser.GetSteamID().ToString());
 
-        Debug.Log("Lobby Created Successfully!");
+        // （オプション）ロビー名として自分のユーザー名も入れておくと、UIで見分けやすいです
+        SteamMatchmaking.SetLobbyData(lobbyId, "name", SteamFriends.GetPersonaName());
+
+        Debug.Log("Lobby Created with Filter Key!");
     }
 
     // Steamの「フレンドのゲームに参加」を押した時に呼ばれる
@@ -76,7 +80,14 @@ public class TestSteam : MonoBehaviour
     public void FindLobbies()
     {
         Debug.Log("ロビーを検索中...");
-        // フィルターなしで検索（特定の条件で絞り込むことも可能）
+
+        SteamMatchmaking.AddRequestLobbyListStringFilter(
+        HostAddressKey,
+        "",
+        ELobbyComparison.k_ELobbyComparisonNotEqual
+        );
+
+        // 検索コマンド
         SteamMatchmaking.RequestLobbyList();
     }
 
