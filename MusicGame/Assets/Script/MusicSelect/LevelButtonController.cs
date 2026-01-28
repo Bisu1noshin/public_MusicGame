@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DG.Tweening;
+using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -28,63 +30,7 @@ namespace MusicSelect
             }
             mRect = GetComponent<RectTransform>();
             mState = ButtonState.Appear;
-
-        }
-        // Update is called once per frame
-        void Update()
-        {
-            switch (mState)
-            {
-                case ButtonState.Appear:
-                    float x = Mathf.Lerp(mRect.anchoredPosition.x, posX, 0.2f);
-                    mRect.anchoredPosition = new(x, mRect.anchoredPosition.y);
-                    if (Mathf.Abs(x - posX) < 1.0f)
-                    {
-                        mRect.anchoredPosition = new(posX, mRect.anchoredPosition.y);
-                        mState = ButtonState.Active;
-                    }
-                    break;
-
-                case ButtonState.Active:
-
-                    if (mSelecter.SelectNum[1] == id)
-                    {
-                        transform.localScale = Vector3.one * 1.2f;
-                    }
-                    else
-                    {
-                        transform.localScale = Vector3.one;
-                    }
-                    mRect.anchoredPosition = new Vector2(posX, SetY(id));
-                    break;
-                case ButtonState.Dead:
-                    mRect.localScale = Vector3.one;
-                    switch (mSelecter.mSceneState)
-                    {
-                        case SceneState.MusicSelect:
-                            x = Mathf.Lerp(mRect.anchoredPosition.x, 1360.0f, 0.2f);
-                            mRect.anchoredPosition = new(x, mRect.anchoredPosition.y);
-                            if (Mathf.Abs(1360.0f - x) < 1.0f)
-                            {
-                                Destroy(gameObject);
-                            }
-                            break;
-                        case SceneState.LevelSelect:
-                            Destroy(gameObject);
-                            break;
-                        case SceneState.EnterGame:
-                            x = Mathf.Lerp(mRect.anchoredPosition.x, -1360.0f, 0.2f);
-                            mRect.anchoredPosition = new(x, mRect.anchoredPosition.y);
-                            if (Mathf.Abs(-1360.0f - x) < 0.1f)
-                            {
-                                Destroy(gameObject);
-                            }
-                            break;
-                    }
-
-                    break;
-            }
-
+            StartCoroutine(ActiveCoroutine());
         }
         public void SetProperty(int id_, string str_)
         {
@@ -123,6 +69,35 @@ namespace MusicSelect
             Action action = () => { lbc.mState = ButtonState.Dead; };
             return action;
         }
-    }
 
+        IEnumerator ActiveCoroutine()
+        {
+            transform.DOLocalMoveX(posX, 0.4f).SetEase(Ease.OutQuad);
+            yield return new WaitForSeconds(0.4f);
+            mState = ButtonState.Active;
+            while (mState == ButtonState.Active)
+            {
+                if (mSelecter.SelectNum[1] == id) transform.localScale = Vector3.one * 1.2f;
+                else transform.localScale = Vector3.one;
+
+                mRect.anchoredPosition = new Vector2(posX, SetY(id));
+                yield return null;
+            }
+            switch (mSelecter.mSceneState)
+            {
+                case SceneState.MusicSelect:
+                    transform.DOLocalMoveX(1360f, 0.4f).SetEase(Ease.OutQuad);
+                    break;
+                case SceneState.LevelSelect:
+                    Destroy(gameObject);
+                    break;
+                case SceneState.EnterGame:
+                    transform.DOLocalMoveX(-1360f, 0.4f).SetEase(Ease.OutQuad);
+                    break;
+            }
+            yield return new WaitForSeconds(0.4f);
+            Destroy(gameObject);
+            yield break;
+        }
+    }
 }
