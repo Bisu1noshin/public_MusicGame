@@ -1,9 +1,11 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using GameInfo;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class Multi_ResultSceneManager : MonoBehaviour
 {
@@ -14,8 +16,13 @@ public class Multi_ResultSceneManager : MonoBehaviour
     [SerializeField] GameObject Img_ClearLamp;              //クリアランプ
     [SerializeField] RawImage Img_MusicJacket;              //楽曲のジャケット
     [SerializeField] TMP_Text Txt_MusicName;
+    [SerializeField] GameObject Img_Bars;                   //ゲージの外枠
+    [SerializeField] Image Img_BarRed;                      //赤ゲージ
+    [SerializeField] Image Img_BarBlue;                     //青ゲージ
+    [SerializeField] RawImage Img_WinLose;                     //勝敗画像
 
     const float finalScorePos = 40.0f;
+    float bluePer;
     [SerializeField] bool DebugMode = default;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -70,7 +77,11 @@ public class Multi_ResultSceneManager : MonoBehaviour
                 newSprite = Resources.Load("Image/Result/Clear_kari") as Texture2D;
             }
             else newSprite = Resources.Load("Image/Result/Failed_kari") as Texture2D;
-            Img_ClearLamp.GetComponent<RawImage>().texture = newSprite;
+            RawImage rawI = Img_ClearLamp.GetComponent<RawImage>();
+            rawI.texture = newSprite;
+            Img_ClearLamp.transform.DOScale(Vector3.one * 1.5f, 0.5f).SetEase(Ease.InQuad).SetDelay(2.5f);
+            rawI.DOFade(1f, 0.5f).SetEase(Ease.InQuad).SetDelay(2.5f);
+            
         }
 
         //楽曲情報の取得
@@ -100,6 +111,39 @@ public class Multi_ResultSceneManager : MonoBehaviour
                     Txt_MusicName.text = "TBD";
                 }
             }
+        }
+
+        //ゲージを表示
+        {
+            if (DebugMode)
+            {
+                bluePer = 0.5f;
+            }
+            else
+            {
+                //対戦後のパーセントを入力
+            }
+            Img_Bars.transform.DOScale(1f, 0.5f).SetEase(Ease.OutQuad).SetDelay(3.5f);
+            Img_BarBlue.DOFillAmount(bluePer, 0.7f).SetEase(Ease.InCubic).SetDelay(4f);
+            Img_BarRed.DOFillAmount(1f - bluePer, 0.7f).SetEase(Ease.InCubic).SetDelay(4f);
+        }
+
+        //ここで勝敗を表示
+        {
+            if (Img_WinLose == null) return;
+            Texture2D tex;
+            if (bluePer >= 0.5f)
+            {
+                tex = Resources.Load<Texture2D>("Image/Result/Win_kari");
+            }
+            else
+            {
+                tex = Resources.Load<Texture2D>("Image/Result/Lose_kari");
+            }
+            if (tex == null) tex = Resources.Load<Texture2D>("Clear_kari");
+
+            Img_WinLose.texture = tex;
+            Img_WinLose.transform.DOScaleX(2f, 0.5f).SetDelay(5f);
         }
     }
 

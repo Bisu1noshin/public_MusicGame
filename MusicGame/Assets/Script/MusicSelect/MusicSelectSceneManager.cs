@@ -195,8 +195,8 @@ namespace MusicSelect
                     mCurrMusicPath = mDataBase.musicDatabase[mSelectNum[0]].musicPath;
                     DeleteAndExecuteAction(CreateLevelButtons());
                     mAudio.PlayOneShot(enter);
-                    timer = 0.15f;
-                    untouchableTimer = 0.2f;
+                    timer = 0f;
+                    untouchableTimer = 0.4f;
                     break;
                 case SceneState.LevelSelect:
                     if (mCurrNotesData[SelectNum[1]] == string.Empty)
@@ -235,15 +235,15 @@ namespace MusicSelect
                 case SceneState.LevelSelect:
                     DeleteAndExecuteAction(CreateMusicButtons(SelectNum[0]));
                     mAudio.PlayOneShot(cancel);
-                    timer = 0.02f;
-                    untouchableTimer = 0.2f;
+                    timer = 0f;
+                    untouchableTimer = 0.4f;
                     mPrevSelectNum = mSelectNum[0];
                     break;
                 case SceneState.EnterGame:
                     DeleteAndExecuteAction(CreateLevelButtons(mSceneState));
                     mAudio.PlayOneShot(cancel);
-                    timer = 0.02f;
-                    untouchableTimer = 0.1f;
+                    timer = 0f;
+                    untouchableTimer = 0.4f;
                     break;
             }
             if (mSceneState > SceneState.MusicSelect)
@@ -260,17 +260,23 @@ namespace MusicSelect
         }
 
         Action CreateMusicButtons(int currentNum = 0)
+            //currentNum : 入るときに選択されている番号
         {
             Action f = () => {
                 (PropertyController, Action) tuple =  PropertyController.CreateInstance(res.GetValue("Property"));
                 mProperty = tuple.Item1;
                 deleteAction += tuple.Item2;
                 demoPropertys = new();
+                int num = 0;
                 foreach (MusicData m in mDataBase.musicDatabase)
                 {
-                    deleteAction += MusicButtonController.CreateInstance(res.GetValue("MusicButton"), m.name, m.id, currentNum);
+                    deleteAction += MusicButtonController.CreateInstance(res.GetValue("MusicButton"), m.name, num++, currentNum);
                     demoPropertys.Add(new(m.name, Resource.GetAudioClip(m.musicScriptData.fileName), Resource.GetSprite(m.musicScriptData.fileName)));
                 }
+                //末尾に戻るボタンを追加
+                deleteAction += MusicButtonController.CreateInstance(res.GetValue("MusicButton"), "戻る", num, currentNum);
+                demoPropertys.Add(new("戻る", null, null));
+
                 deleteAction += GUIController.CreateInstance(res.GetValue("GUI"), "決定(A)", new(-180.0f, -50.0f));
                 deleteAction += GUIController.CreateInstance(res.GetValue("GUI"), "戻る(B)", new(0.0f, -50.0f));
                 mPrevSelectNum = mSelectNum[0];
@@ -359,7 +365,6 @@ namespace MusicSelect
 
     public interface IMusicSelecter
     {
-
         int[] SelectNum { get; }
         void GoForward();
         void GoBack();

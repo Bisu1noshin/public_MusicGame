@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
+using DG.Tweening;
 using TMPro;
 using System;
 using Unity.VisualScripting;
+using System.Collections;
 
 namespace MusicSelect
 {
@@ -21,6 +23,8 @@ namespace MusicSelect
         RectTransform mRect;
         TextScroller mTextScroller;
         int id;
+        bool coroutineLives = true;
+        //Coroutine mCurrCoroutine;
 
         private void Awake()
         {
@@ -29,58 +33,7 @@ namespace MusicSelect
             mSelecter = GameObject.Find("SceneManager").GetComponent<MusicSelectSceneManager>();
             mTextScroller = GetComponentInChildren<TextScroller>();
             mState = ButtonState.Appear;
-        }
-
-        void Start()
-        {
-        }
-
-        void Update()
-        {
-            switch (mState)
-            {
-                case ButtonState.Appear:
-                    float x = Mathf.Lerp(mRect.anchoredPosition.x, -350.0f, 0.2f);
-                    mRect.anchoredPosition = new(x, mRect.anchoredPosition.y);
-                    if (Mathf.Abs(350.0f + x) < 0.1f)
-                    {
-                        mState = ButtonState.Active;
-                    }
-                    break;
-                case ButtonState.Active:
-                    Vector2 pos = new(-350.0f, 0.0f);
-                    pos.y += (mSelecter.SelectNum[0] - id) * 1.3f * buttonPadding;
-                    mRect.anchoredPosition = pos;
-                    if (mSelecter.SelectNum[0] == id)
-                    {
-                        transform.localScale = Vector3.one * 1.2f;
-                        if (!mTextScroller.enabled)
-                        {
-                            mTextScroller.enabled = true;
-                        }
-                    }
-                    else
-                    {
-                        transform.localScale = Vector3.one;
-                        if (mTextScroller.enabled)
-                        {
-                            mTextScroller.enabled = false;
-                        }
-                    }
-                    break;
-                case ButtonState.Dead:
-                    mRect.localScale = Vector3.one;
-                    x = Mathf.Lerp(mRect.anchoredPosition.x, -1360.0f, 0.2f);
-                    mRect.anchoredPosition = new(x, mRect.anchoredPosition.y);
-                    if (Mathf.Abs(1360.0f + x) < 1.0f)
-                    {
-                        Destroy(gameObject);
-                    }
-                    break;
-                default:
-                    break;
-            }
-
+            StartCoroutine(ActiveCoroutine());
         }
         public void SetInfo(string text_, int id_)
         {
@@ -102,6 +55,41 @@ namespace MusicSelect
 
             return f;
         }
-    }
+        IEnumerator ActiveCoroutine()
+        {
+            transform.DOLocalMoveX(-350f, 0.4f).SetEase(Ease.OutQuad);
+            yield return new WaitForSeconds(0.4f);
+            mState = ButtonState.Active;
+            while (mState == ButtonState.Active)
+            {
+                Vector2 pos = new(-350.0f, 0.0f);
+                pos.y += (mSelecter.SelectNum[0] - id) * 1.3f * buttonPadding;
+                mRect.anchoredPosition = pos;
+                if (mSelecter.SelectNum[0] == id)
+                {
+                    transform.localScale = Vector3.one * 1.2f;
+                    if (!mTextScroller.enabled)
+                    {
+                        mTextScroller.enabled = true;
+                    }
+                }
+                else
+                {
+                    transform.localScale = Vector3.one;
+                    if (mTextScroller.enabled)
+                    {
+                        mTextScroller.enabled = false;
+                    }
+                }
+                yield return null;
+            }
 
+            mRect.DOLocalMoveX(-1360f, 0.2f).SetEase(Ease.OutQuad);
+            yield return new WaitForSeconds(0.2f);
+
+            Destroy(gameObject);
+            yield break;
+        }
+    }
+    
 }
