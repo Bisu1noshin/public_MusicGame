@@ -66,7 +66,8 @@ namespace Notes {
         protected virtual void FixedUpdate()
         {
             // 落下処理
-            transform.position += new Vector3(0, -1 * fallSpeed * Time.fixedDeltaTime * Judg.MusicSpeed, 0);
+            float speed = -1 * fallSpeed * Time.fixedDeltaTime * Judg.MusicSpeed;
+            transform.position += new Vector3(0, speed, speed * 5.96f / 5f);
 
             // オートプレイの処理
             if (timeCnt >= Judg.CreateTimeDelay)

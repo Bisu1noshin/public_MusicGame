@@ -69,7 +69,7 @@ namespace Notes {
 
                     var indexY = 16f * NotesManagerData.PlayerConfig.NotesSpeed;
 
-                    NotesPosition[i] = new Vector3(2.0f * value, indexY - 3f, 0f);
+                    NotesPosition[i] = new Vector3(1.0f * value, indexY - 3f, 0f);
                 }
                 
                 InGameTime = 0;

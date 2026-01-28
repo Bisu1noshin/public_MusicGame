@@ -15,7 +15,7 @@ MonoBehaviour:
   fData:
     MusicFilePath: Music/ShiningStar
     NotesDataFilePath:
-    - TextData/NotesData/test
+    - TextData/NotesData/ShiningStar/ShiningStar_HARD
   nData:
     CreateTimeDelay: 1
     JudgmentTimeDelay: 0
