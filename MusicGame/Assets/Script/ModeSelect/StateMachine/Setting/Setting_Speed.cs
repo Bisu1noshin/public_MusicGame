@@ -4,11 +4,11 @@ using System;
 
 namespace ModeSelect.StateMachine.Setting
 {
-    public class Setting_Speed : Kameda_StateParent<ISettingState, STrigger>
+    public class Setting_Speed : Kameda_StateParent<SettingState, STrigger>
     {
         PopupController mPopup;
         float mCurrSpeed;
-        public Setting_Speed(ISettingState owner, IStateMachine<STrigger> st) : base(owner, st)
+        public Setting_Speed(SettingState owner, IStateMachine<STrigger> st) : base(owner, st)
         {
             
         }

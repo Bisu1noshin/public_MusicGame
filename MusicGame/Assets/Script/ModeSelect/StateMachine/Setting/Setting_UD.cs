@@ -4,9 +4,9 @@ using System;
 
 namespace ModeSelect.StateMachine.Setting
 {
-    public class Setting_UD : Kameda_StateParent<ISettingState, STrigger>
+    public class Setting_UD : Kameda_StateParent<SettingState, STrigger>
     {
-        public Setting_UD(ISettingState owner, IStateMachine<STrigger> st) : base(owner, st)
+        public Setting_UD(SettingState owner, IStateMachine<STrigger> st) : base(owner, st)
         {
 
         }

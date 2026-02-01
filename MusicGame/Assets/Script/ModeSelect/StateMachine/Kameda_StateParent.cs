@@ -84,4 +84,8 @@ namespace ModeSelect.StateMachine
             return PopupController.CreateInstanceForNotesSpeed(isKeyboard, mObjectRes.GetValueOrDefault("Popup_Speed"));
         }
     }
+    public interface IParentState
+    {
+        void BackToHome();
+    }
 }

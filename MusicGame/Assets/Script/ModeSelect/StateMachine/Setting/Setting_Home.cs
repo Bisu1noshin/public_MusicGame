@@ -4,20 +4,19 @@ using System;
 
 namespace ModeSelect.StateMachine.Setting
 {
-    public class Setting_Home : Kameda_StateParent<ISettingState, STrigger>
+    public class Setting_Home : Kameda_StateParent<SettingState, STrigger>
     {
         int mPrevSelectNum;
         PropertyController mProperty;
-        public Setting_Home(ISettingState owner, IStateMachine<STrigger> st) : base(owner, st)
+        public Setting_Home(SettingState owner, IStateMachine<STrigger> st) : base(owner, st)
         {
             mActions = new()
             {
                 () => { stateMachine.ExecuteTriggerAction(STrigger.Auto); },
-                () => { stateMachine.ExecuteTriggerAction(STrigger.Lane); },
-                () => { stateMachine.ExecuteTriggerAction(STrigger.LR); },
-                () => { stateMachine.ExecuteTriggerAction(STrigger.UD); },
                 () => { stateMachine.ExecuteTriggerAction(STrigger.Device); },
-                () => { stateMachine.ExecuteTriggerAction(STrigger.Speed); }
+                () => { stateMachine.ExecuteTriggerAction(STrigger.Speed); },
+                () => { stateMachine.ExecuteTriggerAction(STrigger.Oper); },
+                () => { owner.BackToHome(); }
             };
             mSelectNum = 0;
             mPrevSelectNum = 0;
@@ -61,11 +60,10 @@ namespace ModeSelect.StateMachine.Setting
             string str = v switch
             {
                 0 => "オートプレイの設定ができます。\n現在：" + (owner.PlayerConfig.AutoPlay ? "ON" : "OFF"),
-                1 => "レーン反転の設定ができます。\n現在：" + (owner.PlayerConfig.LaneCahge ? "ON" : "OFF"),
-                2 => "操作の左右反転の設定ができます。\n現在：" + (owner.PlayerConfig.LeftRightCahge ? "ON" : "OFF"),
-                3 => "操作の上下反転の設定ができます。\n現在：" + (owner.PlayerConfig.UpDownCahge ? "ON" : "OFF"),
-                4 => "デバイスの変更ができます。\n現在：" + (owner.PlayerConfig.InputDevice == Notes.InputDevice.Controller ? "コントローラー" : "キーボード"),
-                5 => "ノーツ速度の設定ができます。\n現在：" + owner.PlayerConfig.NotesSpeed.ToString(),
+                1 => "デバイスの変更ができます。\n現在：" + (owner.PlayerConfig.InputDevice == Notes.InputDevice.Controller ? "コントローラー" : "キーボード"),
+                2 => "ノーツ速度の設定ができます。\n現在：" + owner.PlayerConfig.NotesSpeed.ToString(),
+                3 => "ゲームプレイ中の操作設定ができます。",
+                4 => "モード選択に戻ります。",
                 _ => string.Empty,
             };
             mProperty.SetText(str);

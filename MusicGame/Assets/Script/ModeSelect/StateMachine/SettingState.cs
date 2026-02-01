@@ -7,18 +7,19 @@ namespace ModeSelect.StateMachine
 {
     public enum SState
     {
-        None = -1, Home, Auto, Lane, LR, UD, Device, Speed
+        None = -1, Home, Auto, Lane, LR, UD, Device, Speed, Oper
     }
     public enum STrigger
     {
-        Home, Auto, Lane, LR, UD, Device, Speed
+        Home, Auto, Lane, LR, UD, Device, Speed, Oper
     }
-    public class SettingState : Kameda_StateParent<ISceneManager, Trigger>, ISettingState
+    public class SettingState : Kameda_StateParent<ISceneManager, Trigger>, IParentState
     {
         public NotesManagerPlayerConfig PlayerConfig { get; set; }
         public PropertyController mProperty { get; private set; }
 
         StateMachine<SState, STrigger> mStateMachine;
+        SState mPrevState;
         
         public SettingState(ModeSelectSceneManager owner, IStateMachine<Trigger> st) : base(owner, st)
         {
@@ -27,21 +28,27 @@ namespace ModeSelect.StateMachine
         }
         protected override void OnEnter()
         {
-            owner.CreateCursor();
-            deleteAction += CreateButtonInstance(0, 6, "オートプレイ");
-            deleteAction += CreateButtonInstance(1, 6, "レーン反転");
-            deleteAction += CreateButtonInstance(2, 6, "上下反転");
-            deleteAction += CreateButtonInstance(3, 6, "左右反転");
-            deleteAction += CreateButtonInstance(4, 6, "デバイス変更");
-            deleteAction += CreateButtonInstance(5, 6, "ノーツ速度");
-            (PropertyController, Action) tuple = CreatePropertyInstance();
-            mProperty = tuple.Item1;
-            deleteAction += tuple.Item2;
+            InitButtons();
+            mPrevState = SState.Home;
             InitStates();
         }
         protected override void OnUpdate(float deltaTime)
         {
             mStateMachine.Update(deltaTime);
+            if (mPrevState != mStateMachine.GetState())
+            {
+                if (mPrevState == SState.Home && mStateMachine.GetState() == SState.Oper)
+                {
+                    owner.TryDeleteCursor();
+                    deleteAction?.Invoke();
+                    deleteAction = null;
+                }
+                if (mPrevState == SState.Oper && mStateMachine.GetState() == SState.Home)
+                {
+                    InitButtons();
+                }
+            }
+            mPrevState = mStateMachine.GetState();
         }
         protected override void OnExit()
         {
@@ -62,6 +69,7 @@ namespace ModeSelect.StateMachine
             mStateMachine.SetupState(SState.UD, new Setting.Setting_UD(this, mStateMachine));
             mStateMachine.SetupState(SState.Device, new Setting.Setting_Device(this, mStateMachine));
             mStateMachine.SetupState(SState.Speed, new Setting.Setting_Speed(this, mStateMachine));
+            mStateMachine.SetupState(SState.Oper, new Setting.Setting_Oper(this, mStateMachine));
 
             mStateMachine.AddTransition(SState.None, SState.Home, STrigger.Home);
             mStateMachine.AddTransition(SState.Home, SState.Auto, STrigger.Auto);
@@ -82,18 +90,26 @@ namespace ModeSelect.StateMachine
             mStateMachine.AddTransition(SState.Home, SState.Speed, STrigger.Speed);
             mStateMachine.AddTransition(SState.Speed, SState.Home, STrigger.Home);
 
+            mStateMachine.AddTransition(SState.Home, SState.Oper, STrigger.Oper);
+            mStateMachine.AddTransition(SState.Oper, SState.Home, STrigger.Home);
+
             mStateMachine.ExecuteTriggerAction(STrigger.Home);
         }
         public void BackToHome()
         {
             stateMachine.ExecuteTriggerAction(Trigger.Home);
         }
-    }
-
-    public interface ISettingState
-    {
-        NotesManagerPlayerConfig PlayerConfig { get; set; }
-        PropertyController mProperty { get; }
-        void BackToHome();
+        void InitButtons()
+        {
+            owner.CreateCursor();
+            deleteAction += CreateButtonInstance(0, 5, "オートプレイ");
+            deleteAction += CreateButtonInstance(1, 5, "デバイス変更");
+            deleteAction += CreateButtonInstance(2, 5, "ノーツ速度");
+            deleteAction += CreateButtonInstance(3, 5, "操作");
+            deleteAction += CreateButtonInstance(4, 5, "戻る");
+            (PropertyController, Action) tuple = CreatePropertyInstance();
+            mProperty = tuple.Item1;
+            deleteAction += tuple.Item2;
+        }
     }
 }

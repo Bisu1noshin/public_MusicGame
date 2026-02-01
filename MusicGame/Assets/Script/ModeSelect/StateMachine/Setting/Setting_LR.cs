@@ -4,9 +4,9 @@ using System;
 
 namespace ModeSelect.StateMachine.Setting
 {
-    public class Setting_LR : Kameda_StateParent<ISettingState, STrigger>
+    public class Setting_LR : Kameda_StateParent<SettingState, STrigger>
     {
-        public Setting_LR(ISettingState owner, IStateMachine<STrigger> st) : base(owner, st)
+        public Setting_LR(SettingState owner, IStateMachine<STrigger> st) : base(owner, st)
         {
             
         }

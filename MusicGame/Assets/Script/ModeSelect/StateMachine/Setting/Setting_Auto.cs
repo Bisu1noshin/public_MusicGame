@@ -5,9 +5,9 @@ using System.Buffers;
 
 namespace ModeSelect.StateMachine.Setting
 {
-    public class Setting_Auto : Kameda_StateParent<ISettingState, STrigger>
+    public class Setting_Auto : Kameda_StateParent<SettingState, STrigger>
     {
-        public Setting_Auto(ISettingState owner, IStateMachine<STrigger> st) : base(owner, st)
+        public Setting_Auto(SettingState owner, IStateMachine<STrigger> st) : base(owner, st)
         {
 
         }

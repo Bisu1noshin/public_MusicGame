@@ -4,9 +4,9 @@ using System;
 
 namespace ModeSelect.StateMachine.Setting
 {
-    public class Setting_Lane : Kameda_StateParent<ISettingState, STrigger>
+    public class Setting_Lane : Kameda_StateParent<SettingState, STrigger>
     {
-        public Setting_Lane(ISettingState owner, IStateMachine<STrigger> st) : base(owner, st)
+        public Setting_Lane(SettingState owner, IStateMachine<STrigger> st) : base(owner, st)
         {
 
         }
