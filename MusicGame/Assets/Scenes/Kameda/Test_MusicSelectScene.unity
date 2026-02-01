@@ -655,6 +655,39 @@ MonoBehaviour:
       m_SubObjectGUID: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
+  jakcetList:
+  - key: ShiningStar.mp3
+    assetRef:
+      m_AssetGUID: eed134db94e62194ea1e044ab9a43db9
+      m_SubObjectName: ShiningStar_0
+      m_SubObjectGUID: 
+      m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      m_EditorAssetChanged: 1
+  - key: gengaozo.mp3
+    assetRef:
+      m_AssetGUID: 57c653efcedacf94ba84babb33ec5790
+      m_SubObjectName: G_e_n_g_a_o_z_o_0
+      m_SubObjectGUID: 
+      m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      m_EditorAssetChanged: 1
+  - key: Chronomia.mp3
+    assetRef:
+      m_AssetGUID: 66960068c2032cc46813fb4a0c5824ac
+      m_SubObjectName: Chronomia_0
+      m_SubObjectGUID: 
+      m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      m_EditorAssetChanged: 1
+  - key: NewYorkBackRaise.mp3
+    assetRef:
+      m_AssetGUID: d73b8a10487e23e43bbf3be6b96e12c2
+      m_SubObjectName: stage_0
+      m_SubObjectGUID: 
+      m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      m_EditorAssetChanged: 1
   textList:
   - key: ShiningStar/ShiningStar_NORMAL.txt
     assetRefs:

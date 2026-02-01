@@ -25,6 +25,16 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 57c653efcedacf94ba84babb33ec5790
+    m_Address: Assets/Prefab/InGame/G_e_n_g_a_o_z_o.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 66960068c2032cc46813fb4a0c5824ac
+    m_Address: Assets/Prefab/InGame/Chronomia.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 68333038cfd22fe408dca8374a4fbc48
     m_Address: Assets/Prefab/Hold/HoldNotes_Left.prefab
     m_ReadOnly: 0
@@ -40,6 +50,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d73b8a10487e23e43bbf3be6b96e12c2
+    m_Address: Assets/Prefab/InGame/NewYorkBackRaise.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d874dd67c13767a4d9c20f8750b04976
     m_Address: Assets/Prefab/Flick/FlickNotes_Right.prefab
     m_ReadOnly: 0
@@ -52,6 +67,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: eb43fe7e561a26a49b580c8d4db68095
     m_Address: Assets/Prefab/Flick/FlickNotes_Left.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eed134db94e62194ea1e044ab9a43db9
+    m_Address: Assets/Prefab/InGame/ShiningStar.jpg
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

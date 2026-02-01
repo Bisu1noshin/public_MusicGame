@@ -7,6 +7,7 @@ using LoadForAsync;
 using Cysharp.Threading.Tasks;
 using System;
 using Unity.VisualScripting;
+using GameInfo;
 
 namespace Notes {
 
@@ -320,9 +321,7 @@ namespace Notes {
             notesData = NotesDataConversion.NotesDataSum(notesDatas);
 
             // 正規のBPMをセットする
-            BPM = ObjectTable.MusicBPM;
-
-            var totalscore = NotesDataConversion.TotalNotesScore(notesData, BPM);
+            BPM = SingletonDataManager.instance.MusicData.BPM;
 
             Debug.Log("SuccessAsync");
         }

@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.AddressableAssets;
 using GameInfo;
+using System.Text.RegularExpressions;
 
 namespace MusicSelect
 {
@@ -55,6 +56,7 @@ namespace MusicSelect
         // 追記
         [SerializeField] private AssetLoadConfig AssetLoadConfig;
         [SerializeField] private List<AssetPair> musicList;
+        [SerializeField] private List<AssetPair> jakcetList;
         [SerializeField] private List<TextAssetPair> textList;
 
         private void Awake()
@@ -337,6 +339,13 @@ namespace MusicSelect
                 }
             }
 
+            // 選択された楽曲を設定
+            {
+                var found = jakcetList.Find(x => x.key == musicPath_);
+                AssetReferenceObject asset = new("MusicJakcet", found.assetRef);
+                references.ReferencesAssets.Add(asset);
+            }
+
             // 選択されたノーツファイルを設定
             {
                 var found = textList.Find(x => x.key == notesPath_);
@@ -353,7 +362,13 @@ namespace MusicSelect
                 }
             }
 
-            string naxtSceneName = "NotesTest";
+            // 難易度の定義
+            {
+                var level = Regex.Match(notesPath_, @"_(.*?)\.").Groups[1].Value;
+                SingletonDataManager.instance.SetMusicLevel(level);
+            }
+
+            string naxtSceneName = "Ooo_MainTest";
             await DataTransferSystem.LoadSceneRef(references, naxtSceneName);
         }
     }

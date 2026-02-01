@@ -48,6 +48,9 @@ namespace LoadForAsync
         {
             await SceneManager.LoadSceneAsync(NextSceneName, LoadSceneMode.Single).ToUniTask();
 
+            // 強制的にガベージコレクションを走らせる
+            System.GC.Collect();
+
             Scene scene = SceneManager.GetSceneByName(NextSceneName);
 
             if (!scene.IsValid())

@@ -9,12 +9,23 @@ using Notes;
 
 namespace GameInfo
 {
+    public enum MusicLevel
+    {
+        None, NORMAL, HARD, EXPERT
+    };
+
     public class SingletonDataManager : MonoBehaviour
     {
         public static SingletonDataManager instance;
         public List<NotesScore> score;
+
+        public int ComboCnt { get; private set; }
+
         public int TotalScore { get; private set; }
+
         public MusicData MusicData { get; private set; }
+
+        public MusicLevel Level { get; private set; }
 
         private void Awake()
         {
@@ -28,23 +39,56 @@ namespace GameInfo
                 instance = this;
 
             DontDestroyOnLoad(this.gameObject);
-            score = new();
-            TotalScore = 0;
+
+            // 変数の初期化
+            {
+                score = new();
+                TotalScore = 0;
+                ComboCnt = 0;
+                Level = MusicLevel.None;
+            }
         }
 
         public void SetScore(NotesScore[] s_)
         {
+            int combo = 1;
+
             foreach (NotesScore s in s_)
             {
                 // 配列から加算する
                 score.Add(s);
                 TotalScore += (int)s;
+
+                if (s == NotesScore.Miss)
+                {
+                    combo = 0;
+                }
             }
+
+            ComboCnt += combo;
         }
 
         public void SetMusicId(MusicData data)
         {
             MusicData = data;
+        }
+
+        public void SetMusicLevel(string level)
+        {
+            switch (level)
+            {
+                case "NORMAL":
+                    Level = MusicLevel.NORMAL;
+                    break;
+                case "HARD":
+                    Level = MusicLevel.HARD;
+                    break;
+                case "EXPERT":
+                    Level = MusicLevel.EXPERT;
+                    break;
+                default:
+                    break;
+            }
         }
 
         public void DestroyInstance()
