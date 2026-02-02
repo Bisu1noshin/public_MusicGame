@@ -49,6 +49,20 @@ namespace GameInfo
             }
         }
 
+        public void SetScore(NotesScore s_)
+        {
+            score.Add(s_);
+            TotalScore += (int)s_;
+
+            int combo = 1;
+            if (s_ == NotesScore.Miss)
+            {
+                combo = 0;
+            }
+
+            ComboCnt += combo;
+        }
+
         public void SetScore(NotesScore[] s_)
         {
             int combo = 1;

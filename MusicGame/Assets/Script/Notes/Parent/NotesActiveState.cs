@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using GameInfo;
+using UnityEngine;
 namespace Notes
 {
 
@@ -31,6 +32,7 @@ namespace Notes
 
         protected override void OnExit()
         {
+            SingletonDataManager.instance.SetScore(this.owner.score.score[holdCnt]);
             holdCnt++;
         }
     }
