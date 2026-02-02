@@ -712,11 +712,11 @@ MonoBehaviour:
       m_EditorAssetChanged: 1
   - key: Chronomia/Chronomia_NORMAL.txt
     assetRefs:
-    - m_AssetGUID: a534b3fc500e43d47bcd33a25556cee0
+    - m_AssetGUID: 23ded731e2c595f43a318cef2209ead5
       m_SubObjectName: 
       m_SubObjectGUID: 
       m_SubObjectType: 
-      m_EditorAssetChanged: 1
+      m_EditorAssetChanged: 0
   - key: Chronomia/Chronomia_HARD.txt
     assetRefs:
     - m_AssetGUID: 4ac371e352db55743ad50ac396af720b
