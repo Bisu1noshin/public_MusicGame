@@ -4,12 +4,11 @@ using System;
 
 namespace ModeSelect.StateMachine.Setting.Operation
 {
-    public class Oper_Home : Kameda_StateParent<Setting_Oper, OTrigger>
+    public class Oper_Home : HomeStateAbstract<Setting_Oper, OTrigger>
     {
-        int mPrevSelectNum;
         public Oper_Home(Setting_Oper owner, IStateMachine<OTrigger> st) : base(owner, st)
         {
-            mActions = new List<Action>
+            mActions = new()
             {
                 () => stateMachine.ExecuteTriggerAction(OTrigger.Lane),
                 () => stateMachine.ExecuteTriggerAction(OTrigger.LR),
@@ -17,11 +16,6 @@ namespace ModeSelect.StateMachine.Setting.Operation
                 () => owner.BackToHome()
             };
             ReplaceEnterAction(mSelectNum);
-            Player.backAction = () =>
-            {
-                PlayCancelSound();
-                owner.BackToHome();
-            };
             Player.vecAction = (vec2) => Scroll(vec2);
         }
         protected override void OnEnter()
@@ -34,7 +28,7 @@ namespace ModeSelect.StateMachine.Setting.Operation
             {
                 ReplaceEnterAction(mSelectNum);
             }
-            mSceneManager.TrySetCursorPos(mSelectNum, mActions.Count);
+            mSceneManager.TrySetCursorPos(mSelectNum, 4);
             mPrevSelectNum = mSelectNum;
         }
         protected override void OnExit()

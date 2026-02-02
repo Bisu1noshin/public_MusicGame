@@ -1,59 +1,96 @@
 ﻿using System;
 using TMPro;
+using UnityEngine.UI;
 using UnityEngine;
 
 namespace ModeSelect
 {
+    public enum PopupType
+    {
+        Normal, Text, Sprite
+    }
     public class PopupController : MonoBehaviour
     {
         public TextMeshProUGUI mText;
         TextMeshProUGUI mCurrValue; //普段使いはしないこと！！！エラーになります
-        bool normal = true;
+        Image mCurrImage;
+        PopupType type = PopupType.Normal;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Awake()
         {
-            mText = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+            
         }
-        void SetInfo(bool n_)
+        void SetInfo(PopupType n_)
         {
-            normal = n_;
-            if (!n_)
+            type = n_;
+            switch (n_)
             {
-                mCurrValue = transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+                case PopupType.Normal:
+                    mText = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+                    break;
+                case PopupType.Text:
+                    mText = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+                    mCurrValue = transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+                    break;
+                case PopupType.Sprite:
+                    mCurrImage = transform.GetChild(0).GetComponent<Image>();
+                    break;
+                default:
+                    break;
             }
         }
-        public void Setnfo(string str_, int size)
+        public void SetText(string str_, int size)
         {
+            if (type == PopupType.Sprite) return;
             mText.text = str_;
             mText.fontSize = size;
         }
-        public void SetValue(float v_)
+        public void SetValue(string v_, int size = 96)
         {
-            if (normal) { return; }
-            mCurrValue.text = "現在：" + v_.ToString();
+            if (type != PopupType.Text) { return; }
+            mCurrValue.text = "現在：" + v_;
+            mCurrValue.fontSize = size;
         }
-        public static Action CreateInstance(string msg, GameObject res, int size = 96)
+        public void SetImage(Sprite img_)
+        {
+            if (type != PopupType.Sprite) return;
+            mCurrImage.sprite = img_;
+        }
+        public static Action CreateInstance(GameObject res, string msg, int size = 96)
         {
             GameObject go = Instantiate(res);
             go.transform.SetParent(GameObject.Find("Canvas").transform);
             go.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
             go.transform.localScale = Vector3.one;
             var ppc = go.GetComponent<PopupController>();
-            ppc.Setnfo(msg, size);
+            ppc.SetInfo(PopupType.Normal);
+            ppc.SetText(msg, size);
             Action f = () => Destroy(go);
             return f;
         }
 
-        public static (PopupController, Action) CreateInstanceForNotesSpeed(bool isController, GameObject res)
+        public static (PopupController, Action) CreateInstanceForNotesSpeed(GameObject res, string msg, int size = 96)
         {
             GameObject go = Instantiate(res);
             go.transform.SetParent(GameObject.Find("Canvas").transform);
             go.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
             go.transform.localScale = Vector3.one;
             var ppc = go.GetComponent<PopupController>();
-            ppc.SetInfo(false);
-            ppc.Setnfo((isController ? "左スティック上下" : "WキーとSキー") + "で\nノーツ速度の調整ができます。", 96);
+            ppc.SetInfo(PopupType.Text);
+            ppc.SetText(msg, size);
+            Action f = () => Destroy(go);
+            return (ppc, f);
+        }
+        public static (PopupController, Action) CreateInstanceImage(GameObject res, Sprite image_)
+        {
+            GameObject go = Instantiate(res);
+            go.transform.SetParent(GameObject.Find("Canvas").transform);
+            go.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+            go.transform.localScale = Vector3.one;
+            var ppc = go.GetComponent<PopupController>();
+            ppc.SetInfo(PopupType.Sprite);
+            ppc.SetImage(image_);
             Action f = () => Destroy(go);
             return (ppc, f);
         }

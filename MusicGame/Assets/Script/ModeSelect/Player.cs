@@ -10,7 +10,7 @@ namespace ModeSelect
     public class Player : PlayerParent
     {
         public static Action enterAction { get; set; }
-        public static Action backAction { get; set; }
+        //public static Action backAction { get; set; }
         public static Action<Vector2> vecAction { get; set; }
 
         public static Action destroyAction { get; private set; }
@@ -56,7 +56,7 @@ namespace ModeSelect
         }
         protected override void OnButtonB()
         {
-            backAction?.Invoke();
+            //backAction?.Invoke();
         }
         
         protected override void LeftStickStarted(Vector2 vec)
@@ -68,7 +68,7 @@ namespace ModeSelect
             }
             else
             {
-                float X = vec.x < 0f ? -1f : 1f;
+                float X = vec.x < 0f ? 1f : -1f;
                 moveVec = new(X, 0f);
             }
             vecAction?.Invoke(moveVec);
@@ -85,7 +85,7 @@ namespace ModeSelect
             }
             else
             {
-                float X = vec.x < 0f ? -1f : 1f;
+                float X = vec.x < 0f ? 1f : -1f;
                 if (moveVec.x == X) return;
                 moveVec = new(X, 0f);
             }

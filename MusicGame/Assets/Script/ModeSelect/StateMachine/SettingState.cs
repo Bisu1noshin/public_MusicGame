@@ -13,10 +13,10 @@ namespace ModeSelect.StateMachine
     {
         Home, Auto, Lane, LR, UD, Device, Speed, Oper
     }
-    public class SettingState : Kameda_StateParent<ISceneManager, Trigger>, IParentState
+    public class SettingState : Kameda_StateBase<ISceneManager, Trigger>, IParentState
     {
         public NotesManagerPlayerConfig PlayerConfig { get; set; }
-        public PropertyController mProperty { get; private set; }
+        PropertyController mProperty;
 
         StateMachine<SState, STrigger> mStateMachine;
         SState mPrevState;
@@ -39,7 +39,7 @@ namespace ModeSelect.StateMachine
             {
                 if (mPrevState == SState.Home && mStateMachine.GetState() == SState.Oper)
                 {
-                    owner.TryDeleteCursor();
+                    //owner.TryDeleteCursor();
                     deleteAction?.Invoke();
                     deleteAction = null;
                 }
@@ -64,25 +64,14 @@ namespace ModeSelect.StateMachine
 
             mStateMachine.SetupState(SState.Home, new Setting.Setting_Home(this, mStateMachine));
             mStateMachine.SetupState(SState.Auto, new Setting.Setting_Auto(this, mStateMachine));
-            mStateMachine.SetupState(SState.Lane, new Setting.Setting_Lane(this, mStateMachine));
-            mStateMachine.SetupState(SState.LR, new Setting.Setting_LR(this, mStateMachine));
-            mStateMachine.SetupState(SState.UD, new Setting.Setting_UD(this, mStateMachine));
             mStateMachine.SetupState(SState.Device, new Setting.Setting_Device(this, mStateMachine));
             mStateMachine.SetupState(SState.Speed, new Setting.Setting_Speed(this, mStateMachine));
             mStateMachine.SetupState(SState.Oper, new Setting.Setting_Oper(this, mStateMachine));
 
             mStateMachine.AddTransition(SState.None, SState.Home, STrigger.Home);
+
             mStateMachine.AddTransition(SState.Home, SState.Auto, STrigger.Auto);
             mStateMachine.AddTransition(SState.Auto, SState.Home, STrigger.Home);
-
-            mStateMachine.AddTransition(SState.Home, SState.Lane, STrigger.Lane);
-            mStateMachine.AddTransition(SState.Lane, SState.Home, STrigger.Home);
-
-            mStateMachine.AddTransition(SState.Home, SState.LR, STrigger.LR);
-            mStateMachine.AddTransition(SState.LR, SState.Home, STrigger.Home);
-
-            mStateMachine.AddTransition(SState.Home, SState.UD, STrigger.UD);
-            mStateMachine.AddTransition(SState.UD, SState.Home, STrigger.Home);
 
             mStateMachine.AddTransition(SState.Home, SState.Device, STrigger.Device);
             mStateMachine.AddTransition(SState.Device, SState.Home, STrigger.Home);
@@ -107,9 +96,11 @@ namespace ModeSelect.StateMachine
             deleteAction += CreateButtonInstance(2, 5, "ノーツ速度");
             deleteAction += CreateButtonInstance(3, 5, "操作");
             deleteAction += CreateButtonInstance(4, 5, "戻る");
-            (PropertyController, Action) tuple = CreatePropertyInstance();
-            mProperty = tuple.Item1;
-            deleteAction += tuple.Item2;
+            CreatePropertyInstance(ref mProperty);
+        }
+        public PropertyController GetProperty()
+        {
+            return mProperty;
         }
     }
 }

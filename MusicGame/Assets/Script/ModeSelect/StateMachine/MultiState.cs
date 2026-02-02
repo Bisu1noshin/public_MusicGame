@@ -11,7 +11,7 @@ namespace ModeSelect.StateMachine
     {
         Home, Enter
     }
-    public class MultiState : Kameda_StateParent<ISceneManager, Trigger>, IMultiState
+    public class MultiState : Kameda_StateBase<ISceneManager, Trigger>, IMultiState
     {
         StateMachine<MState, MTrigger> mStateMachine;
         public MultiState(ModeSelectSceneManager owner, IStateMachine<Trigger> st) : base(owner, st)

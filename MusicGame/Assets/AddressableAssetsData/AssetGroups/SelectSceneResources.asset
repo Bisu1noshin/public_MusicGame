@@ -45,6 +45,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 214abb8f05c9cf94295c31fe71946e70
+    m_Address: "Assets/Prefab/SelectSceneResources/ModeSelect/\u64CD\u4F5C\u30DE\u30CB\u30E5\u30A2\u30EB_\u30AD\u30FC\u30DC\u30FC\u30C9.png"
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 277614fbd087ab6498dec28d87cadf7a
     m_Address: Assets/Prefab/SelectSceneResources/MusicSelecter/GUI.prefab
     m_ReadOnly: 0
@@ -122,6 +127,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b744ce43e36dcab4890066d1b02d352f
     m_Address: Assets/Prefab/SelectSceneResources/MusicSelecter/LevelButton.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bf67d582126b67d47a5fdfa6244bf6d4
+    m_Address: "Assets/Prefab/SelectSceneResources/ModeSelect/\u7121\u984C\u306E\u30D7\u30EC\u30BC\u30F3\u30C6\u30FC\u30B7\u30E7\u30F3.png"
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

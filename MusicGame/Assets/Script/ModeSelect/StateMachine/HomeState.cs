@@ -6,10 +6,9 @@ using UnityEngine.SceneManagement;
 
 namespace ModeSelect.StateMachine
 {
-    public class HomeState : Kameda_StateParent<ISceneManager, Trigger>
+    public class HomeState : HomeStateAbstract<ISceneManager, Trigger>
     {
         PropertyController mProperty;
-        int mPrevSelectNum;
         string[] explaination = new string[]
         {
             "シングルプレイで遊びます",
@@ -40,9 +39,7 @@ namespace ModeSelect.StateMachine
             deleteAction += CreateButtonInstance(3, 5, "クレジット");
             deleteAction += CreateButtonInstance(4, 5, "タイトルに戻る");
             
-            (PropertyController, Action) tuple = CreatePropertyInstance();
-            mProperty = tuple.Item1;
-            deleteAction += tuple.Item2;
+            CreatePropertyInstance(ref mProperty);
             owner.CreateCursor();
         }
 
@@ -66,7 +63,6 @@ namespace ModeSelect.StateMachine
         {
             Player.vecAction = (vector2) => Scroll(vector2);
             deleteAction = null;
-            Player.backAction = () => PlayBeepSound();
             Player.enterAction = mActions[mSelectNum];
             mPrevSelectNum = mSelectNum;
         }

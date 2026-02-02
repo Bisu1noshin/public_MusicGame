@@ -4,9 +4,8 @@ using System;
 
 namespace ModeSelect.StateMachine.Setting
 {
-    public class Setting_Home : Kameda_StateParent<SettingState, STrigger>
+    public class Setting_Home : HomeStateAbstract<SettingState, STrigger>
     {
-        int mPrevSelectNum;
         PropertyController mProperty;
         public Setting_Home(SettingState owner, IStateMachine<STrigger> st) : base(owner, st)
         {
@@ -16,7 +15,11 @@ namespace ModeSelect.StateMachine.Setting
                 () => { stateMachine.ExecuteTriggerAction(STrigger.Device); },
                 () => { stateMachine.ExecuteTriggerAction(STrigger.Speed); },
                 () => { stateMachine.ExecuteTriggerAction(STrigger.Oper); },
-                () => { owner.BackToHome(); }
+                () =>
+                {
+                    PlayCancelSound();
+                    owner.BackToHome();
+                }
             };
             mSelectNum = 0;
             mPrevSelectNum = 0;
@@ -25,13 +28,8 @@ namespace ModeSelect.StateMachine.Setting
         protected override void OnEnter()
         {
             Player.vecAction = (Vector2) => Scroll(Vector2);
-            Player.backAction = () =>
-            {
-                PlayCancelSound();
-                owner.BackToHome();
-            };
             ReplaceEnterAction(mSelectNum);
-            mProperty = owner.mProperty;
+            mProperty = owner.GetProperty();
             mPrevSelectNum = mSelectNum;
         }
         protected override void OnUpdate(float deltaTime)
@@ -67,6 +65,11 @@ namespace ModeSelect.StateMachine.Setting
         }
         void ReplaceEnterAction(int value)
         {
+            if (value == mActions.Count - 1)
+            {
+                Player.enterAction = mActions[value];
+            }
+            else 
             Player.enterAction = () =>
             {
                 PlayEnterSound();

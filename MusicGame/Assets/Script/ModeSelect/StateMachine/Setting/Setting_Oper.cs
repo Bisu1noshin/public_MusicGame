@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Notes;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace ModeSelect.StateMachine.Setting
@@ -13,12 +14,13 @@ namespace ModeSelect.StateMachine.Setting
     }
 
 
-    public class Setting_Oper : Kameda_StateParent<SettingState, STrigger>, IParentState
+    public class Setting_Oper : Kameda_StateBase<SettingState, STrigger>, IParentState
     {
         StateMachine<OState, OTrigger> mStateMachine;
+        public NotesManagerPlayerConfig PlayerConfig { get; set; }
         public Setting_Oper(SettingState owner, IStateMachine<STrigger> st) : base(owner, st)
         {
-
+            PlayerConfig = owner.PlayerConfig;
         }
         protected override void OnEnter()
         {
@@ -26,7 +28,7 @@ namespace ModeSelect.StateMachine.Setting
             deleteAction += CreateButtonInstance(1, 4, "左右反転");
             deleteAction += CreateButtonInstance(2, 4, "上下反転");
             deleteAction += CreateButtonInstance(3, 4, "戻る");
-            mSceneManager.CreateCursor();
+            //mSceneManager.CreateCursor();
             SetupStates();
         }
         protected override void OnUpdate(float deltaTime)

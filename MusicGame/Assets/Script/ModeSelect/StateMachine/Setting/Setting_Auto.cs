@@ -5,35 +5,44 @@ using System.Buffers;
 
 namespace ModeSelect.StateMachine.Setting
 {
-    public class Setting_Auto : Kameda_StateParent<SettingState, STrigger>
+    public class Setting_Auto : PopupAdmin<SettingState, STrigger>
     {
-        public Setting_Auto(SettingState owner, IStateMachine<STrigger> st) : base(owner, st)
+        bool instantBool;
+        public Setting_Auto(SettingState owner, IStateMachine<STrigger> st) : base(owner, st, true)
         {
 
         }
 
         protected override void OnEnter()
         {
-            deleteAction += CreatePopupInstance("オートプレイを" +
-                (owner.PlayerConfig.AutoPlay ? "OFF" : "ON") + "にします。よろしいですか？");
-            Player.enterAction = () =>
+            Player.enterAction = null;
+            instantBool = owner.PlayerConfig.AutoPlay;
+            CreateSpeedPopupInstance(ref mPopup, "オートプレイを変更します。よろしいですか？");
+            CreateCursor();
+            Action change = () =>
             {
-                PlayEnterSound();
-                owner.PlayerConfig.AutoPlay = !owner.PlayerConfig.AutoPlay;
+                instantBool = !instantBool;
+            };
+            Action ent = () =>
+            {
+                owner.PlayerConfig.AutoPlay = instantBool;
                 stateMachine.ExecuteTriggerAction(STrigger.Home);
             };
-            Player.backAction = () =>
+            Action back = () =>
             {
-                PlayCancelSound();
                 stateMachine.ExecuteTriggerAction(STrigger.Home);
             };
-            Player.vecAction = null;
+            SetChangeElementAction(change, change);
+            SetEnterAndCancelAction(ent, back);
+            Player.vecAction = (vec) => ChangeState(vec);
         }
         protected override void OnUpdate(float deltaTime)
         {
+            mPopup.SetValue(instantBool ? "ON" : "OFF", 72);
         }
         protected override void OnExit()
         {
+            mSceneManager.TryDeletePopupCursor();
             deleteAction?.Invoke();
             deleteAction = null;
         }

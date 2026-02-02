@@ -5,9 +5,9 @@ using UnityEngine.SceneManagement;
 
 namespace ModeSelect.StateMachine
 {
-    public class SingleState : Kameda_StateParent<ISceneManager, Trigger>
+    public class SingleState : PopupAdmin<ISceneManager, Trigger>
     {
-        public SingleState(ModeSelectSceneManager owner, IStateMachine<Trigger> st) : base(owner, st)
+        public SingleState(ModeSelectSceneManager owner, IStateMachine<Trigger> st) : base(owner, st, false)
         {
             
         }
@@ -15,13 +15,10 @@ namespace ModeSelect.StateMachine
         {
             deleteAction = null;
             deleteAction += CreatePopupInstance("シングルプレイを開始します。\nよろしいですか？");
-            Player.enterAction = () => SceneManager.LoadScene("Test_MusicSelectScene");
-            Player.backAction = () =>
-            {
-                PlayCancelSound();
-                stateMachine.ExecuteTriggerAction(Trigger.Home);
-            };
-            Player.vecAction = null;
+            Action ent = () => SceneManager.LoadScene("Test_MusicSelectScene");
+            Action back = () => stateMachine.ExecuteTriggerAction(Trigger.Home);
+            SetEnterAndCancelAction(ent, back);
+            Player.vecAction = (vec) => ChangeState(vec);
         }
         protected override void OnUpdate(float deltaTime)
         {
