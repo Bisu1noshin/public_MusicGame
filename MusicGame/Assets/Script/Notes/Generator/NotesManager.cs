@@ -62,7 +62,7 @@ namespace Notes {
                 for (int i = 0; i < NotesPosition.Length; i++)
                 { 
                     int value = -1 + i * 2;
-                    if (NotesManagerData.PlayerConfig.LaneCahge) value *= -1;
+                    //if (NotesManagerData.PlayerConfig.LaneCahge) value *= -1;
                     if (NotesManagerData.PlayerConfig.NotesSpeed == 0)
                     {
                         throw new Exception("0はできません");
@@ -204,8 +204,8 @@ namespace Notes {
 
                 if (NotesManagerData.PlayerConfig.LaneCahge)
                 {
-                    if (NotesLane == NotesLane.Left) NotesLane = NotesLane.Right;
-                    if (NotesLane == NotesLane.Right) NotesLane = NotesLane.Left;
+                    if ((NotesLane)lane == NotesLane.Left) NotesLane = NotesLane.Right;
+                    if ((NotesLane)lane == NotesLane.Right) NotesLane = NotesLane.Left;
                 }
             }
 
