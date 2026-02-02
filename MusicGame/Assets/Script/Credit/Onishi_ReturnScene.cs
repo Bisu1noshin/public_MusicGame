@@ -14,7 +14,7 @@ public class Onishi_ReturnScene : MonoBehaviour
     {
         if (Input.anyKeyDown)
         {
-            SceneManager.LoadScene("Test_ModeSelectScene");
+            SceneManager.LoadScene("Ooo_Title");
         }
     }
 }
