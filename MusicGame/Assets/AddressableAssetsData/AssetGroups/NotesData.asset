@@ -20,8 +20,8 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 651d894d35cc6284aac98c8544c4ec59
-    m_Address: Assets/Prefab/TextData/NotesData/Chronomia/Chronomia_HARD 1.txt
+  - m_GUID: 9a94c7da8d0e63b4ba672eabbf014111
+    m_Address: Assets/Prefab/TextData/NotesData/Chronomia/Chronomia_HARD.txt
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
