@@ -54,19 +54,17 @@ namespace GameInfo
             score.Add(s_);
             TotalScore += (int)s_;
 
-            int combo = 1;
             if (s_ == NotesScore.Miss)
             {
-                combo = 0;
+                ComboCnt = 0;
+                return;
             }
 
-            ComboCnt += combo;
+            ComboCnt ++;
         }
 
         public void SetScore(NotesScore[] s_)
         {
-            int combo = 1;
-
             foreach (NotesScore s in s_)
             {
                 // 配列から加算する
@@ -75,11 +73,11 @@ namespace GameInfo
 
                 if (s == NotesScore.Miss)
                 {
-                    combo = 0;
+                    ComboCnt = 0;
                 }
             }
 
-            ComboCnt += combo;
+            ComboCnt ++;
         }
 
         public void SetMusicId(MusicData data)
