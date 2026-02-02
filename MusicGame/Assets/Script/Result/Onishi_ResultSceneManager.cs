@@ -91,4 +91,9 @@ public class Onishi_ResultSceneManager : MonoBehaviour
             SceneManager.LoadScene("Ooo_Title");
         }
     }
+
+    private void OnDestroy()
+    {
+        SingletonDataManager.instance.DestroyInstance();
+    }
 }
