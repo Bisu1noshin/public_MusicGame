@@ -210,7 +210,7 @@ namespace Notes {
             }
 
             // ラッシュが出た時の制御文
-            var debugInfo = new NotesDebugInfo(index + 1, (NotesLane)lane);
+            var debugInfo = new NotesDebugInfo(index + 1,NotesLane);
             var notesKind = _notes.kind;
             var notesRange = (int)_notes.dir;
             if (notesKind == NotesKind.Rush) notesKind = 0;
