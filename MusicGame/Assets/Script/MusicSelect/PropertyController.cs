@@ -78,7 +78,6 @@ namespace MusicSelect
         {
             transform.DOLocalMoveY(-1000f, 0.1f).SetEase(Ease.Linear);
             yield return new WaitForSeconds(0.1f);
-            Debug.Log("Property died");
             Destroy(gameObject);
             yield break;
         }

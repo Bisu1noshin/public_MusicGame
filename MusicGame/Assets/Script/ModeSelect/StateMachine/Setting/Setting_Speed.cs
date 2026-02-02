@@ -15,8 +15,16 @@ namespace ModeSelect.StateMachine.Setting
         protected override void OnEnter()
         {
             Player.enterAction = null;
-            CreateSpeedPopupInstance(ref mPopup,
-                (owner.PlayerConfig.InputDevice == Notes.InputDevice.KyeBord ? "WキーとSキー" : "左スティック上下") + "で\nノーツ速度の調整ができます。");
+            string str;
+            if (owner.PlayerConfig.InputDevice == Notes.InputDevice.KyeBord)
+            {
+                str = "Aキーで速く、Dキーで遅くできます。";
+            }
+            else
+            {
+                str = "左入力で速く、右入力で遅くできます。";
+            }
+            CreateSpeedPopupInstance(ref mPopup, str);
             CreateCursor();
             mCurrSpeed = owner.PlayerConfig.NotesSpeed;
             Action right = () =>

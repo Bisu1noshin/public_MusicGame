@@ -15,11 +15,11 @@ namespace MusicSelect
         TextMeshProUGUI mText;
         RectTransform mRect;
         int id;
+        Coroutine appear;
 
         void Awake()
         {
             mText = GetComponentInChildren<TextMeshProUGUI>();
-            //mSelecter = GameObject.Find("SceneManager").GetComponent<MusicSelectSceneManager>();
             if (GameObject.Find("SceneManager").TryGetComponent<MusicSelectSceneManager>(out var mssm))
             {
                 mSelecter = mssm;
@@ -30,7 +30,22 @@ namespace MusicSelect
             }
             mRect = GetComponent<RectTransform>();
             mState = ButtonState.Appear;
-            StartCoroutine(ActiveCoroutine());
+            appear = StartCoroutine(AppearMove());
+        }
+        private void Update()
+        {
+            if (mState == ButtonState.Active)
+            {
+                if (mSelecter.SelectNum[1] == id) transform.localScale = Vector3.one * 1.2f;
+                else transform.localScale = Vector3.one;
+
+                mRect.anchoredPosition = new Vector2(posX, SetY(id));
+            }
+            if (mState == ButtonState.Dead)
+            {
+                StopCoroutine(appear);
+                StartCoroutine(DestroyMove());
+            }
         }
         public void SetProperty(int id_, string str_)
         {
@@ -40,7 +55,8 @@ namespace MusicSelect
         }
         public static float SetY(int id_)
         {
-            return (id_ + 1) * -200.0f + 350.0f;
+            if (id_ < 2) return (id_ - 2) * -200f;
+            else return (id_ - 1) * -200f;
         }
         public static Action CreateInstance(GameObject res, int id_, string str_, SceneState ss = SceneState.LevelSelect, bool cantSelect = false)
         {
@@ -49,40 +65,29 @@ namespace MusicSelect
             go.transform.localRotation = Quaternion.identity;
             go.name = str_;
             go.transform.localScale = Vector3.one;
-            if (cantSelect)
-            {
-                go.GetComponent<Image>().color = Color.gray;
-            }
+            if (cantSelect) go.GetComponent<Image>().color = Color.gray;
 
             LevelButtonController lbc = go.GetComponent<LevelButtonController>();
             lbc.SetProperty(id_, str_);
-            if (ss == SceneState.EnterGame)
-            {
-                lbc.mRect.anchoredPosition = new(-1360.0f, SetY(id_));
-            }
-            else
-            {
-                lbc.mRect.anchoredPosition = new(1360.0f, SetY(id_));
-            }
 
+            if (ss == SceneState.EnterGame) lbc.mRect.anchoredPosition = new(-1360.0f, SetY(id_));
+            else lbc.mRect.anchoredPosition = new(1360.0f, SetY(id_));
 
             Action action = () => { lbc.mState = ButtonState.Dead; };
             return action;
         }
-
-        IEnumerator ActiveCoroutine()
+        IEnumerator AppearMove()
         {
             transform.DOLocalMoveX(posX, 0.4f).SetEase(Ease.OutQuad);
             yield return new WaitForSeconds(0.4f);
-            mState = ButtonState.Active;
-            while (mState == ButtonState.Active)
+            if (mState != ButtonState.Dead)
             {
-                if (mSelecter.SelectNum[1] == id) transform.localScale = Vector3.one * 1.2f;
-                else transform.localScale = Vector3.one;
-
-                mRect.anchoredPosition = new Vector2(posX, SetY(id));
-                yield return null;
+                mState = ButtonState.Active;
             }
+            yield break;
+        }
+        IEnumerator DestroyMove()
+        {
             switch (mSelecter.mSceneState)
             {
                 case SceneState.MusicSelect:
@@ -90,7 +95,7 @@ namespace MusicSelect
                     break;
                 case SceneState.LevelSelect:
                     Destroy(gameObject);
-                    break;
+                    yield break;
                 case SceneState.EnterGame:
                     transform.DOLocalMoveX(-1360f, 0.4f).SetEase(Ease.OutQuad);
                     break;

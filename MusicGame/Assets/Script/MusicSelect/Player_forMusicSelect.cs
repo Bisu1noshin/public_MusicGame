@@ -27,7 +27,6 @@ namespace MusicSelect
         }
         protected override void SetPlayerInput()
         {
-            var b = mSelecter.UseKeyboard;
 
             if (mSelecter.UseKeyboard)
             {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using LoadForAsync;
 using Notes;
@@ -43,8 +44,7 @@ namespace MusicSelect
         {
             "NORMAL",
             "HARD",
-            "EXPERT",
-            "ULTIMATE"
+            "EXPERT"
         };
 
         [SerializeField] NotesManagerDatabase mNotesManager;

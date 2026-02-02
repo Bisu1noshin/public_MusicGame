@@ -7,6 +7,8 @@ using UnityEngine;
 
 namespace ModeSelect.StateMachine
 {
+    [Serializable]
+    //複数の分岐を管理するホーム画面のクラステンプレート
     public abstract class HomeStateAbstract<OwnerClass, STrigger> : Kameda_StateBase<OwnerClass, STrigger>
         where OwnerClass : class
         where STrigger : struct, Enum

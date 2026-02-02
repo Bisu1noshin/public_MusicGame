@@ -16,18 +16,20 @@ namespace ModeSelect.StateMachine
             CreateCursor();
             Player.enterAction = null;
             deleteAction = null;
-            deleteAction += CreatePopupInstance("シングルプレイを開始します。\nよろしいですか？");
+            deleteAction += CreatePopupInstance("楽曲選択に移動します。\nよろしいですか？");
             Action ent = () => SceneManager.LoadScene("Test_MusicSelectScene");
             Action back = () => stateMachine.ExecuteTriggerAction(Trigger.Home);
             SetEnterAndCancelAction(ent, back);
             Player.vecAction = (vec) => ChangeState(vec);
-            SetInitialEnterAction(true);
+            Player.enterAction = () => PlayEnterSound();
+            Player.enterAction += ent;
         }
         protected override void OnUpdate(float deltaTime)
         {
         }
         protected override void OnExit()
         {
+            mCursorOwner.TryDeletePopupCursor();
             deleteAction?.Invoke();
         }
     }

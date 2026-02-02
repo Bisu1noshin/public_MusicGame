@@ -42,7 +42,8 @@ namespace ModeSelect.StateMachine
                 { "Button", mSceneManager.Resource.GetGameObject("Button", true) },
                 { "Popup", mSceneManager.Resource.GetGameObject("Popup", true) },
                 { "Popup_Speed", mSceneManager.Resource.GetGameObject("Popup_Speed", true) },
-                { "Property", mSceneManager.Resource.GetGameObject("Property", true) }
+                { "Property", mSceneManager.Resource.GetGameObject("Property", true) },
+                { "Popup_Intro", mSceneManager.Resource.GetGameObject("Popup_Intro", true) }
             };
 
         }

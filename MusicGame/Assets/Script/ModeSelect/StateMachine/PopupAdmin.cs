@@ -11,6 +11,8 @@ namespace ModeSelect.StateMachine
     {
         None = -1, ChangeElement, EnterORCancel
     }
+
+   //ポップアップの表示と管理を行うクラステンプレート
     public abstract class PopupAdmin<OwnerClass, STrigger> : Kameda_StateBase<OwnerClass, STrigger>
         where OwnerClass : class
         where STrigger : struct, Enum
@@ -28,26 +30,15 @@ namespace ModeSelect.StateMachine
             canChangeElement = canChange;
             mCursorState = InitialCursorState;
             CurrisEnter = true;
-        }
-        protected void SetInitialEnterAction(bool _enter)
-        {
-            if (_enter)
+            if (InitialCursorState == CursorState.EnterORCancel)
             {
-                Player.enterAction = () => mSceneManager.PlaySound(0);
-                Player.enterAction += enter;
-                mCursorOwner.TrySetPopupCursorPos(false, true);
-            }
-            else
-            {
-                Player.enterAction = () => mSceneManager.PlaySound(1);
-                Player.enterAction += back;
-                mCursorOwner.TrySetPopupCursorPos(false, false);
+                mCursorOwner.TrySetPopupCursorPos(false, true, false);
             }
         }
         protected void CreateCursor()
         {
             mSceneManager.CreatePopupCursor();
-            mSceneManager.TrySetPopupCursorPos(canChangeElement, true);
+            mSceneManager.TrySetPopupCursorPos(false, true, canChangeElement);
         }
         protected void ChangeState(Vector2 vec)
         {
@@ -72,13 +63,13 @@ namespace ModeSelect.StateMachine
                     {
                         Player.enterAction = () => mSceneManager.PlaySound(0);
                         Player.enterAction += enter;
-                        mCursorOwner.TrySetPopupCursorPos(false, true);
+                        mCursorOwner.TrySetPopupCursorPos(false, true, false);
                     }
                     else
                     {
                         Player.enterAction = () => mSceneManager.PlaySound(1);
                         Player.enterAction += back;
-                        mCursorOwner.TrySetPopupCursorPos(false, false);
+                        mCursorOwner.TrySetPopupCursorPos(false, false, false);
                     }
                 }
             }
@@ -89,25 +80,25 @@ namespace ModeSelect.StateMachine
                 if (mCursorState == CursorState.ChangeElement)
                 {
                     mCursorState = CursorState.EnterORCancel;
-                    mCursorOwner.TrySetPopupCursorPos(false, CurrisEnter);
+                    mCursorOwner.TrySetPopupCursorPos(false, CurrisEnter, false);
 
                     if (CurrisEnter)
                     {
                         Player.enterAction = () => mSceneManager.PlaySound(0);
                         Player.enterAction += enter;
-                        mCursorOwner.TrySetPopupCursorPos(false, true);
+                        mCursorOwner.TrySetPopupCursorPos(false, true, false);
                     }
                     else
                     {
                         Player.enterAction = () => mSceneManager.PlaySound(1);
                         Player.enterAction += back;
-                        mCursorOwner.TrySetPopupCursorPos(false, false);
+                        mCursorOwner.TrySetPopupCursorPos(false, false, false);
                     }
                 }
                 else
                 {
                     mCursorState = CursorState.ChangeElement;
-                    mCursorOwner.TrySetPopupCursorPos(true);
+                    mCursorOwner.TrySetPopupCursorPos(false, true);
                 }
             }
         }
