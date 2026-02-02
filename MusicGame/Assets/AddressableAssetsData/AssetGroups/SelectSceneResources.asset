@@ -70,6 +70,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 69d5ba4b1399d47499aae58970be2282
+    m_Address: Assets/Prefab/SelectSceneResources/ModeSelect/Popup_Intro.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 74b36b5b3b7cf384ba551572adf26116
     m_Address: Assets/Prefab/SelectSceneResources/SoundEffect/Scroll.mp3
     m_ReadOnly: 0
@@ -127,6 +132,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e795e8e113d452e49985ef2515c33545
     m_Address: Assets/Prefab/SelectSceneResources/ModeSelect/Popup_forNotesSpeed.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f36ac62851c91ee4ba9225774b6d6d14
+    m_Address: Assets/Prefab/SelectSceneResources/ModeSelect/Cursor_forPopup.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

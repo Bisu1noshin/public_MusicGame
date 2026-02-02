@@ -1,15 +1,15 @@
 ﻿using UnityEngine;
-
+using UnityEngine.SceneManagement;
 
 namespace ModeSelect.StateMachine.Setting
 {
     public enum OState
     {
-        None = -1, Home, Lane, LR, UD
+        None = -1, Home, Lane, LR, UD, Intro
     }
     public enum OTrigger
     {
-        Home, Lane, LR, UD
+        Home, Lane, LR, UD, Intro
     }
 
 
@@ -22,16 +22,23 @@ namespace ModeSelect.StateMachine.Setting
         }
         protected override void OnEnter()
         {
+            deleteAction += CreateButtonInstance(0, 4, "レーン反転");
+            deleteAction += CreateButtonInstance(1, 4, "左右反転");
+            deleteAction += CreateButtonInstance(2, 4, "上下反転");
+            deleteAction += CreateButtonInstance(3, 4, "戻る");
+            mSceneManager.CreateCursor();
             SetupStates();
-            
         }
         protected override void OnUpdate(float deltaTime)
         {
-            
+            mStateMachine.Update(deltaTime);
         }
         protected override void OnExit()
         {
-
+            deleteAction?.Invoke();
+            deleteAction = null;
+            mSceneManager.TryDeleteCursor();
+            mStateMachine = null;
         }
         public void BackToHome()
         {

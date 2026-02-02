@@ -31,7 +31,7 @@ namespace ModeSelect
 
         public StateMachine<State, Trigger> mStateMachine { get; set; }
 
-        public RectTransform CursorRect { get; set; }
+        RectTransform CursorRect;
         GameObject mCursor, mCursorRes;
         GameObject mPlayer, mPlayerRes;
 
@@ -84,6 +84,10 @@ namespace ModeSelect
             CursorRect.anchoredPosition = new(-350, 0);
         }
         public void TryDeleteCursor() { if(mCursor != null) Destroy(mCursor); }
+        public void TrySetCursorPos(int curr, int max)
+        {
+            if (mCursor) CursorRect.anchoredPosition = new(-350.0f, -(curr - (max - 1) / 2.0f) * (540 / max * 2));
+        }
         public NotesManagerPlayerConfig GetPlayerConfig() { return mNotesManager.PlayerConfig; }
         public void PlaySound(int value)
         {
@@ -104,7 +108,7 @@ namespace ModeSelect
     {
         void CreateCursor();
         void TryDeleteCursor();
-        RectTransform CursorRect { get; set; }
+        void TrySetCursorPos(int curr, int max);
     }
 
     public interface ISceneManager : ICursorController

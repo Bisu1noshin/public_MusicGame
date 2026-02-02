@@ -49,7 +49,7 @@ namespace ModeSelect.StateMachine
         protected override void OnUpdate(float deltaTime)
         {
             mProperty.SetText(explaination[mSelectNum]);
-            if (owner.CursorRect) owner.CursorRect.anchoredPosition = new(-350.0f, -(mSelectNum - (5 - 1) / 2.0f) * (540 / 5 * 2));
+            mSceneManager.TrySetCursorPos(mSelectNum, 5);
             if (mSelectNum != mPrevSelectNum)
             {
                 ReplaceEnterAction(mSelectNum);

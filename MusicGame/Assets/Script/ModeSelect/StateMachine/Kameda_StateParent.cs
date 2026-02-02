@@ -36,9 +36,9 @@ namespace ModeSelect.StateMachine
 
         protected void Scroll(Vector2 vector2)
         {
-            if (vector2 == Vector2.zero) return;
+            if (vector2 == Vector2.zero || Mathf.Abs(vector2.y / vector2.x) < 1f) return;
 
-            mSelectNum += vector2.y < 0.0f ? 1 : -1;
+            mSelectNum += vector2.y < 0f ? 1 : -1;
             if (mSelectNum < 0)
             {
                 mSelectNum = 0;
