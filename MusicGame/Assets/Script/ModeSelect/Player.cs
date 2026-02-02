@@ -10,7 +10,7 @@ namespace ModeSelect
     public class Player : PlayerParent
     {
         public static Action enterAction { get; set; }
-        public static Action backAction { get; set; }
+        //public static Action backAction { get; set; }
         public static Action<Vector2> vecAction { get; set; }
 
         public static Action destroyAction { get; private set; }
@@ -56,24 +56,39 @@ namespace ModeSelect
         }
         protected override void OnButtonB()
         {
-            backAction?.Invoke();
+            //backAction?.Invoke();
         }
         
         protected override void LeftStickStarted(Vector2 vec)
         {
-            if (Mathf.Abs(vec.y / vec.x) < 1.0f) return;
-            float Y = vec.y < 0.0f ? -1.0f : 1.0f;
-            moveVec = new(0.0f, Y);
+            if (Mathf.Abs(vec.y / vec.x) > 1f)
+            {
+                float Y = vec.y < 0f ? -1f : 1f;
+                moveVec = new(0f, Y);
+            }
+            else
+            {
+                float X = vec.x < 0f ? 1f : -1f;
+                moveVec = new(X, 0f);
+            }
             vecAction?.Invoke(moveVec);
             time = 0;
             lastPerformedTime = 0;
         }
         protected override void LeftStickPerformed(Vector2 vec)
         {
-            if (Mathf.Abs(vec.y / vec.x) < 1.0f) return;
-            float Y = vec.y < 0.0f ? -1.0f : 1.0f;
-            if (Y == moveVec.y) { return; }
-            moveVec = new(0.0f, Y);
+            if (Mathf.Abs(vec.y / vec.x) > 1f)
+            {
+                float Y = vec.y < 0f ? -1f : 1f;
+                if (moveVec.y == Y) return;
+                moveVec = new(0f, Y);
+            }
+            else
+            {
+                float X = vec.x < 0f ? 1f : -1f;
+                if (moveVec.x == X) return;
+                moveVec = new(X, 0f);
+            }
             vecAction?.Invoke(moveVec);
             time = 0;
             lastPerformedTime = 0;

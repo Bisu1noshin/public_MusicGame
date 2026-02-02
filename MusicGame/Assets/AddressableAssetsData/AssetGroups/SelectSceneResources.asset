@@ -45,6 +45,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 214abb8f05c9cf94295c31fe71946e70
+    m_Address: "Assets/Prefab/SelectSceneResources/ModeSelect/\u64CD\u4F5C\u30DE\u30CB\u30E5\u30A2\u30EB_\u30AD\u30FC\u30DC\u30FC\u30C9.png"
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 277614fbd087ab6498dec28d87cadf7a
     m_Address: Assets/Prefab/SelectSceneResources/MusicSelecter/GUI.prefab
     m_ReadOnly: 0
@@ -67,6 +72,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 53228227644095d489297c167efb6e5b
     m_Address: Assets/Prefab/SelectSceneResources/MusicSelecter/Property.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 69d5ba4b1399d47499aae58970be2282
+    m_Address: Assets/Prefab/SelectSceneResources/ModeSelect/Popup_Intro.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -120,6 +130,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bf67d582126b67d47a5fdfa6244bf6d4
+    m_Address: "Assets/Prefab/SelectSceneResources/ModeSelect/\u7121\u984C\u306E\u30D7\u30EC\u30BC\u30F3\u30C6\u30FC\u30B7\u30E7\u30F3.png"
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: dc399500b2c96ab4cb56186dd92a48a5
     m_Address: Assets/Prefab/SelectSceneResources/SoundEffect/Beep.mp3
     m_ReadOnly: 0
@@ -127,6 +142,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e795e8e113d452e49985ef2515c33545
     m_Address: Assets/Prefab/SelectSceneResources/ModeSelect/Popup_forNotesSpeed.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f36ac62851c91ee4ba9225774b6d6d14
+    m_Address: Assets/Prefab/SelectSceneResources/ModeSelect/Cursor_forPopup.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

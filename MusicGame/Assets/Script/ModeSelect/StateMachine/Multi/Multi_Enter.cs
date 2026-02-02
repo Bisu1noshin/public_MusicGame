@@ -6,28 +6,28 @@ using System.Threading.Tasks;
 
 namespace ModeSelect.StateMachine.Multi
 {
-    public class Multi_Enter : Kameda_StateParent<IMultiState, MTrigger>
+    public class Multi_Enter : PopupAdmin<IMultiState, MTrigger>
     {
-        public Multi_Enter(IMultiState _owner, IStateMachine<MTrigger> _st) : base(_owner, _st)
+        public Multi_Enter(IMultiState _owner, IStateMachine<MTrigger> _st) : base(_owner, _st, false, CursorState.EnterORCancel)
         {
 
         }
         protected override void OnEnter()
         {
-            deleteAction = null;
+            Player.enterAction = null;
             deleteAction += CreatePopupInstance("オンラインモードを開始しますか？");
-            Player.enterAction = () =>
+            CreateCursor();
+            Action ent = () =>
             {
-                PlayEnterSound();
                 //目的のシーンに飛ぶ
             };
-            Player.backAction = () =>
+            Action back = () =>
             {
                 deleteAction?.Invoke();
-                PlayCancelSound();
                 owner.BackToHome();
             };
-            Player.vecAction = null;
+            SetEnterAndCancelAction(ent, back);
+            Player.vecAction = (vec) => ChangeState(vec);
         }
         protected override void OnUpdate(float deltaTime)
         {
@@ -35,7 +35,9 @@ namespace ModeSelect.StateMachine.Multi
         }
         protected override void OnExit()
         {
+            mSceneManager.TryDeletePopupCursor();
             deleteAction?.Invoke();
+            deleteAction = null;
         }
     }
 }

@@ -2,6 +2,8 @@
 using TMPro;
 using UnityEngine.UI;
 using System;
+using DG.Tweening;
+using System.Collections;
 
 namespace MusicSelect
 {
@@ -21,36 +23,9 @@ namespace MusicSelect
             mThumbnail = transform.GetChild(0).GetComponent<Image>();
             mRect = GetComponent<RectTransform>();
             mState = ButtonState.Appear;
+            StartCoroutine(ActiveCoroutine());
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-            switch (mState)
-            {
-                case ButtonState.Appear:
-                    float y = Mathf.Lerp(mRect.anchoredPosition.y, 0.0f, 0.2f);
-                    mRect.anchoredPosition = new(550.0f, y);
-                    if (Mathf.Abs(y) < 0.1f)
-                    {
-                        mRect.anchoredPosition = new(550.0f, 0.0f);
-                        mState = ButtonState.Active;
-                    }
-                    break;
-                case ButtonState.Active:
-                    break;
-                case ButtonState.Dead:
-                    y = Mathf.Lerp(mRect.anchoredPosition.y, -1e4f, 0.1f);
-                    mRect.anchoredPosition = new(550.0f, y);
-                    if (Mathf.Abs(y + 1000.0f) < 0.1f)
-                    {
-                        Destroy(gameObject);
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
 
         public void SetProperty(string text, AudioClip audio, Sprite image)
         {
@@ -79,6 +54,20 @@ namespace MusicSelect
 
             Action f = () => { pc.mState = ButtonState.Dead; };
             return (pc, f);
+        }
+
+        IEnumerator ActiveCoroutine()
+        {
+            transform.DOLocalMoveY(0f, 0.3f).SetEase(Ease.OutCubic);
+            yield return new WaitForSeconds(0.3f);
+            mState = ButtonState.Active;
+            while (mState == ButtonState.Active)
+            {
+                yield return null;
+            }
+            transform.DOLocalMoveY(-1000f, 0.3f).SetEase(Ease.InOutCubic);
+            Destroy(gameObject);
+            yield break;
         }
     }
 
