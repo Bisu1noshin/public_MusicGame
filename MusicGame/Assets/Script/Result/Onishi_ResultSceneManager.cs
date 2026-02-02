@@ -14,6 +14,7 @@ public class Onishi_ResultSceneManager : MonoBehaviour
     [SerializeField] private GameObject Img_ClearLamp;              //クリアランプ
     [SerializeField] private RawImage Img_MusicJacket;              //楽曲のジャケット
     [SerializeField] private TMP_Text Txt_MusicName;                //楽曲名
+    bool isRainbow = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -38,7 +39,7 @@ public class Onishi_ResultSceneManager : MonoBehaviour
 
         //判定数のテキストをフェードインさせる
         {
-            Txt_PerfectCnt.transform.DOLocalMoveX(-380f, 1f).SetEase(Ease.InOutQuart).SetDelay(1f);
+            Txt_PerfectCnt.transform.DOLocalMoveX(-380f, 1f).SetEase(Ease.InOutQuart).SetDelay(1f).OnComplete(() => isRainbow = true);
             Txt_PerfectCnt.DOFade(1f, 1f).SetEase(Ease.InOutQuart).SetDelay(1f);
             Txt_GoodCnt.transform.DOLocalMoveX(-380f, 1f).SetEase(Ease.InOutQuart).SetDelay(1.5f);
             Txt_GoodCnt.DOFade(1f, 1f).SetEase(Ease.InOutQuart).SetDelay(1.5f);
@@ -86,6 +87,8 @@ public class Onishi_ResultSceneManager : MonoBehaviour
 
     private void Update()
     {
+        if(isRainbow) GamingColor(Txt_PerfectCnt);
+
         if (Input.anyKeyDown)
         {
             SceneManager.LoadScene("Ooo_Title");
@@ -95,5 +98,47 @@ public class Onishi_ResultSceneManager : MonoBehaviour
     private void OnDestroy()
     {
         SingletonDataManager.instance.DestroyInstance();
+    }
+
+    private void GamingColor(MaskableGraphic ui)
+    {
+        float addValue = 1f / 256f * 16f;
+        float maxValue = 1f;
+
+        float r = ui.color.r;
+        float g = ui.color.g;
+        float b = ui.color.b;
+
+        if (r == maxValue && g == 0)
+        {
+            b += addValue;
+        }
+
+        if (g == 0 && b == maxValue)
+        {
+            r -= addValue;
+        }
+
+        if (r == 0 && b == maxValue)
+        {
+            g += addValue;
+        }
+
+        if (r == 0 && g == maxValue)
+        {
+            b -= addValue;
+        }
+
+        if (b == 0 && g == maxValue)
+        {
+            r += addValue;
+        }
+
+        if (b == 0 && r == maxValue)
+        {
+            g -= addValue;
+        }
+
+        ui.color = new Color(r, g, b);
     }
 }
