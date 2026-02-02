@@ -15,12 +15,13 @@ namespace ModeSelect.StateMachine.Setting.Operation
                 () => stateMachine.ExecuteTriggerAction(OTrigger.UD),
                 () => owner.BackToHome()
             };
-            ReplaceEnterAction(mSelectNum);
-            Player.vecAction = (vec2) => Scroll(vec2);
+            
         }
         protected override void OnEnter()
         {
             mPrevSelectNum = mSelectNum;
+            ReplaceEnterAction(mSelectNum);
+            Player.vecAction = (vec2) => Scroll(vec2);
         }
         protected override void OnUpdate(float deltaTime)
         {

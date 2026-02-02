@@ -29,6 +29,21 @@ namespace ModeSelect.StateMachine
             mCursorState = InitialCursorState;
             CurrisEnter = true;
         }
+        protected void SetInitialEnterAction(bool _enter)
+        {
+            if (_enter)
+            {
+                Player.enterAction = () => mSceneManager.PlaySound(0);
+                Player.enterAction += enter;
+                mCursorOwner.TrySetPopupCursorPos(false, true);
+            }
+            else
+            {
+                Player.enterAction = () => mSceneManager.PlaySound(1);
+                Player.enterAction += back;
+                mCursorOwner.TrySetPopupCursorPos(false, false);
+            }
+        }
         protected void CreateCursor()
         {
             mSceneManager.CreatePopupCursor();

@@ -23,17 +23,47 @@ namespace MusicSelect
         RectTransform mRect;
         TextScroller mTextScroller;
         int id;
-        bool coroutineLives = true;
+        Coroutine appear;
         //Coroutine mCurrCoroutine;
 
-        private void Awake()
+        void Awake()
         {
             mText = GetComponentInChildren<TextMeshProUGUI>();
             mRect = GetComponent<RectTransform>();
             mSelecter = GameObject.Find("SceneManager").GetComponent<MusicSelectSceneManager>();
             mTextScroller = GetComponentInChildren<TextScroller>();
             mState = ButtonState.Appear;
-            StartCoroutine(ActiveCoroutine());
+            appear = StartCoroutine(AppearMove());
+        }
+        void Update()
+        {
+            if (mState == ButtonState.Active)
+            {
+                Vector2 pos = new(-350.0f, 0.0f);
+                pos.y += (mSelecter.SelectNum[0] - id) * 1.3f * buttonPadding;
+                mRect.anchoredPosition = pos;
+                if (mSelecter.SelectNum[0] == id)
+                {
+                    transform.localScale = Vector3.one * 1.2f;
+                    if (!mTextScroller.enabled)
+                    {
+                        mTextScroller.enabled = true;
+                    }
+                }
+                else
+                {
+                    transform.localScale = Vector3.one;
+                    if (mTextScroller.enabled)
+                    {
+                        mTextScroller.enabled = false;
+                    }
+                }
+            }
+            if (mState == ButtonState.Dead)
+            {
+                StopCoroutine(appear);
+                StartCoroutine(DestroyMove());
+            }
         }
         public void SetInfo(string text_, int id_)
         {
@@ -55,35 +85,18 @@ namespace MusicSelect
 
             return f;
         }
-        IEnumerator ActiveCoroutine()
+        IEnumerator AppearMove()
         {
             transform.DOLocalMoveX(-350f, 0.4f).SetEase(Ease.OutQuad);
             yield return new WaitForSeconds(0.4f);
-            mState = ButtonState.Active;
-            while (mState == ButtonState.Active)
+            if (mState != ButtonState.Dead)
             {
-                Vector2 pos = new(-350.0f, 0.0f);
-                pos.y += (mSelecter.SelectNum[0] - id) * 1.3f * buttonPadding;
-                mRect.anchoredPosition = pos;
-                if (mSelecter.SelectNum[0] == id)
-                {
-                    transform.localScale = Vector3.one * 1.2f;
-                    if (!mTextScroller.enabled)
-                    {
-                        mTextScroller.enabled = true;
-                    }
-                }
-                else
-                {
-                    transform.localScale = Vector3.one;
-                    if (mTextScroller.enabled)
-                    {
-                        mTextScroller.enabled = false;
-                    }
-                }
-                yield return null;
+                mState = ButtonState.Active;
             }
-
+            yield break;
+        }
+        IEnumerator DestroyMove()
+        {
             mRect.DOLocalMoveX(-1360f, 0.2f).SetEase(Ease.OutQuad);
             yield return new WaitForSeconds(0.2f);
 

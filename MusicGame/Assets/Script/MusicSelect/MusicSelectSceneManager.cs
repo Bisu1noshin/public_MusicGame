@@ -52,6 +52,7 @@ namespace MusicSelect
 
         Dictionary.Dic<string, GameObject> res;
         List<DemoMusicInfo> demoPropertys;
+        int mMusicStateMaxValue;
 
         // 追記
         [SerializeField] private AssetLoadConfig AssetLoadConfig;
@@ -92,7 +93,9 @@ namespace MusicSelect
 
         void Init()
         {
-            resManager = GameObject.Find("ResourceManager").GetComponent<Kameda_ResourceManager>();
+            GameObject go = GameObject.Find("ResourceManager");
+            if (go)
+            resManager = go.GetComponent<Kameda_ResourceManager>();
             
             mSelectNum = new int[3];
             mCurrNotesData = new string[4];
@@ -126,7 +129,7 @@ namespace MusicSelect
             switch (mSceneState)
             {
                 case SceneState.MusicSelect:
-                    if (mSelectNum[0] >= mDataBase.musicDatabase.Count - 1)
+                    if (mSelectNum[0] >= mMusicStateMaxValue - 1)
                     {
                         mAudio.PlayOneShot(beep);
                     }
@@ -191,14 +194,22 @@ namespace MusicSelect
             switch (mSceneState)
             {
                 case SceneState.MusicSelect:
-                    mCurrNotesData[0] = mDataBase.musicDatabase[mSelectNum[0]].normalPath;
-                    mCurrNotesData[1] = mDataBase.musicDatabase[mSelectNum[0]].hardPath;
-                    mCurrNotesData[2] = mDataBase.musicDatabase[mSelectNum[0]].expertPath;
-                    mCurrMusicPath = mDataBase.musicDatabase[mSelectNum[0]].musicPath;
-                    DeleteAndExecuteAction(CreateLevelButtons());
-                    mAudio.PlayOneShot(enter);
-                    timer = 0f;
-                    untouchableTimer = 0.4f;
+                    if (demoPropertys[SelectNum[0]].name == "戻る")
+                    {
+                        SceneManager.LoadScene("Test_ModeSelectScene");
+                    }
+                    else
+                    {
+                        mCurrNotesData[0] = mDataBase.musicDatabase[mSelectNum[0]].normalPath;
+                        mCurrNotesData[1] = mDataBase.musicDatabase[mSelectNum[0]].hardPath;
+                        mCurrNotesData[2] = mDataBase.musicDatabase[mSelectNum[0]].expertPath;
+                        mCurrMusicPath = mDataBase.musicDatabase[mSelectNum[0]].musicPath;
+                        DeleteAndExecuteAction(CreateLevelButtons());
+                        mAudio.PlayOneShot(enter);
+                        timer = 0f;
+                        untouchableTimer = 0.4f;
+                    }
+                    
                     break;
                 case SceneState.LevelSelect:
                     if (mCurrNotesData[SelectNum[1]] == string.Empty)
@@ -276,8 +287,9 @@ namespace MusicSelect
                     demoPropertys.Add(new(m.name, Resource.GetAudioClip(m.musicScriptData.fileName), Resource.GetSprite(m.musicScriptData.fileName)));
                 }
                 //末尾に戻るボタンを追加
-                deleteAction += MusicButtonController.CreateInstance(res.GetValue("MusicButton"), "戻る", num, currentNum);
+                deleteAction += MusicButtonController.CreateInstance(res.GetValue("MusicButton"), "戻る", num++, currentNum);
                 demoPropertys.Add(new("戻る", null, null));
+                mMusicStateMaxValue = num;
 
                 deleteAction += GUIController.CreateInstance(res.GetValue("GUI"), "決定(A)", new(-180.0f, -50.0f));
                 deleteAction += GUIController.CreateInstance(res.GetValue("GUI"), "戻る(B)", new(0.0f, -50.0f));
