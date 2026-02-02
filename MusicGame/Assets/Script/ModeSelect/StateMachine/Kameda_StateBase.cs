@@ -1,30 +1,29 @@
 ﻿using Cysharp.Threading.Tasks.Triggers;
+using JetBrains.Annotations;
 using LoadForAsync;
 using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ModeSelect.StateMachine
 {
-    public abstract class Kameda_StateParent<OwnerClass, SPTrigger> : StateBase<OwnerClass, SPTrigger>
+    public abstract class Kameda_StateBase<OwnerClass, SPTrigger> : StateBase<OwnerClass, SPTrigger>
             where OwnerClass : class
             where SPTrigger : struct, Enum
     {
         protected Dictionary<string, GameObject> mObjectRes;
         protected ISceneManager mSceneManager;
-        protected List<Action> mActions;
-        protected int mSelectNum;
+        
         protected Action deleteAction;
 
         public Action ReleaseAll { get; set; }
 
-        public Kameda_StateParent(OwnerClass owner, IStateMachine<SPTrigger> st) : base(owner, st)
+        public Kameda_StateBase(OwnerClass owner, IStateMachine<SPTrigger> st) : base(owner, st)
         {
             mSceneManager = GameObject.Find("SceneManager").GetComponent<ModeSelectSceneManager>();
-            mActions = new();
-            mSelectNum = 0;
             deleteAction = null;
             SetObjects();   
         }
@@ -34,26 +33,7 @@ namespace ModeSelect.StateMachine
         protected void PlayShiftSound() => mSceneManager.PlaySound(2);
         protected void PlayBeepSound() => mSceneManager.PlaySound(3);
 
-        protected void Scroll(Vector2 vector2)
-        {
-            if (vector2 == Vector2.zero) return;
 
-            mSelectNum += vector2.y < 0.0f ? 1 : -1;
-            if (mSelectNum < 0)
-            {
-                mSelectNum = 0;
-                PlayBeepSound();
-            }
-            else if (mSelectNum > mActions.Count - 1)
-            {
-                mSelectNum = mActions.Count - 1;
-                PlayBeepSound();
-            }
-            else
-            {
-                PlayShiftSound();
-            }
-        }
 
         void SetObjects()
         {
@@ -71,17 +51,31 @@ namespace ModeSelect.StateMachine
         {
             return Button.ButtonManager.CreateInstance(cur, max, mObjectRes.GetValueOrDefault("Button"), msg);
         }
-        protected (PropertyController, Action) CreatePropertyInstance()
+        protected void CreatePropertyInstance(ref PropertyController prc)
         {
-            return PropertyController.CreateInstance(mObjectRes.GetValueOrDefault("Property"));
+            (PropertyController, Action) tuple = PropertyController.CreateInstance(mObjectRes.GetValueOrDefault("Property"));
+            prc = tuple.Item1;
+            deleteAction += tuple.Item2;
         }
         protected Action CreatePopupInstance(string str, int size = 96)
         {
-            return PopupController.CreateInstance(str, mObjectRes.GetValueOrDefault("Popup"), size);
+            return PopupController.CreateInstance(mObjectRes.GetValueOrDefault("Popup"), str, size);
         }
-        protected (PopupController, Action) CreateSpeedPopupInstance(bool isKeyboard)
+        protected void CreateSpeedPopupInstance(ref PopupController pc, string msg, int size = 96)
         {
-            return PopupController.CreateInstanceForNotesSpeed(isKeyboard, mObjectRes.GetValueOrDefault("Popup_Speed"));
+            (PopupController, Action) tuple = PopupController.CreateInstanceForNotesSpeed(mObjectRes.GetValueOrDefault("Popup_Speed"), msg, size);
+            pc = tuple.Item1;
+            deleteAction += tuple.Item2;
         }
+        protected void CreateImagePopupInstance(ref PopupController pc, Sprite image)
+        {
+            (PopupController, Action) tuple = PopupController.CreateInstanceImage(mObjectRes.GetValueOrDefault("Popup_Intro"), image);
+            pc = tuple.Item1;
+            deleteAction += tuple.Item2;
+        }
+    }
+    public interface IParentState
+    {
+        void BackToHome();
     }
 }

@@ -1,23 +1,20 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
-using System;
-using System.Buffers;
+﻿using System;
+using Unity.VisualScripting;
 
-namespace ModeSelect.StateMachine.Setting
+namespace ModeSelect.StateMachine.Setting.Operation
 {
-    public class Setting_Auto : PopupAdmin<SettingState, STrigger>
+    public class Oper_UD : PopupAdmin<Setting_Oper, OTrigger>
     {
         bool instantBool;
-        public Setting_Auto(SettingState owner, IStateMachine<STrigger> st) : base(owner, st, true)
+        public Oper_UD(Setting_Oper owner, IStateMachine<OTrigger> st) : base(owner, st, true)
         {
 
         }
-
         protected override void OnEnter()
         {
             Player.enterAction = null;
-            instantBool = owner.PlayerConfig.AutoPlay;
-            CreateSpeedPopupInstance(ref mPopup, "オートプレイを変更します。よろしいですか？");
+            instantBool = owner.PlayerConfig.UpDownCahge;
+            CreateSpeedPopupInstance(ref mPopup, "上下反転を変更します。");
             CreateCursor();
             Action change = () =>
             {
@@ -25,12 +22,12 @@ namespace ModeSelect.StateMachine.Setting
             };
             Action ent = () =>
             {
-                owner.PlayerConfig.AutoPlay = instantBool;
-                stateMachine.ExecuteTriggerAction(STrigger.Home);
+                owner.PlayerConfig.UpDownCahge = instantBool;
+                stateMachine.ExecuteTriggerAction(OTrigger.Home);
             };
             Action back = () =>
             {
-                stateMachine.ExecuteTriggerAction(STrigger.Home);
+                stateMachine.ExecuteTriggerAction(OTrigger.Home);
             };
             SetChangeElementAction(change, change);
             SetEnterAndCancelAction(ent, back);

@@ -27,12 +27,13 @@ namespace ModeSelect
         AudioSource mAudio;
         AudioClip[] mAudioClips;
 
-        [SerializeField] public NotesManagerDatabase mNotesManager;
+        public NotesManagerDatabase mNotesManager;
 
         public StateMachine<State, Trigger> mStateMachine { get; set; }
 
-        public RectTransform CursorRect { get; set; }
+        RectTransform CursorRect, PopupCursorRect;
         GameObject mCursor, mCursorRes;
+        GameObject mPopupCursor, mPopupCursorRes;
         GameObject mPlayer, mPlayerRes;
 
         [SerializeField] bool DebugMode;
@@ -41,7 +42,9 @@ namespace ModeSelect
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
+            GameObject.Find("CursorCanvas").GetComponent<Canvas>().sortingOrder = 999;
             resManager = GameObject.Find("ResourceManager").GetComponent<Kameda_ResourceManager>();
+            resManager.StartLoadSync();
             SetObjects();
             if (!mPlayer) { mPlayer = Instantiate(mPlayerRes); }
             mAudio = GetComponent<AudioSource>();
@@ -76,6 +79,11 @@ namespace ModeSelect
         }
         public void CreateCursor()
         {
+            if (mCursor != null)
+            {
+                Debug.Log("Warning!! You tried to create cursor but cursor is already exist");
+                return;
+            }
             mCursor = Instantiate(mCursorRes);
             mCursor.transform.SetParent(GameObject.Find("Canvas").transform);
             mCursor.transform.localScale = Vector3.one;
@@ -83,7 +91,19 @@ namespace ModeSelect
             CursorRect = mCursor.GetComponent<RectTransform>();
             CursorRect.anchoredPosition = new(-350, 0);
         }
-        public void TryDeleteCursor() { if(mCursor != null) Destroy(mCursor); }
+
+        public void TryDeleteCursor()
+        {
+            Debug.Log("TryDeleteCursor!");
+            if (mCursor == null) return;
+            Destroy(mCursor);
+            mCursor = null;
+        }
+
+        public void TrySetCursorPos(int curr, int max)
+        {
+            if (mCursor) CursorRect.anchoredPosition = new(-350.0f, -(curr - (max - 1) / 2.0f) * (540 / max * 2));
+        }
         public NotesManagerPlayerConfig GetPlayerConfig() { return mNotesManager.PlayerConfig; }
         public void PlaySound(int value)
         {
@@ -98,22 +118,69 @@ namespace ModeSelect
             mAudioClips[3] = resManager.GetAudioClip("Beep");
             mCursorRes = resManager.GetGameObject("mCursor", true);
             mPlayerRes = resManager.GetGameObject("Player", true);
+            mPopupCursorRes = resManager.GetGameObject("mPopupCursor", true);
+
+            Debug.Log($"PopupCursor : {mPopupCursorRes}");
+        }
+        public void CreatePopupCursor()
+        {
+            mPopupCursor = Instantiate(mPopupCursorRes);
+            mPopupCursor.transform.SetParent(GameObject.Find("CursorCanvas").transform);
+            mPopupCursor.transform.localScale = Vector3.one;
+            mPopupCursor.transform.localRotation = Quaternion.identity;
+            PopupCursorRect = mPopupCursor.GetComponent<RectTransform>();
+            PopupCursorRect.anchoredPosition = new(0, 0);
+        }
+        public void TryDeletePopupCursor()
+        {
+            if (mPopupCursor) Destroy(mPopupCursor);
+        }
+        public void TrySetPopupCursorPos(bool currChangeElement, bool currEnter)
+        {
+            if (!PopupCursorRect) return;
+            if (currChangeElement)
+            {
+                //要素変更中
+                //画面中央
+                PopupCursorRect.anchoredPosition = new(0, 0);
+            }
+            else
+            {
+                //決定orキャンセル
+                //下
+                if (currEnter)
+                {
+                    PopupCursorRect.anchoredPosition = new(-300, -200);
+                }
+                else
+                {
+                    PopupCursorRect.anchoredPosition = new(300, -200);
+                }
+            }
         }
     }
     public interface ICursorController
     {
         void CreateCursor();
         void TryDeleteCursor();
-        RectTransform CursorRect { get; set; }
+        void TrySetCursorPos(int curr, int max);
     }
 
-    public interface ISceneManager : ICursorController
+    public interface ISceneManager : ICursorController, IPopupCursorController
     {
         StateMachine<State, Trigger> mStateMachine { get; set; }
-        void PlaySound(int value);
+
         NotesManagerPlayerConfig GetPlayerConfig();
         bool _DebugMode { get; }
         IResourceManager Resource { get; }
+        void PlaySound(int value);
+    }
+    public interface IPopupCursorController
+    {
+        void CreatePopupCursor();
+        void TryDeletePopupCursor();
+        void TrySetPopupCursorPos(bool currChangeElement, bool currEnter = true);
+        
     }
 }
 

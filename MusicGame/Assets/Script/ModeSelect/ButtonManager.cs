@@ -69,8 +69,6 @@ namespace ModeSelect
             }
             private void OnDisable()
             {
-                if (Player.enterAction != null) Player.enterAction = null;
-                if (Player.backAction != null) Player.backAction = null;
             }
         }
         public interface IButtonController

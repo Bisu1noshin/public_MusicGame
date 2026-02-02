@@ -4,52 +4,53 @@ using System;
 
 namespace ModeSelect.StateMachine.Setting
 {
-    public class Setting_Speed : Kameda_StateParent<ISettingState, STrigger>
+    public class Setting_Speed : PopupAdmin<SettingState, STrigger>
     {
-        PopupController mPopup;
         float mCurrSpeed;
-        public Setting_Speed(ISettingState owner, IStateMachine<STrigger> st) : base(owner, st)
+        public Setting_Speed(SettingState owner, IStateMachine<STrigger> st) : base(owner, st, true)
         {
             
         }
 
         protected override void OnEnter()
         {
-            (PopupController, Action) tuple = CreateSpeedPopupInstance(true);
-            mPopup = tuple.Item1;
-            deleteAction += tuple.Item2;
+            Player.enterAction = null;
+            CreateSpeedPopupInstance(ref mPopup,
+                (owner.PlayerConfig.InputDevice == Notes.InputDevice.KyeBord ? "WキーとSキー" : "左スティック上下") + "で\nノーツ速度の調整ができます。");
+            CreateCursor();
             mCurrSpeed = owner.PlayerConfig.NotesSpeed;
-            Player.enterAction = () =>
+            Action right = () =>
             {
-                PlayEnterSound();
+                mCurrSpeed += 0.1f;
+                if (mCurrSpeed > 3f) { mCurrSpeed = 3f; }
+            };
+            Action left = () =>
+            {
+                mCurrSpeed -= 0.1f;
+                if (mCurrSpeed < 0.3f) mCurrSpeed = 0.3f;
+            };
+            Action ent = () =>
+            {
                 owner.PlayerConfig.NotesSpeed = mCurrSpeed;
                 stateMachine.ExecuteTriggerAction(STrigger.Home);
             };
-            Player.backAction = () =>
+            Action back = () =>
             {
-                PlayCancelSound();
                 stateMachine.ExecuteTriggerAction(STrigger.Home);
             };
-            Player.vecAction = (Vector2) => ChangeCurrSpeed(Vector2);
+            SetChangeElementAction(right, left);
+            SetEnterAndCancelAction(ent, back);
+            Player.vecAction = (vec) => ChangeState(vec);
         }
         protected override void OnUpdate(float deltaTime)
         {
-            mPopup.SetValue(mCurrSpeed);
+            mPopup.SetValue(mCurrSpeed.ToString(), 72);
         }
         protected override void OnExit()
         {
+            mSceneManager.TryDeletePopupCursor();
             deleteAction?.Invoke();
             deleteAction = null;
-        }
-        /// <summary>
-        /// 　ノーツ速度を変える関数　vecActionに突っ込む
-        /// 　現在は0.1単位で変更できる
-        /// </summary>
-        void ChangeCurrSpeed(Vector2 vec)
-        {
-            mCurrSpeed += vec.y * 0.1f;
-            if (mCurrSpeed > 3.0f) { mCurrSpeed = 3.0f; }
-            if (mCurrSpeed < 0.3f) { mCurrSpeed = 0.3f; }
         }
     }
 }

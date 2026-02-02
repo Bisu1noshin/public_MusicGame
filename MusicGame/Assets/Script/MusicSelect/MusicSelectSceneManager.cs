@@ -84,7 +84,7 @@ namespace MusicSelect
             if (mSceneState == SceneState.MusicSelect && mPrevSelectNum != mSelectNum[0])
             {
                 DemoMusicInfo info = demoPropertys[mSelectNum[0]];
-                mProperty?.SetProperty(info.name, info.audio, info.sprite);
+                mProperty.SetProperty(info.name, info.audio, info.sprite);
                 mPrevSelectNum = mSelectNum[0];
             }
             
@@ -282,7 +282,7 @@ namespace MusicSelect
                 deleteAction += GUIController.CreateInstance(res.GetValue("GUI"), "決定(A)", new(-180.0f, -50.0f));
                 deleteAction += GUIController.CreateInstance(res.GetValue("GUI"), "戻る(B)", new(0.0f, -50.0f));
                 mPrevSelectNum = mSelectNum[0];
-                mProperty?.SetProperty(demoPropertys[mPrevSelectNum].name, demoPropertys[mPrevSelectNum].audio, demoPropertys[mPrevSelectNum].sprite);
+                mProperty.SetProperty(demoPropertys[mPrevSelectNum].name, demoPropertys[mPrevSelectNum].audio, demoPropertys[mPrevSelectNum].sprite);
             };
             return f;
         }

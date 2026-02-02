@@ -7,28 +7,28 @@ using System.Threading.Tasks;
 
 namespace ModeSelect.StateMachine.Multi
 {
-    public class Multi_Home : Kameda_StateParent<IMultiState, MTrigger>
+    public class Multi_Home : PopupAdmin<IMultiState, MTrigger>
     {
-        public Multi_Home(IMultiState _owner, IStateMachine<MTrigger> _st) : base(_owner, _st)
+        public Multi_Home(IMultiState _owner, IStateMachine<MTrigger> _st) : base(_owner, _st, false, CursorState.EnterORCancel)
         {
 
         }
         protected override void OnEnter()
         {
-            deleteAction = null;
+            Player.enterAction = null;
             deleteAction += CreatePopupInstance("マルチプレイはSteamの機能を\n使用します。\nSteamの起動が完了した場合は\n次に進んでください。", 72);
-            Player.enterAction = () =>
+            CreateCursor();
+            Action ent = () =>
             {
-                PlayEnterSound();
                 stateMachine.ExecuteTriggerAction(MTrigger.Enter);
             };
-            Player.backAction = () =>
+            Action back = () =>
             {
                 deleteAction?.Invoke();
-                PlayCancelSound();
                 owner.BackToHome();
             };
-            Player.vecAction = null;
+            SetEnterAndCancelAction(ent, back);
+            Player.vecAction = (vec) => ChangeState(vec);
         }
         protected override void OnUpdate(float deltaTime)
         {
@@ -36,7 +36,9 @@ namespace ModeSelect.StateMachine.Multi
         }
         protected override void OnExit()
         {
+            mSceneManager.TryDeletePopupCursor();
             deleteAction?.Invoke();
+            deleteAction = null;
         }
     }
 }

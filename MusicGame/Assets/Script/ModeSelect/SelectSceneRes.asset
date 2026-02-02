@@ -55,6 +55,22 @@ MonoBehaviour:
       m_SubObjectGUID: 
       m_SubObjectType: 
       m_EditorAssetChanged: 1
+  - ObjectPath: Mode_Cursor_Popup
+    AssetReference:
+      m_AssetGUID: f36ac62851c91ee4ba9225774b6d6d14
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      m_EditorAssetChanged: 0
+  - ObjectPath: Mode_Popup_Intro
+    AssetReference:
+      m_AssetGUID: 69d5ba4b1399d47499aae58970be2282
+      m_SubObjectName: 
+      m_SubObjectGUID: 
+      m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      m_EditorAssetChanged: 1
   - ObjectPath: Music_Music_Button
     AssetReference:
       m_AssetGUID: 30b1fc23b5734a94999d1cf5bc286a0e
