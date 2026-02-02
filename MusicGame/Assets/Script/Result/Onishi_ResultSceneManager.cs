@@ -52,14 +52,14 @@ public class Onishi_ResultSceneManager : MonoBehaviour
             Texture2D newSprite;
             if (scoreCnt[0] == 0)
             {
-                if (scoreCnt[1] == 0) newSprite = Resources.Load("Image/Result/AP_kari") as Texture2D;
-                else newSprite = Resources.Load("Image/Result/FC_kari") as Texture2D;
+                if (scoreCnt[1] == 0) newSprite = Resources.Load("Image/Result/AP") as Texture2D;
+                else newSprite = Resources.Load("Image/Result/FC") as Texture2D;
             }
             else if ((float)(score / (scoreCnt[0] + scoreCnt[1] + scoreCnt[2]) * 2) >= 0.7)
             {
-                newSprite = Resources.Load("Image/Result/Clear_kari") as Texture2D;
+                newSprite = Resources.Load("Image/Result/Clear") as Texture2D;
             }
-            else newSprite = Resources.Load("Image/Result/Failed_kari") as Texture2D;
+            else newSprite = Resources.Load("Image/Result/Failed") as Texture2D;
             Img_ClearLamp.GetComponent<RawImage>().texture = newSprite;
         }
 
