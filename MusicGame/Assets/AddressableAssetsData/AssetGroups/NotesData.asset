@@ -15,23 +15,23 @@ MonoBehaviour:
   m_GroupName: NotesData
   m_GUID: 8a965d16329e5124f99b747bdfb77786
   m_SerializeEntries:
-  - m_GUID: 23ded731e2c595f43a318cef2209ead5
-    m_Address: Assets/Prefab/TextData/NotesData/Chronomia/Chronomia_NORMAL.txt
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 41f34407f34b73a40b1fd0ab10dd5753
     m_Address: Assets/Prefab/TextData/NotesData/gengaozo/Gengaozo_EXPERT.txt
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 4ac371e352db55743ad50ac396af720b
-    m_Address: Assets/Prefab/TextData/NotesData/Chronomia/Chronomia_HARD.txt
+  - m_GUID: 651d894d35cc6284aac98c8544c4ec59
+    m_Address: Assets/Prefab/TextData/NotesData/Chronomia/Chronomia_HARD 1.txt
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c1624fd4506bd1046a983066356e152e
     m_Address: Assets/Prefab/TextData/NotesData/Chronomia/Chronomia_EXPERT 1.txt
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c7bfa6181c655d74eb92905382ddfecf
+    m_Address: Assets/Prefab/TextData/NotesData/Chronomia/Chronomia_NORMAL 1.txt
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
