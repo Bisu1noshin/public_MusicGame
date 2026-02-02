@@ -38,6 +38,7 @@ namespace Player
 
         private NotesObject[] notes;
         private Notes.NotesManager manager;
+        private bool IsAutoPlay;
         public static Action<PlayerState, float>[] NotesAction = new Action<PlayerState, float>[2];
 
         private void Start()
@@ -57,6 +58,8 @@ namespace Player
         {
             // ノーツの処理
             {
+                if (IsAutoPlay) { return; }
+
                 for (int i = 0; i < state.Length; i++)
                 {
                     if (state[i] != PlayerState.Idle)
@@ -112,6 +115,7 @@ namespace Player
         {
             manager = GameObject.Find("NotesGenarator").GetComponent<Notes.NotesManager>();
             this.inputDevice = manager.NotesManagerData.PlayerConfig.InputDevice;
+            this.IsAutoPlay = manager.NotesManagerData.PlayerConfig.AutoPlay;
         }
 
         protected override void SetPlayerInputActionType()
