@@ -55,8 +55,8 @@ namespace MusicSelect
         }
         public static float SetY(int id_)
         {
-            if (id_ < 2) return (id_ - 2) * -200f;
-            else return (id_ - 1) * -200f;
+            if (id_ < 2) return (id_ - 2) * -200f - 100f;
+            else return (id_ - 1) * -200f + 100f;
         }
         public static Action CreateInstance(GameObject res, int id_, string str_, SceneState ss = SceneState.LevelSelect, bool cantSelect = false)
         {

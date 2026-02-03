@@ -291,8 +291,8 @@ namespace MusicSelect
                 demoPropertys.Add(new("戻る", null, null));
                 mMusicStateMaxValue = num;
 
-                deleteAction += GUIController.CreateInstance(res.GetValue("GUI"), "決定(A)", new(-180.0f, -50.0f));
-                deleteAction += GUIController.CreateInstance(res.GetValue("GUI"), "戻る(B)", new(0.0f, -50.0f));
+                //deleteAction += GUIController.CreateInstance(res.GetValue("GUI"), "決定(A)", new(-180.0f, -50.0f));
+                //deleteAction += GUIController.CreateInstance(res.GetValue("GUI"), "戻る(B)", new(0.0f, -50.0f));
                 mPrevSelectNum = mSelectNum[0];
                 mProperty.SetProperty(demoPropertys[mPrevSelectNum].name, demoPropertys[mPrevSelectNum].audio, demoPropertys[mPrevSelectNum].sprite);
             };
@@ -302,13 +302,15 @@ namespace MusicSelect
         Action CreateLevelButtons(SceneState ss = SceneState.LevelSelect)
         {
             Action f = () => {
-                for (int i = 0; i < 3; i++)
+                maxValue = 0;
+                for (int i = 0; i < 3; ++i)
                 {
                     deleteAction += LevelButtonController.CreateInstance(res.GetValue("LevelButton"), i, levelName[i], ss, mCurrNotesData[i] == string.Empty);
-                    maxValue = i;
+                    maxValue++;
                 }
-                deleteAction += GUIController.CreateInstance(res.GetValue("GUI"), "決定(A)", new(-180.0f, -50.0f));
-                deleteAction += GUIController.CreateInstance(res.GetValue("GUI"), "戻る(B)", new(0.0f, -50.0f));
+                deleteAction += LevelButtonController.CreateInstance(res.GetValue("LevelButton"), maxValue++, "戻る", ss);
+                //deleteAction += GUIController.CreateInstance(res.GetValue("GUI"), "決定(A)", new(-180.0f, -50.0f));
+                //deleteAction += GUIController.CreateInstance(res.GetValue("GUI"), "戻る(B)", new(0.0f, -50.0f));
             };
             return f;
         }
