@@ -18,18 +18,12 @@ public class Kameda_ResourceManager : MonoBehaviour, IResourceManager, ISetAsync
     {
         if (!loaded)
         {
-            Debug.LogWarning("Warning! Async load hasn't DONE");
             SetSyncObjects();
         }
     }
     void Start()
     {
         DontDestroyOnLoad(this);
-        //if (!loaded)
-        //{
-        //    Debug.LogWarning("Warning! Async load hasn't DONE");
-        //    SetSyncObjects();
-        //}
 
         // 自分を破壊する処理の追加
         {
@@ -92,7 +86,6 @@ public class Kameda_ResourceManager : MonoBehaviour, IResourceManager, ISetAsync
         });
 
         loaded = true;
-        Debug.Log("ModeSelectSceneManager is SuccessAsync");
     }
     void SetSyncObjects()
     {
@@ -137,7 +130,6 @@ public class Kameda_ResourceManager : MonoBehaviour, IResourceManager, ISetAsync
             { "Intro_C", Resources.Load<Sprite>("Image/Intro/Intro_Controller") }
         });
         loaded = true;
-        Debug.Log("ModeSelectSceneManager is SuccessSync");
     }
 
     public GameObject GetGameObject(string path, bool isModeRes = true)

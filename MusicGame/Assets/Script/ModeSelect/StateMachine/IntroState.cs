@@ -1,18 +1,13 @@
-﻿using Mono.Cecil;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using UnityEngine;
 
 namespace ModeSelect.StateMachine.Setting.Operation
 {
-    public class Oper_Intro : PopupAdmin<Setting_Oper, OTrigger>
+    public class IntroState : PopupAdmin<ISceneManager, Trigger>
     {
         Sprite intro_K, intro_C;
         bool curr;
-        public Oper_Intro(Setting_Oper owner, IStateMachine<OTrigger> st) : base(owner, st, false, CursorState.EnterORCancel)
+        public IntroState(ISceneManager owner, IStateMachine<Trigger> st) : base(owner, st, false, CursorState.EnterORCancel)
         {
             intro_K = mSceneManager.Resource.GetSprite("Intro_K");
             intro_C = mSceneManager.Resource.GetSprite("Intro_C");
@@ -22,7 +17,8 @@ namespace ModeSelect.StateMachine.Setting.Operation
             Player.enterAction = null;
             curr = true;
             CreateImagePopupInstance(ref mPopup, intro_K);
-            CreateCursor();
+            mCursorOwner.CreatePopupCursor();
+            mCursorOwner.TrySetPopupCursorPos(true, true);
             Action shift = () =>
             {
                 curr = !curr;
@@ -37,7 +33,7 @@ namespace ModeSelect.StateMachine.Setting.Operation
             };
             Action back = () =>
             {
-                stateMachine.ExecuteTriggerAction(OTrigger.Home);
+                stateMachine.ExecuteTriggerAction(Trigger.Home);
             };
             SetEnterAndCancelAction(shift, back);
             Player.vecAction = (vec) => ChangeState(vec);

@@ -11,8 +11,8 @@ namespace ModeSelect.StateMachine
         PropertyController mProperty;
         string[] explaination = new string[]
         {
-            "シングルプレイで遊びます",
-            "マルチプレイで遊びます",
+            "ひとりで遊べます",
+            "操作方法が見れます",
             "ゲームプレイの設定ができます",
             "ゲーム制作者・作曲者を表示します",
             "タイトルに戻ります"
@@ -22,7 +22,7 @@ namespace ModeSelect.StateMachine
             mActions = new()
             {
                 () => stateMachine.ExecuteTriggerAction(Trigger.Single),
-                () => stateMachine.ExecuteTriggerAction(Trigger.Multi),
+                () => stateMachine.ExecuteTriggerAction(Trigger.Intro),
                 () => stateMachine.ExecuteTriggerAction(Trigger.Setting),
                 () => { owner.Resource.ReleaseAll?.Invoke(); SceneManager.LoadScene("Onishi_Credit"); },
                 () => { owner.Resource.ReleaseAll?.Invoke(); SceneManager.LoadScene("Ooo_Title");  }
@@ -33,8 +33,8 @@ namespace ModeSelect.StateMachine
         {
             InitAction();
             
-            deleteAction += CreateButtonInstance(0, 5, "シングルプレイ");
-            deleteAction += CreateButtonInstance(1, 5, "マルチプレイ");
+            deleteAction += CreateButtonInstance(0, 5, "楽曲選択");
+            deleteAction += CreateButtonInstance(1, 5, "操作方法");
             deleteAction += CreateButtonInstance(2, 5, "設定");
             deleteAction += CreateButtonInstance(3, 5, "クレジット");
             deleteAction += CreateButtonInstance(4, 5, "タイトルに戻る");
