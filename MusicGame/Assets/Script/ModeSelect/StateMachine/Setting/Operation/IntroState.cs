@@ -10,8 +10,8 @@ namespace ModeSelect.StateMachine
         Action enter, back;
         public IntroState(ISceneManager owner, IStateMachine<Trigger> st) : base(owner, st, false, CursorState.EnterORCancel)
         {
-            intro_K = mSceneManager.Resource.GetSprite("Intro_K");
-            intro_C = mSceneManager.Resource.GetSprite("Intro_C");
+            intro_K = Resources.Load<Sprite>("Image/Intro/Intro_Keyboard");
+            intro_C = Resources.Load<Sprite>("Image/Intro/Intro_Controller");
             curr = true;
             Debug.Log($"Intro_K : {intro_K.name}\nIntro_C : {intro_C.name}");
         }

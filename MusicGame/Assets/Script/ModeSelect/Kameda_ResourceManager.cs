@@ -126,8 +126,6 @@ public class Kameda_ResourceManager : MonoBehaviour, IResourceManager, ISetAsync
             { "Gengaozo", Resources.Load<Sprite>("Image/MusicJacket/G_e_n_g_a_o_z_o") },
             { "Chronomia", Resources.Load<Sprite>("Image/MusicJacket/Chronomia") },
             { "NewYorkBackRaise", Resources.Load<Sprite>("Image/MusicJacket/NewYorkBackRaise") },
-            { "Intro_K", Resources.Load<Sprite>("Image/Intro/Intro_Keyboard") },
-            { "Intro_C", Resources.Load<Sprite>("Image/Intro/Intro_Controller") }
         });
         loaded = true;
     }
