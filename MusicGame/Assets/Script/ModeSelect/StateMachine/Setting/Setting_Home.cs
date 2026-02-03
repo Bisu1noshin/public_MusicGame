@@ -34,6 +34,12 @@ namespace ModeSelect.StateMachine.Setting
         }
         protected override void OnUpdate(float deltaTime)
         {
+            if (!mProperty)
+            {
+                if (owner.GetProperty() == null) return; 
+                mProperty = owner.GetProperty();
+                Debug.Log("Setting_Home : Property reconnected");
+            }
             SetPropertyText(mSelectNum);
             mSceneManager.TrySetCursorPos(mSelectNum, mActions.Count);
 

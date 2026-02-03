@@ -24,7 +24,9 @@ namespace ModeSelect.StateMachine.Multi
             };
             Action back = () =>
             {
+                mSceneManager.TryDeletePopupCursor(); 
                 deleteAction?.Invoke();
+                deleteAction = null;
                 owner.BackToHome();
             };
             SetEnterAndCancelAction(ent, back);

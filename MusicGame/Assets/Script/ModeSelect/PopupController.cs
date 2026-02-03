@@ -35,6 +35,14 @@ namespace ModeSelect
                     break;
                 case PopupType.Sprite:
                     mCurrImage = transform.GetChild(0).GetComponent<Image>();
+                    //try
+                    //{
+                    //    mCurrImage = transform.GetChild(0).GetComponent<Image>();
+                    //}
+                    //catch(NullReferenceException nre)
+                    //{
+                    //    throw new Exception("NullReferenceException", nre);
+                    //}
                     break;
                 default:
                     break;

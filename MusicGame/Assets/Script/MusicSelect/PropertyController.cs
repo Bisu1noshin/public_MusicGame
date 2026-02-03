@@ -15,6 +15,7 @@ namespace MusicSelect
         [SerializeField] Image mThumbnail;
         ButtonState mState;
         RectTransform mRect;
+        Coroutine appear;
 
         private void Awake()
         {
@@ -23,12 +24,20 @@ namespace MusicSelect
             mThumbnail = transform.GetChild(0).GetComponent<Image>();
             mRect = GetComponent<RectTransform>();
             mState = ButtonState.Appear;
-            StartCoroutine(ActiveCoroutine());
+            appear = StartCoroutine(AppearMove());
         }
-
+        private void Update()
+        {
+            if (mState == ButtonState.Dead)
+            {
+                StopCoroutine(appear);
+                StartCoroutine(DestroyMove());
+            }
+        }
 
         public void SetProperty(string text, AudioClip audio, Sprite image)
         {
+            if (mState == ButtonState.Dead) return;
             mText.text = text;
             if (audio != null)
             {
@@ -55,17 +64,20 @@ namespace MusicSelect
             Action f = () => { pc.mState = ButtonState.Dead; };
             return (pc, f);
         }
-
-        IEnumerator ActiveCoroutine()
+        IEnumerator AppearMove()
         {
             transform.DOLocalMoveY(0f, 0.3f).SetEase(Ease.OutCubic);
             yield return new WaitForSeconds(0.3f);
-            mState = ButtonState.Active;
-            while (mState == ButtonState.Active)
+            if (mState != ButtonState.Dead)
             {
-                yield return null;
+                mState = ButtonState.Active;
             }
-            transform.DOLocalMoveY(-1000f, 0.3f).SetEase(Ease.InOutCubic);
+            yield break;
+        }
+        IEnumerator DestroyMove()
+        {
+            transform.DOLocalMoveY(-1000f, 0.1f).SetEase(Ease.Linear);
+            yield return new WaitForSeconds(0.1f);
             Destroy(gameObject);
             yield break;
         }

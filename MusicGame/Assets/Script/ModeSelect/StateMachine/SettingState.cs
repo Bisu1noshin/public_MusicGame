@@ -42,6 +42,7 @@ namespace ModeSelect.StateMachine
                     //owner.TryDeleteCursor();
                     deleteAction?.Invoke();
                     deleteAction = null;
+                    mProperty = null;
                 }
                 if (mPrevState == SState.Oper && mStateMachine.GetState() == SState.Home)
                 {
@@ -56,6 +57,7 @@ namespace ModeSelect.StateMachine
             deleteAction?.Invoke();
             deleteAction = null;
             mStateMachine = null;
+            mProperty = null;
         }
 
         void InitStates()

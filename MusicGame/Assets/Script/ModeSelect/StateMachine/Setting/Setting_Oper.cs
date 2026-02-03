@@ -14,9 +14,10 @@ namespace ModeSelect.StateMachine.Setting
     }
 
 
-    public class Setting_Oper : Kameda_StateBase<SettingState, STrigger>, IParentState
+    public class Setting_Oper : Kameda_StateBase<SettingState, STrigger>
     {
         StateMachine<OState, OTrigger> mStateMachine;
+        PropertyController mProperty;
         public NotesManagerPlayerConfig PlayerConfig { get; set; }
         public Setting_Oper(SettingState owner, IStateMachine<STrigger> st) : base(owner, st)
         {
@@ -28,6 +29,7 @@ namespace ModeSelect.StateMachine.Setting
             deleteAction += CreateButtonInstance(1, 4, "左右反転");
             deleteAction += CreateButtonInstance(2, 4, "上下反転");
             deleteAction += CreateButtonInstance(3, 4, "戻る");
+            CreatePropertyInstance(ref mProperty);
             //mSceneManager.CreateCursor();
             SetupStates();
         }
@@ -65,6 +67,8 @@ namespace ModeSelect.StateMachine.Setting
 
             mStateMachine.ExecuteTriggerAction(OTrigger.Home);
         }
+
+        public PropertyController GetProperty() => mProperty;
     }
 
 }
