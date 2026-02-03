@@ -217,12 +217,17 @@ namespace MusicSelect
                         mAudio.PlayOneShot(beep);
                         return;
                     }
-                    else
+                    else if (mSelectNum[1] < 3)
                     {
                         DeleteAndExecuteAction(() => deleteAction += MakePopupInstance());
                         mAudio.PlayOneShot(enter);
                         timer = 0.1f;
                         untouchableTimer = 0.1f;
+                    }
+                    else
+                    {
+                        Undo();
+                        return;
                     }
                     break;
                 case SceneState.EnterGame:

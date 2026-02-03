@@ -202,4 +202,20 @@ MonoBehaviour:
       m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       m_EditorAssetChanged: 1
+  - ObjectPath: Intro_Keyboard
+    AssetReference:
+      m_AssetGUID: 214abb8f05c9cf94295c31fe71946e70
+      m_SubObjectName: Intro_Keyboard
+      m_SubObjectGUID: 
+      m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      m_EditorAssetChanged: 1
+  - ObjectPath: Intro_Controller
+    AssetReference:
+      m_AssetGUID: bf67d582126b67d47a5fdfa6244bf6d4
+      m_SubObjectName: Intro_Controller
+      m_SubObjectGUID: 
+      m_SubObjectType: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      m_EditorAssetChanged: 1
   MusicBPM: 0

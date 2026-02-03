@@ -1,9 +1,4 @@
-﻿using Mono.Cecil;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using UnityEngine;
 
 namespace ModeSelect.StateMachine
@@ -18,6 +13,7 @@ namespace ModeSelect.StateMachine
             intro_K = mSceneManager.Resource.GetSprite("Intro_K");
             intro_C = mSceneManager.Resource.GetSprite("Intro_C");
             curr = true;
+            Debug.Log($"Intro_K : {intro_K.name}\nIntro_C : {intro_C.name}");
         }
         protected override void OnEnter()
         {
